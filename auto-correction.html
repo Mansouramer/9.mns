@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مدرسة داؤود بن عروة الثقفي الابتدائية | نظام الاختبارات والتحليل (بنون)</title>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --secondary: #2563eb;
+            --accent: #bfdbfe;
+            --bg: #eff6ff;
+            --card-bg: #ffffff;
+            --text: #1e3a8a;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --print-btn: #4b5563;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 10px;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            box-sizing: border-box;
+        }
+
+        .header-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        h2 { color: var(--primary); margin: 0; font-size: 17px; }
+
+        .back-btn {
+            background: #4b5563;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .section-box {
+            background: #fafaf9;
+            border: 1px solid #e5e7eb;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .section-box h3 {
+            margin-top: 0;
+            color: var(--primary);
+            font-size: 15px;
+            border-bottom: 1px solid var(--accent);
+            padding-bottom: 6px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .form-group { display: flex; flex-direction: column; gap: 5px; }
+
+        label { font-weight: bold; font-size: 13px; color: var(--primary); }
+
+        select, input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 14px;
+            background: #fff;
+            color: #374151;
+            outline: none;
+            box-sizing: border-box;
+        }
+        select:focus, input:focus { border-color: var(--secondary); }
+
+        .stepper-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #fff;
+            border: 2px solid #d1d5db;
+            border-radius: 8px;
+            padding: 4px;
+        }
+        .stepper-container:focus-within { border-color: var(--secondary); }
+        .stepper-container input {
+            border: none !important;
+            padding: 4px !important;
+            text-align: center;
+            font-weight: bold;
+            font-size: 15px;
+            outline: none;
+        }
+        .stepper-btn {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.15s;
+        }
+        .stepper-btn:hover { background: var(--secondary); }
+
+        .action-btn {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 3px 6px rgba(37, 99, 235, 0.2);
+        }
+        .action-btn:hover { opacity: 0.9; }
+        .btn-print { background: var(--print-btn); }
+        .btn-success { background: var(--success); }
+        .btn-whatsapp { background: #059669; }
+        .btn-warning { background: #d97706; }
+
+        .touch-grading-card {
+            background: #fff;
+            border: 2px solid var(--secondary);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .student-title-badge {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--bg);
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            color: var(--primary);
+            font-size: 14px;
+            margin-bottom: 12px;
+            border: 1px solid var(--accent);
+        }
+
+        .live-score-box {
+            background: var(--success);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .touch-question-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #fdfdfd;
+            padding: 8px 10px;
+            margin-bottom: 8px;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .touch-question-row span {
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .options-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .opt-btn {
+            width: 36px;
+            height: 36px;
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            background: #fff;
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.15s;
+        }
+
+        .opt-btn.active {
+            background: var(--primary);
+            color: #fff;
+            transform: scale(1.05);
+        }
+
+        .opt-btn.correct-choice {
+            background: var(--success) !important;
+            border-color: var(--success) !important;
+            color: #fff !important;
+        }
+
+        .opt-btn.wrong-choice {
+            background: var(--danger) !important;
+            border-color: var(--danger) !important;
+            color: #fff !important;
+        }
+
+        .navigation-btns {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .questions-preview {
+            background: #fff;
+            border: 1px solid #cbd5e1;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .exam-header {
+            text-align: center;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .exam-header h3 { margin: 0; font-size: 15px; color: #1e3a8a; font-weight: bold; }
+        .exam-header h4 { margin: 4px 0; font-size: 13px; color: #374151; }
+
+        .question-row {
+            margin-bottom: 12px;
+            padding: 8px 10px;
+            background: #fdfdfd;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+            font-size: 12.5px;
+            line-height: 1.5;
+        }
+
+        .bubble-options {
+            display: flex;
+            gap: 15px;
+            margin-top: 6px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .bubble-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+        }
+
+        .bubble-circle {
+            width: 18px;
+            height: 18px;
+            border: 1.5px solid #1e3a8a;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: bold;
+            color: #1e3a8a;
+            background: #fff;
+        }
+
+        .analysis-box { display: none; background: #fffbeb; border: 1px solid #f59e0b; padding: 20px; border-radius: 10px; margin-top: 15px; font-size: 13px; }
+        .result-box { display: none; background: #ecfdf5; border: 1px solid #10b981; padding: 15px; border-radius: 10px; margin-top: 15px; font-size: 14px; }
+        .sheet-print-container { display: none; background: #fff; padding: 20px; border-radius: 10px; border: 1px solid #cbd5e1; margin-top: 15px; }
+
+        @media print {
+            @page { size: A4 portrait; margin: 10mm; }
+            body * { visibility: hidden !important; }
+            
+            .printable-exam-area, .printable-exam-area * { visibility: visible !important; }
+            .printable-exam-area { position: absolute; left: 0; top: 0; width: 100% !important; background: white !important; padding: 0 !important; border: none !important; box-shadow: none !important; }
+
+            .printable-sheet-area, .printable-sheet-area * { visibility: visible !important; }
+            .printable-sheet-area { position: absolute; left: 0; top: 0; width: 100% !important; background: white !important; padding: 0 !important; border: none !important; box-shadow: none !important; }
+
+            .printable-analysis-area, .printable-analysis-area * { visibility: visible !important; }
+            .printable-analysis-area { position: absolute; left: 0; top: 0; width: 100% !important; background: white !important; padding: 0 !important; border: none !important; box-shadow: none !important; }
+
+            .no-print { display: none !important; }
+            .question-row { break-inside: avoid; page-break-inside: avoid; margin-bottom: 8px; padding: 6px 8px; border: 1px solid #94a3b8; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header-nav no-print">
+            <h2 id="mainSchoolTitle">مدرسة داؤود بن عروة الثقفي الابتدائية (بنون)</h2>
+            <a href="index.html" class="back-btn">⬅ لوحة التحكم الرئيسية</a>
+        </div>
+
+        <div class="section-box no-print">
+            <h3>📚 أولاً: إعدادات الاختبار والصف والمادة وتحديد الأسابيع (متقدم/متأخر)</h3>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>نوع الاختبار:</label>
+                    <select id="selectExamType" onchange="togglePeriodicLessonsBox()">
+                        <option value="الاختبار الفتري الأول">الاختبار الفتري الأول</option>
+                        <option value="الاختبار الفتري الثاني">الاختبار الفتري الثاني</option>
+                        <option value="الاختبار القبلي التشخيصي">الاختبار القبلي (تشخيصي)</option>
+                        <option value="الاختبار البعدي النهائي">الاختبار البعدي (نهائي)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>الصف الدراسي:</label>
+                    <select id="selectGrade">
+                        <option value="الأول الابتدائي">الصف الأول الابتدائي</option>
+                        <option value="الثاني الابتدائي">الصف الثاني الابتدائي</option>
+                        <option value="الثالث الابتدائي">الصف الثالث الابتدائي</option>
+                        <option value="الرابع الابتدائي">الصف الرابع الابتدائي</option>
+                        <option value="الخامس الابتدائي">الصف الخامس الابتدائي</option>
+                        <option value="السادس الابتدائي">الصف السادس الابتدائي</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>المادة الدراسية:</label>
+                    <select id="selectSubject">
+                        <option value="science">مادة العلوم</option>
+                        <option value="math">مادة الرياضيات</option>
+                        <option value="arabic">مادة لغتي الجميلة</option>
+                        <option value="english">مادة اللغة الإنجليزية</option>
+                        <option value="islamic">الدراسات الإسلامية</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="periodicLessonsConfigBox" class="form-group" style="margin-top: 10px; border-top: 1px dashed #cbd5e1; padding-top: 10px;">
+                <label style="color: #b45309;">📌 نطاق الأسابيع المستهدفة (استخدم الأسهم لتعديل الأسبوع حسب تقدمك أو تأخرك):</label>
+                <div style="display: flex; gap: 20px; align-items: center; margin-top: 8px; flex-wrap: wrap;">
+                    
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 13px; font-weight: bold;">من الأسبوع:</span>
+                        <div class="stepper-container">
+                            <button type="button" class="stepper-btn" onclick="changeWeek('startWeek', -1)">-</button>
+                            <input type="number" id="inputStartWeek" value="1" min="1" max="18" style="width: 50px;">
+                            <button type="button" class="stepper-btn" onclick="changeWeek('startWeek', 1)">+</button>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 13px; font-weight: bold;">إلى الأسبوع:</span>
+                        <div class="stepper-container">
+                            <button type="button" class="stepper-btn" onclick="changeWeek('endWeek', -1)">-</button>
+                            <input type="number" id="inputEndWeek" value="4" min="1" max="18" style="width: 50px;">
+                            <button type="button" class="stepper-btn" onclick="changeWeek('endWeek', 1)">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-box">
+            <h3>⚙️ ثانياً: توليد ورقة الاختبار المعتمدة (10 فقرات ثابتة وعشوائية)</h3>
+            <div class="no-print">
+                <button class="action-btn" onclick="generateTestModel()">⚡ توليد ورقة الاختبار المعتمدة</button>
+            </div>
+
+            <div id="questionsPreviewBox" class="questions-preview printable-exam-area">
+                <div class="exam-header">
+                    <h3>المملكة العربية السعودية - وزارة التعليم</h3>
+                    <h4 id="printSchoolTitle">مدرسة داؤود بن عروة الثقفي الابتدائية</h4>
+                    <p id="printTeacherName" style="margin:2px 0; font-size:11.5px; color:#4b5563; font-weight:bold;"></p>
+                    <p id="printTestInfo" style="margin:2px 0; font-size:12px; color:#555; font-weight:bold;"></p>
+                    <div id="printModelBadge" style="margin:4px 0; font-size:12px; color:#0d9488; font-weight:bold;"></div>
+                    <div style="margin-top: 6px; border: 1.2px solid #64748b; padding: 4px 10px; border-radius: 5px; display:inline-block; font-size:11.5px;">
+                        <b>اسم الطالب:</b> .................................................................... &nbsp;&nbsp; <b>الصف:</b> ................
+                    </div>
+                </div>
+                
+                <div id="generatedQuestionsList"></div>
+
+                <div class="no-print" style="margin-top: 15px;">
+                    <button class="action-btn btn-print" onclick="printExamOnly()">🖨️ طباعة الاختبار بملء صفحة A4</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-box no-print">
+            <h3>👤 ثالثاً: لوحة التصحيح السريع باللمس (رصد درجات الطلاب)</h3>
+            <p style="font-size: 12px; color: #555; margin-bottom: 10px;">
+                انقر على إجابة الطالب؛ لتتحدث درجته فوراً وتُرحل لداشبورد المدرسة:
+            </p>
+            <button class="action-btn btn-success" onclick="startTouchGradingSession()">🚀 بدء جلسة التصحيح الفوري</button>
+
+            <div id="touchGradingCard" class="touch-grading-card">
+                <div id="studentHeaderBadge" class="student-title-badge"></div>
+                <div id="touchQuestionsContainer"></div>
+                
+                <div class="navigation-btns">
+                    <button class="action-btn" style="background: #4b5563;" onclick="prevStudent()">⬅ الطالب السابق</button>
+                    <button class="action-btn btn-success" onclick="saveAndNextStudent()">حفظ والانتقال للتالي ➡</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="resultContainer" class="result-box no-print">
+            <h3 style="margin-top:0; color: var(--primary); font-size: 16px;">📊 سجل درجات الفصل المعتمدة والبحث الفوري عن درجات ولي الأمر</h3>
+            
+            <div style="margin: 12px 0; display: flex; gap: 10px; align-items: center;">
+                <input type="text" id="searchStudentInput" placeholder="🔍 ابحث عن اسم طالب لسؤال ولي أمره..." oninput="filterStudentResults()" style="flex: 1; padding: 8px 12px; border: 1px solid #10b981; border-radius: 6px; font-size: 13px;">
+            </div>
+
+            <p id="correctionOutputText" style="font-size: 14px; margin: 8px 0;"></p>
+            
+            <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;" class="no-print">
+                <button class="action-btn btn-print" style="flex: 1; min-width: 250px;" onclick="printAllGradesSheet()">🖨️ طباعة كشف درجات الفصل (أسماء ودرجات فقط)</button>
+                <button class="action-btn btn-warning" style="flex: 1; min-width: 250px;" onclick="toggleAnalysisBox()">📈 فتح/طباعة تقرير التحليل الإحصائي المستقل</button>
+            </div>
+        </div>
+
+        <!-- كشف الدرجات المستقل للطباعة (أسماء ودرجات فقط بدون أي أسئلة) -->
+        <div id="allGradesSheetPrintArea" class="sheet-print-container printable-sheet-area">
+            <div style="text-align: center; border-bottom: 2px solid #1e3a8a; padding-bottom: 8px; margin-bottom: 15px;">
+                <h3 style="margin: 0; color: #1e3a8a; font-size: 15px;">المملكة العربية السعودية - وزارة التعليم</h3>
+                <h4 id="sheetPrintSchoolName" style="margin: 4px 0; font-size: 13px; color: #374151;">مدرسة داؤود بن عروة الثقفي الابتدائية</h4>
+                <p id="sheetPrintMeta" style="margin: 2px 0; font-size: 12px; color: #4b5563; font-weight: bold;"></p>
+            </div>
+            <table style="width: 100%; border-collapse: collapse; font-size: 12px; text-align: center;" border="1">
+                <thead>
+                    <tr style="background: #eff6ff; color: #1e3a8a;">
+                        <th style="padding: 6px; width: 40px;">م</th>
+                        <th style="padding: 6px; text-align: right; padding-right: 10px;">اسم الطالب</th>
+                        <th style="padding: 6px; width: 100px;">الدرجة المستحقة</th>
+                        <th style="padding: 6px; width: 100px;">الدرجة الكبرى</th>
+                        <th style="padding: 6px; width: 120px;">مستوى الإتقان</th>
+                    </tr>
+                </thead>
+                <tbody id="sheetPrintTableBody">
+                    <!-- تعبئة تلقائية بالدرجات -->
+                </tbody>
+            </table>
+            <div style="margin-top: 25px; display: flex; justify-content: space-between; font-size: 12px; font-weight: bold;">
+                <div>ختم المدرسة / الإدارة: ........................</div>
+                <div id="sheetPrintTeacherSign">اسم معلم المادة: ........................</div>
+            </div>
+        </div>
+
+        <!-- تقرير التحليل المستقل -->
+        <div id="analysisContainer" class="analysis-box printable-analysis-area">
+            <h3 style="margin-top:0; color: #b45309; border-bottom: 2px solid #f59e0b; padding-bottom: 8px; font-size: 16px;">📈 تقرير تحليل نتائج الطلاب ومهارات نافس (مستقل)</h3>
+            <div id="analysisContentText" style="font-size: 12.5px; line-height: 1.6; color: #1f2937;"></div>
+            <div class="no-print" style="margin-top: 15px;">
+                <button class="action-btn btn-print" onclick="printAnalysisBoxOnly()">🖨️ طباعة تقرير التحليل لوحده</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toArabicDigits(str) {
+            if (str === null || str === undefined) return '';
+            const arabicNumbers = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+            return String(str).replace(/[0-9]/g, function(d) {
+                return arabicNumbers[parseInt(d)];
+            });
+        }
+
+        function convertAllNumbersInDOM() {
+            const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+            let node;
+            while (node = walker.nextNode()) {
+                if (node.parentElement && ['SCRIPT', 'STYLE'].includes(node.parentElement.tagName)) continue;
+                if (node.nodeValue) {
+                    node.nodeValue = toArabicDigits(node.nodeValue);
+                }
+            }
+        }
+
+        const subjectNames = { 
+            "science": "مادة العلوم", 
+            "math": "مادة الرياضيات", 
+            "arabic": "مادة لغتي الجميلة", 
+            "english": "مادة اللغة الإنجليزية", 
+            "islamic": "الدراسات الإسلامية" 
+        };
+
+        const accurateGradeQuestionBank = {
+            "الأول الابتدائي": {
+                "science": [
+                    { q: "أي مما يلي يُعد من أجزاء النبات الرئيسية التي تمتص الماء؟", options: ["الرجل", "الجذر", "الید", "الذيل"], correct: "ب" },
+                    { q: "ما هو مصدر النور والحرارة الأساسي على سطح الأرض؟", options: ["القمر", "الشمس", "المصباح", "النجوم"], correct: "ب" },
+                    { q: "أي الحيوانات التالية يعيش في الماء؟", options: ["العصفور", "الأسماك", "الجمل", "القط"], correct: "ب" },
+                    { q: "ما الحالة الفيزيائية للماء المتجمد (ثلج)؟", options: ["سائلة", "غازية", "صلبة", "بخار"], correct: "ج" },
+                    { q: "في أي فصل ترتفع درجة الحرارة وتشتد؟", options: ["الصيف", "الربيع", "الخريف", "الشتاء"], correct: "أ" },
+                    { q: "ما هو الحيوان الذي يُغطي جسمه الريش؟", options: ["القطة", "الأسد", "العصفور", "الخروف"], correct: "ج" },
+                    { q: "أي الأجسام التالية خفيف ويطفو على الماء؟", options: ["المسمار الحديدي", "الحجر", "ورقة الشجر", "العملة المعدنية"], correct: "ج" },
+                    { q: "ما الغاز الذي نتنفسه ونجده في الهواء؟", options: ["ثاني أكسيد الكربون", "الأكسجين", "الهيليوم", "النيتروجين"], correct: "ب" },
+                    { q: "ما اسم الفصول التي يتساقط فيها ورق بعض الأشجار؟", options: ["الربيع", "الصيف", "الخريف", "الشتاء"], correct: "ج" },
+                    { q: "أي مما يأتي يعد من مصادر الإضاءة الطبيعية؟", options: ["الشمس", "التلفاز", "المصباح اليدوي", "الساعة"], correct: "أ" }
+                ],
+                "math": [
+                    { q: "ما الناتج الصحيح لعملية الجمع: ٣ + ٢ = ؟", options: ["٤", "٥", "٦", "٧"], correct: "ب" },
+                    { q: "أي الأعداد التالية أكبر من العدد ٧؟", options: ["٥", "٦", "٩", "٤"], correct: "ج" },
+                    { q: "كم عدد أضلاع الشكل الهندسي (المثلث)؟", options: ["٣", "٤", "٥", "٢"], correct: "أ" },
+                    { q: "ما الناتج الصحيح لعملية الطرح: ٨ - ٣ = ؟", options: ["٤", "٥", "٦", "٧"], correct: "ب" },
+                    { q: "ما هو العدد الذي يأتي مباشرة بعد العدد ٩؟", options: ["٨", "١٠", "١١", "٧"], correct: "ب" },
+                    { q: "عشرة مضافاً إليها خمسة تساوي:", options: ["١٢", "١٥", "٢٠", "١٠"], correct: "ب" },
+                    { q: "أي الأعداد التالية يعتبر عدداً زوجياً؟", options: ["٣", "٥", "٤", "٧"], correct: "ج" },
+                    { q: "مع أحمد ٤ تفاحات وأخذ تفاحتان، فكم أصبح معه؟", options: ["٥", "٦", "٣", "٢"], correct: "ب" },
+                    { q: "طول قلم رصاص قصير يقاس بـ:", options: ["المتر", "السنتيمتر", "الكيلومتر", "الجرام"], correct: "ب" },
+                    { q: "أي الأشكال التالية يمثل دائرة؟", options: ["شكل مربع", "شكل دائري منحني مغلق", "شكل مثلث", "شكل مستطيل"], correct: "ب" }
+                ]
+            },
+            "الثاني الابتدائي": {
+                "science": [
+                    { q: "ما هي المخلوقات التي تصنع غذاءها بنفسها؟", options: ["الحيوانات", "النباتات", "الصخور", "السيارات"], correct: "ب" },
+                    { q: "أي المواد التالية تعد صلبة؟", options: ["الماء", "الهواء", "الحجر", "العصير"], correct: "ج" },
+                    { q: "ما الذي يسبب حركة الأجسام (دفعاً أو سحباً)؟", options: ["القوة", "اللون", "الوزن", "الارتفاع"], correct: "أ" },
+                    { q: "أي الأماكن التالية حار وجاف وقليل الأمطار؟", options: ["الغابة", "الصحراء", "القطب المتجمد", "البحر"], correct: "ب" },
+                    { q: "ما هو تسلسل انتقال الطاقة بين المخلوقات الحية يسمى:", options: ["سلسلة غذائية", "دورة المياه", "الجاذبية", "الكتلة"], correct: "أ" },
+                    { q: "كيف تتكاثر معظم الطيور؟", options: ["بالولادة", "بالبيوض", "بالتبرعم", "بالانقسام"], correct: "ب" },
+                    { q: "ما الصوت الذي له درجة عالية ورفيعة؟", options: ["صوت العصفور", "صوت الأسد", "صوت الرعد", "صوت الطبل"], correct: "أ" },
+                    { q: "أي مما يأتي يعتبر من حاجات المخلوقات الحية الأساسية؟", options: ["الحديد", "الماء والهواء", "البلاستيك", "الزجاج"], correct: "ب" },
+                    { q: "أي الفصول يأتي بعد الشتاء مباشرة وتزهر فيه الأزهار؟", options: ["الصيف", "الخريف", "الربيع", "الشتاء"], correct: "ج" },
+                    { q: "ما هي المادة التي لا تنفذ الضوء من خلالها؟", options: ["الزجاج الصافي", "الماء النقي", "الجدار الخشبي المعتم", "البلاستيك الشفاف"], correct: "ج" }
+                ],
+                "math": [
+                    { q: "ما قيمة الرقم ٥ في العدد ٥٤٢؟", options: ["٥", "٥٠", "٥٠٠", "٥٤"], correct: "ج" },
+                    { q: "ناتج جمع: ٢٥ + ١٤ يساوي:", options: ["٣٩", "٤٠", "٣٨", "٣٥"], correct: "أ" },
+                    { q: "أي الأعداد التالية هو الأكبر؟", options: ["٧٨٢", "٨٧٢", "٧٢٨", "٨٢٧"], correct: "ب" },
+                    { q: "كم يوماً في الأسبوع الواحد؟", options: ["٥ أيام", "٦ أيام", "٧ أيام", "٣٠ يوماً"], correct: "ج" },
+                    { q: "الشكل الهندسي الذي له ٤ أضلاع متساوية هو:", options: ["المثلث", "المربع", "الدائرة", "المستطيل"], correct: "ب" },
+                    { q: "ناتج طرح: ٥٠ - ٢٠ يساوي:", options: ["٢٠", "٣٠", "٤٠", "١٠"], correct: "ب" },
+                    { q: "اكتب العدد مائتان وخمسة بالأرقام:", options: ["٢٥٠", "٢٠٥", "٥٠٢", "٢٥"], correct: "ب" },
+                    { q: "إذا كان خالد يملك ٣ فئات من نقد ١٠ ريالات، فكم إجمالي المبلغ؟", options: ["١٠ ريالات", "٢٠ ريالاً", "٣٠ ريالاً", "٤٠ ريالاً"], correct: "ج" },
+                    { q: "التقدير الأنسب لطول باب الفصل هو:", options: ["٢ متر", "٢ سنتيمتر", "٢٠٠ كيلومتر", "١٠ مليمتر"], correct: "أ" },
+                    { q: "مع حامد ٤٥ قلماً وأعطى زميله ١٥ قلماً، كم بقي معه؟", options: ["٣٠ قلماً", "٦٠ قلماً", "٢٠ قلماً", "٢٥ قلماً"], correct: "أ" }
+                ]
+            },
+            "الثالث الابتدائي": {
+                "science": [
+                    { q: "ما الجهاز المسؤول عن ضخ الدم لجميع أجزاء الجسم؟", options: ["المعدة", "الرئتان", "القلب", "الدماغ"], correct: "ج" },
+                    { q: "ما هي العملية التي تصنع بها النباتات غذاءها؟", options: ["التنفس", "البناء الضوئي", "الهضم", "الامتصاص"], correct: "ب" },
+                    { q: "أي الحيوانات التالية يعد من الحيوانات الفقارية؟", options: ["دودة الأرض", "العقرب", "العصفور", "النملة"], correct: "ج" },
+                    { q: "ما هي القوة التي تجذب الأشياء الفولاذية دون لمسها أحياناً؟", options: ["الاحتكاك", "المغناطيسية", "الجاذبية", "الطفو"], correct: "ب" },
+                    { q: "أي الألوان التالية يعد من ألوان الطيف الستة/السبعة؟", options: ["الأزرق", "البنفسجي الغامق", "الرمادي", "الأسود"], correct: "أ" },
+                    { q: "ما المادة الصلبة الطبيعية التي تتكون منها الصخور؟", options: ["المعادن", "البلاستيك", "الورق", "الزجاج"], correct: "أ" },
+                    { q: "كيف تتكاثر النباتات المعقدة غالباً؟", options: ["بالبذور والأزهار", "بالصخور", "بالتربة", "بالهواء"], correct: "أ" },
+                    { q: "ما هو الغاز الذي تنتجه النباتات أثناء عملية البناء الضوئي؟", options: ["ثاني أكسيد الكربون", "الأكسجين", "النيتروجين", "الهيليوم"], correct: "ب" },
+                    { q: "أي مما يلي يعد تغييراً كيميائياً للمادة؟", options: ["انصهار الثلج", "قص الورق", "احتراق الخشب", "تبخر الماء"], correct: "ج" },
+                    { q: "ما مسكن الحيوان الطبيعي الذي يحميه من الأعداء؟", options: ["المأوى", "المصنع", "المدرسة", "الطريق"], correct: "أ" }
+                ],
+                "math": [
+                    { q: "ما حاصل ضرب: ٦ × ٧ = ؟", options: ["٣٦", "٤٢", "٤٨", "٥٦"], correct: "ب" },
+                    { q: "ما ناتج قسمة: ٣٦ ÷ ٦ = ؟", options: ["٥", "٦", "٧", "٨"], correct: "ب" },
+                    { q: "أي الكسور التالية يمثل النصف تماماً؟", options: ["١/٣", "١/٢", "١/٤", "٣/٤"], correct: "ب" },
+                    { q: "محيط مربع طول ضلعه ٥ سم يساوي:", options: ["١٥ سم", "٢٠ سم", "٢٥ سم", "١٠ سم"], correct: "ب" },
+                    { q: "كم دقيقة في الساعة الواحدة؟", options: ["٣٠ دقيقة", "٦٠ دقيقة", "١٠٠ دقيقة", "٢٤ دقيقة"], correct: "ب" },
+                    { q: "ما هو العدد الذي إذا ضرب في ٨ كان الناتج ٥٦؟", options: ["٦", "٧", "٨", "٩"], correct: "ب" },
+                    { q: "الكسر الأكبر فيما يلي هو:", options: ["١/٤", "١/٢", "١/٨", "١/٦"], correct: "ب" },
+                    { q: "كم ضلعاً لشكل الخماسي المنتظم؟", options: ["٤", "٥", "٦", "٧"], correct: "ب" },
+                    { q: "إذا بدأ الفصل الدراسي الساعة ٧:٠٠ واستمر ٤ ساعات، فمتى ينتهي؟", options: ["١٠:٠٠ صباحاً", "١١:٠٠ صباحاً", "١٢:٠٠ ظهراً", "١:٠٠ ظهراً"], correct: "ب" },
+                    { q: "قرب العدد ٧٤ لأقرب عشرة:", options: ["٧٠", "٨٠", "٧٥", "٦٠"], correct: "أ" }
+                ]
+            },
+            "الرابع الابتدائي": {
+                "science": [
+                    { q: "ما هي وحدة بناء الكائن الحي الأساسية؟", options: ["النسيج", "العضو", "الخلية", "الجهاز"], correct: "ج" },
+                    { q: "أي الحيوانات التالية لا تملك عموداً فقرياً (لافقاريات)؟", options: ["العصفور", "الأرنب", "الأخطبوط", "الجمل"], correct: "ج" },
+                    { q: "ما النظام البيئي الذي يتميز بقلة أمطاره وكائناته المتكيفه مع الجفاف؟", options: ["الغابة الاستوائية", "الصحراء", "المنطقة القطبية", "البحر"], correct: "ب" },
+                    { q: "أي الأمراض التالية يعد مرضاً معدياً ينتشر بين الأفراد؟", options: ["كسر العظام", "الأنفلونزا", "فقر الدم", "السمنة"], correct: "ب" },
+                    { q: "ما هي المادة التي لها حجم ثابت وشكل متغيير حسب إنائها؟", options: ["المادة الصلبة", "المادة السائلة", "المادة الغازية", "البلازما"], correct: "ب" },
+                    { q: "ما القوة التي تبطئ حركة الأجسام عند احتكاكها بسطح آخر؟", options: ["الجاذبية", "الاحتكاك", "المغناطيسية", "الكهرباء"], correct: "ب" },
+                    { q: "أي الأغذية التالية يمد الجسم بالطاقة والنشاط بشكل أساسي؟", options: ["السكريات والنشويات", "الماء فقط", "الفيتامينات الدقيقة", "الأملاح"], correct: "أ" },
+                    { q: "ما هو العضو المسؤول عن ضخ الدم في جسم الإنسان؟", options: ["القلب", "الكبد", "الكليتان", "المعدة"], correct: "أ" },
+                    { q: "ماذا تسمى الصخور التي تتكون نتيجة تبرد الصهارة البركانية؟", options: ["صخور رسوبية", "صخور نارية", "صخور متحولة", "تربة طينية"], correct: "ب" },
+                    { q: "أي أداة تستخدم لقياس كتلة الأجسام؟", options: ["المخبار المجرج", "الميزان ذو الكفتين", "الشريط المتر", "الساعة"], correct: "ب" }
+                ],
+                "math": [
+                    { q: "ما القيمة المنزلية للرقم ٧ في العدد ٧٤٥,١٢٠؟", options: ["سبعون ألفاً", "سبعمائة ألف", "سبعة آلاف", "سبعون مليوناً"], correct: "ب" },
+                    { q: "ناتج ضرب: ٤٠٠ × ٥ يساوي:", options: ["٢٠٠", "٢٠٠٠", "٢٠,٠٠٠", "٢٠"], correct: "ب" },
+                    { q: "أي الكسور التالية يمثل كسراً غير فعلي (بسْطه أكبر من مقامه)؟", options: ["٣/٤", "٧/٤", "١/٢", "٢/٥"], correct: "ب" },
+                    { q: "مساحة مستطيل طوله ٦ سم وعرضه ٤ سم تساوي:", options: ["٢٠ سم مربّع", "٢٤ سم مربّع", "١٠ سم مربّع", "١٢ سم مربّع"], correct: "ب" },
+                    { q: "قرب العدد ٤,٨٢١ لأقرب ألف:", options: ["٤,٠٠٠", "٥,٠٠٠", "٤,٨٠٠", "٤,٩٠٠"], correct: "ب" },
+                    { q: "ناتج جمع الكسرين: ٢/٨ + ٣/٨ يساوي:", options: ["٥/٨", "٥/١٦", "٦/٨", "١/٨"], correct: "أ" },
+                    { q: "كم لتراً في ٣٠٠٠ مللتر؟", options: ["٣ لترات", "٣٠ لتراً", "٣٠٠ لتر", "٣ لترات ونصف"], correct: "أ" },
+                    { q: "أي الأعداد التالية يقبل القسمة على ٢ و ٥ معاً؟", options: ["٢٤", "٣٥", "٤٠", "٤٣"], correct: "ج" },
+                    { q: "قياس الزاوية القائمة بالدرجات يساوي:", options: ["٩٠ درجة", "١٨٠ درجة", "٤٥ درجة", "٣٦٠ درجة"], correct: "أ" },
+                    { q: "المضلع الذي له ٦ أضلاع يسمى:", options: ["مخمس", "مسدس", "مسبع", "مثلث"], correct: "ب" }
+                ]
+            },
+            "الخامس الابتدائي": {
+                "science": [
+                    { q: "ما المجموعتان الرئيسيتان اللتان تُصنف فيهما المخلوقات الحية الدقيقة والنباتات؟", options: ["الفقاريات واللافقاريات", "المملكة النباتية والمملكة الحيوانية", "البكتيريا والطلائعيات", "الصخور والتربة"], correct: "ب" },
+                    { q: "كيف تتكاثر النباتات البذرية المغطاة بالبذور؟", options: ["بالأبواغ فقط", "بالأزهار وتكون البذور داخل الثمار", "بالانقسام الثنائي", "بالتبرعم"], correct: "ب" },
+                    { q: "ماذا يسمى التفاعل المتبادل بين المخلوقات الحية في النظام البيئي؟", options: ["التكافل والتنافس", "الجاذبية الأرضية", "التبخر والتكثف", "الانصهار"], correct: "أ" },
+                    { q: "ما الطبقة الصلبة الخارجية للأرض التي تضم القشرة والستار العلوي؟", options: ["الغلاف الجوي", "الصفائح الأرضية (الغلاف الصخري)", "لب الأرض الداخلي", "المحيط المائي"], correct: "ب" },
+                    { q: "أي التغيرات التالية يُعد تغييراً كيميائياً؟", options: ["انصهار الجليد", "قص الورق", "صدأ الحديد", "تبخر الماء"], correct: "ج" },
+                    { q: "ما هي الآلة البسيطة التي تتكون من مائل يلتف حول اسطوانة؟", options: ["الرافعة", "البرغي (اللولب)", "البكرة", "السطح المائل"], correct: "ب" },
+                    { q: "ما العملية التي يتحول فيها الماء السائل إلى غاز (بخار) بفعل الحرارة؟", options: ["التكثف", "التبخر", "الإنصهار", "التجمد"], correct: "ب" },
+                    { q: "ما الغاز الذي يشكل النسبة الأكبر من مكونات الهواء الجوي؟", options: ["الأكسجين", "النيتروجين", "ثاني أكسيد الكربون", "الهيدروجين"], correct: "ب" },
+                    { q: "ما هو العضو الرئيسي في الجهاز العصبي للإنسان؟", options: ["القلب", "الكبد", "الدماغ", "الرئتان"], correct: "ج" },
+                    { q: "أي الأجرام السماوية يدور حول كوكب الأرض؟", options: ["الشمس", "القمر", "المشتري", "المذنب"], correct: "ب" }
+                ],
+                "math": [
+                    { q: "ما هو الكسر العشري الذي يمثل الكسر الاعتيادي: ٣/١٠ ؟", options: ["٠.٠٣", "٠.٣", "٣.٠", "٠.٠٠٣"], correct: "ب" },
+                    { q: "ناتج ضرب: ٣.٥ × ١٠ يساوي:", options: ["٠.٣٥", "٣٥", "٣٥٠", "٣.٥"], correct: "ب" },
+                    { q: "قرب العدد العشري ١٤.٦٨ إلى أقرب عدد كلي:", options: ["١٤", "١٥", "١٤.٦", "١٤.٧"], correct: "ب" },
+                    { q: "حجم متوازي مستطيلات طوله ٥ سم، عرضه ٢ سم، وارتفاعه ٣ سم يساوي:", options: ["١٠ سم مكعب", "٣٠ سم مكعب", "٢٥ سم مكعب", "١٥ سم مكعب"], correct: "ب" },
+                    { q: "ما المضاعف المشترك الأصغر (م.م.أ) للعددين ٣ و ٤؟", options: ["٧", "١٢", "٢٤", "٦"], correct: "ب" },
+                    { q: "أوجد القاسم المشترك الأكبر (ق.م.أ) للعددين ١٢ و ١٨:", options: ["٣", "٦", "٢", "٤"], correct: "ب" },
+                    { q: "ناتج طرح: ١٥.٨ - ٦.٣ يساوي:", options: ["٩.٥", "٩.٢", "١٠.٥", "٨.٥"], correct: "أ" },
+                    { q: "إذا كانت نسبة الطلاب المفضلين لكرة القدم ٧٠٪، فما هو كسرها الاعتيادي في أبسط صورة؟", options: ["٧/١٠", "٣/٤", "١/٢", "٢/٥"], correct: "أ" },
+                    { q: "ما قياس الزاوية المستقيمة بالدرجات؟", options: ["٩٠ درجة", "١٨٠ درجة", "٢٧٠ درجة", "٣٦٠ درجة"], correct: "ب" },
+                    { q: "المضلع الذي مجموع قياسات زواياه الداخلية ٣٦٠ درجة وله ٤ أضلاع يسمى:", options: ["مثلث", "رباعي الأضلاع", "خماسي", "سداسي"], correct: "ب" }
+                ]
+            },
+            "السادس الابتدائي": {
+                "science": [
+                    { q: "ما التركيب الموجود في الخلية النباتية ويمنحها دعامة وقواماً صلباً ولا يوجد في الخلية الحيوانية؟", options: ["الغشاء البلازمي", "الجدار الخلوي", "النواة", "الميتوكوندريا"], correct: "ب" },
+                    { q: "ما المادة الكيميائية التي إذا تفاعلت مع القواعد تغير لون كاشف عباد الشمس إلى الأحمر وتتميز بطعم حامض؟", options: ["الأحماض", "الأملاح المتعادلة", "القواعد (القلويات)", "المياه المقطرة"], correct: "أ" },
+                    { q: "ما هي القوة التي تغير حركة الأجسام وتنشأ عن تلامس السطوح أو المجالات (مثل الكهرباء الساكنة والمغناطيس)؟", options: ["القوى والحرارة", "القوى الكهربائية والمغناطيسية", "الكتلة البحتة", "الضغط الجوي"], correct: "ب" },
+                    { q: "ما العملية التي تتخلص بها الخلايا الفضلات وتنتج الطاقة باستعمال الأكسجين؟", options: ["البناء الضوئي", "التنفس الخلوي", "الانقسام المتساوي", "النتح"], correct: "ب" },
+                    { q: "أي المحاليل التالية يعتبر من القواعد (القلويات)؟", options: ["عصير الليمون", "الخل الأبيض", "محلول الصابون أو منظف منزلي", "الماء النقي"], correct: "ج" },
+                    { q: "ما الجهاز في جسم الإنسان الذي ينقل الأكسجين والمغذيات لجميع الخلايا؟", options: ["الجهاز الهضمي", "الجهاز الدوري (القلب والأوعية)", "الجهاز التنفسي", "الجهاز العصبي"], correct: "ب" },
+                    { q: "ماذا يسمى انتقال الطاقة الكهربائية في مسار مغلق؟", options: ["دائرة كهربائية مغلقة", "دائرة مفتوحة", "مقاومة حرارية", "شحنة ساكنة"], correct: "أ" },
+                    { q: "ما هي العملية التي تنقسم فيها الخلية إلى خلايا جديدة مطابقة للخلايا الأصلية؟", options: ["الإنقسام المتساوي (الميتوزي)", "البناء الضوئي", "التبخر", "التكاثر البدائي"], correct: "أ" },
+                    { q: "أي طبقات الأرض تعد الأعمق وذات حرارة عالية جداً وتتكون من حديد ونيكل؟", options: ["القشرة الأرضية", "الستار (المانتل)", "اللب (الداخلي والخارجي)", "الغلاف الصخري"], correct: "ج" },
+                    { q: "ما المفهوم الذي يعبر عن كمية المادة في الجسم؟", options: ["الوزن", "الكتلة", "الحجم", "الكثافة"], correct: "ب" }
+                ],
+                "math": [
+                    { q: "أوجد ناتج ضرب الكسرين في أبسط صورة: ٢/٣ × ٣/٤ = ؟", options: ["٦/١٢", "١/٢", "٥/٧", "١/٤"], correct: "ب" },
+                    { q: "ما ناتج قسمة: ٣/٤ ÷ ١/٢ = ؟", options: ["٣/٨", "٣/٢ (أو ١.٥)", "١/٢", "٢/٣"], correct: "ب" },
+                    { q: "إذا كان سعر السلعة ٢٠٠ ريال وعليه خصم بنسبة ٢٠٪، فما قيمة الخصم بالريال؟", options: ["٢٠ ريالاً", "٤٠ ريالاً", "٥٠ ريالاً", "٨٠ ريالاً"], correct: "ب" },
+                    { q: "ما هو المعدل إذا قطعت سيارة مسافة ٢٤٠ كم في ساعتين (٢ ساعة)؟", options: ["١٠٠ كم/س", "١٢٠ كم/س", "٢٤٠ كم/س", "٦٠ كم/س"], correct: "ب" },
+                    { q: "حل التناسب التالي: س / ١٥ = ٤ / ٥ ، فما قيمة (س)؟", options: ["١٠", "١٢", "٩", "٢٠"], correct: "ب" },
+                    { q: "ما مساحة دائرة طول نصف قطرها (نق) يساوي ٧ سم (استخدم ط = ٢٢/٧)?", options: ["٤٤ سم مربّع", "١٥٤ سم مربّع", "٨٨ سم مربّع", "٢٢ سم مربّع"], correct: "ب" },
+                    { q: "اكتب النسبة المئوية ٤٥٪ على صورة كسر اعتيادي في أبسط صورة:", options: ["٩/٢٠", "٤٥/١٠٠", "٣/٤", "١/٢"], correct: "أ" },
+                    { q: "ما هو المدى لمجموعة البيانات التالية: (١٢, ١٨, ٢٥, ٣٠, ١٠)؟", options: ["٢٠", "١٨", "٢٥", "٢٠"], correct: "ب" },
+                    { q: "حجم منشور رباعي طوله ١٠ سم، عرضه ٤ سم، وارتفاعه ٥ سم يساوي:", options: ["١٩ سم مكعب", "٢٠٠ سم مكعب", "١٠٠ سم مكعب", "٩٠ سم مكعب"], correct: "ب" },
+                    { q: "إذا ألقيت مكعب مرقم من ١ إلى ٦، فما احتمال ظهور عدد فردي؟", options: ["١/٦", "١/٢", "١/٣", "٢/٣"], correct: "ب" }
+                ]
+            }
+        };
+
+        const fallbackBank = {
+            "science": [
+                { q: "ما هي الوحدة الأساسية لبناء وتنظيم الكائن الحي؟", options: ["النسيج الحيوي", "العضو الداخلي", "الخلية", "الجهاز العصبي"], correct: "ج" },
+                { q: "ما العملية الحيوية التي تصنع بها النباتات الخضراء غذاءها؟", options: ["التنفس الخلوي", "البناء الضوئي", "الهضم والامتصاص", "النتح"], correct: "ب" },
+                { q: "أي الأجرام السماوية التالية يقع في مركز المجموعة الشمسية؟", options: ["كوكب الأرض", "القمر التابع", "الشمس", "كوكب المريخ"], correct: "ج" },
+                { q: "ما الحالة الفيزيائية للماء عندما يتحول إلى ثلج صلب؟", options: ["الحالة السائلة", "الحالة الغازية", "الحالة الصلبة", "حالة البلازما"], correct: "ج" },
+                { q: "أي الكائنات الحية التالية يُعد من الفقاريات؟", options: ["دودة الأرض", "العقرب البحري", "العصفور", "النمل الأبيض"], correct: "ج" },
+                { q: "ما القوة الطبيعية التي تسحب الأجسام دائماً نحو مركز الأرض؟", options: ["قوة الاحتكاك", "قوة الجاذبية", "القوة المغناطيسية", "قوة الطفو"], correct: "ب" },
+                { q: "أي الألوان الضوئية التالية يعتبر من الألوان الأساسية للضوء؟", options: ["الأصفر", "البنفسجي الداكن", "الأحمر", "البرتقالي"], correct: "ج" },
+                { q: "ما الغاز الأساسي الذي تستنشقه الكائنات الحية وتستعمله للطاقة؟", options: ["ثاني أكسيد الكربون", "غاز النيتروجين", "غاز الأكسجين", "غاز الهيدروجين"], correct: "ج" },
+                { q: "كم عدد الفصول الأربعة المناخية في السنة الميلادية الواحدة؟", options: ["فصلان فقط", "ثلاثة فصول", "أربعة فصول", "ستة فصول"], correct: "ج" },
+                { q: "أي المواد التالية تعتبر موصلة جيدة للتيار الكهربائي؟", options: ["الخشب الجاف", "البلاستيك المرن", "الأسلاك النحاسية", "الزجاج الشفاف"], correct: "ج" }
+            ],
+            "math": [
+                { q: "ما الناتج الصحيح لعملية الجمع: ١٥ + ٢٥ = ؟", options: ["٣٠", "٤٠", "٤٥", "٥٠"], correct: "ب" },
+                { q: "ما ناتج ضرب: ٨ × ٩ = ؟", options: ["٧٢", "٦٤", "٨١", "٥٦"], correct: "أ" },
+                { q: "ما ناتج قسمة: ٤٥ ÷ ٥ = ؟", options: ["٧", "٨", "٩", "٦"], correct: "ج" },
+                { q: "قرب العدد ٣٤٩ لأقرب مئة:", options: ["٣٠٠", "٤٠٠", "٣٥٠", "٢٠٠"], correct: "أ" },
+                { q: "ما مساحة مربع طول ضلعه ٦ سم؟", options: ["١٢ سم مربّع", "٣٦ سم مربّع", "٢٤ سم مربّع", "١٨ سم مربّع"], correct: "ب" },
+                { q: "أي الأعداد التالية يعتبر عدداً أولياً؟", options: ["٤", "٦", "٧", "٩"], correct: "ج" },
+                { q: "كم دقيقة في الساعتين؟", options: ["٦٠ دقيقة", "١٢٠ دقيقة", "٩٠ دقيقة", "١٨٠ دقيقة"], correct: "ب" },
+                { q: "إذا كان مع علي ٥٠ ريالاً واشترى لعبة بـ ٢٠ ريالاً، فكم بقي معه؟", options: ["٢٠ ريالاً", "٣٠ ريالاً", "٤٠ ريالاً", "١٠ ريالات"], correct: "ب" },
+                { q: "ما قياس الزاوية القائمة بالدرجات؟", options: ["٤٥ درجة", "٩٠ درجة", "١٨٠ درجة", "٣٦٠ درجة"], correct: "ب" },
+                { q: "الكسر الذي يمثل نصف الكل هو:", options: ["١/٣", "١/٤", "١/٢", "٣/٤"], correct: "ج" }
+            ]
+        };
+
+        let studentsList = [];
+        let currentStudentIndex = 0;
+        let studentAnswers = {}; 
+        let allClassResults = {};
+        let activeQuestions = [];
+        let currentModelName = "نموذج (أ)";
+        let globalMaxScore = 0;
+
+        function togglePeriodicLessonsBox() {
+            const examType = document.getElementById('selectExamType').value;
+            const configBox = document.getElementById('periodicLessonsConfigBox');
+            if (examType.includes("الفتري")) {
+                configBox.style.display = 'block';
+            } else {
+                configBox.style.display = 'none';
+            }
+        }
+
+        function changeWeek(fieldId, amount) {
+            const input = document.getElementById(fieldId === 'startWeek' ? 'inputStartWeek' : 'inputEndWeek');
+            if (!input) return;
+            
+            let val = parseInt(input.value) || 1;
+            val += amount;
+            if (val < 1) val = 1;
+            if (val > 18) val = 18;
+            
+            input.value = val;
+        }
+
+        function fetchAllStudentsFromStorage() {
+            studentsList = [];
+            for (let i = 0; i < localStorage.length; i++) {
+                let key = localStorage.key(i);
+                if (key && (key.includes('student') || key.includes('boy') || key.includes('طلاب') || key.includes('كشوف'))) {
+                    try {
+                        let data = JSON.parse(localStorage.getItem(key));
+                        if (Array.isArray(data) && data.length > 0) {
+                            studentsList = data.map(item => typeof item === 'string' ? { name: item } : (item.name ? item : null)).filter(Boolean);
+                            if (studentsList.length > 0) break;
+                        }
+                    } catch(e) {}
+                }
+            }
+
+            if (studentsList.length === 0) {
+                studentsList = [
+                    { name: "أحمد محمد العتيبي" },
+                    { name: "خالد عبدالله الشمري" },
+                    { name: "سلطان فهد القحطاني" },
+                    { name: "نايف متعب الحربي" },
+                    { name: "بندر تركي المطيري" }
+                ];
+            }
+        }
+
+        function escapeHtml(text) { return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;"); }
+
+        function generateTestModel() {
+            const examType = document.getElementById('selectExamType').value;
+            const gradeKey = document.getElementById('selectGrade').value;
+            const subjectKey = document.getElementById('selectSubject').value;
+
+            const modelsArray = ["نموذج (أ)", "نموذج (ب)", "نموذج (ج)", "نموذج (د)"];
+            currentModelName = modelsArray[Math.floor(Math.random() * modelsArray.length)];
+
+            document.getElementById('printTestInfo').textContent = `الصف: ${gradeKey} | المادة: ${subjectNames[subjectKey] || "المادة الدراسية"} | نوع الاختبار: ${examType}`;
+            document.getElementById('printModelBadge').textContent = `رقم النموذج: ${currentModelName}`;
+
+            let rawQuestions = [];
+            if (accurateGradeQuestionBank[gradeKey] && accurateGradeQuestionBank[gradeKey][subjectKey]) {
+                rawQuestions = [...accurateGradeQuestionBank[gradeKey][subjectKey]];
+            } else if (fallbackBank[subjectKey]) {
+                rawQuestions = [...fallbackBank[subjectKey]];
+            } else {
+                rawQuestions = [...fallbackBank["science"]];
+            }
+
+            let shuffled = [...rawQuestions];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                let j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+
+            activeQuestions = shuffled.slice(0, 10);
+            while(activeQuestions.length < 10 && rawQuestions.length > 0) {
+                activeQuestions.push(rawQuestions[activeQuestions.length % rawQuestions.length]);
+            }
+
+            globalMaxScore = activeQuestions.length * 2;
+
+            const previewBox = document.getElementById('questionsPreviewBox');
+            const listContainer = document.getElementById('generatedQuestionsList');
+            previewBox.style.display = 'block';
+            
+            let htmlContent = '';
+            for (let i = 0; i < activeQuestions.length; i++) {
+                let qObj = activeQuestions[i];
+                htmlContent += `
+                    <div class="question-row">
+                        <b>س${toArabicDigits(i + 1)}: ${escapeHtml(qObj.q)}</b>
+                        <div class="bubble-options">
+                            <div class="bubble-item"><span class="bubble-circle">أ</span> أ) ${escapeHtml(qObj.options[0])}</div>
+                            <div class="bubble-item"><span class="bubble-circle">ب</span> ب) ${escapeHtml(qObj.options[1])}</div>
+                            <div class="bubble-item"><span class="bubble-circle">ج</span> ج) ${escapeHtml(qObj.options[2])}</div>
+                            <div class="bubble-item"><span class="bubble-circle">د</span> د) ${escapeHtml(qObj.options[3])}</div>
+                        </div>
+                    </div>
+                `;
+            }
+            listContainer.innerHTML = htmlContent;
+            convertAllNumbersInDOM();
+            window.scrollTo({ top: previewBox.offsetTop, behavior: 'smooth' });
+        }
+
+        function printExamOnly() {
+            const previewBox = document.getElementById('questionsPreviewBox');
+            previewBox.style.display = 'block';
+            setTimeout(() => {
+                window.print();
+            }, 200);
+        }
+
+        function startTouchGradingSession() {
+            if (activeQuestions.length === 0) {
+                generateTestModel();
+            }
+
+            fetchAllStudentsFromStorage();
+            if (studentsList.length === 0) { alert('لا توجد قائمة طلاب مسجلة!'); return; }
+            currentStudentIndex = 0;
+            allClassResults = {};
+            document.getElementById('touchGradingCard').style.display = 'block';
+            renderCurrentStudentCard();
+            window.scrollTo({ top: document.getElementById('touchGradingCard').offsetTop, behavior: 'smooth' });
+        }
+
+        function renderCurrentStudentCard() {
+            const student = studentsList[currentStudentIndex];
+            const maxScore = globalMaxScore;
+            document.getElementById('studentHeaderBadge').innerHTML = `
+                <span>👤 الطالب (${toArabicDigits(currentStudentIndex + 1)}/${toArabicDigits(studentsList.length)}): ${escapeHtml(student.name)} [${currentModelName}]</span>
+                <div id="liveScoreBadge" class="live-score-box">الدرجة: ٠ / ${toArabicDigits(maxScore)}</div>
+            `;
+            
+            const container = document.getElementById('touchQuestionsContainer');
+            container.innerHTML = '';
+            studentAnswers = {};
+
+            for (let i = 0; i < activeQuestions.length; i++) {
+                let qNum = i + 1;
+                container.innerHTML += `
+                    <div class="touch-question-row">
+                        <span>سؤال ${toArabicDigits(qNum)}</span>
+                        <div class="options-group">
+                            <button type="button" class="opt-btn" id="q_${qNum}_أ" onclick="selectOpt(${qNum}, 'أ', this)">أ</button>
+                            <button type="button" class="opt-btn" id="q_${qNum}_ب" onclick="selectOpt(${qNum}, 'ب', this)">ب</button>
+                            <button type="button" class="opt-btn" id="q_${qNum}_ج" onclick="selectOpt(${qNum}, 'ج', this)">ج</button>
+                            <button type="button" class="opt-btn" id="q_${qNum}_د" onclick="selectOpt(${qNum}, 'د', this)">د</button>
+                        </div>
+                    </div>
+                `;
+            }
+            convertAllNumbersInDOM();
+        }
+
+        function selectOpt(qNum, opt, btn) {
+            const group = btn.parentElement;
+            group.querySelectorAll('.opt-btn').forEach(b => {
+                b.classList.remove('active', 'correct-choice', 'wrong-choice');
+            });
+            
+            studentAnswers[qNum] = opt;
+            let correctAns = activeQuestions[qNum - 1].correct;
+
+            if (opt === correctAns) {
+                btn.classList.add('correct-choice');
+            } else {
+                btn.classList.add('wrong-choice');
+                let correctBtn = document.getElementById(`q_${qNum}_${correctAns}`);
+                if(correctBtn) correctBtn.classList.add('correct-choice');
+            }
+
+            updateLiveScore();
+        }
+
+        function updateLiveScore() {
+            let correctCount = 0;
+            for (let i = 0; i < activeQuestions.length; i++) {
+                let qNum = i + 1;
+                if (studentAnswers[qNum] && studentAnswers[qNum] === activeQuestions[i].correct) {
+                    correctCount++;
+                }
+            }
+            let liveScore = correctCount * 2;
+            let maxScore = globalMaxScore;
+            const badge = document.getElementById('liveScoreBadge');
+            if (badge) {
+                badge.textContent = `الدرجة: ${toArabicDigits(liveScore)} / ${toArabicDigits(maxScore)} (${toArabicDigits(correctCount)} صحيحة)`;
+            }
+        }
+
+        function saveAndNextStudent() {
+            const student = studentsList[currentStudentIndex];
+            
+            let correctCount = 0;
+            for (let i = 0; i < activeQuestions.length; i++) {
+                let qNum = i + 1;
+                if (studentAnswers[qNum] && studentAnswers[qNum] === activeQuestions[i].correct) {
+                    correctCount++;
+                }
+            }
+            let score = correctCount * 2; 
+
+            allClassResults[student.name] = { score: score, correct: correctCount };
+
+            currentStudentIndex++;
+            if (currentStudentIndex < studentsList.length) {
+                renderCurrentStudentCard();
+                window.scrollTo({ top: document.getElementById('touchGradingCard').offsetTop, behavior: 'smooth' });
+            } else {
+                finishGradingSession();
+            }
+        }
+
+        function prevStudent() {
+            if (currentStudentIndex > 0) {
+                currentStudentIndex--;
+                renderCurrentStudentCard();
+            }
+        }
+
+        function finishGradingSession() {
+            document.getElementById('touchGradingCard').style.display = 'none';
+            const resultBox = document.getElementById('resultContainer');
+            const examType = document.getElementById('selectExamType').value;
+            resultBox.style.display = 'block';
+
+            let maxScore = globalMaxScore;
+            let dashboardRecords = [];
+
+            for (let sName in allClassResults) {
+                let sScore = allClassResults[sName].score;
+                dashboardRecords.push({
+                    name: sName,
+                    score: sScore,
+                    maxScore: maxScore,
+                    examType: `${examType} - ${currentModelName}`,
+                    date: new Date().toLocaleDateString('ar-SA')
+                });
+            }
+
+            localStorage.setItem('dashboardLatestExamResults', JSON.stringify(dashboardRecords));
+            localStorage.setItem('examResultsHistory', JSON.stringify(dashboardRecords));
+
+            filterStudentResults();
+            prepareGradesPrintSheet();
+            prepareAnalysisContent();
+
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }
+
+        function filterStudentResults() {
+            const query = document.getElementById('searchStudentInput').value.toLowerCase().trim();
+            const outputText = document.getElementById('correctionOutputText');
+            let maxScore = globalMaxScore || 20;
+
+            let html = `✅ تم رصد الدرجات وترحيلها بنجاح!<br><br>`;
+            let foundAny = false;
+
+            for (let sName in allClassResults) {
+                if (query === '' || sName.toLowerCase().includes(query)) {
+                    foundAny = true;
+                    let data = allClassResults[sName];
+                    let savedTeacher = localStorage.getItem('teacherName') || 'المعلم';
+                    let waText = `مدرسة داؤود بن عروة الثقفي الابتدائية (بنون)%0Aولي الأمر الفاضل، نود إفادتكم بحصول الطالب: *${encodeURIComponent(sName)}* %0Aعلى درجة الاختبار: *${toArabicDigits(data.score)} / ${toArabicDigits(maxScore)}* (${toArabicDigits(data.correct)} إجابات صحيحة).%0Aمع تحيات المعلم: *${encodeURIComponent(savedTeacher)}*`;
+
+                    html += `
+                        <div style="display: flex; justify-content: space-between; align-items: center; background: #fff; padding: 8px 12px; margin-bottom: 6px; border-radius: 6px; border: 1px solid #10b981;">
+                            <span>• <b>${escapeHtml(sName)}</b>: ${toArabicDigits(data.score)} / ${toArabicDigits(maxScore)} (${toArabicDigits(data.correct)} صحيحة)</span>
+                            <a href="https://wa.me/?text=${waText}" target="_blank" class="action-btn btn-whatsapp" style="padding: 4px 10px; font-size: 12px; width: auto; text-decoration: none;">💬 إرسال لولي الأمر</a>
+                        </div>
+                    `;
+                }
+            }
+
+            if (!foundAny) {
+                html += `<p style="color: #ef4444; text-align: center;">لم يتم العثور على طالب بهذا الاسم في نتائج هذا الاختبار.</p>`;
+            }
+
+            outputText.innerHTML = html;
+            convertAllNumbersInDOM();
+        }
+
+        function prepareGradesPrintSheet() {
+            const gradeKey = document.getElementById('selectGrade').value;
+            const subjectKey = document.getElementById('selectSubject').value;
+            const examType = document.getElementById('selectExamType').value;
+            const maxScore = globalMaxScore || 20;
+
+            document.getElementById('sheetPrintMeta').textContent = `الصف: ${gradeKey} | المادة: ${subjectNames[subjectKey]} | نوع الاختبار: ${examType} (${currentModelName})`;
+            
+            const tbody = document.getElementById('sheetPrintTableBody');
+            tbody.innerHTML = '';
+
+            let idx = 1;
+            for (let sName in allClassResults) {
+                let data = allClassResults[sName];
+                let percentage = maxScore > 0 ? (data.score / maxScore) * 100 : 0;
+                let level = "";
+                if (percentage >= 90) level = "متفوق (متقن تماماً)";
+                else if (percentage >= 75) level = "متقن";
+                else if (percentage >= 50) level = "مبكّر / متوسط";
+                else level = "يحتاج تحسين (غير مقتن)";
+
+                tbody.innerHTML += `
+                    <tr>
+                        <td style="padding: 5px;">${toArabicDigits(idx++)}</td>
+                        <td style="padding: 5px; text-align: right; padding-right: 10px; font-weight: bold;">${escapeHtml(sName)}</td>
+                        <td style="padding: 5px; font-weight: bold; color: #1e3a8a;">${toArabicDigits(data.score)}</td>
+                        <td style="padding: 5px;">${toArabicDigits(maxScore)}</td>
+                        <td style="padding: 5px; color: ${percentage >= 50 ? '#10b981' : '#ef4444'}; font-weight: bold;">${level}</td>
+                    </tr>
+                `;
+            }
+            convertAllNumbersInDOM();
+        }
+
+        function printAllGradesSheet() {
+            // إخفاء صندوق الأسئلة تماماً عند طباعة كشف الدرجات لمنع ظهور الأسئلة في الطباعة
+            const qPreviewBox = document.getElementById('questionsPreviewBox');
+            if (qPreviewBox) {
+                qPreviewBox.style.display = 'none';
+            }
+
+            prepareGradesPrintSheet();
+            const sheetArea = document.getElementById('allGradesSheetPrintArea');
+            sheetArea.style.display = 'block';
+
+            setTimeout(() => {
+                window.print();
+                sheetArea.style.display = 'none';
+            }, 200);
+        }
+
+        function toggleAnalysisBox() {
+            const analysisBox = document.getElementById('analysisContainer');
+            if (analysisBox.style.display === 'block') {
+                analysisBox.style.display = 'none';
+            } else {
+                analysisBox.style.display = 'block';
+                prepareAnalysisContent();
+                window.scrollTo({ top: analysisBox.offsetTop, behavior: 'smooth' });
+            }
+        }
+
+        function prepareAnalysisContent() {
+            const examType = document.getElementById('selectExamType').value;
+            let maxScore = globalMaxScore || 20;
+
+            let totalScoreSum = 0;
+            let count = 0;
+            let highestScore = 0;
+            let lowestScore = maxScore;
+
+            for (let sName in allClassResults) {
+                let sScore = allClassResults[sName].score;
+                totalScoreSum += sScore;
+                if (sScore > highestScore) highestScore = sScore;
+                if (sScore < lowestScore) lowestScore = sScore;
+                count++;
+            }
+
+            let classAverage = count > 0 ? (totalScoreSum / count).toFixed(1) : 0;
+            let percentageAvg = count > 0 ? ((totalScoreSum / (count * maxScore)) * 100).toFixed(1) : 0;
+
+            let dynamicNafisLevel = "مستوى منخفض (يحتاج دعم وتدخل علاجي)";
+            if (percentageAvg >= 90) {
+                dynamicNafisLevel = "مستوى متقدم (تجاوز المعيار المستهدف للطلاب)";
+            } else if (percentageAvg >= 75) {
+                dynamicNafisLevel = "مستوى متقن";
+            } else if (percentageAvg >= 50) {
+                dynamicNafisLevel = "مستوى متوسط / ملائم";
+            }
+
+            document.getElementById('analysisContentText').innerHTML = `
+                <table style="width:100%; border-collapse:collapse; margin-top:5px;" border="1">
+                    <tr style="background:#fef3c7; text-align:center;"><th style="padding:6px;">مؤشر القياس الإحصائي</th><th style="padding:6px;">القيمة التقديرية</th></tr>
+                    <tr><td style="padding:6px;">نوع الاختبار والنموذج</td><td style="text-align:center; color:var(--primary);"><b>${examType} - ${currentModelName}</b></td></tr>
+                    <tr><td style="padding:6px;">إجمالي الطلاب المختبرين</td><td style="text-align:center;"><b>${toArabicDigits(count)}</b> طالب</td></tr>
+                    <tr><td style="padding:6px;">متوسط أداء الفصل العام</td><td style="text-align:center;"><b>${toArabicDigits(classAverage)} / ${toArabicDigits(maxScore)}</b> (${toArabicDigits(percentageAvg)}٪)</td></tr>
+                    <tr><td style="padding:6px;">أعلى درجة بالفصل</td><td style="text-align:center; color:var(--success);"><b>${toArabicDigits(highestScore)} / ${toArabicDigits(maxScore)}</b></td></tr>
+                    <tr><td style="padding:6px;">أقل درجة بالفصل</td><td style="text-align:center; color:var(--danger);"><b>${toArabicDigits(lowestScore)} / ${toArabicDigits(maxScore)}</b></td></tr>
+                    <tr><td style="padding:6px;">مستوى إتقان مهارات نافس</td><td style="text-align:center; color:var(--primary);"><b>${dynamicNafisLevel}</b></td></tr>
+                </table>
+            `;
+            convertAllNumbersInDOM();
+        }
+
+        function printAnalysisBoxOnly() {
+            const analysisBox = document.getElementById('analysisContainer');
+            analysisBox.style.display = 'block';
+
+            setTimeout(() => {
+                window.print();
+            }, 200);
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedSchool = localStorage.getItem('schoolName');
+            const savedTeacher = localStorage.getItem('teacherName');
+
+            if (savedSchool) {
+                const mainTitle = document.getElementById('mainSchoolTitle');
+                if (mainTitle) mainTitle.textContent = `${savedSchool} (بنون)`;
+
+                const printTitle = document.getElementById('printSchoolTitle');
+                if (printTitle) printTitle.textContent = savedSchool;
+
+                const sheetSchool = document.getElementById('sheetPrintSchoolName');
+                if (sheetSchool) sheetSchool.textContent = savedSchool;
+            }
+
+            if (savedTeacher) {
+                const printTeacher = document.getElementById('printTeacherName');
+                if (printTeacher) printTeacher.textContent = `معلم المادة: ${savedTeacher}`;
+
+                const sheetTeacherSign = document.getElementById('sheetPrintTeacherSign');
+                if (sheetTeacherSign) sheetTeacherSign.textContent = `اسم معلم المادة: ${savedTeacher}`;
+            }
+
+            convertAllNumbersInDOM();
+        });
+    </script>
+</body>
+</html>
