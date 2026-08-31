@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>المعلم منصور عامر الرحيلي- مدرسة داوود بن عروةالثقفي (لوحة تحكم مادة العلوم)</title>
+    <title>المعلم منصور - مدرسة داوود (لوحة تحكم مادة العلوم)</title>
     
     <!-- ربط ملف manifest.json والمظهر الخاص بالجوال -->
     <link rel="manifest" href="manifest.json">
@@ -161,7 +161,6 @@
             gap: 12px;
         }
 
-        /* جعل الإحصائيات تترتب بشكل عمودي للجوال فوق بعضها */
         .stats-grid {
             display: flex;
             flex-direction: column;
@@ -201,7 +200,6 @@
             word-wrap: break-word;
         }
 
-        /* تنسيق جميع النماذج والحقول لتصبح فوق بعضها عمودياً (100%) */
         .form-row {
             display: flex;
             flex-direction: column;
@@ -318,6 +316,46 @@
 
         th { background-color: rgba(0,0,0,0.05); color: var(--secondary); }
 
+        /* تنسيق أزرار الأسهم للزيادة والنقصان */
+        .stepper-control {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+            background: rgba(0,0,0,0.03);
+            padding: 2px;
+            border-radius: 6px;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .stepper-btn {
+            width: 22px !important;
+            height: 22px !important;
+            padding: 0 !important;
+            font-size: 10px !important;
+            line-height: 22px !important;
+            border-radius: 4px !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            cursor: pointer;
+            background: var(--secondary);
+            color: white;
+            border: none;
+        }
+
+        .stepper-btn.down {
+            background: #6b7280;
+        }
+
+        .stepper-val {
+            font-weight: bold;
+            font-size: 13px;
+            min-width: 20px;
+            text-align: center;
+            display: inline-block;
+        }
+
         .pagination-bar {
             display: flex;
             flex-direction: column;
@@ -404,7 +442,6 @@
             font-size: 13px;
         }
 
-        /* قائمة الدروس تنازلياً ورأسياً */
         .lessons-grid {
             display: flex;
             flex-direction: column;
@@ -489,7 +526,6 @@
             text-align: center;
         }
 
-        /* أزرار التحكم والنسخ الاحتياطي عمودياً */
         .backup-controls {
             display: flex;
             flex-direction: column;
@@ -641,8 +677,8 @@
     </div>
 
     <div class="header">
-        <h1>مدرسة داوود بن عروة الثقفي()</h1>
-        <div> إعداد المعلم: منصور عامر الرحيلي</div>
+        <h1>مدرسة داوود (طلاب)</h1>
+        <div>إعداد المعلم: منصور</div>
         <p>لوحة تحكم معلم مادة العلوم للمرحلة الابتدائية (وفق المنهج السعودي)</p>
         <div class="subscription-badge">⏳ نهاية الاشتراك: 2027/07/01</div>
 
@@ -680,7 +716,7 @@
                     <p style="margin: 0; font-size: 11px; opacity: 0.85; line-height: 1.4;">.</p>
                 </div>
                 <a href="auto-correction.html" target="_blank" class="whatsapp-btn" style="background: var(--success); text-decoration: none; padding: 10px; font-size: 13px; border-radius: 6px; text-align: center;">
-                    🎯 الانتقال لصفحة التصحيح الآلي ()
+                    🎯 الانتقال لصفحة التصحيح الآلي 
                 </a>
             </div>
         </div>
@@ -836,7 +872,7 @@
         <div class="section-card" id="examsSection">
             <div style="display: flex; flex-direction: column; gap: 8px; border-bottom: 2px solid rgba(0,0,0,0.1); padding-bottom: 8px; margin-bottom: 10px;">
                 <h3 style="margin: 0; border: none; padding: 0;">📊 رصد اختبارات الفترة الأولى والثانية (من ٢٠) 📝</h3>
-                <button class="btn-print" onclick="printSection('examsSection')">🖨️ طباعة التقرير</button>
+                <button class="btn-print" onclick="printSection('examsSection')">🖨️ طباعة التتقرير</button>
             </div>
             
             <div class="form-row no-print">
@@ -881,7 +917,7 @@
         <div class="section-card" id="studentReportSection">
             <div style="display: flex; flex-direction: column; gap: 8px; border-bottom: 2px solid rgba(0,0,0,0.1); padding-bottom: 8px; margin-bottom: 10px;">
                 <h3 style="margin: 0; border: none; padding: 0;">🔍 استعلام وتتبع طالب محدد</h3>
-                <button class="btn-print no-print" onclick="printSection('studentReportSection')">🖨️ طباعة التقرير</button>
+                <button class="btn-print no-print" onclick="printSection('studentReportSection')">🖨️ طباعة التتقرير</button>
             </div>
             <div class="form-row no-print">
                 <div class="searchable-dropdown-container">
@@ -1033,7 +1069,1187 @@
     <div id="toast" class="toast">✅ تم حفظ البيانات تلقائياً!</div>
 
     <script>
-   const _0xc178b0=_0x42db;(function(_0x2aeef9,_0x2bb084){const _0x28719f=_0x42db,_0x5320b1=_0x2aeef9();while(!![]){try{const _0x42ca0a=-parseInt(_0x28719f(0x158))/0x1*(-parseInt(_0x28719f(0x18e))/0x2)+-parseInt(_0x28719f(0x21a))/0x3*(-parseInt(_0x28719f(0xd2))/0x4)+parseInt(_0x28719f(0xe1))/0x5+parseInt(_0x28719f(0x1cd))/0x6*(-parseInt(_0x28719f(0x254))/0x7)+-parseInt(_0x28719f(0x113))/0x8+-parseInt(_0x28719f(0x22f))/0x9*(-parseInt(_0x28719f(0x148))/0xa)+parseInt(_0x28719f(0x240))/0xb*(-parseInt(_0x28719f(0x1a8))/0xc);if(_0x42ca0a===_0x2bb084)break;else _0x5320b1['push'](_0x5320b1['shift']());}catch(_0xc0b307){_0x5320b1['push'](_0x5320b1['shift']());}}}(_0x44cb,0x49862));const TEACHER_NAME=_0xc178b0(0x1f6),SCHOOL_NAME='مدرسة\x20داوود\x20بن\x20عروة\x20الثقفي\x20(';let currentGrade=localStorage[_0xc178b0(0x271)](_0xc178b0(0x192))||_0xc178b0(0x268);document[_0xc178b0(0x1a9)](_0xc178b0(0x1cc))['value']=currentGrade;let activeQueryClass='',selectedStudentIndex='',currentPage=0x1;const rowsPerPage=0x14,defaultMotivations=[{'id':'1','title':_0xc178b0(0x269),'text':_0xc178b0(0x119)},{'id':'2','title':_0xc178b0(0x163),'text':_0xc178b0(0x25c)},{'id':'3','title':_0xc178b0(0x230),'text':'🌱\x20**دقة\x20وإتقان\x20في\x20المفاهيم\x20والعلوم**\x20🌱\x0aعزيزي\x20ولي\x20الأمر،\x20تميز\x20ابنكم\x20اليوم\x20باستيعابه\x20العميق\x20للحقائق\x20العلمية\x20وتوظيفها\x20بذكاء.\x20بارك\x20الله\x20في\x20جهوده!'},{'id':'4','title':_0xc178b0(0x139),'text':_0xc178b0(0x1d2)},{'id':'5','title':'5.\x20حصيلة\x20استكشافية\x20وتجارب\x20ممتازة','text':_0xc178b0(0x19f)},{'id':'6','title':_0xc178b0(0xfc),'text':_0xc178b0(0x132)},{'id':'7','title':_0xc178b0(0x201),'text':_0xc178b0(0x14d)},{'id':'8','title':_0xc178b0(0xd1),'text':'🌍\x20**اهتمام\x20رائع\x20بالبيئة\x20والمحيط**\x0aعزيزي\x20ولي\x20الأمر،\x20أظهر\x20ابنكم\x20اليوم\x20شغفاً\x20واهتماماً\x20لافتاً\x20بدراسة\x20الكائنات\x20الحية\x20وعناصر\x20البيئة\x20من\x20حوله.'},{'id':'9','title':_0xc178b0(0x133),'text':'🛠️\x20**مشروع\x20علمي\x20متميز\x20ومبتكر\x20ومتقن**\x0aعزيزي\x20ولي\x20الأمر،\x20قدم\x20ابنكم\x20اليوم\x20مشروعاً\x20علمياً\x20رائعاً\x20ومنظماً\x20ينم\x20عن\x20تفكير\x20إبداعي\x20ومهارة\x20عالية.'},{'id':'10','title':_0xc178b0(0x15f),'text':_0xc178b0(0x15a)}];let customMotivations=JSON[_0xc178b0(0x1be)](localStorage[_0xc178b0(0x271)]('mansour_custom_motivations_science_v5'))||defaultMotivations;const gradeScienceData={'الأول\x20الابتدائي':[{'chapter':'الوحدة\x201:\x20النباتات\x20من\x20حولنا','title':_0xc178b0(0x103),'desc':'دراسة\x20الجذور،\x20الساق،\x20الأوراق،\x20والزهور\x20ودور\x20كل\x20منها\x20في\x20حياة\x20النبات.'},{'chapter':_0xc178b0(0xdd),'title':_0xc178b0(0x13c),'desc':'التعرف\x20على\x20البذور\x20وكيفية\x20نموها\x20لتصبح\x20نباتات\x20جديدة.'},{'chapter':_0xc178b0(0x231),'title':_0xc178b0(0xef),'desc':'استكشاف\x20الموائل\x20الطبيعية\x20المختلفة\x20للحيوانات\x20(الغابة،\x20الصحراء،\x20الماء).'},{'chapter':'الوحدة\x202:\x20الحيوانات\x20من\x20حولنا','title':'الحيوانات\x20تنمو\x20وتتغير','desc':_0xc178b0(0x18c)},{'chapter':'الوحدة\x203:\x20أرضنا\x20ومواردها','title':'ما\x20الأرض؟\x20وماذا\x20يوجد\x20عليها؟','desc':_0xc178b0(0x233)},{'chapter':_0xc178b0(0x249),'title':_0xc178b0(0x1d5),'desc':_0xc178b0(0x26b)},{'chapter':'الوحدة\x204:\x20الطقس\x20والفصول','title':_0xc178b0(0x23f),'desc':_0xc178b0(0x1bd)},{'chapter':_0xc178b0(0x194),'title':'الفصول\x20الأربعة','desc':_0xc178b0(0x17d)}],'الثاني\x20الابتدائي':[{'chapter':_0xc178b0(0x252),'title':_0xc178b0(0x186),'desc':_0xc178b0(0x242)},{'chapter':_0xc178b0(0x252),'title':_0xc178b0(0x221),'desc':_0xc178b0(0x206)},{'chapter':_0xc178b0(0x120),'title':'السلسلة\x20الغذائية','desc':'كيف\x20تحصل\x20الحيوانات\x20على\x20طاقاتها\x20من\x20النباتات\x20والحيوانات\x20الأخرى.'},{'chapter':'الوحدة\x202:\x20موائل\x20الكائنات\x20الحية','title':'الصحاري\x20والغابات','desc':_0xc178b0(0xf6)},{'chapter':'الوحدة\x203:\x20المادة\x20من\x20حولنا','title':_0xc178b0(0x1f7),'desc':'استكشاف\x20خصائص\x20الأجسام\x20والصلابة\x20واللون\x20والكتلة\x20والحجم.'},{'chapter':_0xc178b0(0x243),'title':'حالات\x20المادة','desc':_0xc178b0(0x109)},{'chapter':_0xc178b0(0x100),'title':_0xc178b0(0x1c5),'desc':_0xc178b0(0x262)},{'chapter':_0xc178b0(0x100),'title':_0xc178b0(0x1fa),'desc':'استكشاف\x20كيف\x20تؤثر\x20قوى\x20الدفع\x20والسحب\x20في\x20تغيير\x20موضع\x20الأجسام\x20وسرعتها.'}],'الثالث\x20الابتدائي':[{'chapter':_0xc178b0(0x1d8),'title':'التكاثر\x20ودورة\x20حياة\x20النباتات\x20والحيوانات','desc':_0xc178b0(0x24c)},{'chapter':_0xc178b0(0x1d8),'title':'التكيف\x20والبقاء\x20في\x20البيئات','desc':_0xc178b0(0x264)},{'chapter':_0xc178b0(0x1ae),'title':'الصخور\x20والمعادن\x20والتربة','desc':'أنواع\x20التربة\x20ومكوناتها\x20واستخدامات\x20الصخور\x20والمعادن\x20في\x20حياتنا\x20اليومية.'},{'chapter':_0xc178b0(0x1e3),'title':_0xc178b0(0x1af),'desc':'التعرف\x20على\x20الجهاز\x20الهيكلي،\x20العضلي،\x20والهضمي\x20والدورة\x20الدموية\x20ووظائفها\x20الأساسية.'},{'chapter':_0xc178b0(0x1e3),'title':_0xc178b0(0xf0),'desc':_0xc178b0(0x107)},{'chapter':_0xc178b0(0x17e),'title':_0xc178b0(0x260),'desc':_0xc178b0(0xe0)},{'chapter':'الوحدة\x204:\x20الطاقة\x20والكهرباء\x20والمغناطيسية','title':_0xc178b0(0x18b),'desc':_0xc178b0(0x1c2)}],'الرابع\x20الابتدائي':[{'chapter':_0xc178b0(0xd5),'title':_0xc178b0(0x16c),'desc':_0xc178b0(0x1c0)},{'chapter':'الوحدة\x202:\x20المملكة\x20الحيوانية','title':_0xc178b0(0x1c8),'desc':'التعرف\x20على\x20خصائص\x20الحيوانات\x20اللافقارية\x20والفقارية\x20وأهم\x20أجهزة\x20أجسامها.'},{'chapter':'الوحدة\x203:\x20الأنظمة\x20البيئية','title':_0xc178b0(0x14f),'desc':_0xc178b0(0x22d)},{'chapter':_0xc178b0(0x19b),'title':'الأمراض\x20المعدية\x20وطرق\x20انتقالها','desc':_0xc178b0(0x11f)},{'chapter':'الوحدة\x205:\x20التغذية\x20والصحة','title':_0xc178b0(0x167),'desc':_0xc178b0(0xfa)},{'chapter':_0xc178b0(0x182),'title':_0xc178b0(0x18a),'desc':_0xc178b0(0x196)}],'الخامس\x20الابتدائي':[{'chapter':_0xc178b0(0xd5),'title':_0xc178b0(0x228),'desc':_0xc178b0(0x19c)},{'chapter':_0xc178b0(0x1b2),'title':_0xc178b0(0x1ed),'desc':_0xc178b0(0x1d7)},{'chapter':'الوحدة\x203:\x20الأنظمة\x20البيئية','title':'التفاعلات\x20والدورات\x20والتغيرات\x20البيئية','desc':_0xc178b0(0x1aa)},{'chapter':_0xc178b0(0x225),'title':_0xc178b0(0x1c9),'desc':_0xc178b0(0xdc)},{'chapter':_0xc178b0(0xf4),'title':_0xc178b0(0x153),'desc':'العناصر،\x20الفلزات\x20واللافلزات،\x20والتغيرات\x20الفيزيائية\x20والكيميائية\x20وحالات\x20المادة.'},{'chapter':_0xc178b0(0xdf),'title':'الشغل\x20والآلات\x20البسيطة\x20والصوت\x20والضوء','desc':_0xc178b0(0x226)}],'السادس\x20الابتدائي':[{'chapter':'الوحدة\x201:\x20الخلايا\x20والوراثة','title':_0xc178b0(0x144),'desc':_0xc178b0(0x1e9)},{'chapter':_0xc178b0(0x266),'title':_0xc178b0(0x12f),'desc':_0xc178b0(0xd4)},{'chapter':'الوحدة\x203:\x20الأنظمة\x20البيئية\x20ومواردها','title':_0xc178b0(0x223),'desc':_0xc178b0(0x126)},{'chapter':'الوحدة\x204:\x20المادة\x20والخصائص\x20الكيميائية','title':_0xc178b0(0x135),'desc':_0xc178b0(0x198)},{'chapter':_0xc178b0(0x265),'title':_0xc178b0(0xce),'desc':'قوانين\x20الحركة\x20وقوى\x20التسارع\x20والاستعمالات\x20التطبيقية.'},{'chapter':_0xc178b0(0x111),'title':_0xc178b0(0x26f),'desc':_0xc178b0(0x101)}]};function getStorageKeyForLessons(){const _0x1670be=_0xc178b0;return'mansour_custom_lessons_science_'+currentGrade+_0x1670be(0x1d0);}function getStorageKeyForStudents(){const _0x49acbf=_0xc178b0;return _0x49acbf(0x1fb)+currentGrade+'_v5';}function getStorageKeyForStatus(){const _0x3a6016=_0xc178b0;return _0x3a6016(0x1ba)+currentGrade+_0x3a6016(0x1d0);}function getStorageKeyForMastery(){const _0x1196c2=_0xc178b0;return _0x1196c2(0x24e)+currentGrade+'_v5';}let lessons=JSON['parse'](localStorage[_0xc178b0(0x271)](getStorageKeyForLessons()))||gradeScienceData[currentGrade],students=JSON[_0xc178b0(0x1be)](localStorage[_0xc178b0(0x271)](getStorageKeyForStudents()))||[],lessonStatus=JSON['parse'](localStorage[_0xc178b0(0x271)](getStorageKeyForStatus()))||{},lessonMastery=JSON['parse'](localStorage[_0xc178b0(0x271)](getStorageKeyForMastery()))||{};function checkBackupReminder(){const _0x5c65b4=_0xc178b0,_0x41f4e3=localStorage[_0x5c65b4(0x271)](_0x5c65b4(0x193)),_0x57ccbf=Date[_0x5c65b4(0x138)]();(!_0x41f4e3||_0x57ccbf-Number(_0x41f4e3)>0x7*0x18*0x3c*0x3c*0x3e8)&&setTimeout(()=>{const _0x2a2be8=_0x5c65b4;alert(_0x2a2be8(0x1bf)),localStorage[_0x2a2be8(0x13f)](_0x2a2be8(0x193),_0x57ccbf[_0x2a2be8(0x1e8)]());},0xbb8);}function changeGradeLevel(_0x22953b){const _0x58df3e=_0xc178b0;currentGrade=_0x22953b,localStorage['setItem'](_0x58df3e(0x192),currentGrade),lessons=JSON['parse'](localStorage['getItem'](getStorageKeyForLessons()))||gradeScienceData[currentGrade],students=JSON[_0x58df3e(0x1be)](localStorage[_0x58df3e(0x271)](getStorageKeyForStudents()))||[],lessonStatus=JSON[_0x58df3e(0x1be)](localStorage[_0x58df3e(0x271)](getStorageKeyForStatus()))||{},lessonMastery=JSON[_0x58df3e(0x1be)](localStorage[_0x58df3e(0x271)](getStorageKeyForMastery()))||{},activeQueryClass='',selectedStudentIndex='',currentPage=0x1,document[_0x58df3e(0x1a9)](_0x58df3e(0x20d))[_0x58df3e(0x1a6)]='',document[_0x58df3e(0x1a9)]('bulkSendPanel')[_0x58df3e(0x122)][_0x58df3e(0x1e5)]='none',document['getElementById']('curriculumTitle')['textContent']='📚\x20دليل\x20مقرر\x20العلوم\x20-\x20'+currentGrade,renderLessons(),renderMasteryDropdowns(),render(),showToast(_0x58df3e(0xe8)+currentGrade);}function onCurriculumDropdownChange(_0x53f8c7){const _0x1c5ee4=_0xc178b0,_0x41fd5f=document[_0x1c5ee4(0x1a9)](_0x1c5ee4(0x1f4));if(_0x53f8c7===''){_0x41fd5f[_0x1c5ee4(0x122)][_0x1c5ee4(0x1e5)]=_0x1c5ee4(0xf5);return;}const _0x144b63=lessons[_0x53f8c7];_0x41fd5f['style']['display']=_0x1c5ee4(0x1fc),_0x41fd5f[_0x1c5ee4(0x131)]=_0x1c5ee4(0x179)+_0x144b63['chapter']+'</strong><br><span\x20style=\x22color:var(--primary);\x20font-size:15px;\x22>'+_0x144b63[_0x1c5ee4(0x24b)]+_0x1c5ee4(0x181)+_0x144b63[_0x1c5ee4(0x173)];}function renderLessons(){const _0x322686=_0xc178b0,_0x165489=document['getElementById'](_0x322686(0x1c1));_0x165489['innerHTML']=_0x322686(0x1dc);const _0x322eca=document[_0x322686(0x1a9)](_0x322686(0x10e));_0x322eca[_0x322686(0x131)]=_0x322686(0x26a);const _0x54a0b7=document[_0x322686(0x1a9)](_0x322686(0x241));_0x54a0b7[_0x322686(0x131)]=_0x322686(0x187);const _0x267507=document[_0x322686(0x1a9)](_0x322686(0x189));_0x267507['innerHTML']='<option\x20value=\x22\x22>--\x20اختر\x20الدرس\x20أو\x20الوحدة\x20للاستعراض\x20--</option>';let _0xb0cb3f='',_0xc7fc58=0x0;const _0x448cf6=document['getElementById']('mainLessonsContainer');_0x448cf6[_0x322686(0x131)]='',lessons[_0x322686(0x1f9)]((_0xbd5e2b,_0x30412f)=>{const _0x2ef0a1=_0x322686,_0x2c5eeb=!!lessonStatus[_0x30412f];if(_0x2c5eeb)_0xc7fc58++;_0xb0cb3f+='<option\x20value=\x22lesson-'+_0x30412f+_0x2ef0a1(0x11e)+_0xbd5e2b[_0x2ef0a1(0xe3)]+']\x20'+_0xbd5e2b['title']+_0x2ef0a1(0x169),_0x267507['innerHTML']+=_0x2ef0a1(0xd3)+_0x30412f+_0x2ef0a1(0x11e)+_0xbd5e2b[_0x2ef0a1(0xe3)]+']\x20'+_0xbd5e2b[_0x2ef0a1(0x24b)]+_0x2ef0a1(0x169),_0x165489['innerHTML']+='<option\x20value=\x22'+_0x30412f+_0x2ef0a1(0x11e)+_0xbd5e2b['chapter']+']\x20'+_0xbd5e2b['title']+'</option>';const _0x1b0fea=document[_0x2ef0a1(0xea)](_0x2ef0a1(0x229));_0x1b0fea[_0x2ef0a1(0x1b7)]=_0x2ef0a1(0x213)+(_0x2c5eeb?_0x2ef0a1(0x1d1):_0x2ef0a1(0x1fd)),_0x1b0fea[_0x2ef0a1(0x131)]='\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22ch-badge\x22>'+_0xbd5e2b['chapter']+_0x2ef0a1(0x217)+_0xbd5e2b['title']+_0x2ef0a1(0x183)+_0xbd5e2b[_0x2ef0a1(0x173)]+_0x2ef0a1(0xde)+(_0x2c5eeb?_0x2ef0a1(0x267):_0x2ef0a1(0x21c))+_0x2ef0a1(0x22a)+_0x30412f+')\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20'+(_0x2c5eeb?'✅\x20منفذ':'⏳\x20قيد\x20الانتظار')+_0x2ef0a1(0x170)+_0x30412f+')\x22>🗑️\x20حذف</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20',_0x448cf6[_0x2ef0a1(0x210)](_0x1b0fea);}),_0x54a0b7[_0x322686(0x131)]+=_0xb0cb3f;let _0x59188f=_0x322686(0x165);customMotivations[_0x322686(0x1f9)]((_0x3d93b3,_0x4a7fa0)=>{const _0x695b59=_0x322686;_0x59188f+=_0x695b59(0x102)+_0x4a7fa0+'\x22>'+_0x3d93b3[_0x695b59(0x24b)]+_0x695b59(0x169),_0x322eca['innerHTML']+=_0x695b59(0x102)+_0x4a7fa0+'\x22>'+_0x3d93b3[_0x695b59(0x24b)]+_0x695b59(0x169);}),_0x59188f+=_0x322686(0x209),document[_0x322686(0x1a9)]('totalExecutedLessons')[_0x322686(0x25f)]=_0xc7fc58+'\x20/\x20'+lessons[_0x322686(0x199)],renderMasteryDropdowns();}function renderMasteryDropdowns(){const _0x5cb2b6=_0xc178b0,_0x54ecb3=document['getElementById'](_0x5cb2b6(0x197)),_0x5570ea=_0x54ecb3[_0x5cb2b6(0x1a6)];_0x54ecb3[_0x5cb2b6(0x131)]=_0x5cb2b6(0xd9),lessons[_0x5cb2b6(0x1f9)]((_0x16aebb,_0x31297d)=>{const _0x33057b=_0x5cb2b6;_0x54ecb3[_0x33057b(0x131)]+=_0x33057b(0xd3)+_0x31297d+'\x22>['+_0x16aebb['chapter']+']\x20'+_0x16aebb[_0x33057b(0x24b)]+_0x33057b(0x169);});if(lessons[_0x5570ea])_0x54ecb3['value']=_0x5570ea;renderMasteryTable();}function toggleLessonStatus(_0x11d53c){const _0x3c35a6=_0xc178b0;lessonStatus[_0x11d53c]=!lessonStatus[_0x11d53c],localStorage[_0x3c35a6(0x13f)](getStorageKeyForStatus(),JSON['stringify'](lessonStatus)),renderLessons(),showToast(_0x3c35a6(0xf3));}function addNewLesson(){const _0x378157=_0xc178b0,_0x10f223=document[_0x378157(0x1a9)](_0x378157(0x255))['value'][_0x378157(0x1e2)](),_0x43b494=document[_0x378157(0x1a9)](_0x378157(0x146))['value'][_0x378157(0x1e2)]();if(!_0x10f223){alert(_0x378157(0x11a));return;}lessons[_0x378157(0x1ee)]({'chapter':_0x378157(0x134),'title':_0x10f223,'desc':_0x43b494||'لا\x20توجد\x20تفاصيل\x20إضافية'}),localStorage[_0x378157(0x13f)](getStorageKeyForLessons(),JSON[_0x378157(0x141)](lessons)),document[_0x378157(0x1a9)](_0x378157(0x255))['value']='',document[_0x378157(0x1a9)](_0x378157(0x146))[_0x378157(0x1a6)]='',renderLessons(),showToast(_0x378157(0x1bc));}function addBatchLessons(){const _0x28f234=_0xc178b0,_0x2d330a=document[_0x28f234(0x1a9)](_0x28f234(0x154))[_0x28f234(0x1a6)][_0x28f234(0x1e2)]();if(!_0x2d330a){alert(_0x28f234(0x1b8));return;}const _0x5222bd=_0x2d330a[_0x28f234(0x21e)]('\x0a');let _0xd27aea=0x0;_0x5222bd['forEach'](_0x4ac96c=>{const _0x3f4130=_0x28f234;if(!_0x4ac96c[_0x3f4130(0x1e2)]())return;const _0x4851bb=_0x4ac96c['split']('|');_0x4851bb['length']>=0x2?(lessons['push']({'chapter':_0x4851bb[0x0][_0x3f4130(0x1e2)](),'title':_0x4851bb[0x1][_0x3f4130(0x1e2)](),'desc':_0x4851bb[0x2]?_0x4851bb[0x2][_0x3f4130(0x1e2)]():_0x3f4130(0x13a)}),_0xd27aea++):(lessons[_0x3f4130(0x1ee)]({'chapter':'إضافات\x20دفعية','title':_0x4851bb[0x0][_0x3f4130(0x1e2)](),'desc':'لا\x20توجد\x20تفاصيل\x20إضافية'}),_0xd27aea++);}),_0xd27aea>0x0?(localStorage[_0x28f234(0x13f)](getStorageKeyForLessons(),JSON[_0x28f234(0x141)](lessons)),document['getElementById']('bulkLessonsInput')[_0x28f234(0x1a6)]='',renderLessons(),showToast(_0x28f234(0x185)+_0xd27aea+_0x28f234(0xe2))):alert(_0x28f234(0x17f));}function deleteLesson(_0xa84284){const _0x5e6d19=_0xc178b0;confirm('هل\x20أنت\x20متأكد\x20من\x20حذف\x20هذا\x20الدرس\x20من\x20المنهج؟')&&(lessons[_0x5e6d19(0x1ef)](_0xa84284,0x1),localStorage[_0x5e6d19(0x13f)](getStorageKeyForLessons(),JSON['stringify'](lessons)),renderLessons(),showToast(_0x5e6d19(0x19a)));}function showToast(_0x2a3249='✅\x20تم\x20الحفظ\x20تلقائياً!'){const _0xd9b105=_0xc178b0,_0x28ad2f=document[_0xd9b105(0x1a9)](_0xd9b105(0x248));_0x28ad2f['textContent']=_0x2a3249,_0x28ad2f['style']['display']=_0xd9b105(0x1fc),setTimeout(()=>{const _0x3fd166=_0xd9b105;_0x28ad2f['style'][_0x3fd166(0x1e5)]='none';},0x7d0);}function render(){const _0x4bb623=_0xc178b0;let _0xc23aa9=students['length']*lessons[_0x4bb623(0x199)],_0x33b65e=0x0;students[_0x4bb623(0x1f9)]((_0x361b6c,_0x2e76bb)=>{const _0x38d87e=_0x4bb623;lessons[_0x38d87e(0x1f9)]((_0x545514,_0x1a2821)=>{lessonMastery[_0x2e76bb]&&lessonMastery[_0x2e76bb][_0x1a2821]&&_0x33b65e++;});});let _0x48cebb=_0xc23aa9>0x0?Math[_0x4bb623(0x16b)](_0x33b65e/_0xc23aa9*0x64):0x0,_0x3f9956=0x0,_0x5b4171=0x0,_0x4b2f73=0x0,_0x1099f1=0x0,_0x5065f2=0x0;students[_0x4bb623(0x1f9)](_0x21ae65=>{const _0x4be2c9=_0x4bb623;_0x3f9956+=Number(_0x21ae65['participation'])||0x0,_0x5b4171+=Number(_0x21ae65[_0x4be2c9(0xf2)])||0x0,_0x4b2f73+=Number(_0x21ae65[_0x4be2c9(0x1ea)])||0x0,_0x1099f1+=Number(_0x21ae65['projects'])||0x0,_0x5065f2+=Number(_0x21ae65[_0x4be2c9(0x1d6)])||0x0;}),document[_0x4bb623(0x1a9)]('totalStudents')[_0x4bb623(0x25f)]=students[_0x4bb623(0x199)],document['getElementById'](_0x4bb623(0xeb))['textContent']=_0x48cebb+'%',document[_0x4bb623(0x1a9)]('totalParticipation')[_0x4bb623(0x25f)]=_0x3f9956,document[_0x4bb623(0x1a9)]('totalHomework')[_0x4bb623(0x25f)]=_0x5b4171,document['getElementById'](_0x4bb623(0x21d))[_0x4bb623(0x25f)]=_0x4b2f73,document[_0x4bb623(0x1a9)](_0x4bb623(0x26e))[_0x4bb623(0x25f)]=_0x1099f1,document[_0x4bb623(0x1a9)]('totalMessagesSent')[_0x4bb623(0x25f)]=_0x5065f2,renderStudentsTable(),renderClassesQuery(),renderMasteryTable();}function addStudent(){const _0x855e12=_0xc178b0,_0x5e3e6d=document[_0x855e12(0x1a9)]('studentName')[_0x855e12(0x1a6)]['trim'](),_0x51fd6d=document['getElementById']('studentClassCustom')[_0x855e12(0x1a6)][_0x855e12(0x1e2)]()||currentGrade,_0x38ea40=document[_0x855e12(0x1a9)]('studentPhone')[_0x855e12(0x1a6)][_0x855e12(0x1e2)]();if(!_0x5e3e6d){alert(_0x855e12(0x1ec));return;}if(_0x38ea40&&_0x38ea40[_0x855e12(0x199)]!==0xa){alert('رقم\x20جوال\x20ولي\x20الأمر\x20يجب\x20أن\x20يكون\x20مكوناً\x20من\x2010\x20أرقام\x20بالضبط');return;}students['push']({'name':_0x5e3e6d,'classCustom':_0x51fd6d,'phone':_0x38ea40,'absence':0x0,'participation':0x0,'homework':0x0,'projects':0x0,'messages':0x0,'exam1':0x0,'exam2':0x0}),localStorage[_0x855e12(0x13f)](getStorageKeyForStudents(),JSON['stringify'](students)),document[_0x855e12(0x1a9)](_0x855e12(0x175))['value']='',document[_0x855e12(0x1a9)](_0x855e12(0xdb))['value']='',render(),showToast(_0x855e12(0x129));}function _0x44cb(){const _0x2bc65e=['نسخة_احتياطية_الداش_بورد_','preventDefault','اختر\x20الرسالة\x20لعرض\x20نص\x20الشكر\x20والتحفيز...','<option\x20value=\x22\x22>--\x20اختر\x20الدرس\x20لتحديد\x20حالة\x20الإتقان\x20--</option>','setAttribute','studentPhone','التضاريس،\x20العمليات\x20المؤثرة\x20على\x20سطح\x20الأرض،\x20ومصادر\x20الطاقة،\x20الهواء\x20والماء.','الوحدة\x201:\x20النباتات\x20من\x20حولنا','</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22lesson-actions\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22status-toggle-btn\x20','الوحدة\x206:\x20الطاقة\x20والقوى','كيف\x20يضيء\x20المصباح\x20الكهربائي\x20وتوصيل\x20الدوائر\x20الكهربائية\x20بأمان.','2836100OilBUZ',')\x20دروس\x20بنجاح!','chapter','\x0a-\x20الدروس\x20المتقنة:\x20','indexOf','sdPhone','#6b7280','🔄\x20تم\x20الانتقال\x20إلى\x20بيانات\x20',')\x20ولي\x20أمر!','createElement','totalSkills','click','</span></td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td><input\x20type=\x22text\x22\x20inputmode=\x22numeric\x22\x20pattern=\x22[0-9]*\x22\x20value=\x22','countReview','أماكن\x20عيش\x20الحيوانات','الصحة\x20الغذائية\x20والرياضية','.xlsx','homework','🔄\x20تم\x20تحديث\x20حالة\x20الدرس\x20وحفظه!','الوحدة\x205:\x20المادة','none','مقارنة\x20الخصائص\x20البيئية\x20للبيئات\x20الحارة\x20والباردة\x20والغابات\x20المطيرة.','✅\x20تم','اسم\x20الطالب','bulkSendListContainer','دراسة\x20الاحتياجات\x20الغذائية\x20السليمة\x20والعناية\x20بالصحّة\x20العامة.','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td><strong>','6.\x20تنظيم\x20رائع\x20للدفتر\x20وواجبات\x20مرتبة\x20بدقة','sdHomework','lessonMastery','</span></td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20style=\x22font-weight:bold;\x20color:\x20','الوحدة\x204:\x20الطاقة\x20والقوى','الدوائر\x20الكهربائية،\x20التيار،\x20المغناطيس\x20والمولدات\x20الكهربائية.','<option\x20value=\x22motiv-','أجزاء\x20النباتات','sdAbsence','1\x20/\x201','slice','أهمية\x20الغذاء\x20المتوازن\x20وممارسة\x20الرياضة\x20للحفاظ\x20على\x20صحة\x20الأجسام\x20وقوتها.','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22class-query-btn\x22\x20onclick=\x22filterByClass(\x27','التمييز\x20بين\x20الحالات\x20الصلبة\x20والسائلة\x20والغازية\x20للمادة\x20وتجارب\x20تغيير\x20حالتها.','book_new','سجل_العلوم_','لا\x20يوجد','تحويل\x20لـ\x20مراجعة','selectMotivation','toLowerCase',',\x20\x27absence\x27,\x20this.value)\x22></td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td><input\x20type=\x22number\x22\x20value=\x22','الوحدة\x206:\x20الكهرباء\x20والمغناطيسية','لا\x20توجد\x20بيانات\x20طلاب\x20لتصديرها!','354968MMOVPz','toFixed','\x0aنحيطكم\x20علماً\x20بأننا\x20تناولنا\x20اليوم\x20في\x20مادة\x20العلوم\x20درس:\x0a📘\x20(','📊\x20تم\x20تصدير\x20ملف\x20الإكسل\x20بنجاح!','masteryClassSelect','ملف\x20الإكسل\x20فارغ\x20أو\x20غير\x20مطابق\x20للهيكلة\x20المطلوبة.','🌟\x20**عالم\x20المستقبل\x20المتميز**\x20🌟\x0aعزيزي\x20ولي\x20الأمر،\x20نفخر\x20اليوم\x20بتميز\x20ابنكم\x20وتألقه\x20في\x20حصة\x20العلوم\x20ومشاركته\x20في\x20التجارب\x20العملية\x20بحماس\x20ونشاط.\x20بوركت\x20جهودكم!','يرجى\x20كتابة\x20عنوان\x20الوحدة\x20أو\x20الدرس','beforeinstallprompt','خطأ\x20في\x20قراءة\x20ملف\x20JSON.','object','\x22>[','مفاهيم\x20الأمراض\x20وكيفية\x20الوقاية\x20منها\x20وانتقال\x20العدوى.','الوحدة\x202:\x20موائل\x20الكائنات\x20الحية','data:text/json;charset=utf-8,','style','sdParticipation','الواجبات','lessonStatus','هرم\x20الطاقة،\x20السلاسل\x20والشبكات،\x20حماية\x20موارد\x20الأرض\x20والتربة.','اسم\x20الطالبة','examClassSelect','➕\x20تمت\x20إضافة\x20الطالب\x20بنجاح!','var(--success)','scrollTop','reload','الاسم','students','عمليات\x20الحياة\x20في\x20النباتات،\x20المخلوقات\x20الدقيقة،\x20والإنسان\x20والحيوان','\x27,\x20event)\x22\x20title=\x22حذف\x20الصف\x20بالكامل\x22>🗑️</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','innerHTML','📝\x20**تنظيم\x20رائع\x20للواجبات\x20والأنشطة**\x20📝\x0aعزيزي\x20ولي\x20الأمر،\x20نشكر\x20لكم\x20متابعتكم\x20المنزلية\x20الواعية.\x20لقد\x20كان\x20واجب\x20ابنكم\x20اليوم\x20منظماً،\x20دقيقاً،\x20ومرتباً\x20للغاية.','9.\x20مشروع\x20علمي\x20متميز\x20ومبتكر\x20ومتقن','إضافات\x20المعلم','الأحماض\x20والقواعد\x20والتغيرات\x20الكيميائية','motiv-','🗑️\x20تم\x20حذف\x20الطالب\x20بنجاح!','now','4.\x20مشاركة\x20نشطة\x20وفعالة\x20في\x20حصة\x20العلوم','لا\x20توجد\x20تفاصيل\x20إضافية','examsAnalysisBox','النباتات\x20تنتج\x20نباتات\x20جديدة','borderRadius','📌\x20ملاحظات:\x20','setItem','\x20/\x2020','stringify','var(--card-bg)','الرجاء\x20اختيار\x20الدرس\x20لتحديد\x20الواجب\x20المراد\x20إرساله','الخلية\x20النباتية\x20والحيوانية\x20وانقسامها\x20والوراثة','name','newLessonDesc','text','390ZVgLSU','motivationMsgPreview','sdProjects','\x0a-\x20اختبار\x20الفترة\x20الأولى:\x20','\x20من\x20أصل\x20','✍️\x20**حل\x20ممتاز\x20للتقويم\x20والتدريبات**\x0aعزيزي\x20ولي\x20الأمر،\x20تميز\x20أداء\x20ابنكم\x20اليوم\x20بحل\x20أسئلة\x20التقويم\x20والتدريبات\x20العلمية\x20بدقة\x20عالية.\x20دمت\x20متميزاً\x20يا\x20بطل!','ملف\x20النسخة\x20الاحتياطية\x20غير\x20صالح.','استكشاف\x20والعلاقات\x20والتغيرات\x20في\x20الأنظمة\x20البيئية','Phone','print','Service\x20Worker\x20registration\x20skipped\x20or\x20failed:\x20','أنواع\x20المادة\x20والتغيرات\x20الفيزيائية\x20والكيميائية','bulkLessonsInput','background','filterStudentNameInput','class-btn-wrapper\x20','55334oGmfKA','.json','⭐\x20**اجتهاد\x20وحرص\x20عالٍ\x20على\x20إتقان\x20العلوم**\x0aعزيزي\x20ولي\x20الأمر،\x20إن\x20حرص\x20ابنكم\x20المستمر\x20على\x20الاستكشاف\x20والتعلم\x20في\x20مادة\x20العلوم\x20محل\x20تقديرنا\x20الدائم.','pageIndicator','الجوال','bulkHomeworkExtraNote','/20\x0a-\x20اختبار\x20الفترة\x20الثانية:\x20','10.\x20اجتهاد\x20وحرص\x20عالٍ\x20على\x20إتقان\x20مهارات\x20العلوم','</span></td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td><input\x20type=\x22text\x22\x20maxlength=\x2210\x22\x20value=\x22','book_append_sheet',',\x20\x27exam2\x27,\x20this.value)\x22></td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td\x20class=\x22no-print\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<a\x20href=\x22https://wa.me/966','2.\x20تفوق\x20ملحوظ\x20في\x20الملاحظة\x20واستنتاج','projects','<optgroup\x20label=\x22🌟\x20الرسائل\x20التشجيعية\x20والتحفيزية\x22>','lesson-','الغذاء\x20المتوازن\x20والمحافظة\x20على\x20الصحة',')\x20طالب\x20بنجاح!','</option>','bulkHomeworkDetails','round','الخلايا\x20وتصنيف\x20المخلوقات\x20الحية','result','text/csv;charset=utf-8;','readAsText','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22btn-action\x20btn-danger\x22\x20onclick=\x22deleteLesson(','https://wa.me/','_backup.json','desc','whatsappLessonBtn','studentName','bulkTargetClass','phone','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22font-size:12px;\x22><strong>','<strong>','/20\x0a\x0aنشكر\x20تعاونكم\x20المستمر.\x0aمع\x20تقديـرنا،\x20المعلم:\x20','lessons','bulkHomeworkMsgPreview','التعرف\x20على\x20التغيرات\x20المناخية\x20خلال\x20السنة\x20(الربيع،\x20الصيف،\x20الخريف،\x20الشتاء).','الوحدة\x204:\x20الطاقة\x20والكهرباء\x20والمغناطيسية','لم\x20يتم\x20العثور\x20على\x20صيغة\x20دروس\x20صحيحة.','Class','</span><br><br>','الوحدة\x206:\x20المادة\x20والقوى\x20والطاقة','</strong>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p>','participation','📥\x20تمت\x20إضافة\x20(','مخلوقات\x20حية\x20ومخلوقات\x20غير\x20حية','<option\x20value=\x22\x22>--\x20اختر\x20الدرس\x20لتحديد\x20الواجب\x20--</option>','href','curriculumDropdownSelect','المادة\x20وخصائصها\x20والقوى\x20والحركة','المغناطيس\x20وقوته','دراسة\x20دورات\x20حياة\x20الحيوانات\x20وكيف\x20تتغير\x20صغار\x20الحيوانات\x20عن\x20أبائها.','6px','6XXrlOL','966','appinstalled','\x20إلى\x20','mansour_current_grade_science_v5','mansour_last_backup_date','الوحدة\x204:\x20الطقس\x20والفصول','🎉\x20تم\x20تثبيت\x20اللوحة\x20على\x20شاشة\x20جهازك\x20بنجاح!','القياس،\x20حالات\x20المادة،\x20المخاليط،\x20القوى\x20والحركة،\x20والطاقة\x20(الحرارة).','masteryLessonSelect','مفاهيم\x20الأحماض\x20والقواعد\x20وتفاعلاتها\x20والتغيرات\x20الكيميائية.','length','🗑️\x20تم\x20حذف\x20الدرس\x20بنجاح!','الوحدة\x204:\x20الأمراض\x20والعدوى','التصنيف\x20العلمي\x20ومكونات\x20وخصائص\x20النباتات.','exam1','الصف/الشعبة','🧠\x20**حصيلة\x20استكشافية\x20وتجارب\x20ممتازة**\x20🧠\x0aعزيزي\x20ولي\x20الأمر،\x20أبدع\x20ابنكم\x20اليوم\x20في\x20تنفيذ\x20التجارب\x20الاستهلالية\x20والاستكشافية\x20بمهارة\x20عالية.\x20مبروك\x20له!','🎯\x20تم\x20تحديث\x20حالة\x20الإتقان\x20بنجاح!','download','<tr><td\x20colspan=\x224\x22\x20style=\x22padding:\x2015px;\x20opacity:\x200.7;\x22>لا\x20توجد\x20بيانات\x20طلاب\x20مسجلة.</td></tr>','عرض\x20من\x20','</strong></td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td><span\x20class=\x22class-badge\x22>','?text=','value','pwaInstallBtn','4260540bGUkHF','getElementById','العلاقات\x20في\x20الأنظمة\x20البيئية،\x20التكيف\x20والبقاء،\x20ودورات\x20العناصر\x20في\x20الطبيعة.','documentElement','writeFile','startsWith','الوحدة\x202:\x20الأرض\x20ومواردها','أجهزة\x20جسم\x20الإنسان','accepted','هل\x20أنت\x20متأكد\x20من\x20حذف\x20هذا\x20الطالب؟','الوحدة\x202:\x20الآباء\x20والأبناء','bulkSendPanel',')\x22>📤\x20إرسال</a>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','smooth','readAsArrayBuffer','className','الرجاء\x20إدخال\x20بيانات\x20الدروس.','classCustom','mansour_lesson_status_science_','json_to_sheet','➕\x20تم\x20إضافة\x20الدرس\x20وحفظه!','ملاحظة\x20الطقس\x20اليومي\x20(مشمس،\x20ممطر،\x20عاصف،\x20بارد)\x20وأثره\x20على\x20ملابسنا.','parse','📌\x20تذكير\x20دوري\x20لحماية\x20بياناتك:\x0aمرت\x20فترة\x20على\x20آخر\x20نسختك\x20الاحتياطية.\x20يوصى\x20بالنقر\x20على\x20زر\x20(تصدير\x20JSON)\x20لحفظ\x20بياناتك\x20وتجنب\x20ضياعها.','دراسة\x20الخلايا\x20وأساسيات\x20تصنيف\x20المخلوقات\x20الحية\x20في\x20ممالكها.','selectLesson','استكشاف\x20أقطاب\x20المغناطيس\x20وتنافرها\x20وتجاذبها\x20والم\x20المواد\x20التي\x20تنجذب\x20إليه.','.section-card','🌟\x20تمت\x20إضافة\x20رسالة\x20التحفيز\x20بنجاح!','الصوت\x20والضوء','\x20طالب','\ufeffاسم\x20الطالب,الصف,رقم\x20الجوال,الغياب,المشاركة,الواجبات,التجارب,اختبار\x201,اختبار\x202\x0a','الحيوانات\x20اللافقارية\x20والفقارية\x20وأجهزتها','معالم\x20سطح\x20الأرض\x20وعملياتها\x20ومواردها','active','\x22,\x22','globalGradeSelect','2626764QRcmAf','files',',\x20\x27homework\x27,\x20this.value)\x22></td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td><input\x20type=\x22number\x22\x20value=\x22','_v5','executed','✋\x20**مشاركة\x20نشطة\x20وتفاعل\x20علمي\x20متميز**\x20✋\x0aعزيزي\x20ولي\x20الأمر،\x20تميز\x20ابنكم\x20اليوم\x20بحرصه\x20العالي\x20ومشاركته\x20النشطة\x20وإجاباته\x20العلمية\x20الموفقة\x20داخل\x20الصف.','flex','<tr><td\x20colspan=\x225\x22\x20style=\x22padding:\x2015px;\x20opacity:\x200.7;\x22>لا\x20يوجد\x20طلاب\x20مسجلون\x20في\x20هذا\x20الصف.</td></tr>','الماء\x20والهواء','messages','مفاهيم\x20التكاثر\x20الحيوي\x20ومراحل\x20دورات\x20حياة\x20الكائنات.','الوحدة\x201:\x20الوراثة\x20والبيئة','\x22\x20style=\x22width:80px;\x20text-align:center;\x20padding:2px;\x22\x20oninput=\x22updateStudentPhone(','paginationInfo','undefined','<option\x20value=\x22\x22>--\x20اختر\x20موضوع\x20الدرس\x20والمهارة\x20--</option>','printing-section','studentCard','<option\x20value=\x22\x22>--\x20جميع\x20الصفوف\x20--</option>','⚠️\x20مراجعة','mansour_custom_motivations_science_v5','trim','الوحدة\x203:\x20المخلوقات\x20الحية\x20تنمو\x20وتتغير','عرض\x200\x20من\x200','display','open','\x0a\x0aمع\x20خالص\x20الشكر،\x20المعلم:\x20','toString','نظرية\x20الخلية،\x20مقارنة\x20الخلايا،\x20الانقسام\x20الخلوي،\x20والوراثة\x20والصفات.','absence','remove','الرجاء\x20إدخال\x20اسم\x20الطالب','التكاثر\x20ودورات\x20الحياة','push','splice','register','border','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','newMotivationText','selectedLessonDetailsBox','<option\x20value=\x22\x22>--\x20اختر\x20الصف\x20لعرض\x20وسجل\x20الاختبارات\x20--</option>','\x20منصور\x20عامر\x20الرحيلي','ما\x20المادة؟','utils','forEach','الحركة\x20والقوى','mansour_students_science_','block','not-executed','عزيزي\x20ولي\x20أمر\x20الطالب\x20','<button\x20class=\x22class-query-btn\x22\x20onclick=\x22filterByClass(\x27\x27)\x22>📋\x20كافة\x20الصفوف</button>','!views','7.\x20حل\x20ممتاز\x20للتدريبات\x20والتقويم\x20التكويني','سجل\x20طلاب\x20العلوم','حدث\x20خطأ\x20أثناء\x20قراءة\x20ملف\x20الإكسل.','المشاركات','SheetNames','دراسة\x20الماء،\x20الهواء،\x20الغذاء،\x20والمكان\x20كاحتياجات\x20أساسية\x20للبقاء.','has','Sheets','</optgroup>','replace','أولياء\x20الأمور\x20الأفاضل،\x20نود\x20إحاطتكم\x20بأن\x20واجب\x20مادة\x20العلوم\x20للدرس:\x0a📘\x20(',',\x20this)\x22>📤\x20إرسال</a>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','studentSearchInput','رقم\x20الجوال','\x22\x20style=\x22width:40px;\x20text-align:center;\x20padding:2px;\x22\x20oninput=\x22updateExamScore(','appendChild','1px\x20solid\x20rgba(0,0,0,0.1)','</strong>\x20<span\x20class=\x22class-badge\x22\x20style=\x22float:left;\x22>','lesson-card\x20','exam2','\x22\x20min=\x220\x22\x20style=\x22width:35px;\x20text-align:center;\x20padding:2px;\x22\x20oninput=\x22updateStudentField(','الصف','</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<strong>','</span></div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<a\x20href=\x22','addEventListener','597783acIqvJ','اختبار\x20الفترة\x20الأولى','pending','totalAbsence','split','\x27)\x22>📁\x20','الغياب','حاجات\x20المخلوقات\x20الحية','💾\x20تم\x20حفظ\x20النسخة\x20الاحتياطية\x20على\x20جهازك\x20بنجاح!','السلاسل\x20الغذائية\x20ومقارنة\x20الأنظمة\x20والتربة','إلى\x20ولي\x20أمر\x20الطالب\x20/\x20','الوحدة\x204:\x20أرضنا\x20المتغيرة','الطاقة،\x20الآلات\x20البسيطة،\x20خصائص\x20الصوت\x20والضوء\x20وتطبيقاتها.','\x20من\x20','تصنيف\x20المخلوقات\x20الحية\x20والنباتات','div','\x22\x20onclick=\x22toggleLessonStatus(','\x22\x20target=\x22_blank\x22\x20class=\x22whatsapp-btn\x22\x20style=\x22margin-top:0;\x20padding:6px;\x20font-size:11px;\x22\x20onclick=\x22markMessageSentFromBulk(','📝\x20المطلوب:\x20حل\x20تدريبات\x20وأسئلة\x20الدرس\x20في\x20الكتاب\x20المدرسي.\x0a','دراسة\x20مقدمة\x20النظم\x20البيئية،\x20شبكات\x20العلاقات\x20الغذائية\x20والتغيرات\x20البيئية.','_blank','47511dUUczG','3.\x20دقة\x20وإتقان\x20في\x20المفاهيم\x20العلمية','الوحدة\x202:\x20الحيوانات\x20من\x20حولنا','studentsTbody','التعرف\x20على\x20اليابسة\x20والماء\x20والصخور\x20المكونة\x20لسطح\x20الأرض.','column','prompt','target','selectedClassBadge','/20\x0aمع\x20تمنياتنا\x20له\x20بدوام\x20التوفيق\x20والنجاح.','./sw.js','examsTbody','filter','\x0a💡\x20المفاهيم\x20والتجارب\x20المرتبطة:\x20','ALL','GoogleSheets_Backup_','حالات\x20الطقس\x20المختلفة','11QBrQQI','bulkSelectHomeworkLesson','التفرقة\x20بين\x20الكائنات\x20الحية\x20التي\x20تنمو\x20وتتغذى\x20والأشياء\x20غير\x20الحية.','الوحدة\x203:\x20المادة\x20من\x20حولنا','\x22\x20onclick=\x22toggleStudentMastery(','\x0aنرجو\x20منكم\x20متابعة\x20ابنكم\x20وتعزيز\x20استكشافاته\x20العلمية.\x0aمع\x20تقديـرنا،\x20المعلم:\x20','\x20-\x20','catch','toast','الوحدة\x203:\x20أرضنا\x20ومواردها','toISOString','title','مراحل\x20نمو\x20المخلوقات\x20الحية\x20والتشابه\x20والاختلاف\x20بين\x20الآباء\x20والأبناء.','newMotivationTitle','mansour_lesson_mastery_science_','mansour_science_theme_v5','avgExam2','عزيزي\x20ولي\x20أمر\x20الطالب\x20/\x20','الوحدة\x201:\x20النباتات\x20والحيوانات','body','7nsbvEE','newLessonTitle','5px','<option\x20value=\x22ALL\x22>جميع\x20الصفوف</option>','masterySummaryBox','serviceWorker','map','review','🔬\x20**تفوق\x20ملحوظ\x20في\x20الملاحظة\x20العلمية**\x20🔬\x0aعزيزي\x20ولي\x20الأمر،\x20أظهر\x20ابنكم\x20اليوم\x20مهارات\x20دقيقة\x20في\x20الملاحظة\x20والتجريب\x20واستنباط\x20النتائج.\x20أحسنت\x20صنعاً!','studentReportSection',',\x20this.value)\x22\x20placeholder=\x2205xxxxxxxx\x22></td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td><input\x20type=\x22number\x22\x20value=\x22','textContent','الدوائر\x20الكهربائية\x20البسيطة',')\x22>حذف</button></td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','كيف\x20ينتقل\x20الصوت\x20وكيف\x20يتكون\x20الضوء\x20وتجارب\x20الظلال\x20والاهتزازات.',')\x20-\x20','كيف\x20تتكيف\x20الحيوانات\x20والنباتات\x20مع\x20ظروف\x20البرد\x20الشديد\x20أو\x20الجفاف.','الوحدة\x205:\x20القوى\x20والطاقة','الوحدة\x202:\x20عمليات\x20الحياة','done','الأول\x20الابتدائي','1.\x20عالم\x20المستقبل\x20المتميز','<option\x20value=\x22\x22>--\x20اختر\x20الرسالة\x20التشجيعية\x20--</option>','أهمية\x20الماء\x20والهواء\x20لحياة\x20الكائنات\x20الحية\x20وطرق\x20المحافظة\x20عليها.','add','onload','totalProjects','الدوائر\x20الكهربائية\x20والتيار\x20والمغناطيس','\x20/\x20','getItem','استعمال\x20القوى\x20والحركة\x20وتسارعها','المشاركة','\x0a-\x20التجارب:\x20','8.\x20اهتمام\x20رائع\x20بالبيئة\x20ومخلوقات\x20الله','4LplMVf','<option\x20value=\x22','التنفس\x20والهضم\x20والدوران\x20والإخراج\x20والحركة\x20والإحساس.','الوحدة\x201:\x20ممالك\x20المخلوقات\x20الحية'];_0x44cb=function(){return _0x2bc65e;};return _0x44cb();}function renderStudentsTable(){const _0x2c4cef=_0xc178b0,_0x291415=document[_0x2c4cef(0x1a9)](_0x2c4cef(0x232));_0x291415['innerHTML']='';let _0x37d8cd=students;activeQueryClass&&(_0x37d8cd=_0x37d8cd[_0x2c4cef(0x23b)](_0x451fcc=>(_0x451fcc[_0x2c4cef(0x1b9)]||currentGrade)===activeQueryClass));const _0x433ab3=document[_0x2c4cef(0x1a9)](_0x2c4cef(0x156))['value'][_0x2c4cef(0x1e2)]()['toLowerCase']();_0x433ab3&&(_0x37d8cd=_0x37d8cd[_0x2c4cef(0x23b)](_0x3faf43=>_0x3faf43[_0x2c4cef(0x145)][_0x2c4cef(0x10f)]()['includes'](_0x433ab3)));const _0x3bec30=_0x37d8cd[_0x2c4cef(0x199)],_0xf19f6f=Math['ceil'](_0x3bec30/rowsPerPage)||0x1;if(currentPage>_0xf19f6f)currentPage=_0xf19f6f;const _0x4ccf8d=(currentPage-0x1)*rowsPerPage,_0x5d8b8d=_0x37d8cd['slice'](_0x4ccf8d,_0x4ccf8d+rowsPerPage);if(_0x5d8b8d[_0x2c4cef(0x199)]===0x0){_0x291415['innerHTML']='<tr><td\x20colspan=\x229\x22\x20style=\x22padding:\x2015px;\x20opacity:\x200.7;\x22>لا\x20توجد\x20بيانات\x20طلاب.</td></tr>',document['getElementById'](_0x2c4cef(0x1da))['textContent']=_0x2c4cef(0x1e4),document['getElementById'](_0x2c4cef(0x15b))[_0x2c4cef(0x25f)]=_0x2c4cef(0x105);return;}_0x5d8b8d[_0x2c4cef(0x1f9)](_0x2af49d=>{const _0x2665ef=_0x2c4cef,_0x1f0520=students[_0x2665ef(0xe5)](_0x2af49d),_0x4e154f=document[_0x2665ef(0xea)]('tr');_0x4e154f[_0x2665ef(0x131)]='\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td><strong>'+_0x2af49d[_0x2665ef(0x145)]+_0x2665ef(0x1a4)+(_0x2af49d[_0x2665ef(0x1b9)]||currentGrade)+_0x2665ef(0x160)+(_0x2af49d[_0x2665ef(0x177)]||'')+_0x2665ef(0x1d9)+_0x1f0520+_0x2665ef(0x25e)+_0x2af49d[_0x2665ef(0x1ea)]+_0x2665ef(0x215)+_0x1f0520+_0x2665ef(0x110)+_0x2af49d[_0x2665ef(0x184)]+_0x2665ef(0x215)+_0x1f0520+',\x20\x27participation\x27,\x20this.value)\x22></td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td><input\x20type=\x22number\x22\x20value=\x22'+_0x2af49d[_0x2665ef(0xf2)]+_0x2665ef(0x215)+_0x1f0520+_0x2665ef(0x1cf)+_0x2af49d[_0x2665ef(0x164)]+_0x2665ef(0x215)+_0x1f0520+',\x20\x27projects\x27,\x20this.value)\x22></td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td>'+(_0x2af49d[_0x2665ef(0x1d6)]||0x0)+'</td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td\x20class=\x22no-print\x22><button\x20class=\x22btn-action\x20btn-danger\x22\x20onclick=\x22deleteStudent('+_0x1f0520+_0x2665ef(0x261),_0x291415['appendChild'](_0x4e154f);}),document[_0x2c4cef(0x1a9)]('paginationInfo')[_0x2c4cef(0x25f)]=_0x2c4cef(0x1a3)+(_0x4ccf8d+0x1)+_0x2c4cef(0x191)+Math['min'](_0x4ccf8d+rowsPerPage,_0x3bec30)+_0x2c4cef(0x14c)+_0x3bec30+_0x2c4cef(0x1c6),document[_0x2c4cef(0x1a9)](_0x2c4cef(0x15b))[_0x2c4cef(0x25f)]=currentPage+_0x2c4cef(0x270)+_0xf19f6f;}function updateStudentPhone(_0x329202,_0x56f667){const _0x5a4e30=_0xc178b0;students[_0x329202]['phone']=_0x56f667[_0x5a4e30(0x1e2)](),localStorage['setItem'](getStorageKeyForStudents(),JSON['stringify'](students));}function updateStudentField(_0x3bdc1e,_0x1a109f,_0x3b99ca){const _0x238f22=_0xc178b0;students[_0x3bdc1e][_0x1a109f]=Number(_0x3b99ca)||0x0,localStorage[_0x238f22(0x13f)](getStorageKeyForStudents(),JSON['stringify'](students)),render();}function deleteStudent(_0x28d9d2){const _0x5d5e28=_0xc178b0;if(confirm(_0x5d5e28(0x1b1))){students[_0x5d5e28(0x1ef)](_0x28d9d2,0x1),localStorage[_0x5d5e28(0x13f)](getStorageKeyForStudents(),JSON[_0x5d5e28(0x141)](students)),delete lessonMastery[_0x28d9d2];let _0x540382={};Object['keys'](lessonMastery)[_0x5d5e28(0x1f9)](_0x3d545f=>{let _0x3ebceb=Number(_0x3d545f);if(_0x3ebceb>_0x28d9d2)_0x540382[_0x3ebceb-0x1]=lessonMastery[_0x3d545f];else _0x3ebceb<_0x28d9d2&&(_0x540382[_0x3ebceb]=lessonMastery[_0x3d545f]);}),lessonMastery=_0x540382,localStorage[_0x5d5e28(0x13f)](getStorageKeyForMastery(),JSON[_0x5d5e28(0x141)](lessonMastery)),render(),showToast(_0x5d5e28(0x137));}}function changePage(_0x1952f2){currentPage+=_0x1952f2;if(currentPage<0x1)currentPage=0x1;renderStudentsTable();}function filterTableByStudentInput(){currentPage=0x1,renderStudentsTable();}function renderClassesQuery(){const _0x26b2d1=_0xc178b0,_0x2d2eca=document[_0x26b2d1(0x1a9)]('classesQueryContainer');_0x2d2eca[_0x26b2d1(0x131)]='';const _0x1eb5a3=new Set();students[_0x26b2d1(0x1f9)](_0x571eff=>_0x1eb5a3[_0x26b2d1(0x26c)](_0x571eff[_0x26b2d1(0x1b9)]||currentGrade));const _0x479c7f=document[_0x26b2d1(0xea)]('div');_0x479c7f[_0x26b2d1(0x1b7)]=_0x26b2d1(0x157)+(activeQueryClass===''?_0x26b2d1(0x1ca):''),_0x479c7f[_0x26b2d1(0x131)]=_0x26b2d1(0x1ff),_0x2d2eca[_0x26b2d1(0x210)](_0x479c7f),_0x1eb5a3[_0x26b2d1(0x1f9)](_0x456e97=>{const _0x4262fe=_0x26b2d1,_0x1dc92c=document[_0x4262fe(0xea)]('div');_0x1dc92c[_0x4262fe(0x1b7)]=_0x4262fe(0x157)+(activeQueryClass===_0x456e97?_0x4262fe(0x1ca):''),_0x1dc92c[_0x4262fe(0x131)]=_0x4262fe(0x108)+_0x456e97+_0x4262fe(0x21f)+_0x456e97+'</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22class-delete-btn\x22\x20onclick=\x22deleteEntireClass(\x27'+_0x456e97+_0x4262fe(0x130),_0x2d2eca['appendChild'](_0x1dc92c);}),updateExamClassSelect(_0x1eb5a3),updateMasteryClassSelect(_0x1eb5a3),updateBulkTargetSelect(_0x1eb5a3);}function filterByClass(_0x184582){activeQueryClass=_0x184582,currentPage=0x1,renderClassesQuery(),renderStudentsTable();}function deleteEntireClass(_0xe8cd92,_0x115ac1){const _0x2bc09d=_0xc178b0;_0x115ac1['stopPropagation']();if(confirm('هل\x20أنت\x20متأكد\x20من\x20حذف\x20جميع\x20طلاب\x20الصف\x20('+_0xe8cd92+')؟')){students=students[_0x2bc09d(0x23b)](_0x5af2b2=>(_0x5af2b2[_0x2bc09d(0x1b9)]||currentGrade)!==_0xe8cd92),localStorage['setItem'](getStorageKeyForStudents(),JSON[_0x2bc09d(0x141)](students));if(activeQueryClass===_0xe8cd92)activeQueryClass='';render(),showToast('🗑️\x20تمت\x20إزالة\x20الصف\x20بنجاح!');}}function updateExamClassSelect(_0x48bb20){const _0x26ada8=_0xc178b0,_0x578fd8=document['getElementById'](_0x26ada8(0x128)),_0x572c15=_0x578fd8[_0x26ada8(0x1a6)];_0x578fd8[_0x26ada8(0x131)]=_0x26ada8(0x1f5),_0x48bb20[_0x26ada8(0x1f9)](_0x2a710f=>{const _0x29d1b4=_0x26ada8;_0x578fd8[_0x29d1b4(0x131)]+=_0x29d1b4(0xd3)+_0x2a710f+'\x22>'+_0x2a710f+'</option>';});if(_0x48bb20[_0x26ada8(0x207)](_0x572c15))_0x578fd8['value']=_0x572c15;renderExamsTable();}function updateMasteryClassSelect(_0x452577){const _0x3a08a7=_0xc178b0,_0x3e02fc=document[_0x3a08a7(0x1a9)](_0x3a08a7(0x117)),_0x5b5777=_0x3e02fc[_0x3a08a7(0x1a6)];_0x3e02fc['innerHTML']=_0x3a08a7(0x1df),_0x452577['forEach'](_0x5ba54f=>{const _0x4914cb=_0x3a08a7;_0x3e02fc[_0x4914cb(0x131)]+=_0x4914cb(0xd3)+_0x5ba54f+'\x22>'+_0x5ba54f+_0x4914cb(0x169);});if(_0x452577['has'](_0x5b5777))_0x3e02fc['value']=_0x5b5777;}function updateBulkTargetSelect(_0x213030){const _0x489530=_0xc178b0,_0x50a23e=document[_0x489530(0x1a9)](_0x489530(0x176));_0x50a23e[_0x489530(0x131)]=_0x489530(0x257),_0x213030[_0x489530(0x1f9)](_0x87a913=>{const _0x3b26da=_0x489530;_0x50a23e[_0x3b26da(0x131)]+=_0x3b26da(0xd3)+_0x87a913+'\x22>'+_0x87a913+_0x3b26da(0x169);});}function renderMasteryTable(){const _0x43aca2=_0xc178b0,_0x4ad3bd=document[_0x43aca2(0x1a9)](_0x43aca2(0x197))[_0x43aca2(0x1a6)],_0x500aaf=document['getElementById'](_0x43aca2(0x117))['value'],_0x3c9b36=document[_0x43aca2(0x1a9)]('masteryTbody'),_0x3f784a=document[_0x43aca2(0x1a9)](_0x43aca2(0x258));_0x3c9b36[_0x43aca2(0x131)]='';if(_0x4ad3bd===''){_0x3c9b36['innerHTML']='<tr><td\x20colspan=\x224\x22\x20style=\x22padding:\x2015px;\x20opacity:\x200.7;\x22>الرجاء\x20اختيار\x20الدرس\x20من\x20القائمة\x20أعلاه.</td></tr>',_0x3f784a['style'][_0x43aca2(0x1e5)]='none';return;}let _0x2d040a=students;_0x500aaf&&(_0x2d040a=students[_0x43aca2(0x23b)](_0x473bcb=>(_0x473bcb[_0x43aca2(0x1b9)]||currentGrade)===_0x500aaf));if(_0x2d040a[_0x43aca2(0x199)]===0x0){_0x3c9b36['innerHTML']=_0x43aca2(0x1a2),_0x3f784a[_0x43aca2(0x122)][_0x43aca2(0x1e5)]=_0x43aca2(0xf5);return;}_0x3f784a[_0x43aca2(0x122)][_0x43aca2(0x1e5)]=_0x43aca2(0x1fc);let _0x36df68=0x0,_0x3136de=0x0;_0x2d040a[_0x43aca2(0x1f9)](_0xd56696=>{const _0x1387a9=_0x43aca2,_0x14c65e=students[_0x1387a9(0xe5)](_0xd56696),_0x549b99=lessonMastery[_0x14c65e]&&lessonMastery[_0x14c65e][_0x4ad3bd];if(_0x549b99)_0x36df68++;else _0x3136de++;const _0x208a83=document['createElement']('tr');_0x208a83[_0x1387a9(0x131)]=_0x1387a9(0xfb)+_0xd56696[_0x1387a9(0x145)]+_0x1387a9(0x1a4)+(_0xd56696[_0x1387a9(0x1b9)]||currentGrade)+_0x1387a9(0xff)+(_0x549b99?_0x1387a9(0x12a):'var(--danger)')+';\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20'+(_0x549b99?'✅\x20متقن':_0x1387a9(0x1e0))+'\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td\x20class=\x22no-print\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22mastery-btn\x20'+(_0x549b99?'mastered':_0x1387a9(0x25b))+_0x1387a9(0x244)+_0x14c65e+',\x20'+_0x4ad3bd+')\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20'+(_0x549b99?_0x1387a9(0x10d):'تحويل\x20لـ\x20متقن')+_0x1387a9(0x1f2),_0x3c9b36['appendChild'](_0x208a83);}),document[_0x43aca2(0x1a9)]('countMastered')[_0x43aca2(0x25f)]=_0x36df68,document[_0x43aca2(0x1a9)](_0x43aca2(0xee))[_0x43aca2(0x25f)]=_0x3136de;}function toggleStudentMastery(_0x18d69f,_0x217757){const _0x52d146=_0xc178b0;!lessonMastery[_0x18d69f]&&(lessonMastery[_0x18d69f]={}),lessonMastery[_0x18d69f][_0x217757]=!lessonMastery[_0x18d69f][_0x217757],localStorage['setItem'](getStorageKeyForMastery(),JSON[_0x52d146(0x141)](lessonMastery)),renderMasteryTable(),render(),showToast(_0x52d146(0x1a0));}function renderExamsTable(){const _0xc5a536=_0xc178b0,_0x566143=document[_0xc5a536(0x1a9)]('examClassSelect')[_0xc5a536(0x1a6)],_0x56b6f1=document['getElementById'](_0xc5a536(0x23a)),_0x562b33=document[_0xc5a536(0x1a9)](_0xc5a536(0x13b));_0x56b6f1['innerHTML']='';if(!_0x566143){_0x56b6f1[_0xc5a536(0x131)]='<tr><td\x20colspan=\x225\x22\x20style=\x22padding:\x2015px;\x20opacity:\x200.7;\x22>الرجاء\x20اختيار\x20الصف\x20الدراسي\x20من\x20القائمة\x20أعلاه.</td></tr>',_0x562b33[_0xc5a536(0x122)][_0xc5a536(0x1e5)]=_0xc5a536(0xf5);return;}const _0x4d34b9=students[_0xc5a536(0x23b)](_0x2ecad7=>(_0x2ecad7[_0xc5a536(0x1b9)]||currentGrade)===_0x566143);if(_0x4d34b9['length']===0x0){_0x56b6f1[_0xc5a536(0x131)]=_0xc5a536(0x1d4),_0x562b33[_0xc5a536(0x122)][_0xc5a536(0x1e5)]=_0xc5a536(0xf5);return;}_0x562b33[_0xc5a536(0x122)]['display']=_0xc5a536(0x1fc);let _0x4f799b=0x0,_0x51a446=0x0;_0x4d34b9[_0xc5a536(0x1f9)](_0x26acd9=>{const _0x5b1fe5=_0xc5a536,_0x390461=students[_0x5b1fe5(0xe5)](_0x26acd9);_0x4f799b+=Number(_0x26acd9[_0x5b1fe5(0x19d)])||0x0,_0x51a446+=Number(_0x26acd9[_0x5b1fe5(0x214)])||0x0;const _0x58bae1=document[_0x5b1fe5(0xea)]('tr');_0x58bae1[_0x5b1fe5(0x131)]=_0x5b1fe5(0xfb)+_0x26acd9['name']+_0x5b1fe5(0x1a4)+(_0x26acd9['classCustom']||currentGrade)+_0x5b1fe5(0xed)+(_0x26acd9[_0x5b1fe5(0x19d)]!==undefined?_0x26acd9['exam1']:0x0)+_0x5b1fe5(0x20f)+_0x390461+',\x20\x27exam1\x27,\x20this.value)\x22></td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td><input\x20type=\x22text\x22\x20inputmode=\x22numeric\x22\x20pattern=\x22[0-9]*\x22\x20value=\x22'+(_0x26acd9['exam2']!==undefined?_0x26acd9[_0x5b1fe5(0x214)]:0x0)+'\x22\x20style=\x22width:40px;\x20text-align:center;\x20padding:2px;\x22\x20oninput=\x22updateExamScore('+_0x390461+_0x5b1fe5(0x162)+(_0x26acd9[_0x5b1fe5(0x177)]?_0x26acd9[_0x5b1fe5(0x177)][_0x5b1fe5(0x20a)](/^0+/,''):'')+_0x5b1fe5(0x1a5)+encodeURIComponent(_0x5b1fe5(0x1fe)+_0x26acd9[_0x5b1fe5(0x145)]+'،\x20نود\x20إفادتكم\x20بدرجات\x20اختبارات\x20مادة\x20العلوم:\x0a-\x20اختبار\x20الفترة\x20الأولى:\x20'+(_0x26acd9[_0x5b1fe5(0x19d)]||0x0)+_0x5b1fe5(0x15e)+(_0x26acd9['exam2']||0x0)+_0x5b1fe5(0x238))+'\x22\x20target=\x22_blank\x22\x20class=\x22whatsapp-btn\x22\x20style=\x22padding:4px\x206px;\x20font-size:11px;\x20margin-top:0;\x22\x20onclick=\x22incrementMessageCount('+_0x390461+_0x5b1fe5(0x1b4),_0x56b6f1[_0x5b1fe5(0x210)](_0x58bae1);}),document[_0xc5a536(0x1a9)]('avgExam1')[_0xc5a536(0x25f)]=(_0x4f799b/_0x4d34b9[_0xc5a536(0x199)])[_0xc5a536(0x114)](0x1)+'\x20/\x2020',document[_0xc5a536(0x1a9)](_0xc5a536(0x250))[_0xc5a536(0x25f)]=(_0x51a446/_0x4d34b9[_0xc5a536(0x199)])['toFixed'](0x1)+_0xc5a536(0x140);}function updateExamScore(_0x362c2e,_0x588ead,_0x39fa7e){const _0x5454e4=_0xc178b0;students[_0x362c2e][_0x588ead]=_0x39fa7e===''?0x0:Number(_0x39fa7e),localStorage[_0x5454e4(0x13f)](getStorageKeyForStudents(),JSON[_0x5454e4(0x141)](students));const _0x244810=document[_0x5454e4(0x1a9)]('examClassSelect')[_0x5454e4(0x1a6)];if(_0x244810){const _0x139309=students[_0x5454e4(0x23b)](_0x19c2c8=>(_0x19c2c8[_0x5454e4(0x1b9)]||currentGrade)===_0x244810);let _0x42ba78=0x0,_0x1a2030=0x0;_0x139309[_0x5454e4(0x1f9)](_0x3df466=>{const _0x47b3e2=_0x5454e4;_0x42ba78+=Number(_0x3df466[_0x47b3e2(0x19d)])||0x0,_0x1a2030+=Number(_0x3df466['exam2'])||0x0;}),document[_0x5454e4(0x1a9)]('avgExam1')[_0x5454e4(0x25f)]=(_0x42ba78/_0x139309['length'])[_0x5454e4(0x114)](0x1)+_0x5454e4(0x140),document[_0x5454e4(0x1a9)](_0x5454e4(0x250))[_0x5454e4(0x25f)]=(_0x1a2030/_0x139309[_0x5454e4(0x199)])['toFixed'](0x1)+_0x5454e4(0x140);}}function printSection(_0x305c8c){const _0x4cd976=_0xc178b0,_0x534794=document['getElementById'](_0x305c8c);if(!_0x534794)return;document['querySelectorAll'](_0x4cd976(0x1c3))[_0x4cd976(0x1f9)](_0x3cc32f=>_0x3cc32f['classList'][_0x4cd976(0x1eb)](_0x4cd976(0x1dd))),_0x534794['classList']['add']('printing-section'),window[_0x4cd976(0x151)]();}function printStudentReport(){const _0x3b7023=_0xc178b0;printSection(_0x3b7023(0x25d));}function _0x42db(_0x102e4a,_0x53ae19){_0x102e4a=_0x102e4a-0xce;const _0x44cb21=_0x44cb();let _0x42db15=_0x44cb21[_0x102e4a];return _0x42db15;}function exportExcel(){const _0x286e58=_0xc178b0;if(students[_0x286e58(0x199)]===0x0){alert(_0x286e58(0x112));return;}const _0x46faa7=students[_0x286e58(0x25a)]((_0x292d60,_0x343114)=>({'م':_0x343114+0x1,'اسم\x20الطالب':_0x292d60[_0x286e58(0x145)],'الصف':_0x292d60['classCustom']||currentGrade,'رقم\x20الجوال':_0x292d60[_0x286e58(0x177)]||'','الغياب':_0x292d60[_0x286e58(0x1ea)]||0x0,'المشاركة':_0x292d60[_0x286e58(0x184)]||0x0,'الواجبات':_0x292d60['homework']||0x0,'التجارب':_0x292d60[_0x286e58(0x164)]||0x0,'اختبار\x20الفترة\x20الأولى':_0x292d60[_0x286e58(0x19d)]||0x0,'اختبار\x20الفترة\x20الثانية':_0x292d60[_0x286e58(0x214)]||0x0})),_0x37be30=XLSX[_0x286e58(0x1f8)][_0x286e58(0x1bb)](_0x46faa7);if(!_0x37be30['!views'])_0x37be30[_0x286e58(0x200)]=[];_0x37be30[_0x286e58(0x200)][_0x286e58(0x1ee)]({'rightToLeft':!![]});const _0x52a23e=XLSX[_0x286e58(0x1f8)][_0x286e58(0x10a)]();XLSX[_0x286e58(0x1f8)][_0x286e58(0x161)](_0x52a23e,_0x37be30,_0x286e58(0x202)),XLSX[_0x286e58(0x1ac)](_0x52a23e,_0x286e58(0x10b)+currentGrade+_0x286e58(0xf1)),showToast(_0x286e58(0x116));}function exportToGoogleSheetsCSV(){const _0x5a1434=_0xc178b0;if(students[_0x5a1434(0x199)]===0x0){alert(_0x5a1434(0x112));return;}let _0xd147d1=_0x5a1434(0x1c7);students[_0x5a1434(0x1f9)](_0x5353e2=>{const _0x1dbcd0=_0x5a1434;_0xd147d1+='\x22'+_0x5353e2[_0x1dbcd0(0x145)]+_0x1dbcd0(0x1cb)+(_0x5353e2[_0x1dbcd0(0x1b9)]||currentGrade)+_0x1dbcd0(0x1cb)+(_0x5353e2['phone']||'')+'\x22,'+(_0x5353e2[_0x1dbcd0(0x1ea)]||0x0)+','+(_0x5353e2[_0x1dbcd0(0x184)]||0x0)+','+(_0x5353e2[_0x1dbcd0(0xf2)]||0x0)+','+(_0x5353e2[_0x1dbcd0(0x164)]||0x0)+','+(_0x5353e2[_0x1dbcd0(0x19d)]||0x0)+','+(_0x5353e2[_0x1dbcd0(0x214)]||0x0)+'\x0a';});const _0x30aee8=new Blob([_0xd147d1],{'type':_0x5a1434(0x16e)}),_0xa1d874=URL['createObjectURL'](_0x30aee8),_0x138f07=document[_0x5a1434(0xea)]('a');_0x138f07[_0x5a1434(0xda)]('href',_0xa1d874),_0x138f07['setAttribute']('download',_0x5a1434(0x23e)+currentGrade+'.csv'),document[_0x5a1434(0x253)][_0x5a1434(0x210)](_0x138f07),_0x138f07['click'](),_0x138f07['remove'](),showToast('☁️\x20تم\x20التصدير\x20بنجاح!');}function importExcel(_0xfe700d){const _0x18a08d=_0xc178b0,_0x4909b4=_0xfe700d['target'][_0x18a08d(0x1ce)][0x0];if(!_0x4909b4)return;const _0x3897fe=new FileReader();_0x3897fe[_0x18a08d(0x26d)]=function(_0x4584c6){const _0x5cb51f=_0x18a08d;try{const _0x2a611d=new Uint8Array(_0x4584c6[_0x5cb51f(0x236)]['result']),_0x3f7979=XLSX['read'](_0x2a611d,{'type':'array'}),_0x115982=_0x3f7979[_0x5cb51f(0x205)][0x0],_0x310e8c=_0x3f7979[_0x5cb51f(0x208)][_0x115982],_0x161967=XLSX[_0x5cb51f(0x1f8)]['sheet_to_json'](_0x310e8c);if(!_0x161967||_0x161967[_0x5cb51f(0x199)]===0x0){alert(_0x5cb51f(0x118));return;}let _0x16fcf3=0x0;_0x161967[_0x5cb51f(0x1f9)](_0x2ffaf0=>{const _0x512126=_0x5cb51f,_0x5e7fb0=_0x2ffaf0[_0x512126(0xf8)]||_0x2ffaf0[_0x512126(0x127)]||_0x2ffaf0[_0x512126(0x12d)]||'',_0x7d3a6a=_0x2ffaf0[_0x512126(0x216)]||_0x2ffaf0[_0x512126(0x19e)]||_0x2ffaf0[_0x512126(0x180)]||currentGrade,_0x1da7e0=_0x2ffaf0[_0x512126(0x20e)]||_0x2ffaf0[_0x512126(0x15c)]||_0x2ffaf0[_0x512126(0x150)]||'';_0x5e7fb0[_0x512126(0x1e8)]()[_0x512126(0x1e2)]()!==''&&(students[_0x512126(0x1ee)]({'name':_0x5e7fb0[_0x512126(0x1e8)]()[_0x512126(0x1e2)](),'classCustom':_0x7d3a6a[_0x512126(0x1e8)]()[_0x512126(0x1e2)](),'phone':_0x1da7e0[_0x512126(0x1e8)]()[_0x512126(0x1e2)](),'absence':Number(_0x2ffaf0[_0x512126(0x220)]||0x0),'participation':Number(_0x2ffaf0[_0x512126(0xcf)]||_0x2ffaf0[_0x512126(0x204)]||0x0),'homework':Number(_0x2ffaf0[_0x512126(0x124)]||0x0),'projects':Number(_0x2ffaf0['التجارب']||0x0),'messages':Number(_0x2ffaf0['الرسائل']||0x0),'exam1':Number(_0x2ffaf0[_0x512126(0x21b)]||0x0),'exam2':Number(_0x2ffaf0['اختبار\x20الفترة\x20الثانية']||0x0)}),_0x16fcf3++);}),localStorage['setItem'](getStorageKeyForStudents(),JSON[_0x5cb51f(0x141)](students)),render(),showToast('📂\x20تمت\x20استعادة\x20('+_0x16fcf3+_0x5cb51f(0x168));}catch(_0x43e280){console['error'](_0x43e280),alert(_0x5cb51f(0x203));}finally{_0xfe700d[_0x5cb51f(0x236)][_0x5cb51f(0x1a6)]='';}},_0x3897fe[_0x18a08d(0x1b6)](_0x4909b4);}function exportData(){const _0x16197a=_0xc178b0,_0x1cb3df={'students':students,'lessons':lessons,'lessonStatus':lessonStatus,'lessonMastery':lessonMastery,'customMotivations':customMotivations},_0x511cb5=_0x16197a(0x121)+encodeURIComponent(JSON[_0x16197a(0x141)](_0x1cb3df)),_0x52d3a7=document['createElement']('a');_0x52d3a7[_0x16197a(0xda)](_0x16197a(0x188),_0x511cb5),_0x52d3a7[_0x16197a(0xda)](_0x16197a(0x1a1),_0x16197a(0x10b)+currentGrade+_0x16197a(0x172)),document['body'][_0x16197a(0x210)](_0x52d3a7),_0x52d3a7[_0x16197a(0xec)](),_0x52d3a7[_0x16197a(0x1eb)](),localStorage['setItem'](_0x16197a(0x193),Date[_0x16197a(0x138)]()['toString']()),showToast('💾\x20تم\x20تصدير\x20النسخة\x20الاحتياطية\x20بنجاح!');}function importData(_0x3b08f4){const _0x5113f8=_0xc178b0,_0x4b0a68=_0x3b08f4[_0x5113f8(0x236)][_0x5113f8(0x1ce)][0x0];if(!_0x4b0a68)return;const _0x1c9dcb=new FileReader();_0x1c9dcb[_0x5113f8(0x26d)]=function(_0x2e3aaa){const _0x29cc37=_0x5113f8;try{const _0x51df01=JSON[_0x29cc37(0x1be)](_0x2e3aaa[_0x29cc37(0x236)][_0x29cc37(0x16d)]);if(Array['isArray'](_0x51df01))students=_0x51df01,localStorage['setItem'](getStorageKeyForStudents(),JSON[_0x29cc37(0x141)](students));else _0x51df01&&typeof _0x51df01===_0x29cc37(0x11d)&&(_0x51df01[_0x29cc37(0x12e)]&&(students=_0x51df01[_0x29cc37(0x12e)],localStorage[_0x29cc37(0x13f)](getStorageKeyForStudents(),JSON[_0x29cc37(0x141)](students))),_0x51df01[_0x29cc37(0x17b)]&&(lessons=_0x51df01['lessons'],localStorage[_0x29cc37(0x13f)](getStorageKeyForLessons(),JSON['stringify'](lessons))),_0x51df01[_0x29cc37(0x125)]&&(lessonStatus=_0x51df01[_0x29cc37(0x125)],localStorage[_0x29cc37(0x13f)](getStorageKeyForStatus(),JSON[_0x29cc37(0x141)](lessonStatus))),_0x51df01[_0x29cc37(0xfe)]&&(lessonMastery=_0x51df01[_0x29cc37(0xfe)],localStorage['setItem'](getStorageKeyForMastery(),JSON[_0x29cc37(0x141)](lessonMastery))));renderLessons(),render(),showToast('📂\x20تم\x20استرجاع\x20كافة\x20البيانات\x20بنجاح!');}catch(_0x46ee6d){alert(_0x29cc37(0x11c));}finally{_0x3b08f4[_0x29cc37(0x236)][_0x29cc37(0x1a6)]='';}},_0x1c9dcb[_0x5113f8(0x16f)](_0x4b0a68);}function filterStudentDropdown(){const _0x26aa7b=_0xc178b0,_0x57196b=document[_0x26aa7b(0x1a9)](_0x26aa7b(0x20d))[_0x26aa7b(0x1a6)][_0x26aa7b(0x1e2)]()[_0x26aa7b(0x10f)](),_0x4625e8=document[_0x26aa7b(0x1a9)]('studentDropdownList');_0x4625e8['innerHTML']='';if(!_0x57196b){_0x4625e8[_0x26aa7b(0x122)]['display']='none';return;}const _0x505f23=students[_0x26aa7b(0x23b)](_0x3e54ed=>_0x3e54ed[_0x26aa7b(0x145)]['toLowerCase']()['includes'](_0x57196b));if(_0x505f23[_0x26aa7b(0x199)]===0x0){_0x4625e8[_0x26aa7b(0x122)][_0x26aa7b(0x1e5)]=_0x26aa7b(0xf5);return;}_0x4625e8['style'][_0x26aa7b(0x1e5)]=_0x26aa7b(0x1fc),_0x505f23[_0x26aa7b(0x1f9)](_0x110107=>{const _0xcc0da2=_0x26aa7b,_0x432328=students[_0xcc0da2(0xe5)](_0x110107),_0x5a841e=document['createElement'](_0xcc0da2(0x229));_0x5a841e['className']='searchable-item',_0x5a841e['innerHTML']=_0xcc0da2(0x179)+_0x110107[_0xcc0da2(0x145)]+_0xcc0da2(0x212)+(_0x110107[_0xcc0da2(0x1b9)]||currentGrade)+'</span>',_0x5a841e['onclick']=function(){const _0x17fca3=_0xcc0da2;selectStudentForDetails(_0x432328),_0x4625e8['style'][_0x17fca3(0x1e5)]='none',document[_0x17fca3(0x1a9)](_0x17fca3(0x20d))['value']=_0x110107['name'];},_0x4625e8[_0xcc0da2(0x210)](_0x5a841e);});}function showStudentDropdown(){const _0x306680=_0xc178b0;document['getElementById']('studentSearchInput')[_0x306680(0x1a6)][_0x306680(0x1e2)]()&&filterStudentDropdown();}function selectStudentForDetails(_0x5c9d79){const _0x221709=_0xc178b0;selectedStudentIndex=_0x5c9d79;const _0x339abe=students[_0x5c9d79];document[_0x221709(0x1a9)](_0x221709(0x1de))[_0x221709(0x122)][_0x221709(0x1e5)]=_0x221709(0x1fc),document[_0x221709(0x1a9)]('selectedName')[_0x221709(0x25f)]=_0x339abe[_0x221709(0x145)],document['getElementById'](_0x221709(0x237))[_0x221709(0x25f)]=_0x339abe[_0x221709(0x1b9)]||currentGrade,document[_0x221709(0x1a9)](_0x221709(0x123))[_0x221709(0x25f)]=_0x339abe[_0x221709(0x184)]||0x0,document[_0x221709(0x1a9)](_0x221709(0xfd))[_0x221709(0x25f)]=_0x339abe['homework']||0x0,document['getElementById'](_0x221709(0x104))[_0x221709(0x25f)]=_0x339abe[_0x221709(0x1ea)]||0x0;let _0xea5ff9=0x0;lessons[_0x221709(0x1f9)]((_0x233edf,_0x4eef9b)=>{if(lessonMastery[_0x5c9d79]&&lessonMastery[_0x5c9d79][_0x4eef9b])_0xea5ff9++;}),document[_0x221709(0x1a9)]('sdSkills')[_0x221709(0x25f)]=_0xea5ff9,document[_0x221709(0x1a9)](_0x221709(0x14a))[_0x221709(0x25f)]=_0x339abe[_0x221709(0x164)]||0x0,document[_0x221709(0x1a9)]('sdMessages')[_0x221709(0x25f)]=_0x339abe['messages']||0x0,document['getElementById'](_0x221709(0xe6))['textContent']=_0x339abe['phone']||_0x221709(0x10c),updateLessonMsg(),updateMotivationMsg();}function updateLessonMsg(){const _0x38e047=_0xc178b0;if(selectedStudentIndex==='')return;const _0x353d47=students[selectedStudentIndex],_0x45a338=document[_0x38e047(0x1a9)](_0x38e047(0x1c1))[_0x38e047(0x1a6)],_0x29c078=document[_0x38e047(0x1a9)]('lessonMsgPreview'),_0x43736c=document[_0x38e047(0x1a9)](_0x38e047(0x174));if(_0x45a338===''){_0x29c078[_0x38e047(0x25f)]='اختر\x20موضوع\x20الدرس\x20والمهارة\x20أعلاه...',_0x43736c[_0x38e047(0x188)]='#';return;}const _0xb255c7=lessons[_0x45a338],_0x31614b=_0x38e047(0x251)+_0x353d47[_0x38e047(0x145)]+_0x38e047(0x115)+_0xb255c7[_0x38e047(0xe3)]+_0x38e047(0x263)+_0xb255c7[_0x38e047(0x24b)]+_0x38e047(0x23c)+_0xb255c7[_0x38e047(0x173)]+_0x38e047(0x245)+TEACHER_NAME+_0x38e047(0x246)+SCHOOL_NAME;_0x29c078[_0x38e047(0x25f)]=_0x31614b;const _0x5b0169=_0x353d47['phone']?_0x38e047(0x18f)+_0x353d47[_0x38e047(0x177)][_0x38e047(0x20a)](/^0+/,''):'';_0x43736c[_0x38e047(0x188)]='https://wa.me/'+_0x5b0169+_0x38e047(0x1a5)+encodeURIComponent(_0x31614b);}function updateMotivationMsg(){const _0x3f2224=_0xc178b0;if(selectedStudentIndex==='')return;const _0x2c674e=students[selectedStudentIndex],_0x543fa7=document[_0x3f2224(0x1a9)](_0x3f2224(0x10e))['value'],_0x388cb7=document['getElementById'](_0x3f2224(0x149)),_0x3247bd=document['getElementById']('whatsappMotivationBtn');if(_0x543fa7===''){_0x388cb7[_0x3f2224(0x25f)]=_0x3f2224(0xd8),_0x3247bd[_0x3f2224(0x188)]='#';return;}let _0xe97810='';if(_0x543fa7[_0x3f2224(0x1ad)](_0x3f2224(0x136))){const _0x4e49fb=_0x543fa7[_0x3f2224(0x21e)]('-')[0x1];_0xe97810=customMotivations[_0x4e49fb][_0x3f2224(0x147)];}const _0x450e04=_0x3f2224(0x224)+_0x2c674e[_0x3f2224(0x145)]+'\x0a\x0a'+_0xe97810+_0x3f2224(0x1e7)+TEACHER_NAME+_0x3f2224(0x246)+SCHOOL_NAME;_0x388cb7[_0x3f2224(0x25f)]=_0x450e04;const _0x3b4848=_0x2c674e['phone']?_0x3f2224(0x18f)+_0x2c674e[_0x3f2224(0x177)][_0x3f2224(0x20a)](/^0+/,''):'';_0x3247bd[_0x3f2224(0x188)]='https://wa.me/'+_0x3b4848+_0x3f2224(0x1a5)+encodeURIComponent(_0x450e04);}function sendFullReportWhatsApp(){const _0x5223a9=_0xc178b0;if(selectedStudentIndex==='')return;const _0x3447f9=students[selectedStudentIndex];let _0x1e883b=0x0;lessons[_0x5223a9(0x1f9)]((_0x1d9681,_0x348a91)=>{if(lessonMastery[selectedStudentIndex]&&lessonMastery[selectedStudentIndex][_0x348a91])_0x1e883b++;});const _0xb5a6f0=_0x5223a9(0x251)+_0x3447f9[_0x5223a9(0x145)]+'\x20('+(_0x3447f9[_0x5223a9(0x1b9)]||currentGrade)+')\x0aنحيطكم\x20علماً\x20بمستوى\x20ابنكم\x20وتقييمه\x20في\x20مادة\x20العلوم\x20حتى\x20تاريخه:\x0a\x0a-\x20المشاركات:\x20'+(_0x3447f9[_0x5223a9(0x184)]||0x0)+'\x0a-\x20الواجبات:\x20'+(_0x3447f9['homework']||0x0)+'\x0a-\x20أيام\x20الغياب:\x20'+(_0x3447f9[_0x5223a9(0x1ea)]||0x0)+_0x5223a9(0xe4)+_0x1e883b+_0x5223a9(0x227)+lessons['length']+_0x5223a9(0xd0)+(_0x3447f9['projects']||0x0)+_0x5223a9(0x14b)+(_0x3447f9[_0x5223a9(0x19d)]||0x0)+_0x5223a9(0x15e)+(_0x3447f9[_0x5223a9(0x214)]||0x0)+_0x5223a9(0x17a)+TEACHER_NAME+_0x5223a9(0x246)+SCHOOL_NAME;incrementMessageCount(selectedStudentIndex);const _0x51670c=_0x3447f9['phone']?_0x5223a9(0x18f)+_0x3447f9[_0x5223a9(0x177)][_0x5223a9(0x20a)](/^0+/,''):'';window[_0x5223a9(0x1e6)](_0x5223a9(0x171)+_0x51670c+_0x5223a9(0x1a5)+encodeURIComponent(_0xb5a6f0),_0x5223a9(0x22e));}function addNewMotivation(){const _0x24afd5=_0xc178b0,_0x189129=document['getElementById'](_0x24afd5(0x24d))[_0x24afd5(0x1a6)][_0x24afd5(0x1e2)](),_0xe78cfe=document[_0x24afd5(0x1a9)](_0x24afd5(0x1f3))[_0x24afd5(0x1a6)][_0x24afd5(0x1e2)]();if(!_0x189129||!_0xe78cfe){alert('الرجاء\x20كتابة\x20عنوان\x20ونصح\x20الرسالة\x20التشجيعية');return;}customMotivations['push']({'id':Date['now']()[_0x24afd5(0x1e8)](),'title':_0x189129,'text':_0xe78cfe}),localStorage[_0x24afd5(0x13f)](_0x24afd5(0x1e1),JSON[_0x24afd5(0x141)](customMotivations)),document['getElementById']('newMotivationTitle')[_0x24afd5(0x1a6)]='',document[_0x24afd5(0x1a9)](_0x24afd5(0x1f3))['value']='',renderLessons(),showToast(_0x24afd5(0x1c4));}function incrementMessageCount(_0x18aace=selectedStudentIndex){const _0xa6a399=_0xc178b0;if(_0x18aace!==''&&students[_0x18aace]){students[_0x18aace][_0xa6a399(0x1d6)]=(students[_0x18aace][_0xa6a399(0x1d6)]||0x0)+0x1,localStorage['setItem'](getStorageKeyForStudents(),JSON[_0xa6a399(0x141)](students)),render();if(selectedStudentIndex!=='')selectStudentForDetails(selectedStudentIndex);}}function updateBulkHomeworkMsgPreview(){const _0x261c65=_0xc178b0,_0x34a19c=document['getElementById'](_0x261c65(0x241))['value'],_0x35bc52=document[_0x261c65(0x1a9)](_0x261c65(0x16a))[_0x261c65(0x1a6)][_0x261c65(0x1e2)](),_0x1c92bc=document['getElementById'](_0x261c65(0x15d))[_0x261c65(0x1a6)][_0x261c65(0x1e2)](),_0x453c83=document['getElementById'](_0x261c65(0x17c));if(!_0x34a19c){_0x453c83[_0x261c65(0x25f)]='اختر\x20الصف\x20والدرس\x20وأدخل\x20تفاصيل\x20الواجب...';return;}let _0x4deaf5='',_0x2d18dd='';if(_0x34a19c[_0x261c65(0x1ad)](_0x261c65(0x166))){const _0x105be9=_0x34a19c[_0x261c65(0x21e)]('-')[0x1],_0x46f6d6=lessons[_0x105be9];_0x2d18dd=_0x46f6d6['chapter'],_0x4deaf5=_0x46f6d6['title'];}let _0x308999=_0x261c65(0x20b)+_0x2d18dd+_0x261c65(0x263)+_0x4deaf5+'\x0a';_0x35bc52?_0x308999+='📝\x20المطلوب\x20حلّه:\x20'+_0x35bc52+'\x0a':_0x308999+=_0x261c65(0x22c),_0x1c92bc&&(_0x308999+=_0x261c65(0x13e)+_0x1c92bc+'\x0a'),_0x308999+='\x0aنرجو\x20الحرص\x20على\x20حل\x20الواجب\x20وإرساله\x20في\x20الموعد\x20المحدد.\x0aمع\x20خالص\x20الشكر،\x20المعلم:\x20'+TEACHER_NAME+'\x20-\x20'+SCHOOL_NAME,_0x453c83['textContent']=_0x308999;}function prepareBulkHomeworkBatch(){const _0x3c4076=_0xc178b0,_0x5142b6=document['getElementById'](_0x3c4076(0x176))[_0x3c4076(0x1a6)],_0x4e1b14=document[_0x3c4076(0x1a9)](_0x3c4076(0x241))[_0x3c4076(0x1a6)];if(!_0x4e1b14){alert(_0x3c4076(0x143));return;}let _0x345e2f=students;_0x5142b6!==_0x3c4076(0x23d)&&(_0x345e2f=students['filter'](_0xcc1d8a=>(_0xcc1d8a[_0x3c4076(0x1b9)]||currentGrade)===_0x5142b6));_0x345e2f=_0x345e2f[_0x3c4076(0x23b)](_0x132186=>_0x132186[_0x3c4076(0x177)]&&_0x132186[_0x3c4076(0x177)]['trim']()!=='');if(_0x345e2f['length']===0x0){alert('لا\x20توجد\x20أرقام\x20جوالات\x20مسجلة\x20للطلاب\x20المستهدفين');return;}const _0x26db09=document[_0x3c4076(0x1a9)](_0x3c4076(0x17c))[_0x3c4076(0x25f)],_0x1f77e1=document[_0x3c4076(0x1a9)](_0x3c4076(0x1b3)),_0x289710=document[_0x3c4076(0x1a9)](_0x3c4076(0xf9));_0x289710['innerHTML']='',_0x345e2f[_0x3c4076(0x1f9)](_0x1a0dfd=>{const _0xad0dd5=_0x3c4076,_0x41253c=students[_0xad0dd5(0xe5)](_0x1a0dfd),_0x12c9df=_0x1a0dfd[_0xad0dd5(0x177)]?_0xad0dd5(0x18f)+_0x1a0dfd[_0xad0dd5(0x177)][_0xad0dd5(0x20a)](/^0+/,''):'',_0x513d1a=_0xad0dd5(0x251)+_0x1a0dfd['name']+'\x0a\x0a'+_0x26db09,_0x44cd02=_0xad0dd5(0x171)+_0x12c9df+_0xad0dd5(0x1a5)+encodeURIComponent(_0x513d1a),_0x3e4514=document[_0xad0dd5(0xea)](_0xad0dd5(0x229));_0x3e4514['style'][_0xad0dd5(0x1e5)]=_0xad0dd5(0x1d3),_0x3e4514[_0xad0dd5(0x122)]['flexDirection']=_0xad0dd5(0x234),_0x3e4514[_0xad0dd5(0x122)]['gap']=_0xad0dd5(0x256),_0x3e4514[_0xad0dd5(0x122)]['background']=_0xad0dd5(0x142),_0x3e4514['style']['padding']='8px',_0x3e4514[_0xad0dd5(0x122)][_0xad0dd5(0x13d)]=_0xad0dd5(0x18d),_0x3e4514[_0xad0dd5(0x122)][_0xad0dd5(0x1f1)]=_0xad0dd5(0x211),_0x3e4514[_0xad0dd5(0x131)]=_0xad0dd5(0x178)+_0x1a0dfd[_0xad0dd5(0x145)]+'</strong>\x20<span\x20class=\x22class-badge\x22\x20style=\x22font-size:10px;\x22>'+(_0x1a0dfd[_0xad0dd5(0x1b9)]||currentGrade)+_0xad0dd5(0x218)+_0x44cd02+_0xad0dd5(0x22b)+_0x41253c+_0xad0dd5(0x20c),_0x289710['appendChild'](_0x3e4514);}),_0x1f77e1[_0x3c4076(0x122)][_0x3c4076(0x1e5)]=_0x3c4076(0x1fc),showToast('🚀\x20تم\x20تجهيز\x20قائمة\x20إرسال\x20لعدد\x20('+_0x345e2f[_0x3c4076(0x199)]+_0x3c4076(0xe9));}function markMessageSentFromBulk(_0x2ec268,_0x47ddb6){const _0x6a158f=_0xc178b0;students[_0x2ec268]&&(students[_0x2ec268][_0x6a158f(0x1d6)]=(students[_0x2ec268]['messages']||0x0)+0x1,localStorage[_0x6a158f(0x13f)](getStorageKeyForStudents(),JSON[_0x6a158f(0x141)](students)),render(),_0x47ddb6[_0x6a158f(0x122)][_0x6a158f(0x155)]=_0x6a158f(0xe7),_0x47ddb6[_0x6a158f(0x25f)]=_0x6a158f(0xf7));}function setTheme(_0x4daf96){const _0x51ea9a=_0xc178b0;document[_0x51ea9a(0x253)][_0x51ea9a(0x1b7)]=_0x4daf96,localStorage[_0x51ea9a(0x13f)](_0x51ea9a(0x24f),_0x4daf96);}function scrollToTop(){const _0x5b48aa=_0xc178b0;window['scrollTo']({'top':0x0,'behavior':_0x5b48aa(0x1b5)});}window['onscroll']=function(){const _0x6d385=_0xc178b0,_0x22103e=document['getElementById']('scrollToTopBtn');document['body'][_0x6d385(0x12b)]>0xc8||document[_0x6d385(0x1ab)][_0x6d385(0x12b)]>0xc8?_0x22103e[_0x6d385(0x122)][_0x6d385(0x1e5)]=_0x6d385(0x1d3):_0x22103e['style'][_0x6d385(0x1e5)]=_0x6d385(0xf5);};const savedTheme=localStorage[_0xc178b0(0x271)](_0xc178b0(0x24f));if(savedTheme)document['body'][_0xc178b0(0x1b7)]=savedTheme;let deferredPrompt;const installBtn=document[_0xc178b0(0x1a9)](_0xc178b0(0x1a7));window[_0xc178b0(0x219)](_0xc178b0(0x11b),_0x1c2f8e=>{const _0x4f1d07=_0xc178b0;_0x1c2f8e[_0x4f1d07(0xd7)](),deferredPrompt=_0x1c2f8e,installBtn&&(installBtn[_0x4f1d07(0x122)][_0x4f1d07(0x1e5)]=_0x4f1d07(0x1d3));});function installPWAApp(){const _0x53df21=_0xc178b0;if(!deferredPrompt)return;deferredPrompt[_0x53df21(0x235)](),deferredPrompt['userChoice']['then'](_0x59cc9e=>{const _0x15e7d9=_0x53df21;_0x59cc9e['outcome']===_0x15e7d9(0x1b0)&&showToast(_0x15e7d9(0x195)),deferredPrompt=null,installBtn[_0x15e7d9(0x122)][_0x15e7d9(0x1e5)]=_0x15e7d9(0xf5);});}window['addEventListener'](_0xc178b0(0x190),()=>{const _0x4a59a4=_0xc178b0;if(installBtn)installBtn['style'][_0x4a59a4(0x1e5)]=_0x4a59a4(0xf5);deferredPrompt=null;}),window[_0xc178b0(0x26d)]=function(){const _0x8dd92=_0xc178b0;renderLessons(),render(),checkBackupReminder(),_0x8dd92(0x259)in navigator&&navigator[_0x8dd92(0x259)][_0x8dd92(0x1f0)](_0x8dd92(0x239))[_0x8dd92(0x247)](_0x5556a3=>{const _0x2f2da1=_0x8dd92;console['log'](_0x2f2da1(0x152),_0x5556a3);});};function backupAllData(){const _0x2980b2=_0xc178b0,_0x509c30={'students':typeof students!==_0x2980b2(0x1db)?students:[],'lessons':typeof lessons!==_0x2980b2(0x1db)?lessons:[],'timestamp':new Date()['toLocaleString']('ar-SA')},_0x1c7798=_0x2980b2(0x121)+encodeURIComponent(JSON[_0x2980b2(0x141)](_0x509c30)),_0x2ac806=document['createElement']('a');_0x2ac806['setAttribute'](_0x2980b2(0x188),_0x1c7798),_0x2ac806['setAttribute'](_0x2980b2(0x1a1),_0x2980b2(0xd6)+new Date()[_0x2980b2(0x24a)]()[_0x2980b2(0x106)](0x0,0xa)+_0x2980b2(0x159)),document['body'][_0x2980b2(0x210)](_0x2ac806),_0x2ac806[_0x2980b2(0xec)](),_0x2ac806[_0x2980b2(0x1eb)](),showToast(_0x2980b2(0x222));}function restoreDashboardData(_0x3e2df0){const _0x118c9f=_0xc178b0,_0x2404b8=_0x3e2df0['target'][_0x118c9f(0x1ce)][0x0];if(!_0x2404b8)return;const _0x501d1e=new FileReader();_0x501d1e[_0x118c9f(0x26d)]=function(_0x4eb366){const _0xac5b3a=_0x118c9f;try{const _0x500e47=JSON[_0xac5b3a(0x1be)](_0x4eb366[_0xac5b3a(0x236)][_0xac5b3a(0x16d)]);if(_0x500e47){if(_0x500e47['students'])localStorage['setItem'](getStorageKeyForStudents(),JSON[_0xac5b3a(0x141)](_0x500e47[_0xac5b3a(0x12e)]));if(_0x500e47['lessons'])localStorage['setItem'](getStorageKeyForLessons(),JSON[_0xac5b3a(0x141)](_0x500e47[_0xac5b3a(0x17b)]));alert('📂\x20تم\x20استرجاع\x20البيانات\x20بنجاح!'),location[_0xac5b3a(0x12c)]();}else alert(_0xac5b3a(0x14e));}catch(_0x2297f0){alert('خطأ\x20في\x20قراءة\x20ملف\x20JSON.');}finally{_0x3e2df0['target']['value']='';}},_0x501d1e[_0x118c9f(0x16f)](_0x2404b8);}
+        const TEACHER_NAME = "منصور";
+        const SCHOOL_NAME = "مدرسة داوود (طلاب)";
+
+        let currentGrade = localStorage.getItem('mansour_current_grade_science_v5') || 'الأول الابتدائي';
+        document.getElementById('globalGradeSelect').value = currentGrade;
+
+        let activeQueryClass = '';
+        let selectedStudentIndex = ''; 
+        let currentPage = 1;
+        const rowsPerPage = 20;
+
+        const defaultMotivations = [
+            { id: "1", title: "1. عالم المستقبل المتميز", text: "🌟 **عالم المستقبل المتميز** 🌟\nعزيزي ولي الأمر، نفخر اليوم بتميز ابنكم وتألقه في حصة العلوم ومشاركته في التجارب العملية بحماس ونشاط. بوركت جهودكم!" },
+            { id: "2", title: "2. تفوق ملحوظ في الملاحظة واستنتاج", text: "🔬 **تفوق ملحوظ في الملاحظة العلمية** 🔬\nعزيزي ولي الأمر، أظهر ابنكم اليوم مهارات دقيقة في الملاحظة والتجريب واستنباط النتائج. أحسنت صنعاً!" },
+            { id: "3", title: "3. دقة وإتقان في المفاهيم العلمية", text: "🌱 **دقة وإتقان في المفاهيم والعلوم** 🌱\nعزيزي ولي الأمر، تميز ابنكم اليوم باستيعابه العميق للحقائق العلمية وتوظيفها بذكاء. بارك الله في جهوده!" },
+            { id: "4", title: "4. مشاركة نشطة وفعالة في حصة العلوم", text: "✋ **مشاركة نشطة وتفاعل علمي متميز** ✋\nعزيزي ولي الأمر، تميز ابنكم اليوم بحرصه العالي ومشاركته النشطة وإجاباته العلمية الموفقة داخل الصف." },
+            { id: "5", title: "5. حصيلة استكشافية وتجارب ممتازة", text: "🧠 **حصيلة استكشافية وتجارب ممتازة** 🧠\nعزيزي ولي الأمر، أبدع ابنكم اليوم في تنفيذ التجارب الاستهلالية والاستكشافية بمهارة عالية. مبروك له!" },
+            { id: "6", title: "6. تنظيم رائع للدفتر وواجبات مرتبة بدقة", text: "📝 **تنظيم رائع للواجبات والأنشطة** 📝\nعزيزي ولي الأمر، نشكر لكم متابعتكم المنزلية الواعية. لقد كان واجب ابنكم اليوم منظماً، دقيقاً، ومرتباً للغاية." },
+            { id: "7", title: "7. حل ممتاز للتدريبات والتقويم التكويني", text: "✍️ **حل ممتاز للتقويم والتدريبات**\nعزيزي ولي الأمر، تميز أداء ابنكم اليوم بحل أسئلة التقويم والتدريبات العلمية بدقة عالية. دمت متميزاً يا بطل!" },
+            { id: "8", title: "8. اهتمام رائع بالبيئة ومخلوقات الله", text: "🌍 **اهتمام رائع بالبيئة والمحيط**\nعزيزي ولي الأمر، أظهر ابنكم اليوم شغفاً واهتماماً لافتاً بدراسة الكائنات الحية وعناصر البيئة من حوله." },
+            { id: "9", title: "9. مشروع علمي متميز ومبتكر ومتقن", text: "🛠️ **مشروع علمي متميز ومبتكر ومتقن**\nعزيزي ولي الأمر، قدم ابنكم اليوم مشروعاً علمياً رائعاً ومنظماً ينم عن تفكير إبداعي ومهارة عالية." },
+            { id: "10", title: "10. اجتهاد وحرص عالٍ على إتقان مهارات العلوم", text: "⭐ **اجتهاد وحرص عالٍ على إتقان العلوم**\nعزيزي ولي الأمر، إن حرص ابنكم المستمر على الاستكشاف والتعلم في مادة العلوم محل تقديرنا الدائم." }
+        ];
+
+        let customMotivations = JSON.parse(localStorage.getItem('mansour_custom_motivations_science_v5')) || defaultMotivations;
+
+        const gradeScienceData = {
+            "الأول الابتدائي": [
+                { chapter: "الوحدة 1: النباتات من حولنا", title: "أجزاء النباتات", desc: "دراسة الجذور، الساق، الأوراق، والزهور ودور كل منها في حياة النبات." },
+                { chapter: "الوحدة 1: النباتات من حولنا", title: "النباتات تنتج نباتات جديدة", desc: "التعرف على البذور وكيفية نموها لتصبح نباتات جديدة." },
+                { chapter: "الوحدة 2: الحيوانات من حولنا", title: "أماكن عيش الحيوانات", desc: "استكشاف الموائل الطبيعية المختلفة للحيوانات (الغابة، الصحراء، الماء)." },
+                { chapter: "الوحدة 2: الحيوانات من حولنا", title: "الحيوانات تنمو وتتغير", desc: "دراسة دورات حياة الحيوانات وكيف تتغير صغار الحيوانات عن أبائها." },
+                { chapter: "الوحدة 3: أرضنا ومواردها", title: "ما الأرض؟ وماذا يوجد عليها؟", desc: "التعرف على اليابسة والماء والصخور المكونة لسطح الأرض." },
+                { chapter: "الوحدة 3: أرضنا ومواردها", title: "الماء والهواء", desc: "أهمية الماء والهواء لحياة الكائنات الحية وطرق المحافظة عليها." },
+                { chapter: "الوحدة 4: الطقس والفصول", title: "حالات الطقس المختلفة", desc: "ملاحظة الطقس اليومي (مشمس، ممطر، عاصف، بارد) وأثره على ملابسنا." },
+                { chapter: "الوحدة 4: الطقس والفصول", title: "الفصول الأربعة", desc: "التعرف على التغيرات المناخية خلال السنة (الربيع، الصيف، الخريف، الشتاء)." }
+            ],
+            "الثاني الابتدائي": [
+                { chapter: "الوحدة 1: النباتات والحيوانات", title: "مخلوقات حية ومخلوقات غير حية", desc: "التفرقة بين الكائنات الحية التي تنمو وتتغذى والأشياء غير الحية." },
+                { chapter: "الوحدة 1: النباتات والحيوانات", title: "حاجات المخلوقات الحية", desc: "دراسة الماء، الهواء، الغذاء، والمكان كاحتياجات أساسية للبقاء." },
+                { chapter: "الوحدة 2: موائل الكائنات الحية", title: "السلسلة الغذائية", desc: "كيف تحصل الحيوانات على طاقاتها من النباتات والحيوانات الأخرى." },
+                { chapter: "الوحدة 2: موائل الكائنات الحية", title: "الصحاري والغابات", desc: "مقارنة الخصائص البيئية للبيئات الحارة والباردة والغابات المطيرة." },
+                { chapter: "الوحدة 3: المادة من حولنا", title: "ما المادة؟", desc: "استكشاف خصائص الأجسام والصلابة واللون والكتلة والحجم." },
+                { chapter: "الوحدة 3: المادة من حولنا", title: "حالات المادة", desc: "التمييز بين الحالات الصلبة والسائلة والغازية للمادة وتجارب تغيير حالتها." },
+                { chapter: "الوحدة 4: الطاقة والقوى", title: "الصوت والضوء", desc: "كيف ينتقل الصوت وكيف يتكون الضوء وتجارب الظلال والاهتزازات." },
+                { chapter: "الوحدة 4: الطاقة والقوى", title: "الحركة والقوى", desc: "استكشاف كيف تؤثر قوى الدفع والسحب في تغيير موضع الأجسام وسرعتها." }
+            ],
+            "الثالث الابتدائي": [
+                { chapter: "الوحدة 1: الوراثة والبيئة", title: "التكاثر ودورة حياة النباتات والحيوانات", desc: "مراحل نمو المخلوقات الحية والتشابه والاختلاف بين الآباء والأبناء." },
+                { chapter: "الوحدة 1: الوراثة والبيئة", title: "التكيف والبقاء في البيئات", desc: "كيف تتكيف الحيوانات والنباتات مع ظروف البرد الشديد أو الجفاف." },
+                { chapter: "الوحدة 2: الأرض ومواردها", title: "الصخور والمعادن والتربة", desc: "أنواع التربة ومكوناتها واستخدامات الصخور والمعادن في حياتنا اليومية." },
+                { chapter: "الوحدة 3: المخلوقات الحية تنمو وتتغير", title: "أجهزة جسم الإنسان", desc: "التعرف على الجهاز الهيكلي، العضلي، والهضمي والدورة الدموية ووظائفها الأساسية." },
+                { chapter: "الوحدة 3: المخلوقات الحية تنمو وتتغير", title: "الصحة الغذائية والرياضية", desc: "أهمية الغذاء المتوازن وممارسة الرياضة للحفاظ على صحة الأجسام وقوتها." },
+                { chapter: "الوحدة 4: الطاقة والكهرباء والمغناطيسية", title: "الدوائر الكهربائية البسيطة", desc: "كيف يضيء المصباح الكهربائي وتوصيل الدوائر الكهربائية بأمان." },
+                { chapter: "الوحدة 4: الطاقة والكهرباء والمغناطيسية", title: "المغناطيس وقوته", desc: "استكشاف أقطاب المغناطيس وتنافرها وتجاذبها والم المواد التي تنجذب إليه." }
+            ],
+            "الرابع الابتدائي": [
+                { chapter: "الوحدة 1: ممالك المخلوقات الحية", title: "الخلايا وتصنيف المخلوقات الحية", desc: "دراسة الخلايا وأساسيات تصنيف المخلوقات الحية في ممالكها." },
+                { chapter: "الوحدة 2: المملكة الحيوانية", title: "الحيوانات اللافقارية والفقارية وأجهزتها", desc: "التعرف على خصائص الحيوانات اللافقارية والفقارية وأهم أجهزة أجسامها." },
+                { chapter: "الوحدة 3: الأنظمة البيئية", title: "استكشاف والعلاقات والتغيرات في الأنظمة البيئية", desc: "دراسة مقدمة النظم البيئية، شبكات العلاقات الغذائية والتغيرات البيئية." },
+                { chapter: "الوحدة 4: الأمراض والعدوى", title: "الأمراض المعدية وطرق انتقالها", desc: "مفاهيم الأمراض وكيفية الوقاية منها وانتقال العدوى." },
+                { chapter: "الوحدة 5: التغذية والصحة", title: "الغذاء المتوازن والمحافظة على الصحة", desc: "دراسة الاحتياجات الغذائية السليمة والعناية بالصحّة العامة." },
+                { chapter: "الوحدة 6: المادة والقوى والطاقة", title: "المادة وخصائصها والقوى والحركة", desc: "القياس، حالات المادة، المخاليط، القوى والحركة، والطاقة (الحرارة)." }
+            ],
+            "الخامس الابتدائي": [
+                { chapter: "الوحدة 1: ممالك المخلوقات الحية", title: "تصنيف المخلوقات الحية والنباتات", desc: "التصنيف العلمي ومكونات وخصائص النباتات." },
+                { chapter: "الوحدة 2: الآباء والأبناء", title: "التكاثر ودورات الحياة", desc: "مفاهيم التكاثر الحيوي ومراحل دورات حياة الكائنات." },
+                { chapter: "الوحدة 3: الأنظمة البيئية", title: "التفاعلات والدورات والتغيرات البيئية", desc: "العلاقات في الأنظمة البيئية، التكيف والبقاء، ودورات العناصر في الطبيعة." },
+                { chapter: "الوحدة 4: أرضنا المتغيرة", title: "معالم سطح الأرض وعملياتها ومواردها", desc: "التضاريس، العمليات المؤثرة على سطح الأرض، ومصادر الطاقة، الهواء والماء." },
+                { chapter: "الوحدة 5: المادة", title: "أنواع المادة والتغيرات الفيزيائية والكيميائية", desc: "العناصر، الفلزات واللافلزات، والتغيرات الفيزيائية والكيميائية وحالات المادة." },
+                { chapter: "الوحدة 6: الطاقة والقوى", title: "الشغل والآلات البسيطة والصوت والضوء", desc: "الطاقة، الآلات البسيطة، خصائص الصوت والضوء وتطبيقاتها." }
+            ],
+            "السادس الابتدائي": [
+                { chapter: "الوحدة 1: الخلايا والوراثة", title: "الخلية النباتية والحيوانية وانقسامها والوراثة", desc: "نظرية الخلية، مقارنة الخلايا، الانقسام الخلوي، والوراثة والصفات." },
+                { chapter: "الوحدة 2: عمليات الحياة", title: "عمليات الحياة في النباتات، المخلوقات الدقيقة، والإنسان والحيوان", desc: "التنفس والهضم والدوران والإخراج والحركة والإحساس." },
+                { chapter: "الوحدة 3: الأنظمة البيئية ومواردها", title: "السلاسل الغذائية ومقارنة الأنظمة والتربة", desc: "هرم الطاقة، السلاسل والشبكات، حماية موارد الأرض والتربة." },
+                { chapter: "الوحدة 4: المادة والخصائص الكيميائية", title: "الأحماض والقواعد والتغيرات الكيميائية", desc: "مفاهيم الأحماض والقواعد وتفاعلاتها والتغيرات الكيميائية." },
+                { chapter: "الوحدة 5: القوى والطاقة", title: "استعمال القوى والحركة وتسارعها", desc: "قوانين الحركة وقوى التسارع والاستعمالات التطبيقية." },
+                { chapter: "الوحدة 6: الكهرباء والمغناطيسية", title: "الدوائر الكهربائية والتيار والمغناطيس", desc: "الدوائر الكهربائية، التيار، المغناطيس والمولدات الكهربائية." }
+            ]
+        };
+
+        function getStorageKeyForLessons() { return 'mansour_custom_lessons_science_' + currentGrade + '_v5'; }
+        function getStorageKeyForStudents() { return 'mansour_students_science_' + currentGrade + '_v5'; }
+        function getStorageKeyForStatus() { return 'mansour_lesson_status_science_' + currentGrade + '_v5'; }
+        function getStorageKeyForMastery() { return 'mansour_lesson_mastery_science_' + currentGrade + '_v5'; }
+
+        let lessons = JSON.parse(localStorage.getItem(getStorageKeyForLessons())) || gradeScienceData[currentGrade];
+        let students = JSON.parse(localStorage.getItem(getStorageKeyForStudents())) || [];
+        let lessonStatus = JSON.parse(localStorage.getItem(getStorageKeyForStatus())) || {};
+        let lessonMastery = JSON.parse(localStorage.getItem(getStorageKeyForMastery())) || {};
+
+        function checkBackupReminder() {
+            const lastBackup = localStorage.getItem('mansour_last_backup_date');
+            const now = Date.now();
+            if (!lastBackup || (now - Number(lastBackup) > 7 * 24 * 60 * 60 * 1000)) {
+                setTimeout(() => {
+                    alert('📌 تذكير دوري لحماية بياناتك:\nمرت فترة على آخر نسختك الاحتياطية. يوصى بالنقر على زر (تصدير JSON) لحفظ بياناتك وتجنب ضياعها.');
+                    localStorage.setItem('mansour_last_backup_date', now.toString());
+                }, 3000);
+            }
+        }
+
+        function changeGradeLevel(grade) {
+            currentGrade = grade;
+            localStorage.setItem('mansour_current_grade_science_v5', currentGrade);
+            
+            lessons = JSON.parse(localStorage.getItem(getStorageKeyForLessons())) || gradeScienceData[currentGrade];
+            students = JSON.parse(localStorage.getItem(getStorageKeyForStudents())) || [];
+            lessonStatus = JSON.parse(localStorage.getItem(getStorageKeyForStatus())) || {};
+            lessonMastery = JSON.parse(localStorage.getItem(getStorageKeyForMastery())) || {};
+
+            activeQueryClass = '';
+            selectedStudentIndex = '';
+            currentPage = 1;
+            document.getElementById('studentSearchInput').value = '';
+            document.getElementById('bulkSendPanel').style.display = 'none';
+
+            document.getElementById('curriculumTitle').textContent = `📚 دليل مقرر العلوم - ${currentGrade}`;
+
+            renderLessons();
+            renderMasteryDropdowns();
+            render();
+            showToast(`🔄 تم الانتقال إلى بيانات ${currentGrade}`);
+        }
+
+        function onCurriculumDropdownChange(idx) {
+            const box = document.getElementById('selectedLessonDetailsBox');
+            if(idx === "") {
+                box.style.display = 'none';
+                return;
+            }
+            const l = lessons[idx];
+            box.style.display = 'block';
+            box.innerHTML = `<strong>${l.chapter}</strong><br><span style="color:var(--primary); font-size:15px;">${l.title}</span><br><br>${l.desc}`;
+        }
+
+        function renderLessons() {
+            const selectLesson = document.getElementById('selectLesson');
+            selectLesson.innerHTML = '<option value="">-- اختر موضوع الدرس والمهارة --</option>';
+
+            const selectMotivation = document.getElementById('selectMotivation');
+            selectMotivation.innerHTML = '<option value="">-- اختر الرسالة التشجيعية --</option>';
+
+            const bulkSelectHomeworkLesson = document.getElementById('bulkSelectHomeworkLesson');
+            bulkSelectHomeworkLesson.innerHTML = '<option value="">-- اختر الدرس لتحديد الواجب --</option>';
+
+            const curriculumDropdown = document.getElementById('curriculumDropdownSelect');
+            curriculumDropdown.innerHTML = '<option value="">-- اختر الدرس أو الوحدة للاستعراض --</option>';
+
+            let lessonsGroup = '';
+            let executedCount = 0;
+            const mainLessonsContainer = document.getElementById('mainLessonsContainer');
+            mainLessonsContainer.innerHTML = '';
+
+            lessons.forEach((l, idx) => { 
+                const isExecuted = !!lessonStatus[idx];
+                if(isExecuted) executedCount++;
+
+                lessonsGroup += `<option value="lesson-${idx}">[${l.chapter}] ${l.title}</option>`; 
+                curriculumDropdown.innerHTML += `<option value="${idx}">[${l.chapter}] ${l.title}</option>`;
+                selectLesson.innerHTML += `<option value="${idx}">[${l.chapter}] ${l.title}</option>`;
+                
+                const card = document.createElement('div');
+                card.className = `lesson-card ${isExecuted ? 'executed' : 'not-executed'}`;
+                card.innerHTML = `
+                    <div>
+                        <span class="ch-badge">${l.chapter}</span>
+                        <strong>${l.title}</strong>
+                        <p>${l.desc}</p>
+                    </div>
+                    <div class="lesson-actions">
+                        <button class="status-toggle-btn ${isExecuted ? 'done' : 'pending'}" onclick="toggleLessonStatus(${idx})">
+                            ${isExecuted ? '✅ منفذ' : '⏳ قيد الانتظار'}
+                        </button>
+                        <button class="btn-action btn-danger" onclick="deleteLesson(${idx})">🗑️ حذف</button>
+                    </div>
+                `;
+                mainLessonsContainer.appendChild(card);
+            });
+
+            bulkSelectHomeworkLesson.innerHTML += lessonsGroup;
+
+            let motivGroup = '<optgroup label="🌟 الرسائل التشجيعية والتحفيزية">';
+            customMotivations.forEach((m, idx) => { 
+                motivGroup += `<option value="motiv-${idx}">${m.title}</option>`; 
+                selectMotivation.innerHTML += `<option value="motiv-${idx}">${m.title}</option>`;
+            });
+            motivGroup += '</optgroup>';
+
+            document.getElementById('totalExecutedLessons').textContent = `${executedCount} / ${lessons.length}`;
+            renderMasteryDropdowns();
+        }
+
+        function renderMasteryDropdowns() {
+            const masterySelect = document.getElementById('masteryLessonSelect');
+            const currentVal = masterySelect.value;
+            masterySelect.innerHTML = '<option value="">-- اختر الدرس لتحديد حالة الإتقان --</option>';
+            lessons.forEach((l, idx) => {
+                masterySelect.innerHTML += `<option value="${idx}">[${l.chapter}] ${l.title}</option>`;
+            });
+            if(lessons[currentVal]) masterySelect.value = currentVal;
+            renderMasteryTable();
+        }
+
+        function toggleLessonStatus(index) {
+            lessonStatus[index] = !lessonStatus[index];
+            localStorage.setItem(getStorageKeyForStatus(), JSON.stringify(lessonStatus));
+            renderLessons();
+            showToast('🔄 تم تحديث حالة الدرس وحفظه!');
+        }
+
+        function addNewLesson() {
+            const title = document.getElementById('newLessonTitle').value.trim();
+            const desc = document.getElementById('newLessonDesc').value.trim();
+            if (!title) { alert('يرجى كتابة عنوان الوحدة أو الدرس'); return; }
+
+            lessons.push({ chapter: "إضافات المعلم", title: title, desc: desc || 'لا توجد تفاصيل إضافية' });
+            localStorage.setItem(getStorageKeyForLessons(), JSON.stringify(lessons));
+
+            document.getElementById('newLessonTitle').value = '';
+            document.getElementById('newLessonDesc').value = '';
+
+            renderLessons();
+            showToast('➕ تم إضافة الدرس وحفظه!');
+        }
+
+        function addBatchLessons() {
+            const textData = document.getElementById('bulkLessonsInput').value.trim();
+            if(!textData) { alert('الرجاء إدخال بيانات الدروس.'); return; }
+
+            const lines = textData.split('\n');
+            let addedCount = 0;
+
+            lines.forEach(line => {
+                if(!line.trim()) return;
+                const parts = line.split('|');
+                if(parts.length >= 2) {
+                    lessons.push({
+                        chapter: parts[0].trim(),
+                        title: parts[1].trim(),
+                        desc: parts[2] ? parts[2].trim() : 'لا توجد تفاصيل إضافية'
+                    });
+                    addedCount++;
+                } else {
+                    lessons.push({
+                        chapter: "إضافات دفعية",
+                        title: parts[0].trim(),
+                        desc: 'لا توجد تفاصيل إضافية'
+                    });
+                    addedCount++;
+                }
+            });
+
+            if(addedCount > 0) {
+                localStorage.setItem(getStorageKeyForLessons(), JSON.stringify(lessons));
+                document.getElementById('bulkLessonsInput').value = '';
+                renderLessons();
+                showToast(`📥 تمت إضافة (${addedCount}) دروس بنجاح!`);
+            } else {
+                alert('لم يتم العثور على صيغة دروس صحيحة.');
+            }
+        }
+
+        function deleteLesson(index) {
+            if (confirm('هل أنت متأكد من حذف هذا الدرس من المنهج؟')) {
+                lessons.splice(index, 1);
+                localStorage.setItem(getStorageKeyForLessons(), JSON.stringify(lessons));
+                renderLessons();
+                showToast('🗑️ تم حذف الدرس بنجاح!');
+            }
+        }
+
+        function showToast(msg = '✅ تم الحفظ تلقائياً!') {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.style.display = 'block';
+            setTimeout(() => { toast.style.display = 'none'; }, 2000);
+        }
+
+        function render() {
+            let totalPossibleMastery = students.length * lessons.length;
+            let achievedMastery = 0;
+
+            students.forEach((s, sIdx) => {
+                lessons.forEach((l, lIdx) => {
+                    if (lessonMastery[sIdx] && lessonMastery[sIdx][lIdx]) {
+                        achievedMastery++;
+                    }
+                });
+            });
+
+            let masteryPercentage = totalPossibleMastery > 0 ? Math.round((achievedMastery / totalPossibleMastery) * 100) : 0;
+
+            let sumPart = 0, sumHw = 0, sumAbs = 0, sumProj = 0, sumMsg = 0;
+
+            students.forEach((s) => {
+                sumPart += Number(s.participation) || 0;
+                sumHw += Number(s.homework) || 0;
+                sumAbs += Number(s.absence) || 0;
+                sumProj += Number(s.projects) || 0;
+                sumMsg += Number(s.messages) || 0;
+            });
+
+            document.getElementById('totalStudents').textContent = students.length;
+            document.getElementById('totalSkills').textContent = masteryPercentage + '%';
+            document.getElementById('totalParticipation').textContent = sumPart;
+            document.getElementById('totalHomework').textContent = sumHw;
+            document.getElementById('totalAbsence').textContent = sumAbs;
+            document.getElementById('totalProjects').textContent = sumProj;
+            document.getElementById('totalMessagesSent').textContent = sumMsg;
+
+            renderStudentsTable();
+            renderClassesQuery();
+            renderMasteryTable();
+        }
+
+        function addStudent() {
+            const name = document.getElementById('studentName').value.trim();
+            const sClass = document.getElementById('studentClassCustom').value.trim() || currentGrade;
+            const phone = document.getElementById('studentPhone').value.trim();
+
+            if(!name) { alert('الرجاء إدخال اسم الطالب'); return; }
+            if(phone && phone.length !== 10) { alert('رقم جوال ولي الأمر يجب أن يكون مكوناً من 10 أرقام بالضبط'); return; }
+
+            students.push({
+                name: name,
+                classCustom: sClass,
+                phone: phone,
+                absence: 0,
+                participation: 0,
+                homework: 0,
+                projects: 0,
+                messages: 0,
+                exam1: 0,
+                exam2: 0
+            });
+
+            localStorage.setItem(getStorageKeyForStudents(), JSON.stringify(students));
+            document.getElementById('studentName').value = '';
+            document.getElementById('studentPhone').value = '';
+            render();
+            showToast('➕ تمت إضافة الطالب بنجاح!');
+        }
+
+        function renderStudentsTable() {
+            const tbody = document.getElementById('studentsTbody');
+            tbody.innerHTML = '';
+            
+            let filtered = students;
+            if(activeQueryClass) {
+                filtered = filtered.filter(s => (s.classCustom || currentGrade) === activeQueryClass);
+            }
+
+            const searchVal = document.getElementById('filterStudentNameInput').value.trim().toLowerCase();
+            if(searchVal) {
+                filtered = filtered.filter(s => s.name.toLowerCase().includes(searchVal));
+            }
+
+            const totalRows = filtered.length;
+            const totalPages = Math.ceil(totalRows / rowsPerPage) || 1;
+            if(currentPage > totalPages) currentPage = totalPages;
+
+            const startIdx = (currentPage - 1) * rowsPerPage;
+            const pageData = filtered.slice(startIdx, startIdx + rowsPerPage);
+
+            if(pageData.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="9" style="padding: 15px; opacity: 0.7;">لا توجد بيانات طلاب.</td></tr>`;
+                document.getElementById('paginationInfo').textContent = `عرض 0 من 0`;
+                document.getElementById('pageIndicator').textContent = `1 / 1`;
+                return;
+            }
+
+            pageData.forEach((s) => {
+                const globalIndex = students.indexOf(s);
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><strong>${s.name}</strong></td>
+                    <td><span class="class-badge">${s.classCustom || currentGrade}</span></td>
+                    <td><input type="text" maxlength="10" value="${s.phone || ''}" style="width:80px; text-align:center; padding:2px;" oninput="updateStudentPhone(${globalIndex}, this.value)" placeholder="05xxxxxxxx"></td>
+                    <td>
+                        <div class="stepper-control">
+                            <button class="stepper-btn" onclick="stepStudentField(${globalIndex}, 'absence', 1)">▲</button>
+                            <span class="stepper-val">${s.absence || 0}</span>
+                            <button class="stepper-btn down" onclick="stepStudentField(${globalIndex}, 'absence', -1)">▼</button>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="stepper-control">
+                            <button class="stepper-btn" onclick="stepStudentField(${globalIndex}, 'participation', 1)">▲</button>
+                            <span class="stepper-val">${s.participation || 0}</span>
+                            <button class="stepper-btn down" onclick="stepStudentField(${globalIndex}, 'participation', -1)">▼</button>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="stepper-control">
+                            <button class="stepper-btn" onclick="stepStudentField(${globalIndex}, 'homework', 1)">▲</button>
+                            <span class="stepper-val">${s.homework || 0}</span>
+                            <button class="stepper-btn down" onclick="stepStudentField(${globalIndex}, 'homework', -1)">▼</button>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="stepper-control">
+                            <button class="stepper-btn" onclick="stepStudentField(${globalIndex}, 'projects', 1)">▲</button>
+                            <span class="stepper-val">${s.projects || 0}</span>
+                            <button class="stepper-btn down" onclick="stepStudentField(${globalIndex}, 'projects', -1)">▼</button>
+                        </div>
+                    </td>
+                    <td>${s.messages || 0}</td>
+                    <td class="no-print"><button class="btn-action btn-danger" onclick="deleteStudent(${globalIndex})">حذف</button></td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            document.getElementById('paginationInfo').textContent = `عرض من ${startIdx + 1} إلى ${Math.min(startIdx + rowsPerPage, totalRows)} من أصل ${totalRows} طالب`;
+            document.getElementById('pageIndicator').textContent = `${currentPage} / ${totalPages}`;
+        }
+
+        function stepStudentField(index, field, change) {
+            let currentVal = Number(students[index][field]) || 0;
+            let newVal = currentVal + change;
+            if(newVal < 0) newVal = 0;
+            students[index][field] = newVal;
+            localStorage.setItem(getStorageKeyForStudents(), JSON.stringify(students));
+            render();
+        }
+
+        function updateStudentPhone(index, val) {
+            students[index].phone = val.trim();
+            localStorage.setItem(getStorageKeyForStudents(), JSON.stringify(students));
+        }
+
+        function updateStudentField(index, field, val) {
+            students[index][field] = Number(val) || 0;
+            localStorage.setItem(getStorageKeyForStudents(), JSON.stringify(students));
+            render();
+        }
+
+        function deleteStudent(index) {
+            if(confirm('هل أنت متأكد من حذف هذا الطالب؟')) {
+                students.splice(index, 1);
+                localStorage.setItem(getStorageKeyForStudents(), JSON.stringify(students));
+                delete lessonMastery[index];
+                let newMastery = {};
+                Object.keys(lessonMastery).forEach(k => {
+                    let oldIdx = Number(k);
+                    if(oldIdx > index) {
+                        newMastery[oldIdx - 1] = lessonMastery[k];
+                    } else if(oldIdx < index) {
+                        newMastery[oldIdx] = lessonMastery[k];
+                    }
+                });
+                lessonMastery = newMastery;
+                localStorage.setItem(getStorageKeyForMastery(), JSON.stringify(lessonMastery));
+                render();
+                showToast('🗑️ تم حذف الطالب بنجاح!');
+            }
+        }
+
+        function changePage(direction) {
+            currentPage += direction;
+            if(currentPage < 1) currentPage = 1;
+            renderStudentsTable();
+        }
+
+        function filterTableByStudentInput() {
+            currentPage = 1;
+            renderStudentsTable();
+        }
+
+        function renderClassesQuery() {
+            const container = document.getElementById('classesQueryContainer');
+            container.innerHTML = '';
+
+            const classesSet = new Set();
+            students.forEach(s => classesSet.add(s.classCustom || currentGrade));
+
+            const allWrapper = document.createElement('div');
+            allWrapper.className = `class-btn-wrapper ${activeQueryClass === '' ? 'active' : ''}`;
+            allWrapper.innerHTML = `<button class="class-query-btn" onclick="filterByClass('')">📋 كافة الصفوف</button>`;
+            container.appendChild(allWrapper);
+
+            classesSet.forEach(cName => {
+                const wrapper = document.createElement('div');
+                wrapper.className = `class-btn-wrapper ${activeQueryClass === cName ? 'active' : ''}`;
+                wrapper.innerHTML = `
+                    <button class="class-query-btn" onclick="filterByClass('${cName}')">📁 ${cName}</button>
+                    <button class="class-delete-btn" onclick="deleteEntireClass('${cName}', event)" title="حذف الصف بالكامل">🗑️</button>
+                `;
+                container.appendChild(wrapper);
+            });
+            
+            updateExamClassSelect(classesSet);
+            updateMasteryClassSelect(classesSet);
+            updateBulkTargetSelect(classesSet);
+        }
+
+        function filterByClass(cName) {
+            activeQueryClass = cName;
+            currentPage = 1;
+            renderClassesQuery();
+            renderStudentsTable();
+        }
+
+        function deleteEntireClass(cName, event) {
+            event.stopPropagation();
+            if(confirm(`هل أنت متأكد من حذف جميع طلاب الصف (${cName})؟`)) {
+                students = students.filter(s => (s.classCustom || currentGrade) !== cName);
+                localStorage.setItem(getStorageKeyForStudents(), JSON.stringify(students));
+                if(activeQueryClass === cName) activeQueryClass = '';
+                render();
+                showToast('🗑️ تمت إزالة الصف بنجاح!');
+            }
+        }
+
+        function updateExamClassSelect(classesSet) {
+            const select = document.getElementById('examClassSelect');
+            const currentVal = select.value;
+            select.innerHTML = '<option value="">-- اختر الصف لعرض وسجل الاختبارات --</option>';
+            classesSet.forEach(cName => {
+                select.innerHTML += `<option value="${cName}">${cName}</option>`;
+            });
+            if(classesSet.has(currentVal)) select.value = currentVal;
+            renderExamsTable();
+        }
+
+        function updateMasteryClassSelect(classesSet) {
+            const select = document.getElementById('masteryClassSelect');
+            const currentVal = select.value;
+            select.innerHTML = '<option value="">-- جميع الصفوف --</option>';
+            classesSet.forEach(cName => {
+                select.innerHTML += `<option value="${cName}">${cName}</option>`;
+            });
+            if(classesSet.has(currentVal)) select.value = currentVal;
+        }
+
+        function updateBulkTargetSelect(classesSet) {
+            const select = document.getElementById('bulkTargetClass');
+            select.innerHTML = '<option value="ALL">جميع الصفوف</option>';
+            classesSet.forEach(cName => {
+                select.innerHTML += `<option value="${cName}">${cName}</option>`;
+            });
+        }
+
+        function renderMasteryTable() {
+            const lessonIdx = document.getElementById('masteryLessonSelect').value;
+            const selectedClass = document.getElementById('masteryClassSelect').value;
+            const tbody = document.getElementById('masteryTbody');
+            const summaryBox = document.getElementById('masterySummaryBox');
+            tbody.innerHTML = '';
+
+            if(lessonIdx === "") {
+                tbody.innerHTML = `<tr><td colspan="4" style="padding: 15px; opacity: 0.7;">الرجاء اختيار الدرس من القائمة أعلاه.</td></tr>`;
+                summaryBox.style.display = 'none';
+                return;
+            }
+
+            let filteredStudents = students;
+            if(selectedClass) {
+                filteredStudents = students.filter(s => (s.classCustom || currentGrade) === selectedClass);
+            }
+
+            if(filteredStudents.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" style="padding: 15px; opacity: 0.7;">لا توجد بيانات طلاب مسجلة.</td></tr>`;
+                summaryBox.style.display = 'none';
+                return;
+            }
+
+            summaryBox.style.display = 'block';
+            let masteredCount = 0;
+            let reviewCount = 0;
+
+            filteredStudents.forEach(s => {
+                const globalIdx = students.indexOf(s);
+                const isMastered = lessonMastery[globalIdx] && lessonMastery[globalIdx][lessonIdx];
+
+                if(isMastered) masteredCount++;
+                else reviewCount++;
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><strong>${s.name}</strong></td>
+                    <td><span class="class-badge">${s.classCustom || currentGrade}</span></td>
+                    <td>
+                        <span style="font-weight:bold; color: ${isMastered ? 'var(--success)' : 'var(--danger)'};">
+                            ${isMastered ? '✅ متقن' : '⚠️ مراجعة'}
+                        </span>
+                    </td>
+                    <td class="no-print">
+                        <button class="mastery-btn ${isMastered ? 'mastered' : 'review'}" onclick="toggleStudentMastery(${globalIdx}, ${lessonIdx})">
+                            ${isMastered ? 'تحويل لـ مراجعة' : 'تحويل لـ متقن'}
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            document.getElementById('countMastered').textContent = masteredCount;
+            document.getElementById('countReview').textContent = reviewCount;
+        }
+
+        function toggleStudentMastery(studentIdx, lessonIdx) {
+            if(!lessonMastery[studentIdx]) {
+                lessonMastery[studentIdx] = {};
+            }
+            lessonMastery[studentIdx][lessonIdx] = !lessonMastery[studentIdx][lessonIdx];
+            localStorage.setItem(getStorageKeyForMastery(), JSON.stringify(lessonMastery));
+            renderMasteryTable();
+            render();
+            showToast('🎯 تم تحديث حالة الإتقان بنجاح!');
+        }
+
+        function renderExamsTable() {
+            const selectedClass = document.getElementById('examClassSelect').value;
+            const tbody = document.getElementById('examsTbody');
+            const analysisBox = document.getElementById('examsAnalysisBox');
+            tbody.innerHTML = '';
+
+            if(!selectedClass) {
+                tbody.innerHTML = `<tr><td colspan="5" style="padding: 15px; opacity: 0.7;">الرجاء اختيار الصف الدراسي من القائمة أعلاه.</td></tr>`;
+                analysisBox.style.display = 'none';
+                return;
+            }
+
+            const classStudents = students.filter(s => (s.classCustom || currentGrade) === selectedClass);
+            if(classStudents.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" style="padding: 15px; opacity: 0.7;">لا يوجد طلاب مسجلون في هذا الصف.</td></tr>`;
+                analysisBox.style.display = 'none';
+                return;
+            }
+
+            analysisBox.style.display = 'block';
+            let sum1 = 0, sum2 = 0;
+
+            classStudents.forEach(s => {
+                const globalIndex = students.indexOf(s);
+                sum1 += Number(s.exam1) || 0;
+                sum2 += Number(s.exam2) || 0;
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><strong>${s.name}</strong></td>
+                    <td><span class="class-badge">${s.classCustom || currentGrade}</span></td>
+                    <td><input type="text" inputmode="numeric" pattern="[0-9]*" value="${s.exam1 !== undefined ? s.exam1 : 0}" style="width:40px; text-align:center; padding:2px;" oninput="updateExamScore(${globalIndex}, 'exam1', this.value)"></td>
+                    <td><input type="text" inputmode="numeric" pattern="[0-9]*" value="${s.exam2 !== undefined ? s.exam2 : 0}" style="width:40px; text-align:center; padding:2px;" oninput="updateExamScore(${globalIndex}, 'exam2', this.value)"></td>
+                    <td class="no-print">
+                        <a href="https://wa.me/966${s.phone ? s.phone.replace(/^0+/, '') : ''}?text=${encodeURIComponent('عزيزي ولي أمر الطالب ' + s.name + '، نود إفادتكم بدرجات اختبارات مادة العلوم:\n- اختبار الفترة الأولى: ' + (s.exam1 || 0) + '/20\n- اختبار الفترة الثانية: ' + (s.exam2 || 0) + '/20\nمع تمنياتنا له بدوام التوفيق والنجاح.')}" target="_blank" class="whatsapp-btn" style="padding:4px 6px; font-size:11px; margin-top:0;" onclick="incrementMessageCount(${globalIndex})">📤 إرسال</a>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            document.getElementById('avgExam1').textContent = (sum1 / classStudents.length).toFixed(1) + ' / 20';
+            document.getElementById('avgExam2').textContent = (sum2 / classStudents.length).toFixed(1) + ' / 20';
+        }
+
+        function updateExamScore(index, field, val) {
+            students[index][field] = val === "" ? 0 : Number(val);
+            localStorage.setItem(getStorageKeyForStudents(), JSON.stringify(students));
+            
+            const selectedClass = document.getElementById('examClassSelect').value;
+            if(selectedClass) {
+                const classStudents = students.filter(s => (s.classCustom || currentGrade) === selectedClass);
+                let sum1 = 0, sum2 = 0;
+                classStudents.forEach(s => {
+                    sum1 += Number(s.exam1) || 0;
+                    sum2 += Number(s.exam2) || 0;
+                });
+                document.getElementById('avgExam1').textContent = (sum1 / classStudents.length).toFixed(1) + ' / 20';
+                document.getElementById('avgExam2').textContent = (sum2 / classStudents.length).toFixed(1) + ' / 20';
+            }
+        }
+
+        function printSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (!section) return;
+            
+            document.querySelectorAll('.section-card').forEach(el => el.classList.remove('printing-section'));
+            section.classList.add('printing-section');
+            window.print();
+        }
+
+        function printStudentReport() {
+            printSection('studentReportSection');
+        }
+
+        function exportExcel() {
+            if(students.length === 0) { alert('لا توجد بيانات طلاب لتصديرها!'); return; }
+            const dataToExport = students.map((s, idx) => ({
+                "م": idx + 1,
+                "اسم الطالب": s.name,
+                "الصف": s.classCustom || currentGrade,
+                "رقم الجوال": s.phone || '',
+                "الغياب": s.absence || 0,
+                "المشاركة": s.participation || 0,
+                "الواجبات": s.homework || 0,
+                "التجارب": s.projects || 0,
+                "اختبار الفترة الأولى": s.exam1 || 0,
+                "اختبار الفترة الثانية": s.exam2 || 0
+            }));
+
+            const ws = XLSX.utils.json_to_sheet(dataToExport);
+            if(!ws['!views']) ws['!views'] = [];
+            ws['!views'].push({ rightToLeft: true });
+
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "سجل طلاب العلوم");
+            XLSX.writeFile(wb, `سجل_العلوم_${currentGrade}.xlsx`);
+            showToast('📊 تم تصدير ملف الإكسل بنجاح!');
+        }
+
+        function exportToGoogleSheetsCSV() {
+            if(students.length === 0) { alert('لا توجد بيانات طلاب لتصديرها!'); return; }
+            let csvContent = "\uFEFFاسم الطالب,الصف,رقم الجوال,الغياب,المشاركة,الواجبات,التجارب,اختبار 1,اختبار 2\n";
+            students.forEach(s => {
+                csvContent += `"${s.name}","${s.classCustom || currentGrade}","${s.phone || ''}",${s.absence || 0},${s.participation || 0},${s.homework || 0},${s.projects || 0},${s.exam1 || 0},${s.exam2 || 0}\n`;
+            });
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.setAttribute('href', url);
+            a.setAttribute('download', `GoogleSheets_Backup_${currentGrade}.csv`);
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            showToast('☁️ تم التصدير بنجاح!');
+        }
+
+        function importExcel(event) {
+            const file = event.target.files[0];
+            if(!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, { type: 'array' });
+                    const firstSheetName = workbook.SheetNames[0];
+                    const worksheet = workbook.Sheets[firstSheetName];
+                    const jsonData = XLSX.utils.sheet_to_json(worksheet);
+
+                    if(!jsonData || jsonData.length === 0) {
+                        alert('ملف الإكسل فارغ أو غير مطابق للهيكلة المطلوبة.');
+                        return;
+                    }
+
+                    let count = 0;
+                    jsonData.forEach(row => {
+                        const name = row["اسم الطالب"] || row["اسم الطالبة"] || row["الاسم"] || "";
+                        const sClass = row["الصف"] || row["الصف/الشعبة"] || row["Class"] || currentGrade;
+                        const phone = row["رقم الجوال"] || row["الجوال"] || row["Phone"] || "";
+
+                        if(name.toString().trim() !== "") {
+                            students.push({
+                                name: name.toString().trim(),
+                                classCustom: sClass.toString().trim(),
+                                phone: phone.toString().trim(),
+                                absence: Number(row["الغياب"] || 0),
+                                participation: Number(row["المشاركة"] || row["المشاركات"] || 0),
+                                homework: Number(row["الواجبات"] || 0),
+                                projects: Number(row["التجارب"] || 0),
+                                messages: Number(row["الرسائل"] || 0),
+                                exam1: Number(row["اختبار الفترة الأولى"] || 0),
+                                exam2: Number(row["اختبار الفترة الثانية"] || 0)
+                            });
+                            count++;
+                        }
+                    });
+
+                    localStorage.setItem(getStorageKeyForStudents(), JSON.stringify(students));
+                    render();
+                    showToast(`📂 تمت استعادة (${count}) طالب بنجاح!`);
+                } catch(err) {
+                    console.error(err);
+                    alert('حدث خطأ أثناء قراءة ملف الإكسل.');
+                } finally {
+                    event.target.value = '';
+                }
+            };
+            reader.readAsArrayBuffer(file);
+        }
+
+        function exportData() {
+            const backupPackage = {
+                students: students,
+                lessons: lessons,
+                lessonStatus: lessonStatus,
+                lessonMastery: lessonMastery,
+                customMotivations: customMotivations
+            };
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backupPackage));
+            const dlAnchor = document.createElement('a');
+            dlAnchor.setAttribute("href", dataStr);
+            dlAnchor.setAttribute("download", `سجل_العلوم_${currentGrade}_backup.json`);
+            document.body.appendChild(dlAnchor);
+            dlAnchor.click();
+            dlAnchor.remove();
+            localStorage.setItem('mansour_last_backup_date', Date.now().toString());
+            showToast('💾 تم تصدير النسخة الاحتياطية بنجاح!');
+        }
+
+        function importData(event) {
+            const file = event.target.files[0];
+            if(!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const imported = JSON.parse(e.target.result);
+                    if(Array.isArray(imported)) {
+                        students = imported;
+                        localStorage.setItem(getStorageKeyForStudents(), JSON.stringify(students));
+                    } else if(imported && typeof imported === 'object') {
+                        if(imported.students) {
+                            students = imported.students;
+                            localStorage.setItem(getStorageKeyForStudents(), JSON.stringify(students));
+                        }
+                        if(imported.lessons) {
+                            lessons = imported.lessons;
+                            localStorage.setItem(getStorageKeyForLessons(), JSON.stringify(lessons));
+                        }
+                        if(imported.lessonStatus) {
+                            lessonStatus = imported.lessonStatus;
+                            localStorage.setItem(getStorageKeyForStatus(), JSON.stringify(lessonStatus));
+                        }
+                        if(imported.lessonMastery) {
+                            lessonMastery = imported.lessonMastery;
+                            localStorage.setItem(getStorageKeyForMastery(), JSON.stringify(lessonMastery));
+                        }
+                    }
+                    renderLessons();
+                    render();
+                    showToast('📂 تم استرجاع كافة البيانات بنجاح!');
+                } catch(err) {
+                    alert('خطأ في قراءة ملف JSON.');
+                } finally {
+                    event.target.value = '';
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function filterStudentDropdown() {
+            const keyword = document.getElementById('studentSearchInput').value.trim().toLowerCase();
+            const listContainer = document.getElementById('studentDropdownList');
+            listContainer.innerHTML = '';
+
+            if(!keyword) {
+                listContainer.style.display = 'none';
+                return;
+            }
+
+            const matches = students.filter(s => s.name.toLowerCase().includes(keyword));
+            if(matches.length === 0) {
+                listContainer.style.display = 'none';
+                return;
+            }
+
+            listContainer.style.display = 'block';
+            matches.forEach(m => {
+                const globalIdx = students.indexOf(m);
+                const item = document.createElement('div');
+                item.className = 'searchable-item';
+                item.innerHTML = `<strong>${m.name}</strong> <span class="class-badge" style="float:left;">${m.classCustom || currentGrade}</span>`;
+                item.onclick = function() {
+                    selectStudentForDetails(globalIdx);
+                    listContainer.style.display = 'none';
+                    document.getElementById('studentSearchInput').value = m.name;
+                };
+                listContainer.appendChild(item);
+            });
+        }
+
+        function showStudentDropdown() {
+            if(document.getElementById('studentSearchInput').value.trim()) {
+                filterStudentDropdown();
+            }
+        }
+
+        function selectStudentForDetails(index) {
+            selectedStudentIndex = index;
+            const s = students[index];
+            document.getElementById('studentCard').style.display = 'block';
+            document.getElementById('selectedName').textContent = s.name;
+            document.getElementById('selectedClassBadge').textContent = s.classCustom || currentGrade;
+            document.getElementById('sdParticipation').textContent = s.participation || 0;
+            document.getElementById('sdHomework').textContent = s.homework || 0;
+            document.getElementById('sdAbsence').textContent = s.absence || 0;
+            
+            let studentMasteredCount = 0;
+            lessons.forEach((l, lIdx) => {
+                if (lessonMastery[index] && lessonMastery[index][lIdx]) studentMasteredCount++;
+            });
+            document.getElementById('sdSkills').textContent = studentMasteredCount;
+            document.getElementById('sdProjects').textContent = s.projects || 0;
+            document.getElementById('sdMessages').textContent = s.messages || 0;
+            document.getElementById('sdPhone').textContent = s.phone || 'لا يوجد';
+            
+            updateLessonMsg();
+            updateMotivationMsg();
+        }
+
+        function updateLessonMsg() {
+            if(selectedStudentIndex === '') return;
+            const s = students[selectedStudentIndex];
+            const lessonIdx = document.getElementById('selectLesson').value;
+            const preview = document.getElementById('lessonMsgPreview');
+            const btn = document.getElementById('whatsappLessonBtn');
+
+            if(lessonIdx === "") {
+                preview.textContent = "اختر موضوع الدرس والمهارة أعلاه...";
+                btn.href = "#";
+                return;
+            }
+
+            const l = lessons[lessonIdx];
+            const msg = `عزيزي ولي أمر الطالب / ${s.name}\nنحيطكم علماً بأننا تناولنا اليوم في مادة العلوم درس:\n📘 (${l.chapter}) - ${l.title}\n💡 المفاهيم والتجارب المرتبطة: ${l.desc}\nنرجو منكم متابعة ابنكم وتعزيز استكشافاته العلمية.\nمع تقديـرنا، المعلم: ${TEACHER_NAME} - ${SCHOOL_NAME}`;
+            
+            preview.textContent = msg;
+            const formattedPhone = s.phone ? `966${s.phone.replace(/^0+/, '')}` : '';
+            btn.href = `https://wa.me/${formattedPhone}?text=` + encodeURIComponent(msg);
+        }
+
+        function updateMotivationMsg() {
+            if(selectedStudentIndex === '') return;
+            const s = students[selectedStudentIndex];
+            const motivVal = document.getElementById('selectMotivation').value;
+            const preview = document.getElementById('motivationMsgPreview');
+            const btn = document.getElementById('whatsappMotivationBtn');
+
+            if(motivVal === "") {
+                preview.textContent = "اختر الرسالة لعرض نص الشكر والتحفيز...";
+                btn.href = "#";
+                return;
+            }
+
+            let text = "";
+            if(motivVal.startsWith('motiv-')) {
+                const idx = motivVal.split('-')[1];
+                text = customMotivations[idx].text;
+            }
+
+            const finalMsg = `إلى ولي أمر الطالب / ${s.name}\n\n${text}\n\nمع خالص الشكر، المعلم: ${TEACHER_NAME} - ${SCHOOL_NAME}`;
+            preview.textContent = finalMsg;
+            const formattedPhone = s.phone ? `966${s.phone.replace(/^0+/, '')}` : '';
+            btn.href = `https://wa.me/${formattedPhone}?text=` + encodeURIComponent(finalMsg);
+        }
+
+        function sendFullReportWhatsApp() {
+            if(selectedStudentIndex === '') return;
+            const s = students[selectedStudentIndex];
+            
+            let studentMasteredCount = 0;
+            lessons.forEach((l, lIdx) => {
+                if (lessonMastery[selectedStudentIndex] && lessonMastery[selectedStudentIndex][lIdx]) studentMasteredCount++;
+            });
+
+            const msg = `عزيزي ولي أمر الطالب / ${s.name} (${s.classCustom || currentGrade})\nنحيطكم علماً بمستوى ابنكم وتقييمه في مادة العلوم حتى تاريخه:\n\n- المشاركات: ${s.participation || 0}\n- الواجبات: ${s.homework || 0}\n- أيام الغياب: ${s.absence || 0}\n- الدروس المتقنة: ${studentMasteredCount} من ${lessons.length}\n- التجارب: ${s.projects || 0}\n- اختبار الفترة الأولى: ${s.exam1 || 0}/20\n- اختبار الفترة الثانية: ${s.exam2 || 0}/20\n\nنشكر تعاونكم المستمر.\nمع تقديـرنا، المعلم: ${TEACHER_NAME} - ${SCHOOL_NAME}`;
+            
+            incrementMessageCount(selectedStudentIndex);
+            const formattedPhone = s.phone ? `966${s.phone.replace(/^0+/, '')}` : '';
+            window.open(`https://wa.me/${formattedPhone}?text=` + encodeURIComponent(msg), '_blank');
+        }
+
+        function addNewMotivation() {
+            const title = document.getElementById('newMotivationTitle').value.trim();
+            const text = document.getElementById('newMotivationText').value.trim();
+            if(!title || !text) { alert('الرجاء كتابة عنوان ونصح الرسالة التشجيعية'); return; }
+
+            customMotivations.push({ id: Date.now().toString(), title: title, text: text });
+            localStorage.setItem('mansour_custom_motivations_science_v5', JSON.stringify(customMotivations));
+            
+            document.getElementById('newMotivationTitle').value = '';
+            document.getElementById('newMotivationText').value = '';
+            
+            renderLessons();
+            showToast('🌟 تمت إضافة رسالة التحفيز بنجاح!');
+        }
+
+        function incrementMessageCount(targetIdx = selectedStudentIndex) {
+            if(targetIdx !== '' && students[targetIdx]) {
+                students[targetIdx].messages = (students[targetIdx].messages || 0) + 1;
+                localStorage.setItem(getStorageKeyForStudents(), JSON.stringify(students));
+                render();
+                if(selectedStudentIndex !== '') selectStudentForDetails(selectedStudentIndex);
+            }
+        }
+
+        function updateBulkHomeworkMsgPreview() {
+            const val = document.getElementById('bulkSelectHomeworkLesson').value;
+            const details = document.getElementById('bulkHomeworkDetails').value.trim();
+            const note = document.getElementById('bulkHomeworkExtraNote').value.trim();
+            const preview = document.getElementById('bulkHomeworkMsgPreview');
+
+            if(!val) {
+                preview.textContent = "اختر الصف والدرس وأدخل تفاصيل الواجب...";
+                return;
+            }
+
+            let lessonTitle = "";
+            let chapterName = "";
+            if(val.startsWith('lesson-')) {
+                const idx = val.split('-')[1];
+                const l = lessons[idx];
+                chapterName = l.chapter;
+                lessonTitle = l.title;
+            }
+
+            let msg = `أولياء الأمور الأفاضل، نود إحاطتكم بأن واجب مادة العلوم للدرس:\n📘 (${chapterName}) - ${lessonTitle}\n`;
+            if(details) {
+                msg += `📝 المطلوب حلّه: ${details}\n`;
+            } else {
+                msg += `📝 المطلوب: حل تدريبات وأسئلة الدرس في الكتاب المدرسي.\n`;
+            }
+
+            if(note) {
+                msg += `📌 ملاحظات: ${note}\n`;
+            }
+
+            msg += `\nنرجو الحرص على حل الواجب وإرساله في الموعد المحدد.\nمع خالص الشكر، المعلم: ${TEACHER_NAME} - ${SCHOOL_NAME}`;
+            preview.textContent = msg;
+        }
+
+        function prepareBulkHomeworkBatch() {
+            const targetClass = document.getElementById('bulkTargetClass').value;
+            const val = document.getElementById('bulkSelectHomeworkLesson').value;
+            if(!val) { alert('الرجاء اختيار الدرس لتحديد الواجب المراد إرساله'); return; }
+
+            let targetStudents = students;
+            if(targetClass !== 'ALL') {
+                targetStudents = students.filter(s => (s.classCustom || currentGrade) === targetClass);
+            }
+
+            targetStudents = targetStudents.filter(s => s.phone && s.phone.trim() !== '');
+            if(targetStudents.length === 0) { 
+                alert('لا توجد أرقام جوالات مسجلة للطلاب المستهدفين'); 
+                return; 
+            }
+
+            const baseMsg = document.getElementById('bulkHomeworkMsgPreview').textContent;
+            const panel = document.getElementById('bulkSendPanel');
+            const listContainer = document.getElementById('bulkSendListContainer');
+            listContainer.innerHTML = '';
+
+            targetStudents.forEach(s => {
+                const globalIdx = students.indexOf(s);
+                const formattedPhone = s.phone ? `966${s.phone.replace(/^0+/, '')}` : '';
+                const finalMsg = `عزيزي ولي أمر الطالب / ${s.name}\n\n` + baseMsg;
+                const link = `https://wa.me/${formattedPhone}?text=` + encodeURIComponent(finalMsg);
+
+                const itemDiv = document.createElement('div');
+                itemDiv.style.display = 'flex';
+                itemDiv.style.flexDirection = 'column';
+                itemDiv.style.gap = '5px';
+                itemDiv.style.background = 'var(--card-bg)';
+                itemDiv.style.padding = '8px';
+                itemDiv.style.borderRadius = '6px';
+                itemDiv.style.border = '1px solid rgba(0,0,0,0.1)';
+
+                itemDiv.innerHTML = `
+                    <div style="font-size:12px;"><strong>${s.name}</strong> <span class="class-badge" style="font-size:10px;">${s.classCustom || currentGrade}</span></div>
+                    <a href="${link}" target="_blank" class="whatsapp-btn" style="margin-top:0; padding:6px; font-size:11px;" onclick="markMessageSentFromBulk(${globalIdx}, this)">📤 إرسال</a>
+                `;
+                listContainer.appendChild(itemDiv);
+            });
+
+            panel.style.display = 'block';
+            showToast(`🚀 تم تجهيز قائمة إرسال لعدد (${targetStudents.length}) ولي أمر!`);
+        }
+
+        function markMessageSentFromBulk(globalIdx, btnElement) {
+            if(students[globalIdx]) {
+                students[globalIdx].messages = (students[globalIdx].messages || 0) + 1;
+                localStorage.setItem(getStorageKeyForStudents(), JSON.stringify(students));
+                render();
+                btnElement.style.background = '#6b7280';
+                btnElement.textContent = '✅ تم';
+            }
+        }
+
+        function setTheme(themeName) {
+            document.body.className = themeName;
+            localStorage.setItem('mansour_science_theme_v5', themeName);
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        window.onscroll = function() {
+            const topBtn = document.getElementById('scrollToTopBtn');
+            if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+                topBtn.style.display = 'flex';
+            } else {
+                topBtn.style.display = 'none';
+            }
+        };
+
+        const savedTheme = localStorage.getItem('mansour_science_theme_v5');
+        if(savedTheme) document.body.className = savedTheme;
+
+        let deferredPrompt;
+        const installBtn = document.getElementById('pwaInstallBtn');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            if (installBtn) {
+                installBtn.style.display = 'flex';
+            }
+        });
+
+        function installPWAApp() {
+            if (!deferredPrompt) return;
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then((choiceResult) => {
+                if (choiceResult.outcome === 'accepted') {
+                    showToast('🎉 تم تثبيت اللوحة على شاشة جهازك بنجاح!');
+                }
+                deferredPrompt = null;
+                installBtn.style.display = 'none';
+            });
+        }
+
+        window.addEventListener('appinstalled', () => {
+            if (installBtn) installBtn.style.display = 'none';
+            deferredPrompt = null;
+        });
+
+        window.onload = function() {
+            renderLessons();
+            render();
+            checkBackupReminder();
+
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('./sw.js').catch((err) => {
+                    console.log('Service Worker registration skipped or failed: ', err);
+                });
+            }
+        };
+
+        function backupAllData() {
+            const fullBackup = {
+                students: typeof students !== 'undefined' ? students : [],
+                lessons: typeof lessons !== 'undefined' ? lessons : [],
+                timestamp: new Date().toLocaleString('ar-SA')
+            };
+
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(fullBackup));
+            const dlAnchor = document.createElement('a');
+            dlAnchor.setAttribute("href", dataStr);
+            dlAnchor.setAttribute("download", `نسخة_احتياطية_الداش_بورد_${new Date().toISOString().slice(0,10)}.json`);
+            document.body.appendChild(dlAnchor);
+            dlAnchor.click();
+            dlAnchor.remove();
+            
+            showToast('💾 تم حفظ النسخة الاحتياطية على جهازك بنجاح!');
+        }
+
+        function restoreDashboardData(event) {
+            const file = event.target.files[0];
+            if(!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const imported = JSON.parse(e.target.result);
+                    if(imported) {
+                        if(imported.students) localStorage.setItem(getStorageKeyForStudents(), JSON.stringify(imported.students));
+                        if(imported.lessons) localStorage.setItem(getStorageKeyForLessons(), JSON.stringify(imported.lessons));
+                        alert('📂 تم استرجاع البيانات بنجاح!');
+                        location.reload();
+                    } else {
+                        alert('ملف النسخة الاحتياطية غير صالح.');
+                    }
+                } catch(err) {
+                    alert('خطأ في قراءة ملف JSON.');
+                } finally {
+                    event.target.value = '';
+                }
+            };
+            reader.readAsText(file);
+        }
     </script>
 </body>
 </html>
