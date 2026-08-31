@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مدرسة داؤود بن عروة الثقفي الابتدائية | نظام الاختبارات والتحليل (بنون)</title>
+    <title>مدرسة داؤود بن عروة الثقفي الابتدائية | نظام الاختبارات والتحليل (طلاب)</title>
     <style>
         :root {
             --primary: #1e3a8a;
@@ -87,7 +87,7 @@
 
         label { font-weight: bold; font-size: 13px; color: var(--primary); }
 
-        select, input[type="text"], input[type="number"] {
+        select, input[type="text"], input[type="number"], textarea {
             width: 100%;
             padding: 10px;
             border: 2px solid #d1d5db;
@@ -98,7 +98,7 @@
             outline: none;
             box-sizing: border-box;
         }
-        select:focus, input:focus { border-color: var(--secondary); }
+        select:focus, input:focus, textarea:focus { border-color: var(--secondary); }
 
         .stepper-container {
             display: flex;
@@ -153,6 +153,7 @@
         .btn-success { background: var(--success); }
         .btn-whatsapp { background: #059669; }
         .btn-warning { background: #d97706; }
+        .btn-purple { background: #7c3aed; }
 
         .touch-grading-card {
             background: #fff;
@@ -331,7 +332,7 @@
 
     <div class="container">
         <div class="header-nav no-print">
-            <h2 id="mainSchoolTitle">مدرسة داؤود بن عروة الثقفي الابتدائية (بنون)</h2>
+            <h2 id="mainSchoolTitle">مدرسة داؤود بن عروة الثقفي الابتدائية (طلاب)</h2>
             <a href="index.html" class="back-btn">⬅ لوحة التحكم الرئيسية</a>
         </div>
 
@@ -395,6 +396,33 @@
             </div>
         </div>
 
+        <!-- قسم إضافة سؤال جديد يدويًا أو عبر توليد ذكي -->
+        <div class="section-box no-print" style="border: 2px dashed #7c3aed; background: #faf5ff;">
+            <h3 style="color: #7c3aed;">✨ إضافة أو توليد سؤال جديد لدرسك</h3>
+            <div class="form-grid">
+                <div class="form-group" style="grid-column: 1 / -1;">
+                    <label>نص السؤال أو الدرس الجديد:</label>
+                    <textarea id="customQuestionText" rows="2" placeholder="اكتب نص السؤال هنا (مثال: ما هو جمع كلمة قلم؟)..."></textarea>
+                </div>
+                <div class="form-group"><label>الخيار (أ):</label><input type="text" id="customOptA" placeholder="الخيار الأول"></div>
+                <div class="form-group"><label>الخيار (ب):</label><input type="text" id="customOptB" placeholder="الخيار الثاني"></div>
+                <div class="form-group"><label>الخيار (ج):</label><input type="text" id="customOptC" placeholder="الخيار الثالث"></div>
+                <div class="form-group"><label>الخيار (د):</label><input type="text" id="customOptD" placeholder="الخيار الرابع"></div>
+                <div class="form-group">
+                    <label>الإجابة الصحيحة:</label>
+                    <select id="customCorrectOpt">
+                        <option value="أ">أ</option>
+                        <option value="ب">ب</option>
+                        <option value="ج">ج</option>
+                        <option value="د">د</option>
+                    </select>
+                </div>
+            </div>
+            <div style="margin-top: 10px; display: flex; gap: 10px;">
+                <button class="action-btn btn-purple" onclick="addNewCustomQuestion()">➕ حفظ وإضافة السؤال لبنك الأسئلة</button>
+            </div>
+        </div>
+
         <div class="section-box">
             <h3>⚙️ ثانياً: توليد ورقة الاختبار المعتمدة (10 فقرات ثابتة وعشوائية)</h3>
             <div class="no-print">
@@ -405,7 +433,7 @@
                 <div class="exam-header">
                     <h3>المملكة العربية السعودية - وزارة التعليم</h3>
                     <h4 id="printSchoolTitle">مدرسة داؤود بن عروة الثقفي الابتدائية</h4>
-                    <p id="printTeacherName" style="margin:2px 0; font-size:11.5px; color:#4b5563; font-weight:bold;"></p>
+                    <p id="printTeacherName" style="margin:2px 0; font-size:11.5px; color:#4b5563; font-weight:bold;">معلم المادة: منصور عامر الرحيلي</p>
                     <p id="printTestInfo" style="margin:2px 0; font-size:12px; color:#555; font-weight:bold;"></p>
                     <div id="printModelBadge" style="margin:4px 0; font-size:12px; color:#0d9488; font-weight:bold;"></div>
                     <div style="margin-top: 6px; border: 1.2px solid #64748b; padding: 4px 10px; border-radius: 5px; display:inline-block; font-size:11.5px;">
@@ -477,7 +505,7 @@
             </table>
             <div style="margin-top: 25px; display: flex; justify-content: space-between; font-size: 12px; font-weight: bold;">
                 <div>ختم المدرسة / الإدارة: ........................</div>
-                <div id="sheetPrintTeacherSign">اسم معلم المادة: ........................</div>
+                <div id="sheetPrintTeacherSign">اسم معلم المادة: منصور عامر الرحيلي</div>
             </div>
         </div>
 
@@ -522,9 +550,9 @@
         const accurateGradeQuestionBank = {
             "الأول الابتدائي": {
                 "science": [
-                    { q: "أي مما يلي يُعد من أجزاء النبات الرئيسية التي تمتص الماء؟", options: ["الرجل", "الجذر", "الید", "الذيل"], correct: "ب" },
+                    { q: "أي مما يلي يُعد من أجزاء النبات الرئيسية التي تمتص الماء؟", options: ["الرجل", "الجذر", "اليد", "الذيل"], correct: "ب" },
                     { q: "ما هو مصدر النور والحرارة الأساسي على سطح الأرض؟", options: ["القمر", "الشمس", "المصباح", "النجوم"], correct: "ب" },
-                    { q: "أي الحيوانات التالية يعيش في الماء؟", options: ["العصفور", "الأسماك", "الجمل", "القط"], correct: "ب" },
+                    { q: "أي الحيوانات التالية يعيش في الماء؟", options: ["العصفور", "الأسماك", "الجمل", "القطة"], correct: "ب" },
                     { q: "ما الحالة الفيزيائية للماء المتجمد (ثلج)؟", options: ["سائلة", "غازية", "صلبة", "بخار"], correct: "ج" },
                     { q: "في أي فصل ترتفع درجة الحرارة وتشتد؟", options: ["الصيف", "الربيع", "الخريف", "الشتاء"], correct: "أ" },
                     { q: "ما هو الحيوان الذي يُغطي جسمه الريش؟", options: ["القطة", "الأسد", "العصفور", "الخروف"], correct: "ج" },
@@ -544,6 +572,18 @@
                     { q: "مع أحمد ٤ تفاحات وأخذ تفاحتان، فكم أصبح معه؟", options: ["٥", "٦", "٣", "٢"], correct: "ب" },
                     { q: "طول قلم رصاص قصير يقاس بـ:", options: ["المتر", "السنتيمتر", "الكيلومتر", "الجرام"], correct: "ب" },
                     { q: "أي الأشكال التالية يمثل دائرة؟", options: ["شكل مربع", "شكل دائري منحني مغلق", "شكل مثلث", "شكل مستطيل"], correct: "ب" }
+                ],
+                "arabic": [
+                    { q: "ما هو الحرف الذي يبدأ به اسم (موز)؟", options: ["ب", "م", "ل", "د"], correct: "ب" },
+                    { q: "أي الحروف التالية يعتبر حرف مد بالألف؟", options: ["بَ", "ما", "مُ", "مِ"], correct: "ب" },
+                    { q: "الكلمة التي تحوي حرف التاء المربوطة هي:", options: ["تفاحة", "قلم", "ولد", "باب"], correct: "أ" },
+                    { q: "ما نوع المد في كلمة (نور)؟", options: ["مد بالألف", "مد بالواو", "مد بالياء", "بدون مد"], correct: "ب" },
+                    { q: "كلمة (باب) تحتوي على مد بـ:", options: ["الواو", "الياء", "الألف", "ليس لها مد"], correct: "ج" },
+                    { q: "الكلمة المبدؤة باللام القمرية فيما يلي:", options: ["الشمس", "الولد", "السماء", "الرمان"], correct: "ب" },
+                    { q: "ضد كلمة (طويل) هو:", options: ["قصير", "كبير", "جميل", "نظيف"], correct: "أ" },
+                    { q: "أي الكلمات التالية تنتهي بتاء مفتوحة؟", options: ["مدرسة", "بنت", "فاطمة", "كرة"], correct: "ب" },
+                    { q: "ما هو الحرف الممدود في كلمة (توت)؟", options: ["التاء الأولى", "الواو", "التاء الثانية", "ليس هناك ممدود"], correct: "ج" },
+                    { q: "الكلمة التي تعبر عن الجمع فيما يلي:", options: ["كتاب", "كتب", "قلم", "طالب"], correct: "ب" }
                 ]
             },
             "الثاني الابتدائي": {
@@ -567,9 +607,21 @@
                     { q: "الشكل الهندسي الذي له ٤ أضلاع متساوية هو:", options: ["المثلث", "المربع", "الدائرة", "المستطيل"], correct: "ب" },
                     { q: "ناتج طرح: ٥٠ - ٢٠ يساوي:", options: ["٢٠", "٣٠", "٤٠", "١٠"], correct: "ب" },
                     { q: "اكتب العدد مائتان وخمسة بالأرقام:", options: ["٢٥٠", "٢٠٥", "٥٠٢", "٢٥"], correct: "ب" },
-                    { q: "إذا كان خالد يملك ٣ فئات من نقد ١٠ ريالات، فكم إجمالي المبلغ؟", options: ["١٠ ريالات", "٢٠ ريالاً", "٣٠ ريالاً", "٤٠ ريالاً"], correct: "ج" },
+                    { q: "إذا كان محمد يملك ٣ فئات من نقد ١٠ ريالات، فكم إجمالي المبلغ؟", options: ["١٠ ريالات", "٢٠ ريالاً", "٣٠ ريالاً", "٤٠ ريالاً"], correct: "ج" },
                     { q: "التقدير الأنسب لطول باب الفصل هو:", options: ["٢ متر", "٢ سنتيمتر", "٢٠٠ كيلومتر", "١٠ مليمتر"], correct: "أ" },
-                    { q: "مع حامد ٤٥ قلماً وأعطى زميله ١٥ قلماً، كم بقي معه؟", options: ["٣٠ قلماً", "٦٠ قلماً", "٢٠ قلماً", "٢٥ قلماً"], correct: "أ" }
+                    { q: "مع خالد ٤٥ قلماً وأعطى زميله ١٥ قلماً، كم بقي معه؟", options: ["٣٠ قلماً", "٦٠ قلماً", "٢٠ قلماً", "٢٥ قلماً"], correct: "أ" }
+                ],
+                "arabic": [
+                    { q: "الكلمة المبدوءة بلام قمرية فيما يلي هي:", options: ["الشمس", "الدرس", "القمر", "السمك"], correct: "ج" },
+                    { q: "التاء المفتوحة في آخر الكلمة تنطق عند الوقف عليها:", options: ["هاءً دائماً", "تاءً دائماً", "هاءً أو تاءً", "ألفاً"], correct: "ب" },
+                    { q: "نوع الجملة (يحب الطالب العلم) هي جملة:", options: ["اسمية", "فعلية", "استفهامية", "تعجبية"], correct: "ب" },
+                    { q: "ضد كلمة (نظيف) هو:", options: ["جميل", "متسخ", "سريع", "كبير"], correct: "ب" },
+                    { q: "الكلمة المنونة تنويناً بالفتح الصحيح فيما يلي:", options: ["كتاباً", "كتابٌ", "كتابٍ", "الكتابَ"], correct: "أ" },
+                    { q: "حرف الجر المناسب في جملة (أكتب القلم) هو:", options: ["في", "بـ", "من", "على"], correct: "ب" },
+                    { q: "مفرد كلمة (مسلمون) هو:", options: ["مسلمة", "مسلم", "سالم", "إسلام"], correct: "ب" },
+                    { q: "الكلمة التي تحتوي على حرف مشدد هي:", options: ["كتب", "محمد", "قلم", "ولد"], correct: "ب" },
+                    { q: "اسم الموصوف بـ (هذا) للمفرد المذكر:", options: ["المعلمة", "البنت", "الطالب", "الوردةة"], correct: "ج" },
+                    { q: "نوع التنوين في كلمة (قلمٌ) هو تنوين:", options: ["فتح", "ضم", "كسر", "سكون"], correct: "ب" }
                 ]
             },
             "الثالث الابتدائي": {
@@ -596,6 +648,18 @@
                     { q: "كم ضلعاً لشكل الخماسي المنتظم؟", options: ["٤", "٥", "٦", "٧"], correct: "ب" },
                     { q: "إذا بدأ الفصل الدراسي الساعة ٧:٠٠ واستمر ٤ ساعات، فمتى ينتهي؟", options: ["١٠:٠٠ صباحاً", "١١:٠٠ صباحاً", "١٢:٠٠ ظهراً", "١:٠٠ ظهراً"], correct: "ب" },
                     { q: "قرب العدد ٧٤ لأقرب عشرة:", options: ["٧٠", "٨٠", "٧٥", "٦٠"], correct: "أ" }
+                ],
+                "arabic": [
+                    { q: "أسلوب الاستفهام الصحيح للسؤال عن المكان هو:", options: ["متى", "أين", "كيف", "لماذا"], correct: "ب" },
+                    { q: "الكلمة التي تحوي همزة متوسطة على الألف هي:", options: ["سأل", "سئل", "سؤل", "قرأ"], correct: "أ" },
+                    { q: "المؤنث من كلمة (طالب) هو:", options: ["معلمة", "طالبة", "مجلد", "كاتبة"], correct: "ب" },
+                    { q: "جمع كلمة (مسلم) هو:", options: ["مسلمات", "مسلمون", "مسلمان", "سالمون"], correct: "ب" },
+                    { q: "نوع الكلمة (يكتب) هل هي:", options: ["اسم", "فعل", "حرف", "صفة"], correct: "ب" },
+                    { q: "أسلوب التمني يبدأ عادة بأداة:", options: ["لعل", "ليت", "هل", "يا"], correct: "ب" },
+                    { q: "الكلمة المكتوبة بتاء مربوطة صحيحة:", options: ["توت", "شجرة", "بيت", "زيت"], correct: "ب" },
+                    { q: "المثنى من كلمة (طالب) هو:", options: ["طلاب", "طالبان", "طالبتان", "طالبون"], correct: "ب" },
+                    { q: "ضد كلمة (ذكي) هو:", options: ["غبي", "نشيط", "مجتهد", "سريع"], correct: "أ" },
+                    { q: "الكلمة التي تبدأ بهمزة قطع هي:", options: ["استخرج", "أحمد", "اكتب", "انطلق"], correct: "ب" }
                 ]
             },
             "الرابع الابتدائي": {
@@ -622,6 +686,18 @@
                     { q: "أي الأعداد التالية يقبل القسمة على ٢ و ٥ معاً؟", options: ["٢٤", "٣٥", "٤٠", "٤٣"], correct: "ج" },
                     { q: "قياس الزاوية القائمة بالدرجات يساوي:", options: ["٩٠ درجة", "١٨٠ درجة", "٤٥ درجة", "٣٦٠ درجة"], correct: "أ" },
                     { q: "المضلع الذي له ٦ أضلاع يسمى:", options: ["مخمس", "مسدس", "مسبع", "مثلث"], correct: "ب" }
+                ],
+                "arabic": [
+                    { q: "الاسم المعرف بأداة التعريف (الـ) يسمى:", options: ["نكرة", "معرفة", "ضميراً", "فعلاً"], correct: "ب" },
+                    { q: "أداة النفي المناسبة للجملة (..... يحضر خالد أمس) هي:", options: ["لن", "لم", "لا", "ما"], correct: "ب" },
+                    { q: "الهمزة المتطرفة في كلمة (لؤلؤ) كتبت على:", options: ["الألف", "الواو", "الياء", "السطر"], correct: "ب" },
+                    { q: "أركان الجملة الاسمية هي:", options: ["فعل وفاعل", "مبتدأ وخبر", "جار ومجرور", "فعل ومفعول"], correct: "ب" },
+                    { q: "نوع الجمع في كلمة (معلمون) هو:", options: ["جمع مذكر سالم", "جمع مؤنث سالم", "جمع تكسير", "مثنى"], correct: "أ" },
+                    { q: "الفعل المضارع في جملة (يكتب الطالب الدرس) مرفوع وعلامة رفعه:", options: ["الفتحة", "الضمة", "السكون", "الكسرة"], correct: "ب" },
+                    { q: "نوع اللام في كلمة (الشمس):", options: ["لام قمرية", "لام شمسية", "ليست لام تعريف", "لام حرف جر"], correct: "ب" },
+                    { q: "جمع التكسير لكلمة (قلم) هو:", options: ["أقلام", "قلمات", "قلمان", "قائلون"], correct: "أ" },
+                    { q: "أسلوب النهي الصحيح للمخاطب:", options: ["لا تلعبْ في الشارع", "لم أذهبْ", "ما رأيتُ أحداً", "لن أكسلَ"], correct: "أ" },
+                    { q: "حرف العطف الذي يفيد الترتيب مع التعقيب:", options: ["و", "فـ", "ثم", "أو"], correct: "ب" }
                 ]
             },
             "الخامس الابتدائي": {
@@ -645,9 +721,20 @@
                     { q: "ما المضاعف المشترك الأصغر (م.م.أ) للعددين ٣ و ٤؟", options: ["٧", "١٢", "٢٤", "٦"], correct: "ب" },
                     { q: "أوجد القاسم المشترك الأكبر (ق.م.أ) للعددين ١٢ و ١٨:", options: ["٣", "٦", "٢", "٤"], correct: "ب" },
                     { q: "ناتج طرح: ١٥.٨ - ٦.٣ يساوي:", options: ["٩.٥", "٩.٢", "١٠.٥", "٨.٥"], correct: "أ" },
-                    { q: "إذا كانت نسبة الطلاب المفضلين لكرة القدم ٧٠٪، فما هو كسرها الاعتيادي في أبسط صورة؟", options: ["٧/١٠", "٣/٤", "١/٢", "٢/٥"], correct: "أ" },
+                    { q: "إذا كانت نسبة الطلاب المفضلي كرة القدم ٧٠٪، فما هو كسرهم الاعتيادي في أبسط صورة؟", options: ["٧/١٠", "٣/٤", "١/٢", "٢/٥"], correct: "أ" },
                     { q: "ما قياس الزاوية المستقيمة بالدرجات؟", options: ["٩٠ درجة", "١٨٠ درجة", "٢٧٠ درجة", "٣٦٠ درجة"], correct: "ب" },
                     { q: "المضلع الذي مجموع قياسات زواياه الداخلية ٣٦٠ درجة وله ٤ أضلاع يسمى:", options: ["مثلث", "رباعي الأضلاع", "خماسي", "سداسي"], correct: "ب" }
+                ],
+                "arabic": [
+                    { q: "نوع العطف في الجملة (جاء محمد وعلي) حرف العطف يفيد:", options: ["الترتيب والتعقيب", "المشاركة المطلقة", "التخيير", "الشك"], correct: "ب" },
+                    { q: "المفعول به في الجملة الفعلية يكون حكمه الإعرابي:", options: ["مرفوعاً", "منصوباً", "مجروراً", "مجزوماً"], correct: "ب" },
+                    { q: "الألف اللينة في آخر الفعل (سعى) كتبت على صورة (ى) لأن أصلها:", options: ["واو", "ياء", "ألف ممدودة", "همزة"], correct: "ب" },
+                    { q: "عند دخول حرف الباء على كلمة (البيت) تصبح:", options: ["بِالبيت", "بِالْبَيْتِ", "بالبيت", "ببيت"], correct: "ب" },
+                    { q: "المبتدأ والخبر في الجملة الاسمية يكونان دائماً:", options: ["منصوبين", "مرفوعين", "مجرورين", "مجزومين"], correct: "ب" },
+                    { q: "علامة نصب المفعول به إذا كان جمع مذكر سالماً هي:", options: ["الفتحة", "الكسرة", "الياء", "الألف"], correct: "ج" },
+                    { q: "الفعل الماضي من الفعل (يكتب):", options: ["كتبَ", "يكتبُ", "اكتبْ", "كاتب"], correct: "أ" },
+                    { q: "الأسلوب اللغوي المعبر عن طلب الإقبال هو:", options: ["النداء", "التعجب", "القسم", "الاستفهام"], correct: "أ" },
+                    { q: "الكلمة المكتوبة بهمزة متوسطة صحيحة على الواو:", options: ["سُؤال", "سَأل", "سُئِل", "بِئْر"], correct: "أ" }
                 ]
             },
             "السادس الابتدائي": {
@@ -655,11 +742,11 @@
                     { q: "ما التركيب الموجود في الخلية النباتية ويمنحها دعامة وقواماً صلباً ولا يوجد في الخلية الحيوانية؟", options: ["الغشاء البلازمي", "الجدار الخلوي", "النواة", "الميتوكوندريا"], correct: "ب" },
                     { q: "ما المادة الكيميائية التي إذا تفاعلت مع القواعد تغير لون كاشف عباد الشمس إلى الأحمر وتتميز بطعم حامض؟", options: ["الأحماض", "الأملاح المتعادلة", "القواعد (القلويات)", "المياه المقطرة"], correct: "أ" },
                     { q: "ما هي القوة التي تغير حركة الأجسام وتنشأ عن تلامس السطوح أو المجالات (مثل الكهرباء الساكنة والمغناطيس)؟", options: ["القوى والحرارة", "القوى الكهربائية والمغناطيسية", "الكتلة البحتة", "الضغط الجوي"], correct: "ب" },
-                    { q: "ما العملية التي تتخلص بها الخلايا الفضلات وتنتج الطاقة باستعمال الأكسجين؟", options: ["البناء الضوئي", "التنفس الخلوي", "الانقسام المتساوي", "النتح"], correct: "ب" },
+                    { q: "ما العملية التي تنقسم فيها الخلية إلى خلايا جديدة مطابقة للخلايا الأصلية؟", options: ["الإنقسام المتساوي (الميتوزي)", "البناء الضوئي", "التبخر", "التكاثر البدائي"], correct: "أ" },
                     { q: "أي المحاليل التالية يعتبر من القواعد (القلويات)؟", options: ["عصير الليمون", "الخل الأبيض", "محلول الصابون أو منظف منزلي", "الماء النقي"], correct: "ج" },
                     { q: "ما الجهاز في جسم الإنسان الذي ينقل الأكسجين والمغذيات لجميع الخلايا؟", options: ["الجهاز الهضمي", "الجهاز الدوري (القلب والأوعية)", "الجهاز التنفسي", "الجهاز العصبي"], correct: "ب" },
                     { q: "ماذا يسمى انتقال الطاقة الكهربائية في مسار مغلق؟", options: ["دائرة كهربائية مغلقة", "دائرة مفتوحة", "مقاومة حرارية", "شحنة ساكنة"], correct: "أ" },
-                    { q: "ما هي العملية التي تنقسم فيها الخلية إلى خلايا جديدة مطابقة للخلايا الأصلية؟", options: ["الإنقسام المتساوي (الميتوزي)", "البناء الضوئي", "التبخر", "التكاثر البدائي"], correct: "أ" },
+                    { q: "ما العملية التي تتخلص بها الخلايا الفضلات وتنتج الطاقة باستعمال الأكسجين؟", options: ["البناء الضوئي", "التنفس الخلوي", "الانقسام المتساوي", "النتح"], correct: "ب" },
                     { q: "أي طبقات الأرض تعد الأعمق وذات حرارة عالية جداً وتتكون من حديد ونيكل؟", options: ["القشرة الأرضية", "الستار (المانتل)", "اللب (الداخلي والخارجي)", "الغلاف الصخري"], correct: "ج" },
                     { q: "ما المفهوم الذي يعبر عن كمية المادة في الجسم؟", options: ["الوزن", "الكتلة", "الحجم", "الكثافة"], correct: "ب" }
                 ],
@@ -674,6 +761,18 @@
                     { q: "ما هو المدى لمجموعة البيانات التالية: (١٢, ١٨, ٢٥, ٣٠, ١٠)؟", options: ["٢٠", "١٨", "٢٥", "٢٠"], correct: "ب" },
                     { q: "حجم منشور رباعي طوله ١٠ سم، عرضه ٤ سم، وارتفاعه ٥ سم يساوي:", options: ["١٩ سم مكعب", "٢٠٠ سم مكعب", "١٠٠ سم مكعب", "٩٠ سم مكعب"], correct: "ب" },
                     { q: "إذا ألقيت مكعب مرقم من ١ إلى ٦، فما احتمال ظهور عدد فردي؟", options: ["١/٦", "١/٢", "١/٣", "٢/٣"], correct: "ب" }
+                ],
+                "arabic": [
+                    { q: "الأفعال الخمسة هي كل فعل مضارع ترفع بـ:", options: ["ثبوت النون", "حذف النون", "الضمة الظاهرة", "الواو"], correct: "أ" },
+                    { q: "النعت (الصفة) في اللغة العربية يتبع المنعوت في:", options: ["الإعراب والتذكير والتأنيث", "الحركة فقط", "نوع الفعل", "الزمن"], correct: "أ" },
+                    { q: "المصدر من الفعل الثلاثي (كتب) هو:", options: ["كاتب", "مكتوب", "كتابة", "يكتب"], correct: "ج" },
+                    { q: "الأسلوب اللغوي في جملة (ليت النجاح قريب) يفيد:", options: ["الترجي", "التمني", "الامر", "النهي"], correct: "ب" },
+                    { q: "الهمزة المتوسطة على السطر في كلمة (مروءة) كتبت كذلك لأنها:", options: ["مفتوحة وقبلها واو مد", "مضمورة", "مكسورة", "ساكنة"], correct: "أ" },
+                    { q: "إعراب الفعل المضارع المعتل الآخر بالواو إذا سبقه حرف نصب (لن):", options: ["يظهر النصب على الواو", "يقدر النصب للتعذر", "ينصب بفتحة ظاهرة على آخره", "يجزم بحذف حرف العلة"], correct: "ج" },
+                    { q: "المعرفة من الألفاظ التالية هي:", options: ["رجل", "مدرسة", "محمد", "كتاب"], correct: "ج" },
+                    { q: "الاسم المجرور بحرف الجر وعلامة جره الياء إذا كان:", options: ["مفرداً", "جمع مؤنث سالم", "جمع مذكر سالم", "جمع تكسير"], correct: "ج" },
+                    { q: "نوع الحرف في كلمة (من) في جملة (أخذت الكتاب من المكتبة):", options: ["حرف عطف", "حرف جر", "حرف نداء", "حرف استثناء"], correct: "ب" },
+                    { q: "الكلمة المبدوءة بهمزة قطع ومفتوحة الهمزة:", options: ["أحمد", "إبراهيم", "ابن", "امرؤ"], correct: "أ" }
                 ]
             }
         };
@@ -699,9 +798,21 @@
                 { q: "ما مساحة مربع طول ضلعه ٦ سم؟", options: ["١٢ سم مربّع", "٣٦ سم مربّع", "٢٤ سم مربّع", "١٨ سم مربّع"], correct: "ب" },
                 { q: "أي الأعداد التالية يعتبر عدداً أولياً؟", options: ["٤", "٦", "٧", "٩"], correct: "ج" },
                 { q: "كم دقيقة في الساعتين؟", options: ["٦٠ دقيقة", "١٢٠ دقيقة", "٩٠ دقيقة", "١٨٠ دقيقة"], correct: "ب" },
-                { q: "إذا كان مع علي ٥٠ ريالاً واشترى لعبة بـ ٢٠ ريالاً، فكم بقي معه؟", options: ["٢٠ ريالاً", "٣٠ ريالاً", "٤٠ ريالاً", "١٠ ريالات"], correct: "ب" },
+                { q: "إذا كان مع فلان ٥٠ ريالاً واشترى لعبة بـ ٢٠ ريالاً، فكم بقي معه؟", options: ["٢٠ ريالاً", "٣٠ ريالاً", "٤٠ ريالاً", "١٠ ريالات"], correct: "ب" },
                 { q: "ما قياس الزاوية القائمة بالدرجات؟", options: ["٤٥ درجة", "٩٠ درجة", "١٨٠ درجة", "٣٦٠ درجة"], correct: "ب" },
                 { q: "الكسر الذي يمثل نصف الكل هو:", options: ["١/٣", "١/٤", "١/٢", "٣/٤"], correct: "ج" }
+            ],
+            "arabic": [
+                { q: "ما هو الكلمة التي تعبر عن فعل ماضي فيما يلي؟", options: ["يكتبُ", "اكتبْ", "كتبَ", "سنكتبُ"], correct: "ج" },
+                { q: "ما هو حرف الجر في جملة (جلس الطالب على الكرسي)؟", options: ["جلس", "الطالب", "على", "الكرسي"], correct: "ج" },
+                { q: "ما جمع كلمة (طالب)؟", options: ["طالبان", "طالبات", "طلاب", "طالبون"], correct: "ج" },
+                { q: "نوع الجملة (الشاطئ جميل) هي جملة:", options: ["اسمية", "فعلية", "استفهامية", "شرطية"], correct: "أ" },
+                { q: "الكلمة التي تحتوي على مد بالياء هي:", options: ["باب", "توت", "تين", "قلم"], correct: "ج" },
+                { q: "علامة رفع المبتدأ والخبر إذا كان مفرداً هي:", options: ["الفتحة", "الضمة", "الكسرة", "السكون"], correct: "ب" },
+                { q: "ضد كلمة (واسع) هو:", options: ["كبير", "ضيق", "جميل", "بعيد"], correct: "ب" },
+                { q: "أي الكلمات التالية تبدأ بهمزة وصل؟", options: ["أحمد", "إسلام", "استخراج", "أمر"], correct: "ج" },
+                { q: "المثنى المذكر لكلمه (طالب) هو:", options: ["طالبان", "طالبتان", "طلاب", "طالبات"], correct: "أ" },
+                { q: "التاء المفتوحة في آخر الكلمة تنطق عند الوصل والوقف:", options: ["هاءً دائماً", "تاءً دائماً", "هاءً أحياناً وتاءً أحياناً", "ألفاً ممدودة"], correct: "ب" }
             ]
         };
 
@@ -735,6 +846,43 @@
             input.value = val;
         }
 
+        function addNewCustomQuestion() {
+            const qText = document.getElementById('customQuestionText').value.trim();
+            const optA = document.getElementById('customOptA').value.trim();
+            const optB = document.getElementById('customOptB').value.trim();
+            const optC = document.getElementById('customOptC').value.trim();
+            const optD = document.getElementById('customOptD').value.trim();
+            const correctVal = document.getElementById('customCorrectOpt').value;
+            const gradeKey = document.getElementById('selectGrade').value;
+            const subjectKey = document.getElementById('selectSubject').value;
+
+            if (!qText || !optA || !optB || !optC || !optD) {
+                alert('الرجاء تعبئة نص السؤال وجميع الخيارات الأربعة.');
+                return;
+            }
+
+            if (!accurateGradeQuestionBank[gradeKey]) {
+                accurateGradeQuestionBank[gradeKey] = {};
+            }
+            if (!accurateGradeQuestionBank[gradeKey][subjectKey]) {
+                accurateGradeQuestionBank[gradeKey][subjectKey] = [];
+            }
+
+            accurateGradeQuestionBank[gradeKey][subjectKey].unshift({
+                q: qText,
+                options: [optA, optB, optC, optD],
+                correct: correctVal
+            });
+
+            document.getElementById('customQuestionText').value = '';
+            document.getElementById('customOptA').value = '';
+            document.getElementById('customOptB').value = '';
+            document.getElementById('customOptC').value = '';
+            document.getElementById('customOptD').value = '';
+
+            alert('✅ تمت إضافة السؤال بنجاح إلى بنك الأسئلة الخاص بهذه المادة والصف!');
+        }
+
         function fetchAllStudentsFromStorage() {
             studentsList = [];
             for (let i = 0; i < localStorage.length; i++) {
@@ -752,11 +900,11 @@
 
             if (studentsList.length === 0) {
                 studentsList = [
-                    { name: "أحمد محمد العتيبي" },
-                    { name: "خالد عبدالله الشمري" },
-                    { name: "سلطان فهد القحطاني" },
-                    { name: "نايف متعب الحربي" },
-                    { name: "بندر تركي المطيري" }
+                    { name: "محمد عبدالله العتيبي" },
+                    { name: "فهد خالد الشمري" },
+                    { name: "سلطان عبد العزيز القحطاني" },
+                    { name: "ناصر متعب الحربي" },
+                    { name: "تركي فهد المطيري" }
                 ];
             }
         }
@@ -979,8 +1127,7 @@
                 if (query === '' || sName.toLowerCase().includes(query)) {
                     foundAny = true;
                     let data = allClassResults[sName];
-                    let savedTeacher = localStorage.getItem('teacherName') || 'المعلم';
-                    let waText = `مدرسة داؤود بن عروة الثقفي الابتدائية (بنون)%0Aولي الأمر الفاضل، نود إفادتكم بحصول الطالب: *${encodeURIComponent(sName)}* %0Aعلى درجة الاختبار: *${toArabicDigits(data.score)} / ${toArabicDigits(maxScore)}* (${toArabicDigits(data.correct)} إجابات صحيحة).%0Aمع تحيات المعلم: *${encodeURIComponent(savedTeacher)}*`;
+                    let waText = `مدرسة داؤود بن عروة الثقفي الابتدائية (طلاب)%0Aولي الأمر الفاضل، نود إفادتكم بحصول الابن: *${encodeURIComponent(sName)}* %0Aعلى درجة الاختبار: *${toArabicDigits(data.score)} / ${toArabicDigits(maxScore)}* (${toArabicDigits(data.correct)} إجابات صحيحة).%0Aمع تحيات المعلم: *منصور عامر الرحيلي*`;
 
                     html += `
                         <div style="display: flex; justify-content: space-between; align-items: center; background: #fff; padding: 8px 12px; margin-bottom: 6px; border-radius: 6px; border: 1px solid #10b981;">
@@ -1017,8 +1164,8 @@
                 let level = "";
                 if (percentage >= 90) level = "متفوق (متقن تماماً)";
                 else if (percentage >= 75) level = "متقن";
-                else if (percentage >= 50) level = "مبكّر / متوسط";
-                else level = "يحتاج تحسين (غير مقتن)";
+                else if (percentage >= 50) level = "مبكر / متوسط";
+                else level = "يحتاج تحسين (غير متقن)";
 
                 tbody.innerHTML += `
                     <tr>
@@ -1034,7 +1181,6 @@
         }
 
         function printAllGradesSheet() {
-            // إخفاء صندوق الأسئلة تماماً عند طباعة كشف الدرجات لمنع ظهور الأسئلة في الطباعة
             const qPreviewBox = document.getElementById('questionsPreviewBox');
             if (qPreviewBox) {
                 qPreviewBox.style.display = 'none';
@@ -1114,28 +1260,6 @@
         }
 
         window.addEventListener('DOMContentLoaded', () => {
-            const savedSchool = localStorage.getItem('schoolName');
-            const savedTeacher = localStorage.getItem('teacherName');
-
-            if (savedSchool) {
-                const mainTitle = document.getElementById('mainSchoolTitle');
-                if (mainTitle) mainTitle.textContent = `${savedSchool} (بنون)`;
-
-                const printTitle = document.getElementById('printSchoolTitle');
-                if (printTitle) printTitle.textContent = savedSchool;
-
-                const sheetSchool = document.getElementById('sheetPrintSchoolName');
-                if (sheetSchool) sheetSchool.textContent = savedSchool;
-            }
-
-            if (savedTeacher) {
-                const printTeacher = document.getElementById('printTeacherName');
-                if (printTeacher) printTeacher.textContent = `معلم المادة: ${savedTeacher}`;
-
-                const sheetTeacherSign = document.getElementById('sheetPrintTeacherSign');
-                if (sheetTeacherSign) sheetTeacherSign.textContent = `اسم معلم المادة: ${savedTeacher}`;
-            }
-
             convertAllNumbersInDOM();
         });
     </script>
