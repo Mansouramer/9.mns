@@ -1,27 +1,19 @@
 /**
  * ===================================================
- * أداة التحضير الذكية الموحدة - ربط الداشبورد وتوليد الأهداف
+ * أداة التحضير التلقائي الشاملة والذكية لمنصة مدرستي
  * ===================================================
  */
-
-// ضع هنا رابط ملف بيانات الدروس أو API الخاص بالداشبورد على Vercel/GitHub
-const DASHBOARD_API_URL = "https://your-dashboard-domain.vercel.app/api/lessons.json";
 
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 window.addEventListener('load', async () => {
-    
-    // 1. إنشاء واجهة التحكم العائمة
     createFloatingControlUI();
 
-    // 2. فحص حالة التشغيل
-    chrome.storage.local.get(['autoPrepRunning', 'defaultStrategy', 'lessonsDB'], async (data) => {
+    chrome.storage.local.get(['autoPrepRunning', 'defaultStrategy'], async (data) => {
         if (!data.autoPrepRunning) return;
 
         const currentUrl = window.location.href;
-        const lessonsDB = data.lessonsDB || {};
-
-        console.log("🤖 محرك التحضير الذكي يعمل الآن...");
+        console.log("🤖 محرك التحضير الآلي يعمل الآن في الصفحة:", currentUrl);
 
         // ===================================================
         // المرحلة الأولى: صفحة الجدول الدراسي
@@ -35,30 +27,29 @@ window.addEventListener('load', async () => {
             });
 
             if (prepButtons.length > 0) {
-                console.log(`تم العثور على ${prepButtons.length} درس غير محضر. جاري فتح الأول...`);
+                console.log(`تم العثور على ${prepButtons.length} درس بانتظار التحضير. جاري الانتقال للدرس الأول...`);
                 await delay(1000);
                 prepButtons[0].click();
             } else {
-                alert("🎉 تم الانتهاء من تحضير كافة حصص الأسبوع بنجاح!");
+                alert("🎉 تم الانتهاء من تحضير كافة حصص الجدول بنجاح!");
                 chrome.storage.local.set({ autoPrepRunning: false });
                 updateUIStatus(false);
             }
         }
 
         // ===================================================
-        // المرحلة الثانية: صفحة تحضير الدرس
+        // المرحلة الثانية: صفحة تحضير الدرس (توليد وتعبئة آلية)
         // ===================================================
         else if (currentUrl.includes("/LessonPrep") || currentUrl.includes("/PrepareLesson") || currentUrl.includes("/Lesson")) {
             await delay(2000);
 
-            // استخراج اسم الدرس الحالي من الصفحة
+            // استخراج اسم الدرس الحالي المكتوب بالصفحة
             let lessonTitleEl = document.querySelector('.lesson-title, h3, h4, #LessonName, .page-header');
-            let lessonTitle = lessonTitleEl ? lessonTitleEl.innerText.trim() : "الدرس الحالي";
+            let lessonName = lessonTitleEl ? lessonTitleEl.innerText.trim() : "المقرر الدراسي";
 
-            // البحث عن بيانات الدرس المجلوبة من الداشبورد
-            let matchedLesson = lessonsDB[lessonTitle] || null;
+            console.log("جاري تحضير الدرس وتوليد الأهداف لـ:", lessonName);
 
-            // أ) تعبئة الاستراتيجية
+            // أ) اختيار استراتيجية التدريس
             let strategySelect = document.querySelector('select[name*="Strategy"], select[id*="Strategy"]');
             if (strategySelect && strategySelect.options.length > 1) {
                 strategySelect.value = data.defaultStrategy || strategySelect.options[1]?.value;
@@ -67,77 +58,48 @@ window.addEventListener('load', async () => {
 
             await delay(800);
 
-            // ب) تعبئة وتوليد الأهداف تلقائياً
-            let goalField = document.querySelector('textarea[name*="Goal"], textarea[id*="Goal"], input[name*="Goal"], textarea[name*="Objective"]');
-            if (goalField) {
-                // استخدام الهدف من الداشبورد أو توليده تلقائياً فورياً
-                let autoGoal = (matchedLesson && matchedLesson.goals) 
-                    ? matchedLesson.goals 
-                    : `أن يتعرف الطالب على مفاهيم درس (${lessonTitle})، ويتقن المهارات الأساسية المقررة بنجاح.`;
-
-                goalField.value = autoGoal;
-                goalField.dispatchEvent(new Event('input', { bubbles: true }));
+            // ب) توليد وتعبئة هدف تعليمي ذكي تلقائياً بناءً على اسم الدرس
+            let goalInput = document.querySelector('textarea[name*="Goal"], textarea[id*="Goal"], input[name*="Goal"], textarea[name*="Objective"]');
+            if (goalInput) {
+                let autoGoal = `أن يتعرف الطالب على المفاهيم والمهارات الأساسية لدرس (${lessonName}) ويطبقها بنجاح.`;
+                goalInput.value = autoGoal;
+                goalInput.dispatchEvent(new Event('input', { bubbles: true }));
             }
 
             await delay(800);
 
-            // ج) تعبئة الواجب
+            // ج) اختيار أول واجب متاح في القائمة المنسدلة
             let homeworkSelect = document.querySelector('select[name*="Homework"], select[id*="Homework"]');
             if (homeworkSelect && homeworkSelect.options.length > 1) {
-                homeworkSelect.selectedIndex = (matchedLesson && matchedLesson.homeworkIndex) ? matchedLesson.homeworkIndex : 1;
+                homeworkSelect.selectedIndex = 1;
                 homeworkSelect.dispatchEvent(new Event('change', { bubbles: true }));
             }
 
             await delay(800);
 
-            // د) تعبئة الإثراء
+            // د) اختيار أول إثراء متاح في القائمة المنسدلة
             let enrichmentSelect = document.querySelector('select[name*="Enrichment"], select[id*="Enrichment"]');
             if (enrichmentSelect && enrichmentSelect.options.length > 1) {
-                enrichmentSelect.selectedIndex = (matchedLesson && matchedLesson.enrichmentIndex) ? matchedLesson.enrichmentIndex : 1;
+                enrichmentSelect.selectedIndex = 1;
                 enrichmentSelect.dispatchEvent(new Event('change', { bubbles: true }));
             }
 
             await delay(1500);
 
-            // هـ) الحفظ التلقائي والعودة للجدول
+            // هـ) الضغط التلقائي على زر الحفظ للعودة للجدول وتحضير الحصة التالية
             let saveButton = document.querySelector('button[type="submit"], #btnSave, .btn-primary, input[type="submit"]');
             if (saveButton) {
-                console.log("جاري حفظ الدرس والعودة للجدول...");
+                console.log("تمت التعبئة والتوليد بنجاح، جاري ضغط زر الحفظ والعودة للجدول...");
                 saveButton.click();
+            } else {
+                console.warn("لم يتم العثور على زر الحفظ، يُرجى التحقق من المحدّدات.");
             }
         }
     });
 });
 
 /**
- * جلب بيانات الدروس تلقائياً من الداشبورد الخارجي
- */
-async function syncDataFromDashboard() {
-    const btnSync = document.getElementById('btnSyncDashboard');
-    btnSync.innerText = "جاري المزامنة... ⏳";
-    btnSync.disabled = true;
-
-    try {
-        const response = await fetch(DASHBOARD_API_URL);
-        if (!response.ok) throw new Error("تعذر الاتصال بالداشبورد");
-
-        const lessonsData = await response.json();
-
-        chrome.storage.local.set({ lessonsDB: lessonsData }, () => {
-            alert("✅ تم مزامنة خطة الدروس والأهداف من الداشبورد بنجاح!");
-            btnSync.innerText = "🔄 مزامنة مع الداشبورد";
-            btnSync.disabled = false;
-        });
-    } catch (error) {
-        console.error("خطأ في المزامنة:", error);
-        alert("⚠️ لم نتمكن من المزامنة تلقائياً. تأكد من رابط الداشبورد. سيتم وضع الأهداف المباشرة تلقائياً.");
-        btnSync.innerText = "🔄 مزامنة مع الداشبورد";
-        btnSync.disabled = false;
-    }
-}
-
-/**
- * إنشاء واجهة التحكم العائمة فوق مدرستي
+ * إنشاء واجهة التحكم العائمة فوق صفحة مدرستي
  */
 function createFloatingControlUI() {
     if (document.getElementById('prep-floating-ui')) return;
@@ -146,41 +108,32 @@ function createFloatingControlUI() {
     uiBox.id = 'prep-floating-ui';
     uiBox.style.cssText = `
         position: fixed; bottom: 20px; left: 20px; z-index: 999999;
-        background: #ffffff; border: 2px solid #10b981; padding: 12px;
+        background: #ffffff; border: 2px solid #10b981; padding: 15px;
         border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-        font-family: system-ui, sans-serif; direction: rtl; width: 270px; text-align: center;
+        font-family: system-ui, sans-serif; direction: rtl; width: 260px; text-align: center;
     `;
 
     uiBox.innerHTML = `
-        <h4 style="margin: 0 0 8px 0; color: #1e293b; font-size: 14px;">🤖 لوحة التحضير الذكية</h4>
-        
-        <select id="uiStrategySelect" style="width:100%; padding:6px; margin-bottom:8px; border-radius:6px; border:1px solid #ccc; font-size:12px;">
-            <option value="التعلم التعاوني">التعلم التعاوني</option>
-            <option value="العصف الذهني">العصف الذهني</option>
-            <option value="التفكير الناقد">التفكير الناقد</option>
-        </select>
-
-        <button id="btnSyncDashboard" style="width:100%; padding:6px; background:#8b5cf6; color:#fff; border:none; border-radius:6px; font-weight:bold; cursor:pointer; font-size:12px; margin-bottom:6px;">
-            🔄 مزامنة البيانات من الداشبورد
-        </button>
-
+        <h4 style="margin: 0 0 10px 0; color: #1e293b; font-size: 15px;">🤖 لوحة التحضير التلقائي</h4>
+        <div style="margin-bottom: 10px;">
+            <select id="uiStrategySelect" style="width:100%; padding:6px; border-radius:6px; border:1px solid #ccc; font-size:12px;">
+                <option value="التعلم التعاوني">التعلم التعاوني</option>
+                <option value="العصف الذهني">العصف الذهني</option>
+                <option value="التفكير الناقد">التفكير الناقد</option>
+            </select>
+        </div>
         <button id="btnTogglePrep" style="width:100%; padding:8px; background:#10b981; color:#fff; border:none; border-radius:6px; font-weight:bold; cursor:pointer; font-size:13px;">
             بدء التحضير الشامل
         </button>
-        
-        <div id="prepStatusText" style="margin-top:6px; font-size:11px; color:#64748b;">الحالة: متوقف</div>
+        <div id="prepStatusText" style="margin-top:8px; font-size:11px; color:#64748b;">الحالة: متوقف</div>
     `;
 
     document.body.appendChild(uiBox);
 
-    chrome.storage.local.get(['autoPrepRunning'], (data) => updateUIStatus(data.autoPrepRunning));
-
-    // زر المزامنة مع الداشبورد
-    document.getElementById('btnSyncDashboard').addEventListener('click', () => {
-        syncDataFromDashboard();
+    chrome.storage.local.get(['autoPrepRunning'], (data) => {
+        updateUIStatus(data.autoPrepRunning);
     });
 
-    // زر البدء والإيقاف
     document.getElementById('btnTogglePrep').addEventListener('click', () => {
         chrome.storage.local.get(['autoPrepRunning'], (data) => {
             const nextState = !data.autoPrepRunning;
@@ -211,7 +164,7 @@ function updateUIStatus(isRunning) {
     if (isRunning) {
         btn.innerText = "إيقاف الأتمتة فوراً";
         btn.style.background = "#ef4444";
-        statusText.innerText = "الحالة: جاري التحضير الذكي... ⏳";
+        statusText.innerText = "الحالة: جاري التحضير التلقائي... ⏳";
         statusText.style.color = "#059669";
     } else {
         btn.innerText = "بدء التحضير الشامل";
