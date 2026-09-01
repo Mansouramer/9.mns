@@ -1,26 +1,34 @@
 /**
  * ===================================================
- * أداة التحضير التلقائي الشاملة والذكية لمنصة مدرستي
+ * أداة التحضير التلقائي الشاملة لمنصة مدرستي (All-In-One Script)
  * ===================================================
  */
 
+// إعداد دالة التأخير الزمني البشري (Human Delays)
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
+// تشغيل المحرك تلقائياً بمجرد اكتمال تحميل الصفحة
 window.addEventListener('load', async () => {
+    
+    // 1. إضافة زر التحكم العائم (Floating UI) مباشرة فوق صفحة مدرستي
     createFloatingControlUI();
 
+    // 2. قراءة حالة التشغيل والإعدادات من ذاكرة المتصفح المحلية
     chrome.storage.local.get(['autoPrepRunning', 'defaultStrategy'], async (data) => {
+        
+        // إذا لم تكن الأتمتة مفعلة، يتوقف التنفيذ
         if (!data.autoPrepRunning) return;
 
         const currentUrl = window.location.href;
         console.log("🤖 محرك التحضير الآلي يعمل الآن في الصفحة:", currentUrl);
 
         // ===================================================
-        // المرحلة الأولى: صفحة الجدول الدراسي
+        // المرحلة الأولى: نحن داخل صفحة الجدول الدراسي
         // ===================================================
         if (currentUrl.includes("/Schedule") || currentUrl.includes("/Teacher/Schedule")) {
-            await delay(2500);
+            await delay(2500); // انتظار تحميل عناصر الجدول بالكامل
 
+            // البحث عن جميع أزرار "قم بإعداد الدرس الآن" للدروس الغير محضرة
             let prepButtons = Array.from(document.querySelectorAll('a, button, .btn')).filter(el => {
                 const text = el.innerText || el.textContent;
                 return text.includes("قم بإعداد الدرس") || text.includes("إعداد الدرس");
@@ -29,8 +37,9 @@ window.addEventListener('load', async () => {
             if (prepButtons.length > 0) {
                 console.log(`تم العثور على ${prepButtons.length} درس بانتظار التحضير. جاري الانتقال للدرس الأول...`);
                 await delay(1000);
-                prepButtons[0].click();
+                prepButtons[0].click(); // الضغط التلقائي للذهاب لصفحة التحضير
             } else {
+                // عند الانتهاء من كافة الحصص
                 alert("🎉 تم الانتهاء من تحضير كافة حصص الجدول بنجاح!");
                 chrome.storage.local.set({ autoPrepRunning: false });
                 updateUIStatus(false);
@@ -38,16 +47,12 @@ window.addEventListener('load', async () => {
         }
 
         // ===================================================
-        // المرحلة الثانية: صفحة تحضير الدرس (توليد وتعبئة آلية)
+        // المرحلة الثانية: نحن داخل صفحة تحضير الدرس
         // ===================================================
         else if (currentUrl.includes("/LessonPrep") || currentUrl.includes("/PrepareLesson") || currentUrl.includes("/Lesson")) {
-            await delay(2000);
+            await delay(2000); // انتظار استقرار القوائم والحقول
 
-            // استخراج اسم الدرس الحالي المكتوب بالصفحة
-            let lessonTitleEl = document.querySelector('.lesson-title, h3, h4, #LessonName, .page-header');
-            let lessonName = lessonTitleEl ? lessonTitleEl.innerText.trim() : "المقرر الدراسي";
-
-            console.log("جاري تحضير الدرس وتوليد الأهداف لـ:", lessonName);
+            console.log("جاري تعبئة بيانات التحضير والواجبات والإثراءات...");
 
             // أ) اختيار استراتيجية التدريس
             let strategySelect = document.querySelector('select[name*="Strategy"], select[id*="Strategy"]');
@@ -56,17 +61,18 @@ window.addEventListener('load', async () => {
                 strategySelect.dispatchEvent(new Event('change', { bubbles: true }));
             }
 
-            await delay(800);
+            await delay(1000);
 
-            // ب) توليد وتعبئة هدف تعليمي ذكي تلقائياً بناءً على اسم الدرس
+            // ب) تعبئة الأهداف تلقائياً (السطر المضاف حديثاً)
             let goalInput = document.querySelector('textarea[name*="Goal"], textarea[id*="Goal"], input[name*="Goal"], textarea[name*="Objective"]');
             if (goalInput) {
-                let autoGoal = `أن يتعرف الطالب على المفاهيم والمهارات الأساسية لدرس (${lessonName}) ويطبقها بنجاح.`;
-                goalInput.value = autoGoal;
+                let lessonTitleEl = document.querySelector('.lesson-title, h3, h4, #LessonName, .page-header');
+                let lessonName = lessonTitleEl ? lessonTitleEl.innerText.trim() : "المقرر الدراسي";
+                goalInput.value = `أن يتعرف الطالب على المفاهيم والمهارات الأساسية لدرس (${lessonName}) ويطبقها بنجاح.`;
                 goalInput.dispatchEvent(new Event('input', { bubbles: true }));
             }
 
-            await delay(800);
+            await delay(1000);
 
             // ج) اختيار أول واجب متاح في القائمة المنسدلة
             let homeworkSelect = document.querySelector('select[name*="Homework"], select[id*="Homework"]');
@@ -75,7 +81,7 @@ window.addEventListener('load', async () => {
                 homeworkSelect.dispatchEvent(new Event('change', { bubbles: true }));
             }
 
-            await delay(800);
+            await delay(1000);
 
             // د) اختيار أول إثراء متاح في القائمة المنسدلة
             let enrichmentSelect = document.querySelector('select[name*="Enrichment"], select[id*="Enrichment"]');
@@ -89,17 +95,19 @@ window.addEventListener('load', async () => {
             // هـ) الضغط التلقائي على زر الحفظ للعودة للجدول وتحضير الحصة التالية
             let saveButton = document.querySelector('button[type="submit"], #btnSave, .btn-primary, input[type="submit"]');
             if (saveButton) {
-                console.log("تمت التعبئة والتوليد بنجاح، جاري ضغط زر الحفظ والعودة للجدول...");
-                saveButton.click();
+                console.log("تمت التعبئة بنجاح، جاري ضغط زر الحفظ والعودة للجدول...");
+                saveButton.click(); // يحفظ الصفحة ويُرجع المتصفح تلقائياً للجدول
             } else {
-                console.warn("لم يتم العثور على زر الحفظ، يُرجى التحقق من المحدّدات.");
+                console.warn("لم يتم العثور على زر الحفظ، يُرجى التحقق من المحدّدات (Selectors).");
             }
         }
     });
 });
 
 /**
- * إنشاء واجهة التحكم العائمة فوق صفحة مدرستي
+ * ===================================================
+ * إنشاء واجهة التحكم العائمة فوق صفحة مدرستي مباشرة
+ * ===================================================
  */
 function createFloatingControlUI() {
     if (document.getElementById('prep-floating-ui')) return;
@@ -107,10 +115,19 @@ function createFloatingControlUI() {
     const uiBox = document.createElement('div');
     uiBox.id = 'prep-floating-ui';
     uiBox.style.cssText = `
-        position: fixed; bottom: 20px; left: 20px; z-index: 999999;
-        background: #ffffff; border: 2px solid #10b981; padding: 15px;
-        border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-        font-family: system-ui, sans-serif; direction: rtl; width: 260px; text-align: center;
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        z-index: 999999;
+        background: #ffffff;
+        border: 2px solid #10b981;
+        padding: 15px;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        font-family: system-ui, sans-serif;
+        direction: rtl;
+        width: 260px;
+        text-align: center;
     `;
 
     uiBox.innerHTML = `
@@ -130,10 +147,12 @@ function createFloatingControlUI() {
 
     document.body.appendChild(uiBox);
 
+    // تحديث زر الواجهة حسب الحالة المخزنة
     chrome.storage.local.get(['autoPrepRunning'], (data) => {
         updateUIStatus(data.autoPrepRunning);
     });
 
+    // أحداث الضغط على الزر
     document.getElementById('btnTogglePrep').addEventListener('click', () => {
         chrome.storage.local.get(['autoPrepRunning'], (data) => {
             const nextState = !data.autoPrepRunning;
@@ -145,6 +164,7 @@ function createFloatingControlUI() {
             }, () => {
                 updateUIStatus(nextState);
                 if (nextState) {
+                    // إذا كان المعلم في صفحة أخرى، توجهه مباشرة لصفحة الجدول
                     if (!window.location.href.includes("/Schedule")) {
                         window.location.href = "https://schools.madrasati.sa/Teacher/Schedule";
                     } else {
@@ -156,6 +176,7 @@ function createFloatingControlUI() {
     });
 }
 
+// دالة لتحديث شكل حالة الأداة في الواجهة العائمة
 function updateUIStatus(isRunning) {
     const btn = document.getElementById('btnTogglePrep');
     const statusText = document.getElementById('prepStatusText');
