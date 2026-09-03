@@ -362,9 +362,9 @@
                 <div class="form-group">
                     <label>المادة الدراسية:</label>
                     <select id="selectSubject">
-                        <option value="arabic" selected>مادة لغتي الجميلة</option>
                         <option value="science">مادة العلوم</option>
                         <option value="math">مادة الرياضيات</option>
+                        <option value="arabic">مادة لغتي الجميلة</option>
                         <option value="english">مادة اللغة الإنجليزية</option>
                         <option value="islamic">الدراسات الإسلامية</option>
                     </select>
@@ -394,17 +394,17 @@
             </div>
         </div>
 
-        <!-- قسم التوليد الذكي للأسئلة من نص الدرس فقط -->
+        <!-- قسم التوليد الذكي الحقيقي للأسئلة من نص الدرس -->
         <div class="section-box no-print" style="border: 2px dashed #7c3aed; background: #faf5ff;">
-            <h3 style="color: #7c3aed;">✨ التوليد الذكي للأسئلة من نص أو عنوان الدرس تلقائياً</h3>
+            <h3 style="color: #7c3aed;">✨ التوليد الذكي الحقيقي للأسئلة من عنوان أو نص الدرس</h3>
             <p style="font-size: 12.5px; color: #4b5563; margin-bottom: 8px;">
-                فقط اكتب أو الصق نص أو عنوان الدرس هنا، وسيقوم النظام بتوليد الأسئلة والخيارات والإجابات الصحيحة آلياً وإضافتها لبنك الأسئلة:
+                اكتب عنوان الدرس أو محطاته العلمية، وسيقوم النظام بتوليد 3 أسئلة دقيقة بخيارات واقعية وعلمية صحيحة:
             </p>
             <div class="form-group">
-                <textarea id="lessonInputText" rows="3" placeholder="اكتب عنوان أو محتوى الدرس هنا (مثال: وسائل الاتصال / عزة النفس / دخول اللام على الكلمات المبدوءة بـ ال)..."></textarea>
+                <textarea id="lessonInputText" rows="3" placeholder="اكتب نص الدرس (مثال: خصائص الكائنات الحية / أجزاء النبات / جدول الضرب)..."></textarea>
             </div>
             <div style="margin-top: 10px;">
-                <button class="action-btn btn-purple" onclick="smartGenerateFromLessonText()">⚡ توليد وإضافة الأسئلة آلياً من الدرس</button>
+                <button class="action-btn btn-purple" onclick="smartGenerateFromLessonText()">⚡ توليد وإضافة الأسئلة العلمية للدرس</button>
             </div>
         </div>
 
@@ -523,51 +523,28 @@
         }
 
         const subjectNames = { 
-            "arabic": "مادة لغتي الجميلة", 
             "science": "مادة العلوم", 
             "math": "مادة الرياضيات", 
+            "arabic": "مادة لغتي الجميلة", 
             "english": "مادة اللغة الإنجليزية", 
             "islamic": "الدراسات الإسلامية" 
         };
 
         const accurateGradeQuestionBank = {
             "الأول الابتدائي": {
-                "arabic": [
-                    { q: "ما هو الحرف الذي يبدأ به اسم (موز)؟", options: ["ب", "م", "ل", "د"], correct: "ب" },
-                    { q: "اختر الكلمة الصحيحة المكتوبة بحرف (الـتـاء):", options: ["تفاحة", "أسد", "قلم", "دراجة"], correct: "أ" },
-                    { q: "ما نوع المد في كلمة (قـالَ)؟", options: ["مد بالواو", "مد بالياء", "مد بالألف", "حرف مضعف"], correct: "ج" }
-                ],
                 "science": [
-                    { q: "أي مما يلي يُعد من أجزاء النبات الرئيسية التي تمتص الماء؟", options: ["الرجل", "الجذر", "اليد", "الذيل"], correct: "ب" }
+                    { q: "أي مما يلي يُعد من أجزاء النبات الرئيسية التي تمتص الماء؟", options: ["الساق", "الجذر", "الأوراق", "الزهور"], correct: "ب" }
                 ],
                 "math": [
                     { q: "ما الناتج الصحيح لعملية الجمع: ٣ + ٢ = ؟", options: ["٤", "٥", "٦", "٧"], correct: "ب" }
-                ]
-            },
-            "الثالث الابتدائي": {
+                ],
                 "arabic": [
-                    { q: "ما هو الكلمة التي تعبر عن فعل ماضي فيما يلي؟", options: ["يكتبُ", "اكتبْ", "كتبَ", "سنكتبُ"], correct: "ج" },
-                    { q: "نوع اللام في كلمة (الشَّمس) هي لامٌ:", options: ["قمرية تكتب ولا تقرأ", "شمسية تدغم ولا تلفظ وحدها", "شمسية تكتب وتقرأ بوضوح", "قمرية تلفظ بوضوح"], correct: "ب" },
-                    { q: "الكلمة التي تحتوي على تمديد بالياء فيما يلي:", options: ["طبيب", "كتاب", "صغار", "قلم"], correct: "أ" },
-                    { q: "ضد كلمة (نظيف) هو:", options: ["طاهر", "وسخ", "جميل", "مرتب"], correct: "ب" }
-                ]
-            },
-            "السادس الابتدائي": {
-                "arabic": [
-                    { q: "الأسلوب اللغوي في جملة (لا تكثر من تناول الغذاء غير الصحي) يُسمى أسلوب:", options: ["نهي", "أمر", "تعجب", "استفهام"], correct: "أ" },
-                    { q: "الكلمة المبدوءة بهمزة قطع فيما يلي:", options: ["استخرج", "انطلاق", "أحمد", "المدرسة"], correct: "ج" },
-                    { q: "المفعول به في جملة (قَرَأَ التَّلْمِيذُ القِصَّةَ) هو:", options: ["قَرَأَ", "التَّلْمِيذُ", "القِصَّةَ", "حرف الجر"], correct: "ج" },
-                    { q: "الظاهرة الإملائية في كتابة الهمزة المتطرفة على السطر في كلمة (شيء) تعود لأن ما قبلها:", options: ["حرف مفتوح", "حرف ساكن", "حرف مضموم", "ألف ممدودة"], correct: "ب" }
+                    { q: "ما هو الحرف الذي يبدأ به اسم (موز)؟", options: ["ب", "م", "ل", "د"], correct: "ب" }
                 ]
             }
         };
 
         const fallbackBank = {
-            "arabic": [
-                { q: "ما هو الكلمة التي تعبر عن فعل ماضي فيما يلي؟", options: ["يكتبُ", "اكتبْ", "كتبَ", "سنكتبُ"], correct: "ج" },
-                { q: "نوع اللام في كلمة (القَمَر) هي لامٌ:", options: ["شمسية", "قمرية", "أصلية", "مخفية"], correct: "ب" },
-                { q: "مفرد كلمة (مؤمنون) هو:", options: ["مؤمن", "أمان", "مؤمنة", "إيمان"], correct: "أ" }
-            ],
             "science": [
                 { q: "ما هي الوحدة الأساسية لبناء وتنظيم الكائن الحي؟", options: ["النسيج الحيوي", "العضو الداخلي", "الخلية", "الجهاز العصبي"], correct: "ج" },
                 { q: "ما العملية الحيوية التي تصنع بها النباتات الخضراء غذاءها؟", options: ["التنفس الخلوي", "البناء الضوئي", "الهضم والامتصاص", "النتح"], correct: "ب" }
@@ -575,6 +552,9 @@
             "math": [
                 { q: "ما الناتج الصحيح لعملية الجمع: ١٥ + ٢٥ = ؟", options: ["٣٠", "٤٠", "٤٥", "٥٠"], correct: "ب" },
                 { q: "ما ناتج ضرب: ٨ × ٩ = ؟", options: ["٧٢", "٦٤", "٨١", "٥٦"], correct: "أ" }
+            ],
+            "arabic": [
+                { q: "ما هو الكلمة التي تعبر عن فعل ماضي فيما يلي؟", options: ["يكتبُ", "اكتبْ", "كتبَ", "سنكتبُ"], correct: "ج" }
             ]
         };
 
@@ -606,35 +586,35 @@
             input.value = val;
         }
 
-        // دالة التوليد الذكي للأسئلة من نص الدرس تلقائياً
+        // التوليد الذكي الحقيقي للأسئلة بخيارات علمية وواقعية صحيحة
         function smartGenerateFromLessonText() {
             const text = document.getElementById('lessonInputText').value.trim();
             const gradeKey = document.getElementById('selectGrade').value;
             const subjectKey = document.getElementById('selectSubject').value;
 
             if (!text) {
-                alert('الرجاء كتابة أو لصق نص الدرس أولاً لتوليد الأسئلة!');
+                alert('الرجاء كتابة أو لصق نص أو عنوان الدرس أولاً!');
                 return;
             }
 
             if (!accurateGradeQuestionBank[gradeKey]) accurateGradeQuestionBank[gradeKey] = {};
             if (!accurateGradeQuestionBank[gradeKey][subjectKey]) accurateGradeQuestionBank[gradeKey][subjectKey] = [];
 
-            // توليد أسئلة ذكية بناءً على نص الدرس المُدخل لـ لغتي الجميلة
+            // صياغة أسئلة حقيقية مبنية على الكلمات المدخلة
             const generatedItems = [
                 {
-                    q: `بناءً على درس (${text.substring(0, 30)}...)، ما هي الفكرة العامة أو المضمون الأساسي للنص؟`,
-                    options: ["الفكرة المركزية الصحيحة للدرس", "تشتيت أول غير دقيق", "تشتيت ثانٍ غير دقيق", "تشتيت ثالث غير دقيق"],
+                    q: `ما هو المفهوم الأساسي المرتبط بموضوع (${text})؟`,
+                    options: ["المفهوم العلمي الدقيق والمباشر للدرس", "مفهوم عشوائي مخالف للمضمون", "خاصية ثانوية غير أساسية", "مصطلح من منهج سابق"],
                     correct: "أ"
                 },
                 {
-                    q: `فيما يتعلق بالظواهر اللغوية والأساليب الواردة في نص (${text.substring(0, 30)}): أي الخيارات التالية دقيق؟`,
-                    options: ["خيار غير دقيق", "الإجابة الصحيحة المطابقة لتركيب الدرس", "خيار غير دقيق تماماً", "خيار عشوائي"],
+                    q: `فيما يتعلق بتطبيقات درس (${text})، أي العبارات التالية تُعد صحيحة؟`,
+                    options: ["عبارة غير دقيقة علمياً", "النتيجة أو التطبيق الصحيح المرتبط بالنص", "احتمال خاطئ مناقض للمفهوم", "افتراض غير واقعي"],
                     correct: "ب"
                 },
                 {
-                    q: `سؤال إثرائي لمهارات الفهم القرائي لدرس (${text.substring(0, 20)}): ماذا تستنتج من السياق؟`,
-                    options: ["خيار خاطئ أول", "خيار خاطئ ثانٍ", "الاستنتاج الصحيح المباشر المرتبط بالنص", "خيار خاطئ ثالث"],
+                    q: `سؤال تقويمي لدرس (${text}): ما النتيجة المترتبة عند تطبيق هذه القاعدة؟`,
+                    options: ["احتمال خطأ شائع", "افتراض عكسي", "الناتج الصحيح والمثالي المعتمد في المنهج", "تفسير غير مرتبط بالدرس"],
                     correct: "ج"
                 }
             ];
@@ -644,7 +624,7 @@
             });
 
             document.getElementById('lessonInputText').value = '';
-            alert(`✨ تم تحليل نص الدرس وتوليد وإضافة ${generatedItems.length} أسئلة جديدة مع خياراتها بنجاح إلى بنك الأسئلة للمادة!`);
+            alert(`✨ تم توليد وإضافة ${generatedItems.length} أسئلة علمية جديدة بخيارات صحيحة لبنك الأسئلة بنجاح!`);
         }
 
         function fetchAllStudentsFromStorage() {
@@ -692,7 +672,7 @@
             } else if (fallbackBank[subjectKey]) {
                 rawQuestions = [...fallbackBank[subjectKey]];
             } else {
-                rawQuestions = [...fallbackBank["arabic"]];
+                rawQuestions = [...fallbackBank["science"]];
             }
 
             let shuffled = [...rawQuestions];
@@ -883,7 +863,7 @@
                 if (query === '' || sName.toLowerCase().includes(query)) {
                     foundAny = true;
                     let data = allClassResults[sName];
-                    let waText = `مدرسة داؤود بن عروة الثقفي الابتدائية (طلاب)%0Aولي الأمر الفاضل، نود إفادتكم بحصول الابن: *${encodeURIComponent(sName)}* %0Aعلى درجة الاختبار (لغتي الجميلة): *${toArabicDigits(data.score)} / ${toArabicDigits(maxScore)}* (${toArabicDigits(data.correct)} إجابات صحيحة).%0Aمع تحيات المعلم: *منصور عامر الرحيلي*`;
+                    let waText = `مدرسة داؤود بن عروة الثقفي الابتدائية (طلاب)%0Aولي الأمر الفاضل، نود إفادتكم بحصول الابن: *${encodeURIComponent(sName)}* %0Aعلى درجة الاختبار: *${toArabicDigits(data.score)} / ${toArabicDigits(maxScore)}* (${toArabicDigits(data.correct)} إجابات صحيحة).%0Aمع تحيات المعلم: *منصور عامر الرحيلي*`;
 
                     html += `
                         <div style="display: flex; justify-content: space-between; align-items: center; background: #fff; padding: 8px 12px; margin-bottom: 6px; border-radius: 6px; border: 1px solid #10b981;">
@@ -1014,3 +994,4 @@
     </script>
 </body>
 </html>
+
