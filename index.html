@@ -677,7 +677,7 @@
     </div>
 
     <div class="header">
-        <h1>مدرسة داوود بن عروة  الثقفي(طلاب)</h1>
+        <h1>مدرسة داوود بن عروة  الثقفي()</h1>
         <div>إعداد المعلم: منصور عامر الرحيلي</div>
         <p>لوحة تحكم معلم مادة العلوم للمرحلة الابتدائية (وفق المنهج السعودي)</p>
         <div class="subscription-badge">⏳ نهاية الاشتراك: 2027/07/01</div>
@@ -1286,7 +1286,7 @@
             const desc = document.getElementById('newLessonDesc').value.trim();
             if (!title) { alert('يرجى كتابة عنوان الوحدة أو الدرس'); return; }
 
-            lessons.push({ chapter: "إضافات المعلم", title: title, desc: desc || 'لا توجد تفاصيل إضافية' });
+            lessons.push({ chapter: " ", title: title, desc: desc || 'لا توجد تفاصيل إضافية' });
             localStorage.setItem(getStorageKeyForLessons(), JSON.stringify(lessons));
 
             document.getElementById('newLessonTitle').value = '';
