@@ -756,6 +756,146 @@
                 <p id="totalExecutedLessons">0 / 0</p>
             </div>
         </div>
+<!-- قسم الخطة الأسبوعية التفاعلية -->
+<div class="section-card" id="weeklyPlanSection">
+    <div style="display: flex; flex-direction: column; gap: 15px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--primary, #1e3a8a); padding-bottom: 10px;">
+            <h3 style="margin: 0; color: var(--text, #1e3a8a); font-size: 1.25rem; font-weight: bold;">📅 إعداد وإرسال الخطة الأسبوعية</h3>
+            <button onclick="sendCustomWeeklyPlan()" style="background-color: #10b981; color: white; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: bold; font-family: 'Cairo', sans-serif;">
+                إرسال الخطة المحددة عبر الواتساب 📱
+            </button>
+        </div>
+
+        <!-- حيارات التصفية أو الإدخال السريع للخطة -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;" class="no-print">
+            <div>
+                <label style="font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 5px;">اليوم الدراسي:</label>
+                <select id="planDay" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 6px;">
+                    <option value="الأحد">الأحد</option>
+                    <option value="الإثنين">الإثنين</option>
+                    <option value="الثلاثاء">الثلاثاء</option>
+                    <option value="الأربعاء">الأربعاء</option>
+                    <option value="الخميس">الخميس</option>
+                </select>
+            </div>
+            <div>
+                <label style="font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 5px;">المادة:</label>
+                <input type="text" id="planSubject" placeholder="أدخل اسم المادة (مثال: رياضيات)" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 6px;">
+            </div>
+            <div>
+                <label style="font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 5px;">موضوع الدرس:</label>
+                <input type="text" id="planTopic" placeholder="أدخل عنوان الدرس" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 6px;">
+            </div>
+            <div>
+                <label style="font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 5px;">الواجب أو المهام:</label>
+                <input type="text" id="planHomework" placeholder="أدخل الواجب المطلوب" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 6px;">
+            </div>
+        </div>
+
+        <div style="text-align: left;" class="no-print">
+            <button onclick="addPlanToTable()" style="background-color: var(--primary, #1e3a8a); color: white; border: none; padding: 8px 20px; border-radius: 6px; cursor: pointer; font-family: 'Cairo', sans-serif;">
+                + إضافة للجدول
+            </button>
+        </div>
+
+        <!-- جدول عرض الخطة -->
+        <div style="overflow-x: auto; margin-top: 10px;">
+            <table style="width: 100%; border-collapse: collapse; text-align: right;" id="dynamicPlanTable">
+                <thead>
+                    <tr style="background-color: var(--bg, #eff6ff); color: var(--text, #1e3a8a);">
+                        <th style="padding: 10px; border-bottom: 2px solid #ddd;">اليوم</th>
+                        <th style="padding: 10px; border-bottom: 2px solid #ddd;">المادة</th>
+                        <th style="padding: 10px; border-bottom: 2px solid #ddd;">الدرس</th>
+                        <th style="padding: 10px; border-bottom: 2px solid #ddd;">الواجب</th>
+                        <th style="padding: 10px; border-bottom: 2px solid #ddd; text-align: center;">إجراء</th>
+                    </tr>
+                </thead>
+                <tbody id="planTableRows">
+                    <tr>
+                        <td style="padding: 8px; border-bottom: 1px solid #eee;">الأحد</td>
+                        <td style="padding: 8px; border-bottom: 1px solid #eee;">لغتي</td>
+                        <td style="padding: 8px; border-bottom: 1px solid #eee;">نص الاستماع</td>
+                        <td style="padding: 8px; border-bottom: 1px solid #eee;">حل التمارين ص 15</td>
+                        <td style="padding: 8px; border-bottom: 1px solid #eee; text-align: center;">
+                            <button onclick="deletePlanRow(this)" style="background: #ef4444; color: white; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer;">حذف</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    // دالة لإضافة صف جديد للخطط بناءً على المدخلات
+    function addPlanToTable() {
+        const day = document.getElementById('planDay').value;
+        const subject = document.getElementById('planSubject').value.trim();
+        const topic = document.getElementById('planTopic').value.trim();
+        const homework = document.getElementById('planHomework').value.trim();
+
+        if (!subject || !topic) {
+            alert('الرجاء إدخال اسم المادة وموضوع الدرس على الأقل.');
+            return;
+        }
+
+        const tbody = document.getElementById('planTableRows');
+        const newRow = document.createElement('tr');
+        newRow.innerHTML = `
+            <td style="padding: 8px; border-bottom: 1px solid #eee;">${day}</td>
+            <td style="padding: 8px; border-bottom: 1px solid #eee;">${subject}</td>
+            <td style="padding: 8px; border-bottom: 1px solid #eee;">${topic}</td>
+            <td style="padding: 8px; border-bottom: 1px solid #eee;">${homework || 'لا يوجد'}</td>
+            <td style="padding: 8px; border-bottom: 1px solid #eee; text-align: center;">
+                <button onclick="deletePlanRow(this)" style="background: #ef4444; color: white; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer;">حذف</button>
+            </td>
+        `;
+        tbody.appendChild(newRow);
+
+        // تفريغ الحقول بعد الإضافة
+        document.getElementById('planSubject').value = '';
+        document.getElementById('planTopic').value = '';
+        document.getElementById('planHomework').value = '';
+    }
+
+    // دالة لحذف صف من الجدول
+    function deletePlanRow(button) {
+        const row = button.closest('tr');
+        row.remove();
+    }
+
+    // دالة لتوليد رسالة الواتساب بناءً على محتويات الجدول المضافة وتنسيقها
+    function sendCustomWeeklyPlan() {
+        const rows = document.querySelectorAll('#dynamicPlanTable tbody tr');
+        if (rows.length === 0) {
+            alert('لا توجد خطط أسبوعية لإرسالها.');
+            return;
+        }
+
+        let message = `*السلام عليكم ورحمة الله وبركاته، أولياء الأمور الكرام*%0A`;
+        message += `نستعرض لكم الخطة الدراسية المعتمدة:%0A-----------------------------------%0A`;
+
+        rows.forEach((row, index) => {
+            const cols = row.querySelectorAll('td');
+            if (cols.length >= 4) {
+                const day = cols[0].innerText;
+                const subject = cols[1].innerText;
+                const topic = cols[2].innerText;
+                const homework = cols[3].innerText;
+
+                message += `📌 *${day}* | *${subject}*%0A`;
+                message += `📖 الدرس: ${topic}%0A`;
+                message += `✍️ الواجب: ${homework}%0A`;
+                message += `-----------------------------------%0A`;
+            }
+        });
+
+        message += `مع تحيات إدارة مدرسة داؤود بن عروة الثقفي الابتدائية 🏫`;
+
+        const whatsappUrl = `https://wa.me/?text=${message}`;
+        window.open(whatsappUrl, '_blank');
+    }
+</script>
 
         <!-- تسجيل الطلاب والصفوف والجدول -->
         <div class="section-card" id="studentsTableSection">
