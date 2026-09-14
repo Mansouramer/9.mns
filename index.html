@@ -31,33 +31,33 @@
 
         body.theme-default { 
             --bg: linear-gradient(135deg, #eff6ff 0%, #bfdbfe 100%); 
-            --card-bg: #ffffff; 
+            --card-bg: rgba(255, 255, 255, 0.75); 
             --text: #1e3a8a; 
         }
         body.theme-royal { 
             --bg: linear-gradient(135deg, #3b0764 0%, #581c87 100%); 
-            --card-bg: #4c1d95; 
+            --card-bg: rgba(76, 29, 149, 0.4); 
             --text: #f3e8ff; 
             --secondary: #a855f7;
             --primary: #6b21a8;
         }
         body.theme-emerald { 
             --bg: linear-gradient(135deg, #064e3b 0%, #065f46 100%); 
-            --card-bg: #ffffff; 
+            --card-bg: rgba(255, 255, 255, 0.85); 
             --text: #065f46; 
             --secondary: #059669;
             --primary: #047857;
         }
         body.theme-amber { 
             --bg: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%); 
-            --card-bg: #ffffff; 
+            --card-bg: rgba(255, 255, 255, 0.85); 
             --text: #78350f; 
             --secondary: #d97706;
             --primary: #b45309;
         }
         body.theme-blue { 
             --bg: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); 
-            --card-bg: #ffffff; 
+            --card-bg: rgba(255, 255, 255, 0.85); 
             --text: #1e3a8a; 
             --secondary: #2563eb;
             --primary: #1d4ed8;
@@ -171,6 +171,7 @@
 
         .stat-card {
             background: var(--card-bg);
+            backdrop-filter: blur(8px);
             padding: 12px;
             border-radius: 10px;
             text-align: center;
@@ -184,6 +185,7 @@
 
         .section-card {
             background: var(--card-bg);
+            backdrop-filter: blur(8px);
             padding: 12px;
             border-radius: 12px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.05);
@@ -215,10 +217,10 @@
             max-width: 100% !important;
             min-width: 100% !important;
             padding: 10px;
-            border: 1px solid #ccc;
+            border: 1px solid rgba(0,0,0,0.15);
             border-radius: 6px;
             font-size: 14px;
-            background-color: var(--card-bg);
+            background-color: rgba(255,255,255,0.85);
             color: var(--text);
         }
 
@@ -260,7 +262,7 @@
             border-radius: 8px;
             overflow: hidden;
             border: 2px solid var(--secondary);
-            background: rgba(0, 0, 0, 0.04);
+            background: rgba(255, 255, 255, 0.4);
             width: 100%;
         }
 
@@ -314,9 +316,9 @@
             text-align: center;
         }
 
-        th { background-color: rgba(0,0,0,0.05); color: var(--secondary); }
+        th { background-color: rgba(255,255,255,0.5); color: var(--secondary); }
 
-        /* تنسيق أزرار الأسهم والتحكم التفاعلي الشفاف والمتناسق */
+        /* تنسيق أزرار الأسهم والتحكم التفاعلي الشفاف والمريح للعين */
         .stepper-control {
             display: inline-flex;
             align-items: center;
@@ -325,7 +327,7 @@
             border-radius: 6px;
             border: 1px solid rgba(0,0,0,0.15);
             width: 100%;
-            background: rgba(255,255,255,0.4);
+            background: rgba(255,255,255,0.6);
         }
 
         .stepper-btn {
@@ -351,11 +353,11 @@
             display: inline-block;
         }
 
-        /* حاويات شفافة بالكامل وناعمة مريحة للعين */
-        .box-absence { background: rgba(239, 68, 68, 0.05); border: 1px solid rgba(239, 68, 68, 0.2); padding: 6px; border-radius: 8px; }
-        .box-participation { background: rgba(245, 158, 11, 0.05); border: 1px solid rgba(245, 158, 11, 0.2); padding: 6px; border-radius: 8px; }
-        .box-homework { background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.2); padding: 6px; border-radius: 8px; }
-        .box-phone { background: rgba(0, 0, 0, 0.02); border: 1px solid rgba(0, 0, 0, 0.1); padding: 6px; border-radius: 8px; }
+        /* حاويات فرعية داخل بطاقة الطالب ذات شفافية ناعمة تدمج الألوان بسلاسة */
+        .box-absence { background: rgba(254, 242, 242, 0.65); border: 1px solid rgba(252, 165, 165, 0.4); padding: 6px; border-radius: 8px; backdrop-filter: blur(4px); }
+        .box-participation { background: rgba(254, 252, 232, 0.65); border: 1px solid rgba(253, 224, 71, 0.4); padding: 6px; border-radius: 8px; backdrop-filter: blur(4px); }
+        .box-homework { background: rgba(240, 253, 244, 0.65); border: 1px solid rgba(134, 239, 172, 0.4); padding: 6px; border-radius: 8px; backdrop-filter: blur(4px); }
+        .box-phone { background: rgba(248, 250, 252, 0.65); border: 1px solid rgba(203, 213, 225, 0.4); padding: 6px; border-radius: 8px; backdrop-filter: blur(4px); }
 
         .pagination-bar {
             display: flex;
@@ -405,7 +407,7 @@
         .detail-item strong { font-size: 15px; color: var(--secondary); }
 
         .sub-box {
-            background: rgba(0,0,0,0.02);
+            background: rgba(255,255,255,0.4);
             border: 1px solid rgba(0,0,0,0.1);
             border-radius: 8px;
             padding: 10px;
@@ -455,7 +457,7 @@
         }
 
         .lesson-card {
-            background: rgba(0,0,0,0.03);
+            background: rgba(255,255,255,0.5);
             border: 1px solid rgba(0,0,0,0.08);
             padding: 10px;
             border-radius: 8px;
@@ -467,12 +469,12 @@
 
         .lesson-card.executed {
             border-right: 5px solid var(--secondary);
-            background: rgba(37, 99, 235, 0.04);
+            background: rgba(37, 99, 235, 0.08);
         }
 
         .lesson-card.not-executed {
             border-right: 5px solid var(--warning);
-            background: rgba(245, 158, 11, 0.05);
+            background: rgba(245, 158, 11, 0.08);
         }
 
         .lesson-card span.ch-badge {
@@ -569,7 +571,7 @@
             border: 1px solid #ccc;
             border-radius: 6px;
             font-size: 14px;
-            background-color: var(--card-bg);
+            background-color: rgba(255,255,255,0.85);
             color: var(--text);
         }
 
@@ -580,7 +582,7 @@
             right: 0;
             max-height: 200px;
             overflow-y: auto;
-            background: var(--card-bg);
+            background: rgba(255,255,255,0.95);
             border: 1px solid var(--secondary);
             border-radius: 0 0 6px 6px;
             z-index: 999;
@@ -695,7 +697,7 @@
 
     <div class="container">
         <!-- اختيار الصف الدراسي -->
-        <div class="section-card no-print" style="background: linear-gradient(135deg, rgba(37,99,235,0.05), rgba(30,58,138,0.1)); border: 2px solid var(--secondary);">
+        <div class="section-card no-print" style="border: 2px solid var(--secondary);">
             <h3 style="margin-bottom: 8px;">📌 اختر الصف الدراسي للمتابعة</h3>
             <div class="form-row" style="margin-bottom: 0;">
                 <select id="globalGradeSelect" onchange="changeGradeLevel(this.value)" style="font-weight: bold; font-size: 14px; color: var(--secondary);">
@@ -710,7 +712,7 @@
         </div>
 
         <!-- التصحيح الآلي والاختبارات -->
-        <div class="section-card no-print" style="background: linear-gradient(135deg, rgba(16,185,129,0.08), rgba(5,150,105,0.12)); border: 2px solid var(--success);">
+        <div class="section-card no-print" style="border: 2px solid var(--success);">
             <div style="display: flex; flex-direction: column; gap: 8px;">
                 <div>
                     <h3 style="color: var(--success); margin: 0 0 4px 0;">🤖 نظام التصحيح الآلي الذكي والاختبارات</h3>
@@ -782,7 +784,7 @@
                     </div>
                     <div>
                         <label style="font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 5px;">المادة:</label>
-                        <input type="text" id="planSubject" value="علوم" readonly style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 6px; background-color: #f3f4f6; font-weight: bold;">
+                        <input type="text" id="planSubject" value="علوم" readonly style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 6px; background-color: rgba(243, 244, 246, 0.8); font-weight: bold;">
                     </div>
                     <div>
                         <label style="font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 5px;">اختر موضوع الدرس (أو اكتبه):</label>
@@ -815,7 +817,7 @@
                 <div style="overflow-x: auto; margin-top: 10px;">
                     <table style="width: 100%; border-collapse: collapse; text-align: right;" id="dynamicPlanTable">
                         <thead>
-                            <tr style="background-color: var(--bg, #eff6ff); color: var(--text, #1e3a8a);">
+                            <tr style="background-color: rgba(255,255,255,0.6); color: var(--text, #1e3a8a);">
                                 <th style="padding: 10px; border-bottom: 2px solid #ddd;">اليوم</th>
                                 <th style="padding: 10px; border-bottom: 2px solid #ddd;">المادة</th>
                                 <th style="padding: 10px; border-bottom: 2px solid #ddd;">موضوع الدرس</th>
@@ -858,7 +860,7 @@
                 <div id="classesQueryContainer" class="classes-query-grid"></div>
             </div>
 
-            <div class="form-row no-print" style="background: rgba(0,0,0,0.03); padding: 8px; border-radius: 6px; margin-top: 10px;">
+            <div class="form-row no-print" style="background: rgba(255,255,255,0.4); padding: 8px; border-radius: 6px; margin-top: 10px;">
                 <span style="font-weight: bold; font-size: 12px; display: block; margin-bottom: 4px;">🔍 بحث عن طالب بالاسم:</span>
                 <input type="text" id="filterStudentNameInput" placeholder="اكتب اسم الطالب للبحث..." oninput="filterTableByStudentInput()">
             </div>
@@ -1062,7 +1064,7 @@
                 </div>
                 <div id="bulkHomeworkMsgPreview" class="preview-msg">اختر الصف والدرس وأدخل تفاصيل الواجب...</div>
                 
-                <div id="bulkSendPanel" style="display: none; margin-top: 10px; background: rgba(0,0,0,0.04); padding: 8px; border-radius: 8px; border: 1px solid var(--secondary);">
+                <div id="bulkSendPanel" style="display: none; margin-top: 10px; background: rgba(255,255,255,0.6); padding: 8px; border-radius: 8px; border: 1px solid var(--secondary);">
                     <h5 style="margin-top: 0; color: var(--secondary); font-size: 12px;">📤 قائمة إرسال الواجب الجماعي:</h5>
                     <div id="bulkSendListContainer" style="display: flex; flex-direction: column; gap: 8px; max-height: 220px; overflow-y: auto; margin-top: 8px;"></div>
                 </div>
@@ -1112,7 +1114,7 @@
 
     </div>
 
-    <div class="section-card" style="text-align: center; background: #ffffff; margin: 10px auto; width: 100%; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); padding: 12px;">
+    <div class="section-card" style="text-align: center; background: var(--card-bg); margin: 10px auto; width: 100%; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); padding: 12px;">
         <h4 style="color: var(--secondary, #2563eb); margin: 0 0 10px 0; font-size: 14px;">💾 النسخ الاحتياطي وإدارة البيانات</h4>
         <div style="display: flex; flex-direction: column; gap: 8px;">
             <button class="btn-info" onclick="backupAllData()" style="background: #e11d48; padding: 10px; font-size: 13px; border-radius: 6px; cursor: pointer; color: white; border: none; font-weight: bold;">
@@ -1511,8 +1513,9 @@
             pageData.forEach((s) => {
                 const globalIndex = students.indexOf(s);
                 const card = document.createElement('div');
-                card.style.background = 'transparent';
-                card.style.border = '1px solid rgba(0,0,0,0.15)';
+                card.style.background = 'var(--card-bg)';
+                card.style.backdropFilter = 'blur(6px)';
+                card.style.border = '1px solid rgba(0,0,0,0.12)';
                 card.style.borderRadius = '8px';
                 card.style.padding = '10px';
                 card.style.display = 'flex';
