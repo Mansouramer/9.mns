@@ -778,11 +778,11 @@
             </div>
 
             <div class="form-row no-print" style="background: rgba(255,255,255,0.4); padding: 8px; border-radius: 6px; margin-top: 10px;">
-                <span style="font-weight: bold; font-size: 12px; display: block; margin-bottom: 4px;">🔍 بحث عن طالب بالاسم:</span>
+                <span style="font-weight: bold; font-size: 12px; display: block; margin-bottom: 4px;">🔍 بحث عن طالب بالاسم (يبحث تلقائياً في جميع الفصول):</span>
                 <input type="text" id="filterStudentNameInput" placeholder="اكتب اسم الطالب للبحث..." oninput="filterTableByStudentInput()">
             </div>
 
-            <!-- عرض الطلاب بطريقة رأسية متسلسلة (مخفي افتراضياً ولن يظهر إلا عند اختيار صف محدد) -->
+            <!-- عرض الطلاب بطريقة رأسية متسلسلة -->
             <div id="verticalStudentsContainer" style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;"></div>
 
             <div class="pagination-bar no-print">
@@ -1169,7 +1169,7 @@
             activeQueryClass = '__NONE__'; 
             selectedStudentIndex = '';
             currentPage = 1;
-            document.getElementById('studentSearchInput').value = '';
+            document.getElementById('filterStudentNameInput').value = '';
             document.getElementById('bulkSendPanel').style.display = 'none';
 
             document.getElementById('curriculumTitle').textContent = `📚 دليل مقرر العلوم - ${currentGrade}`;
@@ -1403,21 +1403,20 @@
             const container = document.getElementById('verticalStudentsContainer');
             container.innerHTML = '';
             
-            if(activeQueryClass === '__NONE__') {
-                container.innerHTML = `<div style="padding: 15px; text-align: center; opacity: 0.7; font-weight: bold; background: rgba(0,0,0,0.02); border-radius: 8px;">ℹ️ الرجاء اختيار الفصل الدراسي أعلاه لعرض قائمة الطلاب وبياناتهم.</div>`;
+            const searchVal = document.getElementById('filterStudentNameInput').value.trim().toLowerCase();
+
+            let filtered = students;
+            
+            // إذا كان المستخدم يكتب في حقل البحث، سيتم البحث في كافة الطلاب مباشرة دون التقيد باختيار الفصل
+            if(searchVal !== '') {
+                filtered = students.filter(s => s.name.toLowerCase().includes(searchVal));
+            } else if(activeQueryClass === '__NONE__') {
+                container.innerHTML = `<div style="padding: 15px; text-align: center; opacity: 0.7; font-weight: bold; background: rgba(0,0,0,0.02); border-radius: 8px;">ℹ️ الرجاء اختيار الفصل الدراسي أو البحث عن اسم الطالب أعلاه لعرض البيانات.</div>`;
                 document.getElementById('paginationInfo').textContent = `عرض 0 من 0`;
                 document.getElementById('pageIndicator').textContent = `1 / 1`;
                 return;
-            }
-
-            let filtered = students;
-            if(activeQueryClass) {
-                filtered = filtered.filter(s => (s.classCustom || currentGrade) === activeQueryClass);
-            }
-
-            const searchVal = document.getElementById('filterStudentNameInput').value.trim().toLowerCase();
-            if(searchVal) {
-                filtered = filtered.filter(s => s.name.toLowerCase().includes(searchVal));
+            } else {
+                filtered = students.filter(s => (s.classCustom || currentGrade) === activeQueryClass);
             }
 
             const totalRows = filtered.length;
@@ -1428,7 +1427,7 @@
             const pageData = filtered.slice(startIdx, startIdx + rowsPerPage);
 
             if(pageData.length === 0) {
-                container.innerHTML = `<div style="padding: 15px; text-align: center; opacity: 0.7;">لا توجد بيانات طلاب في هذا الفصل.</div>`;
+                container.innerHTML = `<div style="padding: 15px; text-align: center; opacity: 0.7;">لا توجد نتائج مطابقة للبحث أو الفصل المحدد.</div>`;
                 document.getElementById('paginationInfo').textContent = `عرض 0 من 0`;
                 document.getElementById('pageIndicator').textContent = `1 / 1`;
                 return;
@@ -1535,6 +1534,10 @@
 
         function filterTableByStudentInput() {
             currentPage = 1;
+            if(document.getElementById('filterStudentNameInput').value.trim() !== '') {
+                activeQueryClass = '__NONE__'; // إلغاء تفعيل الفلترة بالفصل عند الكتابة بالبحث الشامل
+                renderClassesQuery();
+            }
             renderStudentsTable();
         }
 
@@ -1565,6 +1568,7 @@
                 activeQueryClass = '__NONE__';
             } else {
                 activeQueryClass = cName;
+                document.getElementById('filterStudentNameInput').value = ''; // تفريغ حقل البحث عند اختيار فصل محدد
             }
             currentPage = 1;
             renderClassesQuery();
