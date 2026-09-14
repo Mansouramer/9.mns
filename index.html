@@ -316,7 +316,7 @@
 
         th { background-color: rgba(0,0,0,0.05); color: var(--secondary); }
 
-        /* تنسيق أزرار الأسهم والتحكم التفاعلي الملون */
+        /* تنسيق أزرار الأسهم والتحكم التفاعلي الشفاف والمتناسق */
         .stepper-control {
             display: inline-flex;
             align-items: center;
@@ -325,6 +325,7 @@
             border-radius: 6px;
             border: 1px solid rgba(0,0,0,0.15);
             width: 100%;
+            background: rgba(255,255,255,0.4);
         }
 
         .stepper-btn {
@@ -350,11 +351,11 @@
             display: inline-block;
         }
 
-        /* خلفيات تفاعلية جذابة مخصصة */
-        .box-absence { background-color: #fef2f2; border: 1px solid #fca5a5; padding: 6px; border-radius: 8px; }
-        .box-participation { background-color: #fefce8; border: 1px solid #fde047; padding: 6px; border-radius: 8px; }
-        .box-homework { background-color: #f0fdf4; border: 1px solid #86efac; padding: 6px; border-radius: 8px; }
-        .box-phone { background-color: #f8fafc; border: 1px solid #cbd5e1; padding: 6px; border-radius: 8px; }
+        /* حاويات شفافة بالكامل وناعمة مريحة للعين */
+        .box-absence { background: rgba(239, 68, 68, 0.05); border: 1px solid rgba(239, 68, 68, 0.2); padding: 6px; border-radius: 8px; }
+        .box-participation { background: rgba(245, 158, 11, 0.05); border: 1px solid rgba(245, 158, 11, 0.2); padding: 6px; border-radius: 8px; }
+        .box-homework { background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.2); padding: 6px; border-radius: 8px; }
+        .box-phone { background: rgba(0, 0, 0, 0.02); border: 1px solid rgba(0, 0, 0, 0.1); padding: 6px; border-radius: 8px; }
 
         .pagination-bar {
             display: flex;
@@ -838,7 +839,7 @@
             </div>
         </div>
 
-        <!-- تسجيل الطلاب والصفوف والجدول (بطاقات شفافة مع خلفيات ألوان تفاعلية جذابة للغياب والواجبات) -->
+        <!-- تسجيل الطلاب والصفوف والجدول (بطاقات شفافة متناسقة ومريحة للعين) -->
         <div class="section-card" id="studentsTableSection">
             <div style="display: flex; flex-direction: column; gap: 8px; border-bottom: 2px solid rgba(0,0,0,0.1); padding-bottom: 8px; margin-bottom: 10px;">
                 <h3 style="margin: 0; border: none; padding: 0;">✏️ تسجيل الطلاب والصفوف ومتابعتهم</h3>
@@ -862,7 +863,7 @@
                 <input type="text" id="filterStudentNameInput" placeholder="اكتب اسم الطالب للبحث..." oninput="filterTableByStudentInput()">
             </div>
 
-            <!-- عرض الطلاب بطريقة رأسية متسلسلة مع خلفيات ألوان تفاعلية جذابة -->
+            <!-- عرض الطلاب بطريقة رأسية متسلسلة شفافة ومريحة -->
             <div id="verticalStudentsContainer" style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;"></div>
 
             <div class="pagination-bar no-print">
@@ -1529,11 +1530,11 @@
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 12px; align-items: center;">
                         <div class="box-phone">
                             <span style="display:block; margin-bottom:2px; font-weight:bold;">📱 الجوال:</span>
-                            <input type="text" maxlength="10" value="${s.phone || ''}" style="width:100%; text-align:center; padding:4px; background:#fff;" oninput="updateStudentPhone(${globalIndex}, this.value)" placeholder="05xxxxxxxx">
+                            <input type="text" maxlength="10" value="${s.phone || ''}" style="width:100%; text-align:center; padding:4px; background:transparent; border:1px solid rgba(0,0,0,0.15); border-radius:4px;" oninput="updateStudentPhone(${globalIndex}, this.value)" placeholder="05xxxxxxxx">
                         </div>
                         <div class="box-absence">
                             <span style="display:block; margin-bottom:2px; font-weight:bold; color:#b91c1c;">🔴 الغياب:</span>
-                            <div class="stepper-control" style="background:#fff;">
+                            <div class="stepper-control">
                                 <button class="stepper-btn" style="background:#ef4444;" onclick="stepStudentField(${globalIndex}, 'absence', -1)">▼</button>
                                 <span class="stepper-val" style="color:#b91c1c;">${s.absence || 0}</span>
                                 <button class="stepper-btn" style="background:#ef4444;" onclick="stepStudentField(${globalIndex}, 'absence', 1)">▲</button>
@@ -1541,7 +1542,7 @@
                         </div>
                         <div class="box-participation">
                             <span style="display:block; margin-bottom:2px; font-weight:bold; color:#a16207;">✋ المشاركة:</span>
-                            <div class="stepper-control" style="background:#fff;">
+                            <div class="stepper-control">
                                 <button class="stepper-btn" style="background:#ca8a04;" onclick="stepStudentField(${globalIndex}, 'participation', -1)">▼</button>
                                 <span class="stepper-val" style="color:#a16207;">${s.participation || 0}</span>
                                 <button class="stepper-btn" style="background:#ca8a04;" onclick="stepStudentField(${globalIndex}, 'participation', 1)">▲</button>
@@ -1549,7 +1550,7 @@
                         </div>
                         <div class="box-homework">
                             <span style="display:block; margin-bottom:2px; font-weight:bold; color:#15803d;">📚 الواجبات:</span>
-                            <div class="stepper-control" style="background:#fff;">
+                            <div class="stepper-control">
                                 <button class="stepper-btn" style="background:#22c55e;" onclick="stepStudentField(${globalIndex}, 'homework', -1)">▼</button>
                                 <span class="stepper-val" style="color:#15803d;">${s.homework || 0}</span>
                                 <button class="stepper-btn" style="background:#22c55e;" onclick="stepStudentField(${globalIndex}, 'homework', 1)">▲</button>
