@@ -318,7 +318,6 @@
 
         th { background-color: rgba(255,255,255,0.5); color: var(--secondary); }
 
-        /* تنسيق أزرار الأسهم والتحكم التفاعلي الشفاف والمريح للعين */
         .stepper-control {
             display: inline-flex;
             align-items: center;
@@ -353,7 +352,6 @@
             display: inline-block;
         }
 
-        /* حاويات فرعية داخل بطاقة الطالب ذات شفافية ناعمة تدمج الألوان بسلاسة */
         .box-absence { background: rgba(254, 242, 242, 0.65); border: 1px solid rgba(252, 165, 165, 0.4); padding: 6px; border-radius: 8px; backdrop-filter: blur(4px); }
         .box-participation { background: rgba(254, 252, 232, 0.65); border: 1px solid rgba(253, 224, 71, 0.4); padding: 6px; border-radius: 8px; backdrop-filter: blur(4px); }
         .box-homework { background: rgba(240, 253, 244, 0.65); border: 1px solid rgba(134, 239, 172, 0.4); padding: 6px; border-radius: 8px; backdrop-filter: blur(4px); }
@@ -841,7 +839,7 @@
             </div>
         </div>
 
-        <!-- تسجيل الطلاب والصفوف والجدول (بطاقات شفافة متناسقة ومريحة للعين) -->
+        <!-- تسجيل الطلاب والصفوف والجدول (مخفي افتراضياً ولا يظهر إلا عند اختيار الفصل) -->
         <div class="section-card" id="studentsTableSection">
             <div style="display: flex; flex-direction: column; gap: 8px; border-bottom: 2px solid rgba(0,0,0,0.1); padding-bottom: 8px; margin-bottom: 10px;">
                 <h3 style="margin: 0; border: none; padding: 0;">✏️ تسجيل الطلاب والصفوف ومتابعتهم</h3>
@@ -856,7 +854,7 @@
             </div>
 
             <div style="margin-top: 10px;" class="no-print">
-                <span style="font-weight: bold; font-size: 12px; display: block; margin-bottom: 6px;">🏫 تصفح الصفوف (اضغط على الصف لعرضه):</span>
+                <span style="font-weight: bold; font-size: 12px; display: block; margin-bottom: 6px;">🏫 تصفح الصفوف (اضغط على الصف لعرض طلابه):</span>
                 <div id="classesQueryContainer" class="classes-query-grid"></div>
             </div>
 
@@ -865,7 +863,7 @@
                 <input type="text" id="filterStudentNameInput" placeholder="اكتب اسم الطالب للبحث..." oninput="filterTableByStudentInput()">
             </div>
 
-            <!-- عرض الطلاب بطريقة رأسية متسلسلة شفافة ومريحة -->
+            <!-- عرض الطلاب بطريقة رأسية متسلسلة (مخفي افتراضياً ولن يظهر إلا عند اختيار صف محدد) -->
             <div id="verticalStudentsContainer" style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;"></div>
 
             <div class="pagination-bar no-print">
@@ -1143,7 +1141,7 @@
         let currentGrade = localStorage.getItem('mansour_current_grade_science_v5') || 'الأول الابتدائي';
         document.getElementById('globalGradeSelect').value = currentGrade;
 
-        let activeQueryClass = '';
+        let activeQueryClass = '__NONE__'; // يبدأ بدون عرض أي طلاب افتراضياً
         let selectedStudentIndex = ''; 
         let currentPage = 1;
         const rowsPerPage = 20;
@@ -1171,7 +1169,7 @@
                 { chapter: "الوحدة 2: الحيوانات من حولنا", title: "الحيوانات تنمو وتتغير", desc: "دراسة دورات حياة الحيوانات وكيف تتغير صغار الحيوانات عن أبائها." },
                 { chapter: "الوحدة 3: أرضنا ومواردها", title: "ما الأرض؟ وماذا يوجد عليها؟", desc: "التعرف على اليابسة والماء والصخور المكونة لسطح الأرض." },
                 { chapter: "الوحدة 3: أرضنا ومواردها", title: "الماء والهواء", desc: "أهمية الماء والهواء لحياة الكائنات الحية وطرق المحافظة عليها." },
-                { chapter: "الوحدة 4: الطقس والفصول", title: "حالات الطقس المختلفة", desc: "ملاحظة الطقس اليومي (مشمس، ممطر، عاصف، بارد) وأثره على ملابسنا." },
+                { chapter: "الوحدة 4: الطقس والفصول", title: "ح حالات الطقس المختلفة", desc: "ملاحظة الطقس اليومي (مشمس، ممطر، عاصف، بارد) وأثره على ملابسنا." },
                 { chapter: "الوحدة 4: الطقس والفصول", title: "الفصول الأربعة", desc: "التعرف على التغيرات المناخية خلال السنة (الربيع، الصيف، الخريف، الشتاء)." }
             ],
             "الثاني الابتدائي": [
@@ -1249,7 +1247,7 @@
             lessonStatus = JSON.parse(localStorage.getItem(getStorageKeyForStatus())) || {};
             lessonMastery = JSON.parse(localStorage.getItem(getStorageKeyForMastery())) || {};
 
-            activeQueryClass = '';
+            activeQueryClass = '__NONE__'; // يبدأ مخفياً عند تغيير المرحلة
             selectedStudentIndex = '';
             currentPage = 1;
             document.getElementById('studentSearchInput').value = '';
@@ -1486,6 +1484,14 @@
             const container = document.getElementById('verticalStudentsContainer');
             container.innerHTML = '';
             
+            // إذا لم يتم اختيار فصل محدد، لا يتم عرض أي طلاب
+            if(activeQueryClass === '__NONE__') {
+                container.innerHTML = `<div style="padding: 15px; text-align: center; opacity: 0.7; font-weight: bold; background: rgba(0,0,0,0.02); border-radius: 8px;">ℹ️ الرجاء اختيار الفصل الدراسي أعلاه لعرض قائمة الطلاب وبياناتهم.</div>`;
+                document.getElementById('paginationInfo').textContent = `عرض 0 من 0`;
+                document.getElementById('pageIndicator').textContent = `1 / 1`;
+                return;
+            }
+
             let filtered = students;
             if(activeQueryClass) {
                 filtered = filtered.filter(s => (s.classCustom || currentGrade) === activeQueryClass);
@@ -1504,7 +1510,7 @@
             const pageData = filtered.slice(startIdx, startIdx + rowsPerPage);
 
             if(pageData.length === 0) {
-                container.innerHTML = `<div style="padding: 15px; text-align: center; opacity: 0.7;">لا توجد بيانات طلاب.</div>`;
+                container.innerHTML = `<div style="padding: 15px; text-align: center; opacity: 0.7;">لا توجد بيانات طلاب في هذا الفصل.</div>`;
                 document.getElementById('paginationInfo').textContent = `عرض 0 من 0`;
                 document.getElementById('pageIndicator').textContent = `1 / 1`;
                 return;
@@ -1621,11 +1627,6 @@
             const classesSet = new Set();
             students.forEach(s => classesSet.add(s.classCustom || currentGrade));
 
-            const allWrapper = document.createElement('div');
-            allWrapper.className = `class-btn-wrapper ${activeQueryClass === '' ? 'active' : ''}`;
-            allWrapper.innerHTML = `<button class="class-query-btn" onclick="filterByClass('')">📋 كافة الصفوف</button>`;
-            container.appendChild(allWrapper);
-
             classesSet.forEach(cName => {
                 const wrapper = document.createElement('div');
                 wrapper.className = `class-btn-wrapper ${activeQueryClass === cName ? 'active' : ''}`;
@@ -1642,7 +1643,12 @@
         }
 
         function filterByClass(cName) {
-            activeQueryClass = cName;
+            // إذا كان الفصل مُختار مسبقاً، يتم إلغاء التحديد وإخفاء الطلاب، وإلا يتم عرضه
+            if (activeQueryClass === cName) {
+                activeQueryClass = '__NONE__';
+            } else {
+                activeQueryClass = cName;
+            }
             currentPage = 1;
             renderClassesQuery();
             renderStudentsTable();
@@ -1653,7 +1659,7 @@
             if(confirm(`هل أنت متأكد من حذف جميع طلاب الصف (${cName})؟`)) {
                 students = students.filter(s => (s.classCustom || currentGrade) !== cName);
                 localStorage.setItem(getStorageKeyForStudents(), JSON.stringify(students));
-                if(activeQueryClass === cName) activeQueryClass = '';
+                if(activeQueryClass === cName) activeQueryClass = '__NONE__';
                 render();
                 showToast('🗑️ تمت إزالة الصف بالكامل!');
             }
