@@ -924,6 +924,17 @@
                     </div>
                 </div>
 
+                <!-- قسم نقل الطالب المباشر من تفاصيل الطالب -->
+                <div class="sub-box no-print" style="background: rgba(6, 182, 212, 0.05); border: 1px solid var(--info);">
+                    <h5>🚚 نقل السجل بالكامل إلى فصل آخر</h5>
+                    <div class="form-row" style="margin-bottom: 5px;">
+                        <select id="transferTargetClassSelect">
+                            <option value="">-- اختر الفصل المستهدف للنقل --</option>
+                        </select>
+                    </div>
+                    <button class="btn-info" onclick="transferSelectedStudentClass()" style="background: var(--info); color: white;">🚀 تنفيذ نقل الطالب وسجله بالكامل</button>
+                </div>
+
                 <div class="form-row no-print" style="margin-top: 10px;">
                     <button class="btn-print" onclick="printStudentReport()">🖨️ طباعة التقرير الرسمي</button>
                     <button class="whatsapp-btn" onclick="sendFullReportWhatsApp()">📤 إرسال التقرير الشامل عبر واتساب</button>
@@ -1407,7 +1418,6 @@
 
             let filtered = students;
             
-            // إذا كان المستخدم يكتب في حقل البحث، سيتم البحث في كافة الطلاب مباشرة دون التقيد باختيار الفصل
             if(searchVal !== '') {
                 filtered = students.filter(s => s.name.toLowerCase().includes(searchVal));
             } else if(activeQueryClass === '__NONE__') {
@@ -1451,7 +1461,10 @@
                             <strong style="font-size: 14px; color: var(--secondary);">${s.name}</strong>
                             <span class="class-badge" style="margin-right: 6px;">${s.classCustom || currentGrade}</span>
                         </div>
-                        <button class="btn-action btn-danger" style="width: auto !important; padding: 4px 8px; font-size: 11px;" onclick="deleteStudent(${globalIndex})">حذف</button>
+                        <div style="display: flex; gap: 4px;">
+                            <button class="btn-action btn-info" style="width: auto !important; padding: 4px 8px; font-size: 11px; background: var(--info);" onclick="quickTransferPrompt(${globalIndex})" title="نقل لطالب فصل آخر">🚚 نقل</button>
+                            <button class="btn-action btn-danger" style="width: auto !important; padding: 4px 8px; font-size: 11px;" onclick="deleteStudent(${globalIndex})">حذف</button>
+                        </div>
                     </div>
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 12px; align-items: center;">
                         <div class="box-phone">
@@ -1489,6 +1502,26 @@
 
             document.getElementById('paginationInfo').textContent = `عرض من ${startIdx + 1} إلى ${Math.min(startIdx + rowsPerPage, totalRows)} من أصل ${totalRows} طالب`;
             document.getElementById('pageIndicator').textContent = `${currentPage} / ${totalPages}`;
+        }
+
+        function quickTransferPrompt(index) {
+            const s = students[index];
+            const classesSet = new Set();
+            students.forEach(st => classesSet.add(st.classCustom || currentGrade));
+            classesSet.add(currentGrade);
+
+            let msg = `اختر الفصل المراد نقل الطالب (${s.name}) إليه:\n`;
+            let classArray = Array.from(classesSet);
+            
+            let promptText = `أدخل اسم الفصل الجديد المطلوب نقل الطالب إليه (المتاح حالياً: ${classArray.join(', ')}):`;
+            let targetClass = prompt(promptText, s.classCustom || currentGrade);
+
+            if(targetClass && targetClass.trim() !== '') {
+                s.classCustom = targetClass.trim();
+                localStorage.setItem(getStorageKeyForStudents(), JSON.stringify(students));
+                render();
+                showToast(`🚚 تم نقل الطالب ${s.name} إلى فصل (${s.classCustom}) بنجاح!`);
+            }
         }
 
         function stepStudentField(index, field, change) {
@@ -1535,7 +1568,7 @@
         function filterTableByStudentInput() {
             currentPage = 1;
             if(document.getElementById('filterStudentNameInput').value.trim() !== '') {
-                activeQueryClass = '__NONE__'; // إلغاء تفعيل الفلترة بالفصل عند الكتابة بالبحث الشامل
+                activeQueryClass = '__NONE__'; 
                 renderClassesQuery();
             }
             renderStudentsTable();
@@ -1561,6 +1594,29 @@
             updateExamClassSelect(classesSet);
             updateMasteryClassSelect(classesSet);
             updateBulkTargetSelect(classesSet);
+            updateTransferTargetSelect(classesSet);
+        }
+
+        function updateTransferTargetSelect(classesSet) {
+            const select = document.getElementById('transferTargetClassSelect');
+            if(!select) return;
+            select.innerHTML = '<option value="">-- اختر الفصل المستهدف للنقل --</option>';
+            classesSet.forEach(cName => {
+                select.innerHTML += `<option value="${cName}">${cName}</option>`;
+            });
+        }
+
+        function transferSelectedStudentClass() {
+            if(selectedStudentIndex === '') return;
+            const targetClass = document.getElementById('transferTargetClassSelect').value;
+            if(!targetClass) { alert('الرجاء اختيار الفصل المستهدف للنقل'); return; }
+
+            const s = students[selectedStudentIndex];
+            s.classCustom = targetClass;
+            localStorage.setItem(getStorageKeyForStudents(), JSON.stringify(students));
+            render();
+            selectStudentForDetails(selectedStudentIndex);
+            showToast(`🚚 تم نقل سجل الطالب ${s.name} إلى فصل (${targetClass}) بنجاح!`);
         }
 
         function filterByClass(cName) {
@@ -1568,7 +1624,7 @@
                 activeQueryClass = '__NONE__';
             } else {
                 activeQueryClass = cName;
-                document.getElementById('filterStudentNameInput').value = ''; // تفريغ حقل البحث عند اختيار فصل محدد
+                document.getElementById('filterStudentNameInput').value = ''; 
             }
             currentPage = 1;
             renderClassesQuery();
