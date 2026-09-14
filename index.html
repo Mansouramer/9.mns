@@ -316,15 +316,14 @@
 
         th { background-color: rgba(0,0,0,0.05); color: var(--secondary); }
 
-        /* تنسيق أزرار الأسهم للزيادة والنقصان */
+        /* تنسيق أزرار الأسهم والتحكم التفاعلي الملون */
         .stepper-control {
             display: inline-flex;
             align-items: center;
             justify-content: space-between;
-            background: rgba(0,0,0,0.03);
             padding: 3px;
             border-radius: 6px;
-            border: 1px solid rgba(0,0,0,0.1);
+            border: 1px solid rgba(0,0,0,0.15);
             width: 100%;
         }
 
@@ -339,13 +338,8 @@
             align-items: center !important;
             justify-content: center !important;
             cursor: pointer;
-            background: var(--secondary);
             color: white;
             border: none;
-        }
-
-        .stepper-btn.down {
-            background: #6b7280;
         }
 
         .stepper-val {
@@ -355,6 +349,12 @@
             text-align: center;
             display: inline-block;
         }
+
+        /* خلفيات تفاعلية جذابة مخصصة */
+        .box-absence { background-color: #fef2f2; border: 1px solid #fca5a5; padding: 6px; border-radius: 8px; }
+        .box-participation { background-color: #fefce8; border: 1px solid #fde047; padding: 6px; border-radius: 8px; }
+        .box-homework { background-color: #f0fdf4; border: 1px solid #86efac; padding: 6px; border-radius: 8px; }
+        .box-phone { background-color: #f8fafc; border: 1px solid #cbd5e1; padding: 6px; border-radius: 8px; }
 
         .pagination-bar {
             display: flex;
@@ -838,7 +838,7 @@
             </div>
         </div>
 
-        <!-- تسجيل الطلاب والصفوف والجدول (بطاقات رأسية شفافة بدون خلفية بيضاء مع أزرار زيادة ونقصان) -->
+        <!-- تسجيل الطلاب والصفوف والجدول (بطاقات شفافة مع خلفيات ألوان تفاعلية جذابة للغياب والواجبات) -->
         <div class="section-card" id="studentsTableSection">
             <div style="display: flex; flex-direction: column; gap: 8px; border-bottom: 2px solid rgba(0,0,0,0.1); padding-bottom: 8px; margin-bottom: 10px;">
                 <h3 style="margin: 0; border: none; padding: 0;">✏️ تسجيل الطلاب والصفوف ومتابعتهم</h3>
@@ -862,7 +862,7 @@
                 <input type="text" id="filterStudentNameInput" placeholder="اكتب اسم الطالب للبحث..." oninput="filterTableByStudentInput()">
             </div>
 
-            <!-- عرض الطلاب بطريقة رأسية متسلسلة شفافة مع أزرار زيادة ونقصان -->
+            <!-- عرض الطلاب بطريقة رأسية متسلسلة مع خلفيات ألوان تفاعلية جذابة -->
             <div id="verticalStudentsContainer" style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;"></div>
 
             <div class="pagination-bar no-print">
@@ -1510,9 +1510,8 @@
             pageData.forEach((s) => {
                 const globalIndex = students.indexOf(s);
                 const card = document.createElement('div');
-                // إلغاء الخلفية البيضاء وصلبة لتبدو البطاقة شفافة ونظيفة
                 card.style.background = 'transparent';
-                card.style.border = '1px solid rgba(0,0,0,0.12)';
+                card.style.border = '1px solid rgba(0,0,0,0.15)';
                 card.style.borderRadius = '8px';
                 card.style.padding = '10px';
                 card.style.display = 'flex';
@@ -1528,32 +1527,32 @@
                         <button class="btn-action btn-danger" style="width: auto !important; padding: 4px 8px; font-size: 11px;" onclick="deleteStudent(${globalIndex})">حذف</button>
                     </div>
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 12px; align-items: center;">
-                        <div>
-                            <span style="display:block; margin-bottom:2px;">📱 الجوال:</span>
-                            <input type="text" maxlength="10" value="${s.phone || ''}" style="width:100%; text-align:center; padding:4px;" oninput="updateStudentPhone(${globalIndex}, this.value)" placeholder="05xxxxxxxx">
+                        <div class="box-phone">
+                            <span style="display:block; margin-bottom:2px; font-weight:bold;">📱 الجوال:</span>
+                            <input type="text" maxlength="10" value="${s.phone || ''}" style="width:100%; text-align:center; padding:4px; background:#fff;" oninput="updateStudentPhone(${globalIndex}, this.value)" placeholder="05xxxxxxxx">
                         </div>
-                        <div>
-                            <span style="display:block; margin-bottom:2px;">🔴 الغياب:</span>
-                            <div class="stepper-control">
-                                <button class="stepper-btn down" onclick="stepStudentField(${globalIndex}, 'absence', -1)">▼</button>
-                                <span class="stepper-val">${s.absence || 0}</span>
-                                <button class="stepper-btn" onclick="stepStudentField(${globalIndex}, 'absence', 1)">▲</button>
+                        <div class="box-absence">
+                            <span style="display:block; margin-bottom:2px; font-weight:bold; color:#b91c1c;">🔴 الغياب:</span>
+                            <div class="stepper-control" style="background:#fff;">
+                                <button class="stepper-btn" style="background:#ef4444;" onclick="stepStudentField(${globalIndex}, 'absence', -1)">▼</button>
+                                <span class="stepper-val" style="color:#b91c1c;">${s.absence || 0}</span>
+                                <button class="stepper-btn" style="background:#ef4444;" onclick="stepStudentField(${globalIndex}, 'absence', 1)">▲</button>
                             </div>
                         </div>
-                        <div>
-                            <span style="display:block; margin-bottom:2px;">✋ المشاركة:</span>
-                            <div class="stepper-control">
-                                <button class="stepper-btn down" onclick="stepStudentField(${globalIndex}, 'participation', -1)">▼</button>
-                                <span class="stepper-val">${s.participation || 0}</span>
-                                <button class="stepper-btn" onclick="stepStudentField(${globalIndex}, 'participation', 1)">▲</button>
+                        <div class="box-participation">
+                            <span style="display:block; margin-bottom:2px; font-weight:bold; color:#a16207;">✋ المشاركة:</span>
+                            <div class="stepper-control" style="background:#fff;">
+                                <button class="stepper-btn" style="background:#ca8a04;" onclick="stepStudentField(${globalIndex}, 'participation', -1)">▼</button>
+                                <span class="stepper-val" style="color:#a16207;">${s.participation || 0}</span>
+                                <button class="stepper-btn" style="background:#ca8a04;" onclick="stepStudentField(${globalIndex}, 'participation', 1)">▲</button>
                             </div>
                         </div>
-                        <div>
-                            <span style="display:block; margin-bottom:2px;">📚 الواجبات:</span>
-                            <div class="stepper-control">
-                                <button class="stepper-btn down" onclick="stepStudentField(${globalIndex}, 'homework', -1)">▼</button>
-                                <span class="stepper-val">${s.homework || 0}</span>
-                                <button class="stepper-btn" onclick="stepStudentField(${globalIndex}, 'homework', 1)">▲</button>
+                        <div class="box-homework">
+                            <span style="display:block; margin-bottom:2px; font-weight:bold; color:#15803d;">📚 الواجبات:</span>
+                            <div class="stepper-control" style="background:#fff;">
+                                <button class="stepper-btn" style="background:#22c55e;" onclick="stepStudentField(${globalIndex}, 'homework', -1)">▼</button>
+                                <span class="stepper-val" style="color:#15803d;">${s.homework || 0}</span>
+                                <button class="stepper-btn" style="background:#22c55e;" onclick="stepStudentField(${globalIndex}, 'homework', 1)">▲</button>
                             </div>
                         </div>
                     </div>
@@ -1652,7 +1651,7 @@
                 localStorage.setItem(getStorageKeyForStudents(), JSON.stringify(students));
                 if(activeQueryClass === cName) activeQueryClass = '';
                 render();
-                showToast('🗑️ تمت إزالة الصف بنجاح!');
+                showToast('🗑️ تمت إزالة الصف بالكامل!');
             }
         }
 
