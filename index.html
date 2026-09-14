@@ -1311,7 +1311,7 @@
                     addedCount++;
                 } else {
                     lessons.push({
-                        chapter: "إضافات دفعية",
+                        chapter: "",
                         title: parts[0].trim(),
                         desc: 'لا توجد تفاصيل إضافية'
                     });
@@ -1510,9 +1510,7 @@
             students.forEach(st => classesSet.add(st.classCustom || currentGrade));
             classesSet.add(currentGrade);
 
-            let msg = `اختر الفصل المراد نقل الطالب (${s.name}) إليه:\n`;
             let classArray = Array.from(classesSet);
-            
             let promptText = `أدخل اسم الفصل الجديد المطلوب نقل الطالب إليه (المتاح حالياً: ${classArray.join(', ')}):`;
             let targetClass = prompt(promptText, s.classCustom || currentGrade);
 
