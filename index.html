@@ -316,46 +316,6 @@
 
         th { background-color: rgba(0,0,0,0.05); color: var(--secondary); }
 
-        /* تنسيق أزرار الأسهم للزيادة والنقصان */
-        .stepper-control {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 2px;
-            background: rgba(0,0,0,0.03);
-            padding: 2px;
-            border-radius: 6px;
-            border: 1px solid rgba(0,0,0,0.1);
-        }
-
-        .stepper-btn {
-            width: 22px !important;
-            height: 22px !important;
-            padding: 0 !important;
-            font-size: 10px !important;
-            line-height: 22px !important;
-            border-radius: 4px !important;
-            display: inline-flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            cursor: pointer;
-            background: var(--secondary);
-            color: white;
-            border: none;
-        }
-
-        .stepper-btn.down {
-            background: #6b7280;
-        }
-
-        .stepper-val {
-            font-weight: bold;
-            font-size: 13px;
-            min-width: 20px;
-            text-align: center;
-            display: inline-block;
-        }
-
         .pagination-bar {
             display: flex;
             flex-direction: column;
@@ -756,156 +716,89 @@
                 <p id="totalExecutedLessons">0 / 0</p>
             </div>
         </div>
-<!-- قسم الخطة الأسبوعية لمادة العلوم -->
-<div class="section-card" id="weeklyPlanSection">
-    <div style="display: flex; flex-direction: column; gap: 15px;">
-        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--primary, #1e3a8a); padding-bottom: 10px;">
-            <h3 style="margin: 0; color: var(--text, #1e3a8a); font-size: 1.25rem; font-weight: bold;">🧪 الخطة الأسبوعية - مادة العلوم</h3>
-            <button onclick="sendCustomWeeklyPlan()" style="background-color: #10b981; color: white; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: bold; font-family: 'Cairo', sans-serif;">
-                إرسال الخطة عبر الواتساب 📱
-            </button>
+
+        <!-- قسم الخطة الأسبوعية لمادة العلوم -->
+        <div class="section-card" id="weeklyPlanSection">
+            <div style="display: flex; flex-direction: column; gap: 15px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--primary, #1e3a8a); padding-bottom: 10px;">
+                    <h3 style="margin: 0; color: var(--text, #1e3a8a); font-size: 1.25rem; font-weight: bold;">🧪 الخطة الأسبوعية - مادة العلوم</h3>
+                    <button onclick="sendCustomWeeklyPlan()" style="background-color: #10b981; color: white; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: bold; font-family: 'Cairo', sans-serif;">
+                        إرسال الخطة عبر الواتساب 📱
+                    </button>
+                </div>
+
+                <!-- حقول الإدخال واختيار المواضيع الجاهزة -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;" class="no-print">
+                    <div>
+                        <label style="font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 5px;">اليوم الدراسي:</label>
+                        <select id="planDay" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 6px;">
+                            <option value="الأحد">الأحد</option>
+                            <option value="الإثنين">الإثنين</option>
+                            <option value="الثلاثاء">الثلاثاء</option>
+                            <option value="الأربعاء">الأربعاء</option>
+                            <option value="الخميس">الخميس</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 5px;">المادة:</label>
+                        <input type="text" id="planSubject" value="علوم" readonly style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 6px; background-color: #f3f4f6; font-weight: bold;">
+                    </div>
+                    <div>
+                        <label style="font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 5px;">اختر موضوع الدرس (أو اكتبه):</label>
+                        <select id="scienceTopicSelect" onchange="document.getElementById('planTopic').value = this.value;" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 6px; margin-bottom: 5px;">
+                            <option value="">-- اختر من مواضيع العلوم المقررة --</option>
+                            <option value="الوحدة الأولى: المخلوقات الحية (النباتات وأجزاؤها)">النباتات وأجزاؤها</option>
+                            <option value="الوحدة الأولى: المخلوقات الحية (احتياجات المخلوقات الحية)">احتياجات المخلوقات الحية</option>
+                            <option value="الوحدة الثانية: الحيوانات من حولنا (مجموعات الحيوانات)">مجموعات الحيوانات</option>
+                            <option value="الوحدة الثانية: الحيوانات من حولنا (مكان العيش - الموائل)">مكان العيش (الموائل)</option>
+                            <option value="الوحدة الثالثة: أرضنا (الارض من حولنا والصخور)">الأرض من حولنا والصخور</option>
+                            <option value="الوحدة الثالثة: أرضنا (water and soil - الماء والتربة)">الماء والتربة</option>
+                            <option value="الوحدة الرابعة: الطقس والفصول الأربعة (حالة الطقس)">حالة الطقس</option>
+                            <option value="الوحدة الرابعة: الطقس والفصول الأربعة (فصول السنة)">فصول السنة</option>
+                        </select>
+                        <input type="text" id="planTopic" placeholder="أو اكتب عنوان الدرس هنا يدوياً" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 6px;">
+                    </div>
+                    <div>
+                        <label style="font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 5px;">الواجب أو التجربة المنزلية:</label>
+                        <input type="text" id="planHomework" placeholder="مثال: حل صفحة 32 / إحضار وسائل تجربة" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 6px;">
+                    </div>
+                </div>
+
+                <div style="text-align: left;" class="no-print">
+                    <button onclick="addPlanToTable()" style="background-color: var(--primary, #1e3a8a); color: white; border: none; padding: 8px 20px; border-radius: 6px; cursor: pointer; font-family: 'Cairo', sans-serif;">
+                        + إضافة الخطة للجدول
+                    </button>
+                </div>
+
+                <!-- جدول عرض الخطط -->
+                <div style="overflow-x: auto; margin-top: 10px;">
+                    <table style="width: 100%; border-collapse: collapse; text-align: right;" id="dynamicPlanTable">
+                        <thead>
+                            <tr style="background-color: var(--bg, #eff6ff); color: var(--text, #1e3a8a);">
+                                <th style="padding: 10px; border-bottom: 2px solid #ddd;">اليوم</th>
+                                <th style="padding: 10px; border-bottom: 2px solid #ddd;">المادة</th>
+                                <th style="padding: 10px; border-bottom: 2px solid #ddd;">موضوع الدرس</th>
+                                <th style="padding: 10px; border-bottom: 2px solid #ddd;">الواجب / التجربة</th>
+                                <th style="padding: 10px; border-bottom: 2px solid #ddd; text-align: center;">إجراء</th>
+                            </tr>
+                        </thead>
+                        <tbody id="planTableRows">
+                            <tr>
+                                <td style="padding: 8px; border-bottom: 1px solid #eee;">الأحد</td>
+                                <td style="padding: 8px; border-bottom: 1px solid #eee;">علوم</td>
+                                <td style="padding: 8px; border-bottom: 1px solid #eee;">النباتات وأجزاؤها</td>
+                                <td style="padding: 8px; border-bottom: 1px solid #eee;">حل التمارين ص 15</td>
+                                <td style="padding: 8px; border-bottom: 1px solid #eee; text-align: center;">
+                                    <button onclick="deletePlanRow(this)" style="background: #ef4444; color: white; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer;">حذف</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
 
-        <!-- حقول الإدخال واختيار المواضيع الجاهزة -->
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;" class="no-print">
-            <div>
-                <label style="font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 5px;">اليوم الدراسي:</label>
-                <select id="planDay" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 6px;">
-                    <option value="الأحد">الأحد</option>
-                    <option value="الإثنين">الإثنين</option>
-                    <option value="الثلاثاء">الثلاثاء</option>
-                    <option value="الأربعاء">الأربعاء</option>
-                    <option value="الخميس">الخميس</option>
-                </select>
-            </div>
-            <div>
-                <label style="font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 5px;">المادة:</label>
-                <input type="text" id="planSubject" value="علوم" readonly style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 6px; background-color: #f3f4f6; font-weight: bold;">
-            </div>
-            <div>
-                <label style="font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 5px;">اختر موضوع الدرس (أو اكتبه):</label>
-                <select id="scienceTopicSelect" onchange="document.getElementById('planTopic').value = this.value;" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 6px; margin-bottom: 5px;">
-                    <option value="">-- اختر من مواضيع العلوم المقررة --</option>
-                    <option value="الوحدة الأولى: المخلوقات الحية (النباتات وأجزاؤها)">النباتات وأجزاؤها</option>
-                    <option value="الوحدة الأولى: المخلوقات الحية (احتياجات المخلوقات الحية)">احتياجات المخلوقات الحية</option>
-                    <option value="الوحدة الثانية: الحيوانات من حولنا (مجموعات الحيوانات)">مجموعات الحيوانات</option>
-                    <option value="الوحدة الثانية: الحيوانات من حولنا (مكان العيش - الموائل)">مكان العيش (الموائل)</option>
-                    <option value="الوحدة الثالثة: أرضنا (الارض من حولنا والصخور)">الأرض من حولنا والصخور</option>
-                    <option value="الوحدة الثالثة: أرضنا (water and soil - الماء والتربة)">الماء والتربة</option>
-                    <option value="الوحدة الرابعة: الطقس والفصول الأربعة (حالة الطقس)">حالة الطقس</option>
-                    <option value="الوحدة الرابعة: الطقس والفصول الأربعة (فصول السنة)">فصول السنة</option>
-                </select>
-                <input type="text" id="planTopic" placeholder="أو اكتب عنوان الدرس هنا يدوياً" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 6px;">
-            </div>
-            <div>
-                <label style="font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 5px;">الواجب أو التجربة المنزلية:</label>
-                <input type="text" id="planHomework" placeholder="مثال: حل صفحة 32 / إحضار وسائل تجربة" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 6px;">
-            </div>
-        </div>
-
-        <div style="text-align: left;" class="no-print">
-            <button onclick="addPlanToTable()" style="background-color: var(--primary, #1e3a8a); color: white; border: none; padding: 8px 20px; border-radius: 6px; cursor: pointer; font-family: 'Cairo', sans-serif;">
-                + إضافة الخطة للجدول
-            </button>
-        </div>
-
-        <!-- جدول عرض الخطط -->
-        <div style="overflow-x: auto; margin-top: 10px;">
-            <table style="width: 100%; border-collapse: collapse; text-align: right;" id="dynamicPlanTable">
-                <thead>
-                    <tr style="background-color: var(--bg, #eff6ff); color: var(--text, #1e3a8a);">
-                        <th style="padding: 10px; border-bottom: 2px solid #ddd;">اليوم</th>
-                        <th style="padding: 10px; border-bottom: 2px solid #ddd;">المادة</th>
-                        <th style="padding: 10px; border-bottom: 2px solid #ddd;">موضوع الدرس</th>
-                        <th style="padding: 10px; border-bottom: 2px solid #ddd;">الواجب / التجربة</th>
-                        <th style="padding: 10px; border-bottom: 2px solid #ddd; text-align: center;">إجراء</th>
-                    </tr>
-                </thead>
-                <tbody id="planTableRows">
-                    <tr>
-                        <td style="padding: 8px; border-bottom: 1px solid #eee;">الأحد</td>
-                        <td style="padding: 8px; border-bottom: 1px solid #eee;">علوم</td>
-                        <td style="padding: 8px; border-bottom: 1px solid #eee;">النباتات وأجزاؤها</td>
-                        <td style="padding: 8px; border-bottom: 1px solid #eee;">حل التمارين ص 15</td>
-                        <td style="padding: 8px; border-bottom: 1px solid #eee; text-align: center;">
-                            <button onclick="deletePlanRow(this)" style="background: #ef4444; color: white; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer;">حذف</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-
-<script>
-    function addPlanToTable() {
-        const day = document.getElementById('planDay').value;
-        const subject = document.getElementById('planSubject').value;
-        const topic = document.getElementById('planTopic').value.trim();
-        const homework = document.getElementById('planHomework').value.trim();
-
-        if (!topic) {
-            alert('الرجاء اختيار أو كتابة موضوع الدرس.');
-            return;
-        }
-
-        const tbody = document.getElementById('planTableRows');
-        const newRow = document.createElement('tr');
-        newRow.innerHTML = `
-            <td style="padding: 8px; border-bottom: 1px solid #eee;">${day}</td>
-            <td style="padding: 8px; border-bottom: 1px solid #eee;">${subject}</td>
-            <td style="padding: 8px; border-bottom: 1px solid #eee;">${topic}</td>
-            <td style="padding: 8px; border-bottom: 1px solid #eee;">${homework || 'لا يوجد'}</td>
-            <td style="padding: 8px; border-bottom: 1px solid #eee; text-align: center;">
-                <button onclick="deletePlanRow(this)" style="background: #ef4444; color: white; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer;">حذف</button>
-            </td>
-        `;
-        tbody.appendChild(newRow);
-
-        // إعادة تعيين الحقول
-        document.getElementById('planTopic').value = '';
-        document.getElementById('planHomework').value = '';
-        document.getElementById('scienceTopicSelect').selectedIndex = 0;
-    }
-
-    function deletePlanRow(button) {
-        const row = button.closest('tr');
-        row.remove();
-    }
-
-    function sendCustomWeeklyPlan() {
-        const rows = document.querySelectorAll('#dynamicPlanTable tbody tr');
-        if (rows.length === 0) {
-            alert('لا توجد خطط أسبوعية لإرسالها.');
-            return;
-        }
-
-        let message = `*السلام عليكم ورحمة الله وبركاته، أولياء الأمور الكرام*%0A`;
-        message += `نستعرض لكم خطة مادة العلوم لهذا الأسبوع:%0A-----------------------------------%0A`;
-
-        rows.forEach((row) => {
-            const cols = row.querySelectorAll('td');
-            if (cols.length >= 4) {
-                const day = cols[0].innerText;
-                const subject = cols[1].innerText;
-                const topic = cols[2].innerText;
-                const homework = cols[3].innerText;
-
-                message += `📌 *${day}* (${subject})%0A`;
-                message += `📖 الدرس: ${topic}%0A`;
-                message += `✍️ الواجب/النشاط: ${homework}%0A`;
-                message += `-----------------------------------%0A`;
-            }
-        });
-
-        message += `مع تحيات إدارة مدرسة داؤود بن عروة الثقفي الابتدائية 🏫`;
-
-        const whatsappUrl = `https://wa.me/?text=${message}`;
-        window.open(whatsappUrl, '_blank');
-    }
-</script>
-
-        <!-- تسجيل الطلاب والصفوف والجدول -->
+        <!-- تسجيل الطلاب والصفوف والجدول (مُعدل لعرض البطاقات الرأسية) -->
         <div class="section-card" id="studentsTableSection">
             <div style="display: flex; flex-direction: column; gap: 8px; border-bottom: 2px solid rgba(0,0,0,0.1); padding-bottom: 8px; margin-bottom: 10px;">
                 <h3 style="margin: 0; border: none; padding: 0;">✏️ تسجيل الطلاب والصفوف ومتابعتهم</h3>
@@ -929,24 +822,8 @@
                 <input type="text" id="filterStudentNameInput" placeholder="اكتب اسم الطالب للبحث..." oninput="filterTableByStudentInput()">
             </div>
 
-            <div style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>اسم الطالب</th>
-                            <th>🏫 الصف</th>
-                            <th>📱 الجوال</th>
-                            <th>🔴 غياب</th>
-                            <th>✋ مشاركة</th>
-                            <th>📚 واجبات</th>
-                            <th>🛠️ تجارب</th>
-                            <th>💬 رسائل</th>
-                            <th class="no-print">حذف</th>
-                        </tr>
-                    </thead>
-                    <tbody id="studentsTbody"></tbody>
-                </table>
-            </div>
+            <!-- عرض الطلاب بطريقة رأسية متسلسلة تحت بعضهم لمنع التمرير الأفقي -->
+            <div id="verticalStudentsContainer" style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;"></div>
 
             <div class="pagination-bar no-print">
                 <div id="paginationInfo" style="font-size: 11px; font-weight: bold; text-align: center;">عرض 0 من 0</div>
@@ -1563,8 +1440,8 @@
         }
 
         function renderStudentsTable() {
-            const tbody = document.getElementById('studentsTbody');
-            tbody.innerHTML = '';
+            const container = document.getElementById('verticalStudentsContainer');
+            container.innerHTML = '';
             
             let filtered = students;
             if(activeQueryClass) {
@@ -1584,7 +1461,7 @@
             const pageData = filtered.slice(startIdx, startIdx + rowsPerPage);
 
             if(pageData.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="9" style="padding: 15px; opacity: 0.7;">لا توجد بيانات طلاب.</td></tr>`;
+                container.innerHTML = `<div style="padding: 15px; text-align: center; opacity: 0.7;">لا توجد بيانات طلاب.</div>`;
                 document.getElementById('paginationInfo').textContent = `عرض 0 من 0`;
                 document.getElementById('pageIndicator').textContent = `1 / 1`;
                 return;
@@ -1592,56 +1469,65 @@
 
             pageData.forEach((s) => {
                 const globalIndex = students.indexOf(s);
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td><strong>${s.name}</strong></td>
-                    <td><span class="class-badge">${s.classCustom || currentGrade}</span></td>
-                    <td><input type="text" maxlength="10" value="${s.phone || ''}" style="width:80px; text-align:center; padding:2px;" oninput="updateStudentPhone(${globalIndex}, this.value)" placeholder="05xxxxxxxx"></td>
-                    <td>
-                        <div class="stepper-control">
-                            <button class="stepper-btn" onclick="stepStudentField(${globalIndex}, 'absence', 1)">▲</button>
-                            <span class="stepper-val">${s.absence || 0}</span>
-                            <button class="stepper-btn down" onclick="stepStudentField(${globalIndex}, 'absence', -1)">▼</button>
+                const card = document.createElement('div');
+                card.style.background = 'rgba(0,0,0,0.02)';
+                card.style.border = '1px solid rgba(0,0,0,0.1)';
+                card.style.borderRadius = '8px';
+                card.style.padding = '10px';
+                card.style.display = 'flex';
+                card.style.flexDirection = 'column';
+                card.style.gap = '8px';
+
+                card.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed rgba(0,0,0,0.1); padding-bottom: 6px;">
+                        <div>
+                            <strong style="font-size: 14px; color: var(--secondary);">${s.name}</strong>
+                            <span class="class-badge" style="margin-right: 6px;">${s.classCustom || currentGrade}</span>
                         </div>
-                    </td>
-                    <td>
-                        <div class="stepper-control">
-                            <button class="stepper-btn" onclick="stepStudentField(${globalIndex}, 'participation', 1)">▲</button>
-                            <span class="stepper-val">${s.participation || 0}</span>
-                            <button class="stepper-btn down" onclick="stepStudentField(${globalIndex}, 'participation', -1)">▼</button>
+                        <button class="btn-action btn-danger" style="width: auto !important; padding: 4px 8px; font-size: 11px;" onclick="deleteStudent(${globalIndex})">حذف</button>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; font-size: 12px;">
+                        <div>
+                            <span>📱 الجوال:</span>
+                            <input type="text" maxlength="10" value="${s.phone || ''}" style="width:100%; text-align:center; padding:4px; margin-top:2px;" oninput="updateStudentPhone(${globalIndex}, this.value)" placeholder="05xxxxxxxx">
                         </div>
-                    </td>
-                    <td>
-                        <div class="stepper-control">
-                            <button class="stepper-btn" onclick="stepStudentField(${globalIndex}, 'homework', 1)">▲</button>
-                            <span class="stepper-val">${s.homework || 0}</span>
-                            <button class="stepper-btn down" onclick="stepStudentField(${globalIndex}, 'homework', -1)">▼</button>
+                        <div>
+                            <span>🔴 الغياب:</span>
+                            <select style="width:100%; padding:4px; margin-top:2px; font-weight:bold;" onchange="updateStudentField(${globalIndex}, 'absence', this.value)">
+                                <option value="0" ${s.absence == 0 ? 'selected' : ''}>0 - حاضر</option>
+                                <option value="1" ${s.absence == 1 ? 'selected' : ''}>1 - غائب</option>
+                                <option value="2" ${s.absence == 2 ? 'selected' : ''}>2</option>
+                                <option value="3" ${s.absence == 3 ? 'selected' : ''}>3</option>
+                            </select>
                         </div>
-                    </td>
-                    <td>
-                        <div class="stepper-control">
-                            <button class="stepper-btn" onclick="stepStudentField(${globalIndex}, 'projects', 1)">▲</button>
-                            <span class="stepper-val">${s.projects || 0}</span>
-                            <button class="stepper-btn down" onclick="stepStudentField(${globalIndex}, 'projects', -1)">▼</button>
+                        <div>
+                            <span>✋ المشاركة:</span>
+                            <select style="width:100%; padding:4px; margin-top:2px;" onchange="updateStudentField(${globalIndex}, 'participation', this.value)">
+                                <option value="${s.participation || 0}" selected>${s.participation || 0} (تحديث)</option>
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="5">5</option>
+                            </select>
                         </div>
-                    </td>
-                    <td>${s.messages || 0}</td>
-                    <td class="no-print"><button class="btn-action btn-danger" onclick="deleteStudent(${globalIndex})">حذف</button></td>
+                        <div>
+                            <span>📚 الواجبات:</span>
+                            <select style="width:100%; padding:4px; margin-top:2px;" onchange="updateStudentField(${globalIndex}, 'homework', this.value)">
+                                <option value="${s.homework || 0}" selected>${s.homework || 0} (تحديث)</option>
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
+                        </div>
+                    </div>
                 `;
-                tbody.appendChild(tr);
+                container.appendChild(card);
             });
 
             document.getElementById('paginationInfo').textContent = `عرض من ${startIdx + 1} إلى ${Math.min(startIdx + rowsPerPage, totalRows)} من أصل ${totalRows} طالب`;
             document.getElementById('pageIndicator').textContent = `${currentPage} / ${totalPages}`;
-        }
-
-        function stepStudentField(index, field, change) {
-            let currentVal = Number(students[index][field]) || 0;
-            let newVal = currentVal + change;
-            if(newVal < 0) newVal = 0;
-            students[index][field] = newVal;
-            localStorage.setItem(getStorageKeyForStudents(), JSON.stringify(students));
-            render();
         }
 
         function updateStudentPhone(index, val) {
@@ -2398,7 +2284,71 @@
             };
             reader.readAsText(file);
         }
+
+        function addPlanToTable() {
+            const day = document.getElementById('planDay').value;
+            const subject = document.getElementById('planSubject').value;
+            const topic = document.getElementById('planTopic').value.trim();
+            const homework = document.getElementById('planHomework').value.trim();
+
+            if (!topic) {
+                alert('الرجاء اختيار أو كتابة موضوع الدرس.');
+                return;
+            }
+
+            const tbody = document.getElementById('planTableRows');
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td style="padding: 8px; border-bottom: 1px solid #eee;">${day}</td>
+                <td style="padding: 8px; border-bottom: 1px solid #eee;">${subject}</td>
+                <td style="padding: 8px; border-bottom: 1px solid #eee;">${topic}</td>
+                <td style="padding: 8px; border-bottom: 1px solid #eee;">${homework || 'لا يوجد'}</td>
+                <td style="padding: 8px; border-bottom: 1px solid #eee; text-align: center;">
+                    <button onclick="deletePlanRow(this)" style="background: #ef4444; color: white; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer;">حذف</button>
+                </td>
+            `;
+            tbody.appendChild(newRow);
+
+            document.getElementById('planTopic').value = '';
+            document.getElementById('planHomework').value = '';
+            document.getElementById('scienceTopicSelect').selectedIndex = 0;
+        }
+
+        function deletePlanRow(button) {
+            const row = button.closest('tr');
+            row.remove();
+        }
+
+        function sendCustomWeeklyPlan() {
+            const rows = document.querySelectorAll('#dynamicPlanTable tbody tr');
+            if (rows.length === 0) {
+                alert('لا توجد خطط أسبوعية لإرسالها.');
+                return;
+            }
+
+            let message = `*السلام عليكم ورحمة الله وبركاته، أولياء الأمور الكرام*%0A`;
+            message += `نستعرض لكم خطة مادة العلوم لهذا الأسبوع:%0A-----------------------------------%0A`;
+
+            rows.forEach((row) => {
+                const cols = row.querySelectorAll('td');
+                if (cols.length >= 4) {
+                    const day = cols[0].innerText;
+                    const subject = cols[1].innerText;
+                    const topic = cols[2].innerText;
+                    const homework = cols[3].innerText;
+
+                    message += `📌 *${day}* (${subject})%0A`;
+                    message += `📖 الدرس: ${topic}%0A`;
+                    message += `✍️ الواجب/النشاط: ${homework}%0A`;
+                    message += `-----------------------------------%0A`;
+                }
+            });
+
+            message += `مع تحيات إدارة مدرسة داؤود بن عروة الثقفي الابتدائية 🏫`;
+
+            const whatsappUrl = `https://wa.me/?text=${message}`;
+            window.open(whatsappUrl, '_blank');
+        }
     </script>
 </body>
 </html>
-
