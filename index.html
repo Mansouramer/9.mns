@@ -161,7 +161,6 @@
             gap: 12px;
         }
 
-        /* صندوق الجدول الذكي والمؤقت وجرس التنبيه */
         .schedule-widget-card {
             background: linear-gradient(135deg, rgba(37, 99, 235, 0.15), rgba(30, 58, 138, 0.2));
             border: 2px solid var(--secondary);
@@ -752,7 +751,7 @@
 
             <!-- محتوى الجدول المدرسي الكامل المخفي -->
             <div id="scheduleExpandedContent" class="schedule-expanded-content" onclick="event.stopPropagation()">
-                <h5 style="margin-top: 0; color: var(--secondary); border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 5px;">📅 الجدول المدرسي الدقيق (اختر وقت البداية وزمن الحصة بدقائق مرنة)</h5>
+                <h5 style="margin-top: 0; color: var(--secondary); border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 5px;">📅 الجدول المدرسي الدقيق (اختر الفصل أو "لا توجد حصة" بكل مرونة)</h5>
                 
                 <div class="form-row" style="margin-bottom: 5px;">
                     <select id="scheduleDaySelect" onchange="renderScheduleTable()">
@@ -770,7 +769,7 @@
                                 <th>الحصة</th>
                                 <th>بداية الحصة</th>
                                 <th>زمن الحصة</th>
-                                <th>الصف / الفصل</th>
+                                <th>الصف / الفصل أو الحالة</th>
                             </tr>
                         </thead>
                         <tbody id="scheduleTableTbody">
@@ -1163,7 +1162,6 @@
         let currentPage = 1;
         const rowsPerPage = 20;
 
-        // توليد خيارات الأوقات بدقائق مرنة بزيادة 5 دقائق (من 07:00 إلى 13:00)
         function generateTimeOptions(selectedTime) {
             let options = '';
             for (let h = 7; h <= 13; h++) {
@@ -1176,7 +1174,6 @@
             return options;
         }
 
-        // خيارات أزمنة الحصص المتاحة (45، 40، 35 دقيقة)
         function generateDurationOptions(selectedDuration) {
             let durations = [45, 40, 35, 30];
             let options = '';
@@ -1187,10 +1184,36 @@
             return options;
         }
 
+        const predefinedClasses = [
+            "لا توجد حصة",
+            "انتظار",
+            "نشاط / مراجعة",
+            "الأول الابتدائي",
+            "الثاني الابتدائي",
+            "الثالث الابتدائي",
+            "الرابع الابتدائي",
+            "الخامس الابتدائي",
+            "السادس الابتدائي"
+        ];
+
+        function generateClassSelectOptions(selectedVal) {
+            let options = '';
+            let found = false;
+            predefinedClasses.forEach(c => {
+                let sel = (c === selectedVal) ? 'selected' : '';
+                if(sel) found = true;
+                options += `<option value="${c}" ${sel}>${c}</option>`;
+            });
+            if(!found && selectedVal) {
+                options += `<option value="${selectedVal}" selected>${selectedVal}</option>`;
+            }
+            return options;
+        }
+
         const defaultSchedule = {
             "الأحد": [
-                { period: "الحصة الأولى", startTime: "07:00", duration: 45, className: "الأول الابتدائي" },
-                { period: "الحصة الثانية", startTime: "07:50", duration: 45, className: "الثاني الابتدائي" },
+                { period: "الحصة الأولى", startTime: "07:00", duration: 45, className: "لا توجد حصة" },
+                { period: "الحصة الثانية", startTime: "07:50", duration: 45, className: "لا توجد حصة" },
                 { period: "الحصة الثالثة", startTime: "08:40", duration: 45, className: "الثالث الابتدائي" },
                 { period: "الحصة الرابعة", startTime: "09:35", duration: 45, className: "الرابع الابتدائي" },
                 { period: "الحصة الخامسة", startTime: "10:25", duration: 45, className: "الخامس الابتدائي" },
@@ -1235,7 +1258,7 @@
             ]
         };
 
-        let schoolSchedule = JSON.parse(localStorage.getItem('mansour_school_schedule_v7')) || defaultSchedule;
+        let schoolSchedule = JSON.parse(localStorage.getItem('mansour_school_schedule_v8')) || defaultSchedule;
 
         function toggleScheduleExpansion() {
             const content = document.getElementById('scheduleExpandedContent');
@@ -1267,7 +1290,11 @@
                             ${generateDurationOptions(p.duration || 45)}
                         </select>
                     </td>
-                    <td><input type="text" value="${p.className}" style="width:100%; text-align:center; padding:4px;" oninput="updateScheduleItem('${day}', ${idx}, 'className', this.value)" placeholder="اسم الفصل"></td>
+                    <td>
+                        <select style="width:100%; text-align:center; padding:4px; font-size:12px;" onchange="updateScheduleItem('${day}', ${idx}, 'className', this.value)">
+                            ${generateClassSelectOptions(p.className)}
+                        </select>
+                    </td>
                 `;
                 tbody.appendChild(tr);
             });
@@ -1280,9 +1307,9 @@
                 } else {
                     schoolSchedule[day][idx][field] = val.trim();
                 }
-                localStorage.setItem('mansour_school_schedule_v7', JSON.stringify(schoolSchedule));
+                localStorage.setItem('mansour_school_schedule_v8', JSON.stringify(schoolSchedule));
                 updateLiveScheduleWidget();
-                showToast('⏰ تم تحديث وقت الحصة بنجاح!');
+                showToast('⏰ تم تحديث الجدول بنجاح!');
             }
         }
 
@@ -1294,7 +1321,7 @@
                 const osc = ctx.createOscillator();
                 const gain = ctx.createGain();
                 osc.type = 'sine';
-                osc.frequency.setValueAtTime(880, ctx.currentTime); // نغمة جرس تنبيه واضحة
+                osc.frequency.setValueAtTime(880, ctx.currentTime);
                 gain.gain.setValueAtTime(0.3, ctx.currentTime);
                 gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 1.2);
                 osc.connect(gain);
@@ -1329,13 +1356,17 @@
                     const endM = startM + duration;
 
                     if(currentMinutes >= startM && currentMinutes < endM) {
-                        activePeriodText = `الحالية: ${p.period} (${p.className})`;
+                        if(p.className === "لا توجد حصة") {
+                            activePeriodText = `الحالية: ${p.period} (لا توجد حصة)`;
+                        } else {
+                            activePeriodText = `الحالية: ${p.period} (${p.className})`;
+                        }
+                        
                         let remTotalSecs = (endM * 60) - (currentMinutes * 60 + currentSecs);
                         let remMin = Math.floor(remTotalSecs / 60);
                         let remSec = remTotalSecs % 60;
                         remainingText = `متبقي: ${remMin}د ${remSec}ث`;
 
-                        // جرس تنبيه عند بداية الحصة تماماً
                         if(remMin === duration - 1 && remSec >= 55 && lastBeepMinute !== startM) {
                             playBellSound();
                             lastBeepMinute = startM;
@@ -1355,7 +1386,7 @@
             document.getElementById('widgetTimeRemaining').textContent = remainingText;
         }
 
-        setInterval(updateLiveScheduleWidget, 1000); // تحديث كل ثانية للمؤقت الدقيق
+        setInterval(updateLiveScheduleWidget, 1000);
 
         const defaultMotivations = [
             { id: "1", title: "1. عالم المستقبل المتميز", text: "🌟 **عالم المستقبل المتميز** 🌟\nعزيزي ولي الأمر، نفخر اليوم بتميز ابنكم وتألقه في حصة العلوم ومشاركته في التجارب العملية بحماس ونشاط. بوركت جهودكم!" },
@@ -2237,7 +2268,7 @@
                         }
                         if(imported.schoolSchedule) {
                             schoolSchedule = imported.schoolSchedule;
-                            localStorage.setItem('mansour_school_schedule_v7', JSON.stringify(schoolSchedule));
+                            localStorage.setItem('mansour_school_schedule_v8', JSON.stringify(schoolSchedule));
                         }
                     }
                     renderLessons();
@@ -2581,7 +2612,7 @@
                     if(imported) {
                         if(imported.students) localStorage.setItem(getStorageKeyForStudents(), JSON.stringify(imported.students));
                         if(imported.lessons) localStorage.setItem(getStorageKeyForLessons(), JSON.stringify(imported.lessons));
-                        if(imported.schoolSchedule) localStorage.setItem('mansour_school_schedule_v7', JSON.stringify(imported.schoolSchedule));
+                        if(imported.schoolSchedule) localStorage.setItem('mansour_school_schedule_v8', JSON.stringify(imported.schoolSchedule));
                         alert('📂 تم استرجاع البيانات بنجاح!');
                         location.reload();
                     } else {
