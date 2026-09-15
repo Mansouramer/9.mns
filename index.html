@@ -752,7 +752,7 @@
 
             <!-- محتوى الجدول المدرسي الكامل المخفي (يظهر عند الضغط) -->
             <div id="scheduleExpandedContent" class="schedule-expanded-content" onclick="event.stopPropagation()">
-                <h5 style="margin-top: 0; color: var(--secondary); border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 5px;">📅 الجدول المدرسي الأسبوعي (7 حصص - قابل للتعديل الكامل)</h5>
+                <h5 style="margin-top: 0; color: var(--secondary); border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 5px;">📅 الجدول المدرسي الأسبوعي (7 حصص - اختر الوقت والفصل من القوائم)</h5>
                 <div class="form-row" style="margin-bottom: 5px;">
                     <select id="scheduleDaySelect" onchange="renderScheduleTable()">
                         <option value="الأحد">الأحد</option>
@@ -767,7 +767,7 @@
                         <thead>
                             <tr>
                                 <th>الحصة</th>
-                                <th>الوقت (عدل واضغط خارج الخانة للحفظ)</th>
+                                <th>الوقت (قائمة منسدلة)</th>
                                 <th>الصف / الفصل</th>
                             </tr>
                         </thead>
@@ -1161,7 +1161,20 @@
         let currentPage = 1;
         const rowsPerPage = 20;
 
-        // الجدول المدرسي الافتراضي المحدث (7 حصص قابلة للتعديل الكامل بالوقت واسم الفصل)
+        // قائمة الأوقات الجاهزة للاختيار السريع بدون كتابة يدوية
+        const availableTimes = [
+            "07:00 - 07:45",
+            "07:45 - 08:30",
+            "08:30 - 09:15",
+            "09:15 - 09:35", // فسحة
+            "09:35 - 10:20",
+            "10:20 - 11:05",
+            "11:05 - 11:25", // استراحة
+            "11:25 - 12:10",
+            "12:10 - 12:55"
+        ];
+
+        // الجدول المدرسي الافتراضي (7 حصص)
         const defaultSchedule = {
             "الأحد": [
                 { period: "الحصة الأولى", time: "07:00 - 07:45", className: "الأول الابتدائي" },
@@ -1229,10 +1242,20 @@
             
             const periods = schoolSchedule[day] || schoolSchedule["الأحد"];
             periods.forEach((p, idx) => {
+                let timeOptionsHtml = '';
+                availableTimes.forEach(t => {
+                    let selected = (t === p.time) ? 'selected' : '';
+                    timeOptionsHtml += `<option value="${t}" ${selected}>${t}</option>`;
+                });
+
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td><strong>${p.period}</strong></td>
-                    <td><input type="text" value="${p.time}" style="width:100%; text-align:center; padding:4px; font-size:11px;" oninput="updateScheduleField('${day}', ${idx}, 'time', this.value)" placeholder="07:00 - 07:45"></td>
+                    <td>
+                        <select style="width:100%; text-align:center; padding:4px; font-size:11px;" onchange="updateScheduleField('${day}', ${idx}, 'time', this.value)">
+                            ${timeOptionsHtml}
+                        </select>
+                    </td>
                     <td><input type="text" value="${p.className}" style="width:100%; text-align:center; padding:4px;" oninput="updateScheduleField('${day}', ${idx}, 'className', this.value)" placeholder="اسم الفصل"></td>
                 `;
                 tbody.appendChild(tr);
