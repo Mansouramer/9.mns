@@ -751,7 +751,7 @@
 
             <!-- محتوى الجدول المدرسي الكامل المخفي -->
             <div id="scheduleExpandedContent" class="schedule-expanded-content" onclick="event.stopPropagation()">
-                <h5 style="margin-top: 0; color: var(--secondary); border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 5px;">📅 الجدول المدرسي الدقيق (أوقات الحصص ثابتة في جميع الأيام)</h5>
+                <h5 style="margin-top: 0; color: var(--secondary); border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 5px;">📅 الجدول المدرسي الدقيق (أوقات الحصص ثابتة وموحدة في جميع الأيام)</h5>
                 
                 <div class="form-row" style="margin-bottom: 5px;">
                     <select id="scheduleDaySelect" onchange="renderScheduleTable()">
@@ -1210,7 +1210,7 @@
             return options;
         }
 
-        // أوقات ثابتة لجميع أيام الأسبوع (الأحد إلى الخميس)
+        // أوقات ثابتة وموحدة لجميع أيام الأسبوع (الأحد إلى الخميس)
         const fixedDayTemplate = [
             { period: "الحصة الأولى", startTime: "07:00", duration: 45, className: "الأول الابتدائي/1" },
             { period: "الحصة الثانية", startTime: "07:50", duration: 45, className: "الثاني الابتدائي/1" },
@@ -1229,7 +1229,7 @@
             "الخميس": JSON.parse(JSON.stringify(fixedDayTemplate))
         };
 
-        let schoolSchedule = JSON.parse(localStorage.getItem('mansour_school_schedule_v11')) || defaultSchedule;
+        let schoolSchedule = JSON.parse(localStorage.getItem('mansour_school_schedule_v12')) || defaultSchedule;
 
         function toggleScheduleExpansion() {
             const content = document.getElementById('scheduleExpandedContent');
@@ -1272,16 +1272,26 @@
         }
 
         function updateScheduleItem(day, idx, field, val) {
-            if(schoolSchedule[day] && schoolSchedule[day][idx]) {
-                if(field === 'duration') {
-                    schoolSchedule[day][idx][field] = Number(val);
-                } else {
+            const days = ["الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس"];
+            
+            if(field === 'startTime' || field === 'duration') {
+                // جعل أوقات وأزمنة الحصص ثابتة وموحدة في جميع الأيام تلقائياً
+                days.forEach(d => {
+                    if(schoolSchedule[d] && schoolSchedule[d][idx]) {
+                        schoolSchedule[d][idx][field] = (field === 'duration') ? Number(val) : val.trim();
+                    }
+                });
+            } else {
+                // اسم الفصل يتبع اليوم المحدد
+                if(schoolSchedule[day] && schoolSchedule[day][idx]) {
                     schoolSchedule[day][idx][field] = val.trim();
                 }
-                localStorage.setItem('mansour_school_schedule_v11', JSON.stringify(schoolSchedule));
-                updateLiveScheduleWidget();
-                showToast('⏰ تم تحديث الجدول بنجاح!');
             }
+
+            localStorage.setItem('mansour_school_schedule_v12', JSON.stringify(schoolSchedule));
+            updateLiveScheduleWidget();
+            renderScheduleTable();
+            showToast('⏰ تم تحديث الأوقات لتكون ثابتة في جميع الأيام!');
         }
 
         let lastBeepMinute = -1;
@@ -2239,7 +2249,7 @@
                         }
                         if(imported.schoolSchedule) {
                             schoolSchedule = imported.schoolSchedule;
-                            localStorage.setItem('mansour_school_schedule_v11', JSON.stringify(schoolSchedule));
+                            localStorage.setItem('mansour_school_schedule_v12', JSON.stringify(schoolSchedule));
                         }
                     }
                     renderLessons();
@@ -2583,7 +2593,7 @@
                     if(imported) {
                         if(imported.students) localStorage.setItem(getStorageKeyForStudents(), JSON.stringify(imported.students));
                         if(imported.lessons) localStorage.setItem(getStorageKeyForLessons(), JSON.stringify(imported.lessons));
-                        if(imported.schoolSchedule) localStorage.setItem('mansour_school_schedule_v11', JSON.stringify(imported.schoolSchedule));
+                        if(imported.schoolSchedule) localStorage.setItem('mansour_school_schedule_v12', JSON.stringify(imported.schoolSchedule));
                         alert('📂 تم استرجاع البيانات بنجاح!');
                         location.reload();
                     } else {
