@@ -161,7 +161,7 @@
             gap: 12px;
         }
 
-        /* صندوق الجدول الذكي المصغر والتفاعلي */
+        /* صندوق الجدول الذكي المصغر والتفاعلي (مخفي ولا يظهر إلا الحصة الحالية والوقت) */
         .schedule-widget-card {
             background: linear-gradient(135deg, rgba(37, 99, 235, 0.15), rgba(30, 58, 138, 0.2));
             border: 2px solid var(--secondary);
@@ -734,7 +734,7 @@
     </div>
 
     <div class="container">
-        <!-- صندوق الجدول المدرسي الذكي والمخفي (يظهر الحصة الحالية والوقت المتبقي ويفتح الجدول بالضغط) -->
+        <!-- صندوق الجدول المدرسي الذكي والمخفي (يظهر الحصة الحالية والوقت المتبقي ويفتح الجدول كاملاً بالضغط) -->
         <div class="schedule-widget-card no-print" onclick="toggleScheduleExpansion()">
             <div class="schedule-collapsed-view">
                 <div style="display: flex; align-items: center; gap: 8px;">
@@ -752,7 +752,7 @@
 
             <!-- محتوى الجدول المدرسي الكامل المخفي (يظهر عند الضغط) -->
             <div id="scheduleExpandedContent" class="schedule-expanded-content" onclick="event.stopPropagation()">
-                <h5 style="margin-top: 0; color: var(--secondary); border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 5px;">📅 الجدول المدرسي الأسبوعي (انقر لتعديل أو استعراض الحصص)</h5>
+                <h5 style="margin-top: 0; color: var(--secondary); border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 5px;">📅 الجدول المدرسي الأسبوعي (7 حصص)</h5>
                 <div class="form-row" style="margin-bottom: 5px;">
                     <select id="scheduleDaySelect" onchange="renderScheduleTable()">
                         <option value="الأحد">الأحد</option>
@@ -1161,47 +1161,52 @@
         let currentPage = 1;
         const rowsPerPage = 20;
 
-        // نظام الجدول المدرسي الافتراضي
+        // الجدول المدرسي الافتراضي المحدث (7 حصص لكل أيام الأسبوع)
         const defaultSchedule = {
             "الأحد": [
                 { period: "الحصة الأولى", time: "07:00 - 07:45", className: "الأول الابتدائي" },
                 { period: "الحصة الثانية", time: "07:45 - 08:30", className: "الثاني الابتدائي" },
-                { period: "الحصة الثالثة", time: "08:50 - 09:35", className: "الثالث الابتدائي" },
+                { period: "الحصة الثالثة", time: "08:30 - 09:15", className: "الثالث الابتدائي" },
                 { period: "الحصة الرابعة", time: "09:35 - 10:20", className: "الرابع الابتدائي" },
-                { period: "الحصة الخامسة", time: "10:40 - 11:25", className: "الخامس الابتدائي" },
-                { period: "الحصة السادسة", time: "11:25 - 12:10", className: "السادس الابتدائي" }
+                { period: "الحصة الخامسة", time: "10:20 - 11:05", className: "الخامس الابتدائي" },
+                { period: "الحصة السادسة", time: "11:25 - 12:10", className: "السادس الابتدائي" },
+                { period: "الحصة السابعة", time: "12:10 - 12:55", className: "نشاط / مراجعة" }
             ],
             "الإثنين": [
                 { period: "الحصة الأولى", time: "07:00 - 07:45", className: "الثاني الابتدائي" },
                 { period: "الحصة الثانية", time: "07:45 - 08:30", className: "الأول الابتدائي" },
-                { period: "الحصة الثالثة", time: "08:50 - 09:35", className: "الرابع الابتدائي" },
+                { period: "الحصة الثالثة", time: "08:30 - 09:15", className: "الرابع الابتدائي" },
                 { period: "الحصة الرابعة", time: "09:35 - 10:20", className: "الثالث الابتدائي" },
-                { period: "الحصة الخامسة", time: "10:40 - 11:25", className: "السادس الابتدائي" },
-                { period: "الحصة السادسة", time: "11:25 - 12:10", className: "الخامس الابتدائي" }
+                { period: "الحصة الخامسة", time: "10:20 - 11:05", className: "السادس الابتدائي" },
+                { period: "الحصة السادسة", time: "11:25 - 12:10", className: "الخامس الابتدائي" },
+                { period: "الحصة السابعة", time: "12:10 - 12:55", className: "نشاط / مراجعة" }
             ],
             "الثلاثاء": [
                 { period: "الحصة الأولى", time: "07:00 - 07:45", className: "الثالث الابتدائي" },
                 { period: "الحصة الثانية", time: "07:45 - 08:30", className: "الرابع الابتدائي" },
-                { period: "الحصة الثالثة", time: "08:50 - 09:35", className: "الأول الابتدائي" },
+                { period: "الحصة الثالثة", time: "08:30 - 09:15", className: "الأول الابتدائي" },
                 { period: "الحصة الرابعة", time: "09:35 - 10:20", className: "الثاني الابتدائي" },
-                { period: "الحصة الخامسة", time: "10:40 - 11:25", className: "السادس الابتدائي" },
-                { period: "الحصة السادسة", time: "11:25 - 12:10", className: "الخامس الابتدائي" }
+                { period: "الحصة الخامسة", time: "10:20 - 11:05", className: "السادس الابتدائي" },
+                { period: "الحصة السادسة", time: "11:25 - 12:10", className: "الخامس الابتدائي" },
+                { period: "الحصة السابعة", time: "12:10 - 12:55", className: "نشاط / مراجعة" }
             ],
             "الأربعاء": [
                 { period: "الحصة الأولى", time: "07:00 - 07:45", className: "الرابع الابتدائي" },
                 { period: "الحصة الثانية", time: "07:45 - 08:30", className: "الثالث الابتدائي" },
-                { period: "الحصة الثالثة", time: "08:50 - 09:35", className: "الثاني الابتدائي" },
+                { period: "الحصة الثالثة", time: "08:30 - 09:15", className: "الثاني الابتدائي" },
                 { period: "الحصة الرابعة", time: "09:35 - 10:20", className: "الأول الابتدائي" },
-                { period: "الحصة الخامسة", time: "10:40 - 11:25", className: "الخامس الابتدائي" },
-                { period: "الحصة السادسة", time: "11:25 - 12:10", className: "السادس الابتدائي" }
+                { period: "الحصة الخامسة", time: "10:20 - 11:05", className: "الخامس الابتدائي" },
+                { period: "الحصة السادسة", time: "11:25 - 12:10", className: "السادس الابتدائي" },
+                { period: "الحصة السابعة", time: "12:10 - 12:55", className: "نشاط / مراجعة" }
             ],
-            "خميس": [
+            "الخميس": [
                 { period: "الحصة الأولى", time: "07:00 - 07:45", className: "الخامس الابتدائي" },
                 { period: "الحصة الثانية", time: "07:45 - 08:30", className: "السادس الابتدائي" },
-                { period: "الحصة الثالثة", time: "08:50 - 09:35", className: "الأول الابتدائي" },
+                { period: "الحصة الثالثة", time: "08:30 - 09:15", className: "الأول الابتدائي" },
                 { period: "الحصة الرابعة", time: "09:35 - 10:20", className: "الثاني الابتدائي" },
-                { period: "الحصة الخامسة", time: "10:40 - 11:25", className: "الثالث الابتدائي" },
-                { period: "الحصة السادسة", time: "11:25 - 12:10", className: "الرابع الابتدائي" }
+                { period: "الحصة الخامسة", time: "10:20 - 11:05", className: "الثالث الابتدائي" },
+                { period: "الحصة السادسة", time: "11:25 - 12:10", className: "الرابع الابتدائي" },
+                { period: "الحصة السابعة", time: "12:10 - 12:55", className: "نشاط / مراجعة" }
             ]
         };
 
