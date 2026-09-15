@@ -751,7 +751,7 @@
 
             <!-- محتوى الجدول المدرسي الكامل المخفي -->
             <div id="scheduleExpandedContent" class="schedule-expanded-content" onclick="event.stopPropagation()">
-                <h5 style="margin-top: 0; color: var(--secondary); border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 5px;">📅 الجدول المدرسي الدقيق (اختر الفصل أو "لا توجد حصة" بكل مرونة)</h5>
+                <h5 style="margin-top: 0; color: var(--secondary); border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 5px;">📅 الجدول المدرسي الدقيق (اختر الفصل أو الحالة من القائمة المنسدلة)</h5>
                 
                 <div class="form-row" style="margin-bottom: 5px;">
                     <select id="scheduleDaySelect" onchange="renderScheduleTable()">
@@ -1188,6 +1188,18 @@
             "لا توجد حصة",
             "انتظار",
             "نشاط / مراجعة",
+            "الأول الابتدائي/1",
+            "الأول الابتدائي/2",
+            "الأول الابتدائي/3",
+            "الأول الابتدائي/4",
+            "الثاني الابتدائي/1",
+            "الثاني الابتدائي/2",
+            "الثاني الابتدائي/3",
+            "الثاني الابتدائي/4",
+            "الثالث الابتدائي/1",
+            "الثالث الابتدائي/2",
+            "الثالث الابتدائي/3",
+            "الثالث الابتدائي/4",
             "الأول الابتدائي",
             "الثاني الابتدائي",
             "الثالث الابتدائي",
@@ -1214,35 +1226,35 @@
             "الأحد": [
                 { period: "الحصة الأولى", startTime: "07:00", duration: 45, className: "لا توجد حصة" },
                 { period: "الحصة الثانية", startTime: "07:50", duration: 45, className: "لا توجد حصة" },
-                { period: "الحصة الثالثة", startTime: "08:40", duration: 45, className: "الثالث الابتدائي" },
-                { period: "الحصة الرابعة", startTime: "09:35", duration: 45, className: "الرابع الابتدائي" },
-                { period: "الحصة الخامسة", startTime: "10:25", duration: 45, className: "الخامس الابتدائي" },
-                { period: "الحصة السادسة", startTime: "11:15", duration: 45, className: "السادس الابتدائي" },
+                { period: "الحصة الثالثة", startTime: "08:40", duration: 45, className: "الثالث الابتدائي/1" },
+                { period: "الحصة الرابعة", startTime: "09:35", duration: 45, className: "الثالث الابتدائي/2" },
+                { period: "الحصة الخامسة", startTime: "10:25", duration: 45, className: "الثالث الابتدائي/3" },
+                { period: "الحصة السادسة", startTime: "11:15", duration: 45, className: "الثالث الابتدائي/4" },
                 { period: "الحصة السابعة", startTime: "12:05", duration: 40, className: "نشاط / مراجعة" }
             ],
             "الإثنين": [
-                { period: "الحصة الأولى", startTime: "07:00", duration: 45, className: "الثاني الابتدائي" },
-                { period: "الحصة الثانية", startTime: "07:50", duration: 45, className: "الأول الابتدائي" },
-                { period: "الحصة الثالثة", startTime: "08:40", duration: 45, className: "الرابع الابتدائي" },
-                { period: "الحصة الرابعة", startTime: "09:35", duration: 45, className: "الثالث الابتدائي" },
+                { period: "الحصة الأولى", startTime: "07:00", duration: 45, className: "الثاني الابتدائي/1" },
+                { period: "الحصة الثانية", startTime: "07:50", duration: 45, className: "الثاني الابتدائي/2" },
+                { period: "الحصة الثالثة", startTime: "08:40", duration: 45, className: "الثاني الابتدائي/3" },
+                { period: "الحصة الرابعة", startTime: "09:35", duration: 45, className: "الثاني الابتدائي/4" },
                 { period: "الحصة الخامسة", startTime: "10:25", duration: 45, className: "السادس الابتدائي" },
                 { period: "الحصة السادسة", startTime: "11:15", duration: 45, className: "الخامس الابتدائي" },
                 { period: "الحصة السابعة", startTime: "12:05", duration: 40, className: "نشاط / مراجعة" }
             ],
             "الثلاثاء": [
-                { period: "الحصة الأولى", startTime: "07:00", duration: 45, className: "الثالث الابتدائي" },
-                { period: "الحصة الثانية", startTime: "07:50", duration: 45, className: "الرابع الابتدائي" },
-                { period: "الحصة الثالثة", startTime: "08:40", duration: 45, className: "الأول الابتدائي" },
-                { period: "الحصة الرابعة", startTime: "09:35", duration: 45, className: "الثاني الابتدائي" },
+                { period: "الحصة الأولى", startTime: "07:00", duration: 45, className: "الأول الابتدائي/1" },
+                { period: "الحصة الثانية", startTime: "07:50", duration: 45, className: "الأول الابتدائي/2" },
+                { period: "الحصة الثالثة", startTime: "08:40", duration: 45, className: "الأول الابتدائي/3" },
+                { period: "الحصة الرابعة", startTime: "09:35", duration: 45, className: "الأول الابتدائي/4" },
                 { period: "الحصة الخامسة", startTime: "10:25", duration: 45, className: "السادس الابتدائي" },
                 { period: "الحصة السادسة", startTime: "11:15", duration: 45, className: "الخامس الابتدائي" },
                 { period: "الحصة السابعة", startTime: "12:05", duration: 40, className: "نشاط / مراجعة" }
             ],
             "الأربعاء": [
                 { period: "الحصة الأولى", startTime: "07:00", duration: 45, className: "الرابع الابتدائي" },
-                { period: "الحصة الثانية", startTime: "07:50", duration: 45, className: "الثالث الابتدائي" },
-                { period: "الحصة الثالثة", startTime: "08:40", duration: 45, className: "الثاني الابتدائي" },
-                { period: "الحصة الرابعة", startTime: "09:35", duration: 45, className: "الأول الابتدائي" },
+                { period: "الحصة الثانية", startTime: "07:50", duration: 45, className: "الثالث الابتدائي/1" },
+                { period: "الحصة الثالثة", startTime: "08:40", duration: 45, className: "الثاني الابتدائي/1" },
+                { period: "الحصة الرابعة", startTime: "09:35", duration: 45, className: "الأول الابتدائي/1" },
                 { period: "الحصة الخامسة", startTime: "10:25", duration: 45, className: "الخامس الابتدائي" },
                 { period: "الحصة السادسة", startTime: "11:15", duration: 45, className: "السادس الابتدائي" },
                 { period: "الحصة السابعة", startTime: "12:05", duration: 40, className: "نشاط / مراجعة" }
@@ -1250,15 +1262,15 @@
             "الخميس": [
                 { period: "الحصة الأولى", startTime: "07:00", duration: 45, className: "الخامس الابتدائي" },
                 { period: "الحصة الثانية", startTime: "07:50", duration: 45, className: "السادس الابتدائي" },
-                { period: "الحصة الثالثة", startTime: "08:40", duration: 45, className: "الأول الابتدائي" },
-                { period: "الحصة الرابعة", startTime: "09:35", duration: 45, className: "الثاني الابتدائي" },
-                { period: "الحصة الخامسة", startTime: "10:25", duration: 45, className: "الثالث الابتدائي" },
+                { period: "الحصة الثالثة", startTime: "08:40", duration: 45, className: "الأول الابتدائي/1" },
+                { period: "الحصة الرابعة", startTime: "09:35", duration: 45, className: "الثاني الابتدائي/1" },
+                { period: "الحصة الخامسة", startTime: "10:25", duration: 45, className: "الثالث الابتدائي/1" },
                 { period: "الحصة السادسة", startTime: "11:15", duration: 45, className: "الرابع الابتدائي" },
                 { period: "الحصة السابعة", startTime: "12:05", duration: 40, className: "نشاط / مراجعة" }
             ]
         };
 
-        let schoolSchedule = JSON.parse(localStorage.getItem('mansour_school_schedule_v8')) || defaultSchedule;
+        let schoolSchedule = JSON.parse(localStorage.getItem('mansour_school_schedule_v9')) || defaultSchedule;
 
         function toggleScheduleExpansion() {
             const content = document.getElementById('scheduleExpandedContent');
@@ -1307,7 +1319,7 @@
                 } else {
                     schoolSchedule[day][idx][field] = val.trim();
                 }
-                localStorage.setItem('mansour_school_schedule_v8', JSON.stringify(schoolSchedule));
+                localStorage.setItem('mansour_school_schedule_v9', JSON.stringify(schoolSchedule));
                 updateLiveScheduleWidget();
                 showToast('⏰ تم تحديث الجدول بنجاح!');
             }
@@ -2268,7 +2280,7 @@
                         }
                         if(imported.schoolSchedule) {
                             schoolSchedule = imported.schoolSchedule;
-                            localStorage.setItem('mansour_school_schedule_v8', JSON.stringify(schoolSchedule));
+                            localStorage.setItem('mansour_school_schedule_v9', JSON.stringify(schoolSchedule));
                         }
                     }
                     renderLessons();
@@ -2612,7 +2624,7 @@
                     if(imported) {
                         if(imported.students) localStorage.setItem(getStorageKeyForStudents(), JSON.stringify(imported.students));
                         if(imported.lessons) localStorage.setItem(getStorageKeyForLessons(), JSON.stringify(imported.lessons));
-                        if(imported.schoolSchedule) localStorage.setItem('mansour_school_schedule_v8', JSON.stringify(imported.schoolSchedule));
+                        if(imported.schoolSchedule) localStorage.setItem('mansour_school_schedule_v9', JSON.stringify(imported.schoolSchedule));
                         alert('📂 تم استرجاع البيانات بنجاح!');
                         location.reload();
                     } else {
