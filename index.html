@@ -734,7 +734,7 @@
     </div>
 
     <div class="container">
-        <!-- صندوق الجدول المدرسي الذكي والمخفي (يظهر الحصة الحالية والوقت المتبقي ويفتح الجدول كاملاً بالضغط) -->
+        <!-- صندوق الجدول الذكي والمخفي (يظهر الحصة الحالية والوقت المتبقي ويفتح الجدول كاملاً بالضغط) -->
         <div class="schedule-widget-card no-print" onclick="toggleScheduleExpansion()">
             <div class="schedule-collapsed-view">
                 <div style="display: flex; align-items: center; gap: 8px;">
@@ -752,7 +752,7 @@
 
             <!-- محتوى الجدول المدرسي الكامل المخفي (يظهر عند الضغط) -->
             <div id="scheduleExpandedContent" class="schedule-expanded-content" onclick="event.stopPropagation()">
-                <h5 style="margin-top: 0; color: var(--secondary); border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 5px;">📅 الجدول المدرسي الأسبوعي (7 حصص)</h5>
+                <h5 style="margin-top: 0; color: var(--secondary); border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 5px;">📅 الجدول المدرسي الأسبوعي (7 حصص - قابل للتعديل الكامل)</h5>
                 <div class="form-row" style="margin-bottom: 5px;">
                     <select id="scheduleDaySelect" onchange="renderScheduleTable()">
                         <option value="الأحد">الأحد</option>
@@ -767,7 +767,7 @@
                         <thead>
                             <tr>
                                 <th>الحصة</th>
-                                <th>الوقت</th>
+                                <th>الوقت (عدل واضغط خارج الخانة للحفظ)</th>
                                 <th>الصف / الفصل</th>
                             </tr>
                         </thead>
@@ -1161,7 +1161,7 @@
         let currentPage = 1;
         const rowsPerPage = 20;
 
-        // الجدول المدرسي الافتراضي المحدث (7 حصص لكل أيام الأسبوع)
+        // الجدول المدرسي الافتراضي المحدث (7 حصص قابلة للتعديل الكامل بالوقت واسم الفصل)
         const defaultSchedule = {
             "الأحد": [
                 { period: "الحصة الأولى", time: "07:00 - 07:45", className: "الأول الابتدائي" },
@@ -1232,16 +1232,16 @@
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td><strong>${p.period}</strong></td>
-                    <td style="font-size:11px;">${p.time}</td>
-                    <td><input type="text" value="${p.className}" style="width:100%; text-align:center; padding:4px;" oninput="updateScheduleClass('${day}', ${idx}, this.value)"></td>
+                    <td><input type="text" value="${p.time}" style="width:100%; text-align:center; padding:4px; font-size:11px;" oninput="updateScheduleField('${day}', ${idx}, 'time', this.value)" placeholder="07:00 - 07:45"></td>
+                    <td><input type="text" value="${p.className}" style="width:100%; text-align:center; padding:4px;" oninput="updateScheduleField('${day}', ${idx}, 'className', this.value)" placeholder="اسم الفصل"></td>
                 `;
                 tbody.appendChild(tr);
             });
         }
 
-        function updateScheduleClass(day, idx, val) {
+        function updateScheduleField(day, idx, field, val) {
             if(schoolSchedule[day] && schoolSchedule[day][idx]) {
-                schoolSchedule[day][idx].className = val.trim();
+                schoolSchedule[day][idx][field] = val.trim();
                 localStorage.setItem('mansour_school_schedule_v5', JSON.stringify(schoolSchedule));
                 updateLiveScheduleWidget();
             }
@@ -1264,19 +1264,21 @@
                 if(parts.length === 2) {
                     const startParts = parts[0].trim().split(':');
                     const endParts = parts[1].trim().split(':');
-                    const startM = Number(startParts[0]) * 60 + Number(startParts[1]);
-                    const endM = Number(endParts[0]) * 60 + Number(endParts[1]);
+                    if(startParts.length === 2 && endParts.length === 2) {
+                        const startM = Number(startParts[0]) * 60 + Number(startParts[1]);
+                        const endM = Number(endParts[0]) * 60 + Number(endParts[1]);
 
-                    if(currentMinutes >= startM && currentMinutes <= endM) {
-                        activePeriodText = `${p.period}: ${p.className}`;
-                        let rem = endM - currentMinutes;
-                        remainingText = `متبقي ${rem} دقيقة`;
-                        break;
-                    } else if(currentMinutes < startM) {
-                        activePeriodText = `القادمة: ${p.period} (${p.className})`;
-                        let rem = startM - currentMinutes;
-                        remainingText = `تبدأ بعد ${rem} دقيقة`;
-                        break;
+                        if(currentMinutes >= startM && currentMinutes <= endM) {
+                            activePeriodText = `${p.period}: ${p.className}`;
+                            let rem = endM - currentMinutes;
+                            remainingText = `متبقي ${rem} دقيقة`;
+                            break;
+                        } else if(currentMinutes < startM) {
+                            activePeriodText = `القادمة: ${p.period} (${p.className})`;
+                            let rem = startM - currentMinutes;
+                            remainingText = `تبدأ بعد ${rem} دقيقة`;
+                            break;
+                        }
                     }
                 }
             }
