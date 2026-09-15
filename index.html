@@ -161,6 +161,46 @@
             gap: 12px;
         }
 
+        /* صندوق الجدول الذكي المصغر والتفاعلي */
+        .schedule-widget-card {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.15), rgba(30, 58, 138, 0.2));
+            border: 2px solid var(--secondary);
+            border-radius: 12px;
+            padding: 12px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            backdrop-filter: blur(8px);
+            transition: 0.2s;
+            width: 100%;
+        }
+        .schedule-widget-card:hover { opacity: 0.95; }
+        
+        .schedule-collapsed-view {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .class-badge-pill {
+            background: var(--secondary);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .schedule-expanded-content {
+            display: none;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed rgba(0,0,0,0.15);
+        }
+
         .stats-grid {
             display: flex;
             flex-direction: column;
@@ -694,6 +734,51 @@
     </div>
 
     <div class="container">
+        <!-- صندوق الجدول المدرسي الذكي والمخفي (يظهر الحصة الحالية والوقت المتبقي ويفتح الجدول بالضغط) -->
+        <div class="schedule-widget-card no-print" onclick="toggleScheduleExpansion()">
+            <div class="schedule-collapsed-view">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-size: 18px;">⏰</span>
+                    <div>
+                        <div style="font-size: 11px; opacity: 0.85;">الحصة الحالية:</div>
+                        <div id="widgetCurrentClass" style="font-weight: bold; font-size: 13px; color: var(--secondary);">جاري تحديث الوقت...</div>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 6px;">
+                    <span id="widgetTimeRemaining" class="class-badge-pill" style="background: var(--success); font-size: 11px;">-- دقيقة</span>
+                    <span style="font-size: 12px; opacity: 0.7;">▼ الجدول</span>
+                </div>
+            </div>
+
+            <!-- محتوى الجدول المدرسي الكامل المخفي (يظهر عند الضغط) -->
+            <div id="scheduleExpandedContent" class="schedule-expanded-content" onclick="event.stopPropagation()">
+                <h5 style="margin-top: 0; color: var(--secondary); border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 5px;">📅 الجدول المدرسي الأسبوعي (انقر لتعديل أو استعراض الحصص)</h5>
+                <div class="form-row" style="margin-bottom: 5px;">
+                    <select id="scheduleDaySelect" onchange="renderScheduleTable()">
+                        <option value="الأحد">الأحد</option>
+                        <option value="الإثنين">الإثنين</option>
+                        <option value="الثلاثاء">الثلاثاء</option>
+                        <option value="الأربعاء">الأربعاء</option>
+                        <option value="الخميس">الخميس</option>
+                    </select>
+                </div>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>الحصة</th>
+                                <th>الوقت</th>
+                                <th>الصف / الفصل</th>
+                            </tr>
+                        </thead>
+                        <tbody id="scheduleTableTbody">
+                            <!-- سيتم تعبئتها برمجياً -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
         <!-- اختيار الصف الدراسي -->
         <div class="section-card no-print" style="border: 2px solid var(--secondary);">
             <h3 style="margin-bottom: 8px;">📌 اختر الصف الدراسي للمتابعة</h3>
@@ -1075,6 +1160,127 @@
         let selectedStudentIndex = ''; 
         let currentPage = 1;
         const rowsPerPage = 20;
+
+        // نظام الجدول المدرسي الافتراضي
+        const defaultSchedule = {
+            "الأحد": [
+                { period: "الحصة الأولى", time: "07:00 - 07:45", className: "الأول الابتدائي" },
+                { period: "الحصة الثانية", time: "07:45 - 08:30", className: "الثاني الابتدائي" },
+                { period: "الحصة الثالثة", time: "08:50 - 09:35", className: "الثالث الابتدائي" },
+                { period: "الحصة الرابعة", time: "09:35 - 10:20", className: "الرابع الابتدائي" },
+                { period: "الحصة الخامسة", time: "10:40 - 11:25", className: "الخامس الابتدائي" },
+                { period: "الحصة السادسة", time: "11:25 - 12:10", className: "السادس الابتدائي" }
+            ],
+            "الإثنين": [
+                { period: "الحصة الأولى", time: "07:00 - 07:45", className: "الثاني الابتدائي" },
+                { period: "الحصة الثانية", time: "07:45 - 08:30", className: "الأول الابتدائي" },
+                { period: "الحصة الثالثة", time: "08:50 - 09:35", className: "الرابع الابتدائي" },
+                { period: "الحصة الرابعة", time: "09:35 - 10:20", className: "الثالث الابتدائي" },
+                { period: "الحصة الخامسة", time: "10:40 - 11:25", className: "السادس الابتدائي" },
+                { period: "الحصة السادسة", time: "11:25 - 12:10", className: "الخامس الابتدائي" }
+            ],
+            "الثلاثاء": [
+                { period: "الحصة الأولى", time: "07:00 - 07:45", className: "الثالث الابتدائي" },
+                { period: "الحصة الثانية", time: "07:45 - 08:30", className: "الرابع الابتدائي" },
+                { period: "الحصة الثالثة", time: "08:50 - 09:35", className: "الأول الابتدائي" },
+                { period: "الحصة الرابعة", time: "09:35 - 10:20", className: "الثاني الابتدائي" },
+                { period: "الحصة الخامسة", time: "10:40 - 11:25", className: "السادس الابتدائي" },
+                { period: "الحصة السادسة", time: "11:25 - 12:10", className: "الخامس الابتدائي" }
+            ],
+            "الأربعاء": [
+                { period: "الحصة الأولى", time: "07:00 - 07:45", className: "الرابع الابتدائي" },
+                { period: "الحصة الثانية", time: "07:45 - 08:30", className: "الثالث الابتدائي" },
+                { period: "الحصة الثالثة", time: "08:50 - 09:35", className: "الثاني الابتدائي" },
+                { period: "الحصة الرابعة", time: "09:35 - 10:20", className: "الأول الابتدائي" },
+                { period: "الحصة الخامسة", time: "10:40 - 11:25", className: "الخامس الابتدائي" },
+                { period: "الحصة السادسة", time: "11:25 - 12:10", className: "السادس الابتدائي" }
+            ],
+            "خميس": [
+                { period: "الحصة الأولى", time: "07:00 - 07:45", className: "الخامس الابتدائي" },
+                { period: "الحصة الثانية", time: "07:45 - 08:30", className: "السادس الابتدائي" },
+                { period: "الحصة الثالثة", time: "08:50 - 09:35", className: "الأول الابتدائي" },
+                { period: "الحصة الرابعة", time: "09:35 - 10:20", className: "الثاني الابتدائي" },
+                { period: "الحصة الخامسة", time: "10:40 - 11:25", className: "الثالث الابتدائي" },
+                { period: "الحصة السادسة", time: "11:25 - 12:10", className: "الرابع الابتدائي" }
+            ]
+        };
+
+        let schoolSchedule = JSON.parse(localStorage.getItem('mansour_school_schedule_v5')) || defaultSchedule;
+
+        function toggleScheduleExpansion() {
+            const content = document.getElementById('scheduleExpandedContent');
+            if(content.style.display === 'block') {
+                content.style.display = 'none';
+            } else {
+                content.style.display = 'block';
+                renderScheduleTable();
+            }
+        }
+
+        function renderScheduleTable() {
+            const day = document.getElementById('scheduleDaySelect').value;
+            const tbody = document.getElementById('scheduleTableTbody');
+            tbody.innerHTML = '';
+            
+            const periods = schoolSchedule[day] || schoolSchedule["الأحد"];
+            periods.forEach((p, idx) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><strong>${p.period}</strong></td>
+                    <td style="font-size:11px;">${p.time}</td>
+                    <td><input type="text" value="${p.className}" style="width:100%; text-align:center; padding:4px;" oninput="updateScheduleClass('${day}', ${idx}, this.value)"></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function updateScheduleClass(day, idx, val) {
+            if(schoolSchedule[day] && schoolSchedule[day][idx]) {
+                schoolSchedule[day][idx].className = val.trim();
+                localStorage.setItem('mansour_school_schedule_v5', JSON.stringify(schoolSchedule));
+                updateLiveScheduleWidget();
+            }
+        }
+
+        function updateLiveScheduleWidget() {
+            const now = new Date();
+            const daysMap = { 0: "الأحد", 1: "الإثنين", 2: "الثلاثاء", 3: "الأربعاء", 4: "الخميس", 5: "الجمعة", 6: "السبت" };
+            let currentDayName = daysMap[now.getDay()] || "الأحد";
+            if(currentDayName === "الجمعة" || currentDayName === "السبت") currentDayName = "الأحد";
+
+            const periods = schoolSchedule[currentDayName] || schoolSchedule["الأحد"];
+            const currentMinutes = now.getHours() * 60 + now.getMinutes();
+
+            let activePeriodText = "خارج أوقات الدوام المدرسي";
+            let remainingText = "اليوم انتهى";
+
+            for(let p of periods) {
+                const parts = p.time.split('-');
+                if(parts.length === 2) {
+                    const startParts = parts[0].trim().split(':');
+                    const endParts = parts[1].trim().split(':');
+                    const startM = Number(startParts[0]) * 60 + Number(startParts[1]);
+                    const endM = Number(endParts[0]) * 60 + Number(endParts[1]);
+
+                    if(currentMinutes >= startM && currentMinutes <= endM) {
+                        activePeriodText = `${p.period}: ${p.className}`;
+                        let rem = endM - currentMinutes;
+                        remainingText = `متبقي ${rem} دقيقة`;
+                        break;
+                    } else if(currentMinutes < startM) {
+                        activePeriodText = `القادمة: ${p.period} (${p.className})`;
+                        let rem = startM - currentMinutes;
+                        remainingText = `تبدأ بعد ${rem} دقيقة`;
+                        break;
+                    }
+                }
+            }
+
+            document.getElementById('widgetCurrentClass').textContent = activePeriodText;
+            document.getElementById('widgetTimeRemaining').textContent = remainingText;
+        }
+
+        setInterval(updateLiveScheduleWidget, 30000);
 
         const defaultMotivations = [
             { id: "1", title: "1. عالم المستقبل المتميز", text: "🌟 **عالم المستقبل المتميز** 🌟\nعزيزي ولي الأمر، نفخر اليوم بتميز ابنكم وتألقه في حصة العلوم ومشاركته في التجارب العملية بحماس ونشاط. بوركت جهودكم!" },
@@ -1913,7 +2119,8 @@
                 lessons: lessons,
                 lessonStatus: lessonStatus,
                 lessonMastery: lessonMastery,
-                customMotivations: customMotivations
+                customMotivations: customMotivations,
+                schoolSchedule: schoolSchedule
             };
             const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backupPackage));
             const dlAnchor = document.createElement('a');
@@ -1952,6 +2159,10 @@
                         if(imported.lessonMastery) {
                             lessonMastery = imported.lessonMastery;
                             localStorage.setItem(getStorageKeyForMastery(), JSON.stringify(lessonMastery));
+                        }
+                        if(imported.schoolSchedule) {
+                            schoolSchedule = imported.schoolSchedule;
+                            localStorage.setItem('mansour_school_schedule_v5', JSON.stringify(schoolSchedule));
                         }
                     }
                     renderLessons();
@@ -2256,6 +2467,7 @@
         window.onload = function() {
             renderLessons();
             render();
+            updateLiveScheduleWidget();
             checkBackupReminder();
 
             if ('serviceWorker' in navigator) {
@@ -2269,6 +2481,7 @@
             const fullBackup = {
                 students: typeof students !== 'undefined' ? students : [],
                 lessons: typeof lessons !== 'undefined' ? lessons : [],
+                schoolSchedule: typeof schoolSchedule !== 'undefined' ? schoolSchedule : {},
                 timestamp: new Date().toLocaleString('ar-SA')
             };
 
@@ -2293,6 +2506,7 @@
                     if(imported) {
                         if(imported.students) localStorage.setItem(getStorageKeyForStudents(), JSON.stringify(imported.students));
                         if(imported.lessons) localStorage.setItem(getStorageKeyForLessons(), JSON.stringify(imported.lessons));
+                        if(imported.schoolSchedule) localStorage.setItem('mansour_school_schedule_v5', JSON.stringify(imported.schoolSchedule));
                         alert('📂 تم استرجاع البيانات بنجاح!');
                         location.reload();
                     } else {
