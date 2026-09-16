@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مدرسة داؤود بن عروة الثقفي الابتدائية | نظام الاختبارات والتحليل العميق (طلاب)</title>
+    <title>مدرسة داؤود بن عروة الثقفي الابتدائية | نظام الاختبارات والتحليل (طلاب)</title>
     <style>
         :root {
             --primary: #1e3a8a;
             --secondary: #2563eb;
             --accent: #bfdbfe;
-            --bg: #0f172a;
-            --card-bg: #1e293b;
-            --text: #f8fafc;
+            --bg: #eff6ff;
+            --card-bg: #ffffff;
+            --text: #1e3a8a;
             --success: #10b981;
             --warning: #f59e0b;
             --danger: #ef4444;
@@ -30,26 +30,25 @@
         }
 
         .container {
-            max-width: 900px;
+            max-width: 850px;
             margin: 0 auto;
             background: var(--card-bg);
             padding: 15px;
             border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             box-sizing: border-box;
-            border: 1px solid #334155;
         }
 
         .header-nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid #334155;
+            border-bottom: 2px solid var(--accent);
             padding-bottom: 10px;
             margin-bottom: 15px;
         }
 
-        h2 { color: #93c5fd; margin: 0; font-size: 17px; }
+        h2 { color: var(--primary); margin: 0; font-size: 17px; }
 
         .back-btn {
             background: #4b5563;
@@ -62,8 +61,8 @@
         }
 
         .section-box {
-            background: #1e293b;
-            border: 1px solid #334155;
+            background: #fafaf9;
+            border: 1px solid #e5e7eb;
             padding: 15px;
             border-radius: 10px;
             margin-bottom: 15px;
@@ -71,9 +70,9 @@
 
         .section-box h3 {
             margin-top: 0;
-            color: #93c5fd;
+            color: var(--primary);
             font-size: 15px;
-            border-bottom: 1px solid #334155;
+            border-bottom: 1px solid var(--accent);
             padding-bottom: 6px;
         }
 
@@ -86,16 +85,16 @@
 
         .form-group { display: flex; flex-direction: column; gap: 5px; }
 
-        label { font-weight: bold; font-size: 13px; color: #93c5fd; }
+        label { font-weight: bold; font-size: 13px; color: var(--primary); }
 
         select, input[type="text"], input[type="number"], textarea {
             width: 100%;
             padding: 10px;
-            border: 2px solid #475569;
+            border: 2px solid #d1d5db;
             border-radius: 8px;
             font-size: 14px;
-            background: #0f172a;
-            color: #f8fafc;
+            background: #fff;
+            color: #374151;
             outline: none;
             box-sizing: border-box;
         }
@@ -121,34 +120,34 @@
         .btn-warning { background: #d97706; }
         .btn-purple { background: #7c3aed; }
 
-        /* تنيسقات التصحيح الفردي السريع مع تغيير اللون للطالب التالي */
         .touch-grading-card {
-            background: #1e293b;
+            background: #fff;
             border: 2px solid var(--secondary);
             border-radius: 10px;
             padding: 15px;
             margin-top: 15px;
             display: none;
-            transition: background 0.4s ease, border-color 0.4s ease;
+            transition: background 0.3s ease;
         }
 
+        /* فئة تنبيه تغير اللون عند الانتقال للطالب التالي */
         .touch-grading-card.student-changed {
-            background: #065f46 !important;
-            border-color: #34d399 !important;
+            background: #d1fae5 !important;
+            border-color: #059669 !important;
         }
 
         .student-title-badge {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: #0f172a;
+            background: var(--bg);
             padding: 10px 15px;
             border-radius: 8px;
             font-weight: bold;
-            color: #93c5fd;
+            color: var(--primary);
             font-size: 14px;
             margin-bottom: 12px;
-            border: 1px solid #334155;
+            border: 1px solid var(--accent);
         }
 
         .live-score-box {
@@ -161,8 +160,8 @@
         }
 
         .single-step-question-box {
-            background: #0f172a;
-            border: 2px solid #334155;
+            background: #fdfdfd;
+            border: 2px solid #cbd5e1;
             padding: 15px;
             border-radius: 10px;
             margin-bottom: 15px;
@@ -170,56 +169,45 @@
 
         .single-step-question-box h4 {
             margin-top: 0;
-            color: #f8fafc;
+            color: var(--primary);
             font-size: 15px;
             line-height: 1.6;
         }
 
         .options-grid-fast {
             display: grid;
-            grid-template-columns: 1fr;
+            grid-template-columns: repeat(2, 1fr);
             gap: 10px;
             margin-top: 12px;
         }
 
         .opt-fast-btn {
-            background: #1e293b;
-            border: 2px solid #475569;
-            color: #f8fafc;
+            background: #fff;
+            border: 2px solid var(--primary);
+            color: var(--primary);
             padding: 12px;
             border-radius: 8px;
             font-size: 14px;
             font-weight: bold;
             cursor: pointer;
             text-align: right;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             transition: 0.1s;
         }
 
         .opt-fast-btn:hover {
-            background: #334155;
+            background: var(--accent);
         }
 
         .opt-fast-btn.correct-choice {
-            background: #065f46 !important;
-            border-color: #34d399 !important;
+            background: var(--success) !important;
+            border-color: var(--success) !important;
             color: #fff !important;
         }
 
         .opt-fast-btn.wrong-choice {
-            background: #7f1d1d !important;
-            border-color: #f87171 !important;
+            background: var(--danger) !important;
+            border-color: var(--danger) !important;
             color: #fff !important;
-        }
-
-        .correct-badge-text {
-            background: #047857;
-            color: #a7f3d0;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 12px;
         }
 
         .navigation-btns {
@@ -229,8 +217,7 @@
         }
 
         .questions-preview {
-            background: #ffffff;
-            color: #1e3a8a;
+            background: #fff;
             border: 1px solid #cbd5e1;
             padding: 20px;
             border-radius: 10px;
@@ -240,7 +227,7 @@
 
         .exam-header {
             text-align: center;
-            border-bottom: 2px solid #1e3a8a;
+            border-bottom: 2px solid var(--primary);
             padding-bottom: 10px;
             margin-bottom: 15px;
         }
@@ -256,7 +243,6 @@
             border: 1px solid #e2e8f0;
             font-size: 12.5px;
             line-height: 1.5;
-            color: #1e3a8a;
         }
 
         .bubble-options {
@@ -288,25 +274,25 @@
             background: #fff;
         }
 
-        .analysis-box { display: none; background: #1e293b; border: 1px solid #f59e0b; padding: 20px; border-radius: 10px; margin-top: 15px; font-size: 13px; color: #f8fafc; }
-        .result-box { display: none; background: #1e293b; border: 1px solid #10b981; padding: 15px; border-radius: 10px; margin-top: 15px; font-size: 14px; color: #f8fafc; }
-        .sheet-print-container { display: none; background: #fff; color: #000; padding: 20px; border-radius: 10px; border: 1px solid #cbd5e1; margin-top: 15px; }
+        .analysis-box { display: none; background: #fffbeb; border: 1px solid #f59e0b; padding: 20px; border-radius: 10px; margin-top: 15px; font-size: 13px; }
+        .result-box { display: none; background: #ecfdf5; border: 1px solid #10b981; padding: 15px; border-radius: 10px; margin-top: 15px; font-size: 14px; }
+        .sheet-print-container { display: none; background: #fff; padding: 20px; border-radius: 10px; border: 1px solid #cbd5e1; margin-top: 15px; }
 
         @media print {
             @page { size: A4 portrait; margin: 10mm; }
             body * { visibility: hidden !important; }
             
             .printable-exam-area, .printable-exam-area * { visibility: visible !important; }
-            .printable-exam-area { position: absolute; left: 0; top: 0; width: 100% !important; background: white !important; color: black !important; padding: 0 !important; border: none !important; box-shadow: none !important; }
+            .printable-exam-area { position: absolute; left: 0; top: 0; width: 100% !important; background: white !important; padding: 0 !important; border: none !important; box-shadow: none !important; }
 
             .printable-sheet-area, .printable-sheet-area * { visibility: visible !important; }
-            .printable-sheet-area { position: absolute; left: 0; top: 0; width: 100% !important; background: white !important; color: black !important; padding: 0 !important; border: none !important; box-shadow: none !important; }
+            .printable-sheet-area { position: absolute; left: 0; top: 0; width: 100% !important; background: white !important; padding: 0 !important; border: none !important; box-shadow: none !important; }
 
             .printable-analysis-area, .printable-analysis-area * { visibility: visible !important; }
-            .printable-analysis-area { position: absolute; left: 0; top: 0; width: 100% !important; background: white !important; color: black !important; padding: 0 !important; border: none !important; box-shadow: none !important; }
+            .printable-analysis-area { position: absolute; left: 0; top: 0; width: 100% !important; background: white !important; padding: 0 !important; border: none !important; box-shadow: none !important; }
 
             .no-print { display: none !important; }
-            .question-row { break-inside: avoid; page-break-inside: avoid; margin-bottom: 8px; padding: 6px 8px; border: 1px solid #94a3b8; color: black !important; }
+            .question-row { break-inside: avoid; page-break-inside: avoid; margin-bottom: 8px; padding: 6px 8px; border: 1px solid #94a3b8; }
         }
     </style>
 </head>
@@ -314,7 +300,7 @@
 
     <div class="container">
         <div class="header-nav no-print">
-            <h2 id="mainSchoolTitle">مدرسة داؤود بن عروة الثقفي الابتدائية | نظام الاختبارات والتحليل العميق (طلاب)</h2>
+            <h2 id="mainSchoolTitle">مدرسة داؤود بن عروة الثقفي الابتدائية (طلاب)</h2>
             <a href="index.html" class="back-btn">⬅ لوحة التحكم الرئيسية</a>
         </div>
 
@@ -354,21 +340,21 @@
             </div>
 
             <!-- صندوق اختيار الدروس والمواضيع -->
-            <div class="form-group" style="margin-top: 12px; border-top: 1px dashed #334155; padding-top: 10px;">
-                <label style="color: #fbbf24; display: flex; align-items: center; gap: 5px;">
+            <div class="form-group" style="margin-top: 12px; border-top: 1px dashed #cbd5e1; padding-top: 10px;">
+                <label style="color: #b45309; display: flex; align-items: center; gap: 5px;">
                     <span>📖</span> اختر الدروس أو المواضيع المراد وضع الأسئلة منها:
                 </label>
-                <div id="lessonsSelectionContainer" style="display: flex; flex-direction: column; gap: 6px; max-height: 180px; overflow-y: auto; background: #0f172a; padding: 10px; border: 2px solid #475569; border-radius: 8px; margin-top: 6px;">
+                <div id="lessonsSelectionContainer" style="display: flex; flex-direction: column; gap: 6px; max-height: 180px; overflow-y: auto; background: #fff; padding: 10px; border: 2px solid #d1d5db; border-radius: 8px; margin-top: 6px;">
                     <!-- سيتم تعبئة الدروس برمجياً هنا -->
                 </div>
             </div>
         </div>
 
         <!-- قسم التوليد الذكي الحقيقي للأسئلة من نص الدرس -->
-        <div class="section-box no-print" style="border: 2px dashed #7c3aed; background: #1e1b4b;">
-            <h3 style="color: #c084fc;">✨ التوليد الذكي للأسئلة من نص أو عنوان الدرس</h3>
-            <p style="font-size: 12.5px; color: #cbd5e1; margin-bottom: 8px;">
-                اكتب عنوان أو موضوع الدرس لتوليد أسئلة دقيقة ومضبوطة بـ ٤ خيارات:
+        <div class="section-box no-print" style="border: 2px dashed #7c3aed; background: #faf5ff;">
+            <h3 style="color: #7c3aed;">✨ التوليد الذكي للأسئلة من نص أو عنوان الدرس</h3>
+            <p style="font-size: 12.5px; color: #4b5563; margin-bottom: 8px;">
+                اكتب عنوان أو موضوع الدرس لتوليد أسئلة علمية دقيقة ومضبوطة بـ ٤ خيارات:
             </p>
             <div class="form-group">
                 <textarea id="lessonInputText" rows="3" placeholder="مثال: أجزاء النباتات أو المخلوقات الحية..."></textarea>
@@ -406,26 +392,27 @@
         </div>
 
         <div class="section-box no-print">
-            <h3>👤 ثالثاً: لوحة التصحيح السريع والذكي (سؤال بسؤال مع تنبيه تلوين الكارت عند الانتقال للطالب التالي)</h3>
-            <p style="font-size: 12px; color: #94a3b8; margin-bottom: 10px;">
-                تظهر الأسئلة سؤالاً تلو الآخر؛ بمجرد الضغط على الإجابة ينتقل النظام تلقائياً للسؤال التالي، وعند الانتهاء يتغير لون الكارت مؤقتاً لتنبيهك بالانتقال للطالب التالي:
+            <h3>👤 ثالثاً: لوحة التصحيح السريع (سؤال بسؤال مع تنبيه مرئي عند الانتقال للطالب التالي)</h3>
+            <p style="font-size: 12px; color: #555; margin-bottom: 10px;">
+                عند إجابة السؤال الأخير، يتغير لون الإطار مؤقتاً لتنبيهك بنجاح حفظ درجة الطالب والانتقال التلقائي للطالب التالي:
             </p>
             <button class="action-btn btn-success" onclick="startTouchGradingSession()">🚀 بدء جلسة التصحيح ورصد الدرجات</button>
 
             <div id="touchGradingCard" class="touch-grading-card">
                 <div id="studentHeaderBadge" class="student-title-badge"></div>
                 
+                <!-- عرض السؤال الحالي فقط -->
                 <div id="singleQuestionContainer"></div>
                 
                 <div class="navigation-btns" style="justify-content: space-between;">
-                    <button class="action-btn" style="background: #475569; width: 48%;" onclick="prevQuestionStep()">⬅ السؤال السابق</button>
+                    <button class="action-btn" style="background: #4b5563; width: 48%;" onclick="prevQuestionStep()">⬅ السؤال السابق</button>
                     <button class="action-btn btn-success" style="width: 48%;" onclick="nextQuestionStepOrFinish()">التالي / حفظ ➡</button>
                 </div>
             </div>
         </div>
 
         <div id="resultContainer" class="result-box no-print">
-            <h3 style="margin-top:0; color: #34d399; font-size: 16px;">📊 سجل درجات الفصل المعتمدة والبحث الفوري عن درجات ولي الأمر</h3>
+            <h3 style="margin-top:0; color: var(--primary); font-size: 16px;">📊 سجل درجات الفصل المعتمدة والبحث الفوري عن درجات ولي الأمر</h3>
             
             <div style="margin: 12px 0; display: flex; gap: 10px; align-items: center;">
                 <input type="text" id="searchStudentInput" placeholder="🔍 ابحث عن اسم طالب لسؤال ولي أمره..." oninput="filterStudentResults()" style="flex: 1; padding: 8px 12px; border: 1px solid #10b981; border-radius: 6px; font-size: 13px;">
@@ -435,7 +422,7 @@
             
             <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;" class="no-print">
                 <button class="action-btn btn-print" style="flex: 1; min-width: 250px;" onclick="printAllGradesSheet()">🖨️ طباعة كشف درجات الفصل (أسماء ودرجات فقط)</button>
-                <button class="action-btn btn-warning" style="flex: 1; min-width: 250px;" onclick="toggleAnalysisBox()">📈 فتح/طباعة تقرير التحليل الإحصائي العميق</button>
+                <button class="action-btn btn-warning" style="flex: 1; min-width: 250px;" onclick="toggleAnalysisBox()">📈 فتح/طباعة تقرير التحليل الإحصائي المستقل</button>
             </div>
         </div>
 
@@ -464,10 +451,10 @@
             </div>
         </div>
 
-        <!-- تقرير التحليل العميق -->
+        <!-- تقرير التحليل المستقل -->
         <div id="analysisContainer" class="analysis-box printable-analysis-area">
-            <h3 style="margin-top:0; color: #fbbf24; border-bottom: 2px solid #f59e0b; padding-bottom: 8px; font-size: 16px;">📈 تقرير تحليل نتائج الطلاب ومهارات نافس والتشخيص العميق</h3>
-            <div id="analysisContentText" style="font-size: 12.5px; line-height: 1.6; color: #f8fafc;"></div>
+            <h3 style="margin-top:0; color: #b45309; border-bottom: 2px solid #f59e0b; padding-bottom: 8px; font-size: 16px;">📈 تقرير تحليل نتائج الطلاب ومهارات نافس</h3>
+            <div id="analysisContentText" style="font-size: 12.5px; line-height: 1.6; color: #1f2937;"></div>
             <div class="no-print" style="margin-top: 15px;">
                 <button class="action-btn btn-print" onclick="printAnalysisBoxOnly()">🖨️ طباعة تقرير التحليل لوحده</button>
             </div>
@@ -573,8 +560,8 @@
                 label.style.cursor = 'pointer';
                 label.style.padding = '4px 6px';
                 label.style.borderRadius = '4px';
-                label.style.background = '#1e293b';
-                label.style.border = '1px solid #475569';
+                label.style.background = '#f8fafc';
+                label.style.border = '1px solid #e2e8f0';
 
                 label.innerHTML = `
                     <input type="checkbox" class="lesson-checkbox" value="${escapeHtml(l.title)}" checked style="width: 16px; height: 16px; accent-color: var(--secondary); cursor: pointer;">
@@ -792,26 +779,15 @@
             let qNum = currentQuestionStep + 1;
             let savedOpt = studentAnswers[qNum] || '';
 
-            let optionsHtml = '';
-            ['أ', 'ب', 'ج', 'د'].forEach((optChar, idx) => {
-                let optText = qObj.options[idx];
-                let isSelected = (savedOpt === optChar);
-                let btnClass = isSelected ? (optChar === qObj.correct ? 'correct-choice' : 'wrong-choice') : '';
-                let indicator = optChar === qObj.correct ? `<span class="correct-badge-text">الإجابة النموذجية</span>` : '';
-                optionsHtml += `
-                    <button type="button" class="opt-fast-btn ${btnClass}" onclick="selectFastOpt(${qNum}, '${optChar}', this)">
-                        <span>${optChar}) ${escapeHtml(optText)}</span>
-                        ${indicator}
-                    </button>
-                `;
-            });
-
             const container = document.getElementById('singleQuestionContainer');
             container.innerHTML = `
                 <div class="single-step-question-box">
                     <h4>سؤال ${toArabicDigits(qNum)}: ${escapeHtml(qObj.q)}</h4>
                     <div class="options-grid-fast">
-                        ${optionsHtml}
+                        <button type="button" class="opt-fast-btn ${savedOpt === 'أ' ? 'correct-choice' : ''}" onclick="selectFastOpt(${qNum}, 'أ', this)">أ) ${escapeHtml(qObj.options[0])}</button>
+                        <button type="button" class="opt-fast-btn ${savedOpt === 'ب' ? 'correct-choice' : ''}" onclick="selectFastOpt(${qNum}, 'ب', this)">ب) ${escapeHtml(qObj.options[1])}</button>
+                        <button type="button" class="opt-fast-btn ${savedOpt === 'ج' ? 'correct-choice' : ''}" onclick="selectFastOpt(${qNum}, 'ج', this)">ج) ${escapeHtml(qObj.options[2])}</button>
+                        <button type="button" class="opt-fast-btn ${savedOpt === 'د' ? 'correct-choice' : ''}" onclick="selectFastOpt(${qNum}, 'د', this)">د) ${escapeHtml(qObj.options[3])}</button>
                     </div>
                 </div>
             `;
@@ -831,10 +807,11 @@
             } else {
                 btn.classList.add('wrong-choice');
                 parentGrid.querySelectorAll('.opt-fast-btn').forEach(b => {
-                    if (b.textContent.includes(correctAns + ')')) b.classList.add('correct-choice');
+                    if (b.textContent.startsWith(correctAns)) b.classList.add('correct-choice');
                 });
             }
 
+            // الانتقال التلقائي للسؤال التالي برهة قصيرة إذا لم يكن السؤال الأخير
             setTimeout(() => {
                 if (currentQuestionStep < activeQuestions.length - 1) {
                     currentQuestionStep++;
@@ -873,6 +850,7 @@
 
             currentStudentIndex++;
             if (currentStudentIndex < studentsList.length) {
+                // تفعيل تأثير تغير اللون مؤقتاً للتنبيه بالانتقال للطالب التالي
                 const card = document.getElementById('touchGradingCard');
                 card.classList.add('student-changed');
                 
@@ -930,7 +908,7 @@
                     let waText = `مدرسة داؤود بن عروة الثقفي الابتدائية (طلاب)%0Aولي الأمر الفاضل، نود إفادتكم بحصول الابن: *${encodeURIComponent(sName)}* %0Aعلى درجة الاختبار: *${toArabicDigits(data.score)} / ${toArabicDigits(maxScore)}* (${toArabicDigits(data.correct)} إجابات صحيحة).%0Aمع تحيات المعلم: *منصور عامر الرحيلي*`;
 
                     html += `
-                        <div style="display: flex; justify-content: space-between; align-items: center; background: #0f172a; padding: 8px 12px; margin-bottom: 6px; border-radius: 6px; border: 1px solid #10b981;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; background: #fff; padding: 8px 12px; margin-bottom: 6px; border-radius: 6px; border: 1px solid #10b981;">
                             <span>• <b>${escapeHtml(sName)}</b>: ${toArabicDigits(data.score)} / ${toArabicDigits(maxScore)} (${toArabicDigits(data.correct)} صحيحة)</span>
                             <a href="https://wa.me/?text=${waText}" target="_blank" class="action-btn btn-whatsapp" style="padding: 4px 10px; font-size: 12px; width: auto; text-decoration: none;">💬 إرسال لولي الأمر</a>
                         </div>
@@ -1023,33 +1001,25 @@
             let classAverage = count > 0 ? (totalScoreSum / count).toFixed(1) : 0;
             let percentageAvg = count > 0 ? ((totalScoreSum / (count * maxScore)) * 100).toFixed(1) : 0;
 
-            let dynamicNafisLevel = "مستوى منخفض (يحتاج دعم وتدخل علاجي وتفعيل خطط تحسين دقيقة)";
+            let dynamicNafisLevel = "مستوى منخفض (يحتاج دعم وتدخل علاجي)";
             if (percentageAvg >= 90) {
-                dynamicNafisLevel = "مستوى متقدم (تجاوز المعيار المستهدف للطلاب بتميز)";
+                dynamicNafisLevel = "مستوى متقدم (تجاوز المعيار المستهدف للطلاب)";
             } else if (percentageAvg >= 75) {
                 dynamicNafisLevel = "مستوى متقن";
             } else if (percentageAvg >= 50) {
-                dynamicNafisLevel = "مستوى متوسط / ملائم يحتاج تعزيز";
+                dynamicNafisLevel = "مستوى متوسط / ملائم";
             }
 
             document.getElementById('analysisContentText').innerHTML = `
                 <table style="width:100%; border-collapse:collapse; margin-top:5px;" border="1">
-                    <tr style="background:#334155; text-align:center;"><th style="padding:6px;">مؤشر القياس الإحصائي</th><th style="padding:6px;">القيمة التقديرية</th></tr>
-                    <tr><td style="padding:6px;">نوع الاختبار والنموذج</td><td style="text-align:center; color:#93c5fd;"><b>${examType} - ${currentModelName}</b></td></tr>
+                    <tr style="background:#fef3c7; text-align:center;"><th style="padding:6px;">مؤشر القياس الإحصائي</th><th style="padding:6px;">القيمة التقديرية</th></tr>
+                    <tr><td style="padding:6px;">نوع الاختبار والنموذج</td><td style="text-align:center; color:var(--primary);"><b>${examType} - ${currentModelName}</b></td></tr>
                     <tr><td style="padding:6px;">إجمالي الطلاب المختبرين</td><td style="text-align:center;"><b>${toArabicDigits(count)}</b> طالب</td></tr>
                     <tr><td style="padding:6px;">متوسط أداء الفصل العام</td><td style="text-align:center;"><b>${toArabicDigits(classAverage)} / ${toArabicDigits(maxScore)}</b> (${toArabicDigits(percentageAvg)}٪)</td></tr>
                     <tr><td style="padding:6px;">أعلى درجة بالفصل</td><td style="text-align:center; color:var(--success);"><b>${toArabicDigits(highestScore)} / ${toArabicDigits(maxScore)}</b></td></tr>
                     <tr><td style="padding:6px;">أقل درجة بالفصل</td><td style="text-align:center; color:var(--danger);"><b>${toArabicDigits(lowestScore)} / ${toArabicDigits(maxScore)}</b></td></tr>
-                    <tr><td style="padding:6px;">مستوى إتقان مهارات نافس</td><td style="text-align:center; color:#fbbf24;"><b>${dynamicNafisLevel}</b></td></tr>
+                    <tr><td style="padding:6px;">مستوى إتقان مهارات نافس</td><td style="text-align:center; color:var(--primary);"><b>${dynamicNafisLevel}</b></td></tr>
                 </table>
-                <div style="margin-top: 15px; background: #0f172a; padding: 12px; border-radius: 8px; border: 1px solid #475569;">
-                    <p style="margin:0 0 6px 0; font-weight:bold; color:#60a5fa;">💡 التوصيات ومقترحات التحسين العلاجي:</p>
-                    <ul style="margin:0; padding-right:20px; font-size:12px; line-height:1.6; color:#cbd5e1;">
-                        <li>تنفيذ حصص إثرائية للطلاب الحاصلين على نسب أقل من ٧٥٪ للتركيز على المفاهيم الأساسية.</li>
-                        <li>تكثيف الأنشطة التفاعلية الفردية وتفعيل استراتيجيات التقويم الصفي المستمر.</li>
-                        <li>التواصل المباشر مع أولياء الأمور عبر زر الواتساب لإطلاعهم على نتائج أبنائهم ومستواهم المستهدف.</li>
-                    </ul>
-                </div>
             `;
             convertAllNumbersInDOM();
         }
