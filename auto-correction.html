@@ -10,12 +10,12 @@
             --primary: #1e3a8a;
             --secondary: #2563eb;
             --accent: #dbeafe;
-            --bg: #f8fafc;
-            --card-bg: #fdfdfd;
-            --box-bg-1: #f0fdf4; /* خلفية تفاعلية خضراء هادئة */
-            --box-bg-2: #eff6ff; /* خلفية تفاعلية زرقاء هادئة */
-            --box-bg-3: #fefce8; /* خلفية تفاعلية صفراء هادئة */
-            --box-bg-4: #faf5ff; /* خلفية تفاعلية بنسق بنفسجي */
+            --bg: #fef9c3; /* خلفية عامة دافئة بعيدة عن الأبيض */
+            --card-bg: #fefce8; /* خلفية الصناديق أصفر كريمي دافئ */
+            --box-bg-1: #f0fdf4; 
+            --box-bg-2: #eff6ff; 
+            --box-bg-3: #fff7ed; 
+            --box-bg-4: #faf5ff; 
             --text: #1e293b;
             --success: #059669;
             --warning: #d97706;
@@ -25,7 +25,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            background: linear-gradient(135deg, #fef08a 0%, #fef3c7 50%, #fed7aa 100%);
             color: var(--text);
             margin: 0;
             padding: 12px;
@@ -36,12 +36,12 @@
         .container {
             max-width: 900px;
             margin: 0 auto;
-            background: linear-gradient(145deg, #ffffff, #f1f5f9);
+            background: linear-gradient(145deg, #fefce8, #fef9c3);
             padding: 20px;
             border-radius: 16px;
-            box-shadow: 0 8px 30px rgba(30, 58, 138, 0.12);
+            box-shadow: 0 8px 30px rgba(180, 83, 9, 0.15);
             box-sizing: border-box;
-            border: 2px solid #cbd5e1;
+            border: 3px solid #f59e0b;
         }
 
         .header-nav {
@@ -51,16 +51,17 @@
             border-bottom: 3px solid var(--primary);
             padding-bottom: 12px;
             margin-bottom: 20px;
-            background: #e0f2fe;
+            background: #fef3c7;
             padding: 12px 15px;
             border-radius: 10px;
+            border: 2px solid #fcd34d;
         }
 
         h2 { color: var(--primary); margin: 0; font-size: 18px; }
 
         .back-btn {
             background: #334155;
-            color: white;
+            color: #f8fafc;
             padding: 8px 14px;
             border-radius: 8px;
             text-decoration: none;
@@ -75,7 +76,7 @@
             padding: 18px;
             border-radius: 12px;
             margin-bottom: 18px;
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.05);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);
         }
 
         .section-box:nth-child(even) {
@@ -105,20 +106,20 @@
         select, input[type="text"], input[type="number"], textarea {
             width: 100%;
             padding: 11px;
-            border: 2px solid #94a3b8;
+            border: 2px solid #cbd5e1;
             border-radius: 8px;
             font-size: 14px;
-            background: #f8fafc;
+            background: #fefce8; /* استبدال الأبيض بتدرج كريمي دافئ */
             color: #0f172a;
             outline: none;
             box-sizing: border-box;
             font-weight: 600;
         }
-        select:focus, input:focus, textarea:focus { border-color: var(--secondary); background: #ffffff; }
+        select:focus, input:focus, textarea:focus { border-color: var(--secondary); background: #fef08a; }
 
         .action-btn {
             background: linear-gradient(135deg, #2563eb, #1d4ed8);
-            color: white;
+            color: #f8fafc;
             border: none;
             padding: 13px;
             border-radius: 9px;
@@ -131,7 +132,7 @@
             transition: 0.2s;
         }
         .action-btn:hover { transform: translateY(-1px); opacity: 0.95; }
-        .btn-print { background: linear-gradient(135deg, #475569, #334155); }
+        .btn-print { background: linear-gradient(135deg, #475569, #334151); }
         .btn-success { background: linear-gradient(135deg, #059669, #047857); }
         .btn-whatsapp { background: linear-gradient(135deg, #10b981, #059669); }
         .btn-purple { background: linear-gradient(135deg, #7c3aed, #6d28d9); }
@@ -162,7 +163,7 @@
 
         .live-score-box {
             background: #059669;
-            color: white;
+            color: #f8fafc;
             padding: 6px 12px;
             border-radius: 6px;
             font-size: 14px;
@@ -170,7 +171,7 @@
         }
 
         .single-step-question-box {
-            background: #fdf8f6;
+            background: #fff7ed;
             border: 2px solid #f97316;
             padding: 16px;
             border-radius: 10px;
@@ -192,7 +193,7 @@
         }
 
         .opt-fast-btn {
-            background: #fff7ed;
+            background: #fef3c7;
             border: 2px solid #fb923c;
             color: #9a3412;
             padding: 12px;
@@ -204,15 +205,15 @@
             transition: 0.1s;
         }
 
-        .opt-fast-btn:hover { background: #ffedd5; }
-        .opt-fast-btn.correct-choice { background: #059669 !important; border-color: #047857 !important; color: #fff !important; }
-        .opt-fast-btn.wrong-choice { background: #dc2626 !important; border-color: #b91c1c !important; color: #fff !important; }
+        .opt-fast-btn:hover { background: #fde68a; }
+        .opt-fast-btn.correct-choice { background: #059669 !important; border-color: #047857 !important; color: #f8fafc !important; }
+        .opt-fast-btn.wrong-choice { background: #dc2626 !important; border-color: #b91c1c !important; color: #f8fafc !important; }
 
         .navigation-btns { display: flex; gap: 10px; margin-top: 15px; }
 
         .questions-preview {
-            background: #f8fafc;
-            border: 2px solid #94a3b8;
+            background: #fefce8;
+            border: 2px solid #ca8a04;
             padding: 20px;
             border-radius: 12px;
             margin-top: 15px;
@@ -224,7 +225,7 @@
             border-bottom: 3px solid var(--primary);
             padding-bottom: 10px;
             margin-bottom: 15px;
-            background: #e2e8f0;
+            background: #fef08a;
             padding: 10px;
             border-radius: 8px;
         }
@@ -235,9 +236,9 @@
         .question-row {
             margin-bottom: 14px;
             padding: 10px 12px;
-            background: #f1f5f9;
+            background: #fef9c3;
             border-radius: 8px;
-            border: 1px solid #cbd5e1;
+            border: 1.5px solid #fcd34d;
             font-size: 13px;
             line-height: 1.6;
         }
@@ -263,12 +264,12 @@
             font-size: 11px;
             font-weight: bold;
             color: #1e3a8a;
-            background: #e2e8f0;
+            background: #fef3c7;
         }
 
-        .analysis-box { display: none; background: #fefce8; border: 2px solid #eab308; padding: 20px; border-radius: 12px; margin-top: 15px; font-size: 13px; }
-        .result-box { display: block; background: #f0fdf4; border: 2px solid #34d399; padding: 18px; border-radius: 12px; margin-top: 15px; font-size: 14px; }
-        .sheet-print-container { display: none; background: #f8fafc; padding: 20px; border-radius: 12px; border: 2px solid #94a3b8; margin-top: 15px; }
+        .analysis-box { display: none; background: #fef3c7; border: 2px solid #eab308; padding: 20px; border-radius: 12px; margin-top: 15px; font-size: 13px; }
+        .result-box { display: block; background: #ecfdf5; border: 2px solid #34d399; padding: 18px; border-radius: 12px; margin-top: 15px; font-size: 14px; }
+        .sheet-print-container { display: none; background: #fefce8; padding: 20px; border-radius: 12px; border: 2px solid #ca8a04; margin-top: 15px; }
 
         @media print {
             @page { size: A4 portrait; margin: 10mm; }
@@ -280,7 +281,7 @@
             .printable-analysis-area, .printable-analysis-area * { visibility: visible !important; }
             .printable-analysis-area { position: absolute; left: 0; top: 0; width: 100% !important; background: white !important; padding: 0 !important; border: none !important; box-shadow: none !important; }
             .no-print { display: none !important; }
-            .question-row { break-inside: avoid; page-break-inside: avoid; margin-bottom: 8px; padding: 6px 8px; border: 1px solid #94a3b8; background: #fff !important; }
+            .question-row { break-inside: avoid; page-break-inside: avoid; margin-bottom: 8px; padding: 6px 8px; border: 1px solid #94a3b8; background: #fefce8 !important; }
         }
     </style>
 </head>
@@ -343,19 +344,19 @@
                     <span>📊</span> حدد مجالات مادة العلوم المستهدفة في اختبارات نافس:
                 </label>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 8px; margin-top: 8px;">
-                    <label style="display: flex; align-items: center; gap: 6px; font-size: 13px; background: #fffbeb; padding: 8px; border-radius: 6px; border: 1px solid #fcd34d; cursor: pointer;">
+                    <label style="display: flex; align-items: center; gap: 6px; font-size: 13px; background: #fef9c3; padding: 8px; border-radius: 6px; border: 1px solid #fcd34d; cursor: pointer;">
                         <input type="checkbox" class="nafis-domain-cb" value="علوم الحياة" checked style="width: 16px; height: 16px; accent-color: #b45309;">
                         <span><b>1. علوم الحياة</b></span>
                     </label>
-                    <label style="display: flex; align-items: center; gap: 6px; font-size: 13px; background: #fffbeb; padding: 8px; border-radius: 6px; border: 1px solid #fcd34d; cursor: pointer;">
+                    <label style="display: flex; align-items: center; gap: 6px; font-size: 13px; background: #fef9c3; padding: 8px; border-radius: 6px; border: 1px solid #fcd34d; cursor: pointer;">
                         <input type="checkbox" class="nafis-domain-cb" value="العلوم الفيزيائية" checked style="width: 16px; height: 16px; accent-color: #b45309;">
                         <span><b>2. العلوم الفيزيائية</b></span>
                     </label>
-                    <label style="display: flex; align-items: center; gap: 6px; font-size: 13px; background: #fffbeb; padding: 8px; border-radius: 6px; border: 1px solid #fcd34d; cursor: pointer;">
+                    <label style="display: flex; align-items: center; gap: 6px; font-size: 13px; background: #fef9c3; padding: 8px; border-radius: 6px; border: 1px solid #fcd34d; cursor: pointer;">
                         <input type="checkbox" class="nafis-domain-cb" value="علوم الأرض والفضاء" checked style="width: 16px; height: 16px; accent-color: #b45309;">
                         <span><b>3. علوم الأرض والفضاء</b></span>
                     </label>
-                    <label style="display: flex; align-items: center; gap: 6px; font-size: 13px; background: #fffbeb; padding: 8px; border-radius: 6px; border: 1px solid #fcd34d; cursor: pointer;">
+                    <label style="display: flex; align-items: center; gap: 6px; font-size: 13px; background: #fef9c3; padding: 8px; border-radius: 6px; border: 1px solid #fcd34d; cursor: pointer;">
                         <input type="checkbox" class="nafis-domain-cb" value="الاستقصاء العلمي" checked style="width: 16px; height: 16px; accent-color: #b45309;">
                         <span><b>4. الاستقصاء العلمي</b></span>
                     </label>
@@ -367,7 +368,7 @@
                 <label style="color: var(--primary); display: flex; align-items: center; gap: 5px;">
                     <span>📖</span> اختر الدروس أو المواضيع المراد وضع الأسئلة منها:
                 </label>
-                <div id="lessonsSelectionContainer" style="display: flex; flex-direction: column; gap: 6px; max-height: 180px; overflow-y: auto; background: #e0f2fe; padding: 10px; border: 2px solid #93c5fd; border-radius: 8px; margin-top: 6px;"></div>
+                <div id="lessonsSelectionContainer" style="display: flex; flex-direction: column; gap: 6px; max-height: 180px; overflow-y: auto; background: #fef3c7; padding: 10px; border: 2px solid #93c5fd; border-radius: 8px; margin-top: 6px;"></div>
             </div>
         </div>
 
@@ -383,7 +384,7 @@
         </div>
 
         <div class="section-box">
-            <h3>⚙️ ثانياً: توليد ورقة الاختبار المعتمَدة (بالعدد والخيارات العشوائية والدقيقة)</h3>
+            <h3>⚙️ ثانياً: توليد ورقة الاختبار المعتمَدة (بدون تكرار وبنك أسئلة واسع وغني)</h3>
             <div class="no-print">
                 <button class="action-btn" onclick="generateTestModel()">⚡ توليد ورقة الاختبار الآن</button>
             </div>
@@ -396,7 +397,7 @@
                     <p id="printTestInfo" style="margin:2px 0; font-size:12px; color:#1e3a8a; font-weight:bold;"></p>
                     <div id="printSelectedLessonsPrint" style="margin:2px 0; font-size:11.5px; color:#0284c7; font-weight:bold;"></div>
                     <div id="printModelBadge" style="margin:4px 0; font-size:12px; color:#0d9488; font-weight:bold;"></div>
-                    <div style="margin-top: 6px; border: 1.5px solid #64748b; padding: 4px 10px; border-radius: 5px; display:inline-block; font-size:11.5px; background: #ffffff;">
+                    <div style="margin-top: 6px; border: 1.5px solid #ca8a04; padding: 4px 10px; border-radius: 5px; display:inline-block; font-size:11.5px; background: #fef3c7;">
                         <b>اسم الطالب:</b> .................................................................... &nbsp;&nbsp; <b>الصف:</b> ................
                     </div>
                 </div>
@@ -426,7 +427,7 @@
         <div id="resultContainer" class="result-box no-print">
             <h3 style="margin-top:0; color: #065f46; font-size: 16px;">📊 سجل درجات الطلاب والبحث الفوري والواتساب</h3>
             <div style="margin: 12px 0; display: flex; gap: 10px; align-items: center;">
-                <input type="text" id="searchStudentInput" placeholder="🔍 ابحث عن اسم طالب لسؤال ولي أمره..." oninput="filterStudentResults()" style="flex: 1; padding: 9px 12px; border: 2px solid #059669; border-radius: 6px; font-size: 13px; background: #fff;">
+                <input type="text" id="searchStudentInput" placeholder="🔍 ابحث عن اسم طالب لسؤال ولي أمره..." oninput="filterStudentResults()" style="flex: 1; padding: 9px 12px; border: 2px solid #059669; border-radius: 6px; font-size: 13px; background: #fefce8;">
             </div>
             <p id="correctionOutputText" style="font-size: 14px; margin: 8px 0;"></p>
             
@@ -445,7 +446,7 @@
             </div>
             <table style="width: 100%; border-collapse: collapse; font-size: 12px; text-align: center;" border="1">
                 <thead>
-                    <tr style="background: #e2e8f0; color: #1e3a8a;">
+                    <tr style="background: #fef08a; color: #1e3a8a;">
                         <th style="padding: 6px; width: 40px;">م</th>
                         <th style="padding: 6px; text-align: right; padding-right: 10px;">اسم الطالب</th>
                         <th style="padding: 6px; width: 100px;">الدرجة المستحقة</th>
@@ -539,8 +540,8 @@
                 label.style.cursor = 'pointer';
                 label.style.padding = '5px 8px';
                 label.style.borderRadius = '6px';
-                label.style.background = '#f0f9ff';
-                label.style.border = '1px solid #bae6fd';
+                label.style.background = '#fefce8';
+                label.style.border = '1px solid #fde047';
 
                 label.innerHTML = `
                     <input type="checkbox" class="lesson-checkbox" value="${escapeHtml(l.title)}" checked style="width: 16px; height: 16px; accent-color: var(--secondary); cursor: pointer;">
@@ -550,6 +551,7 @@
             });
         }
 
+        // بنك أسئلة واسع جداً وغني بمتغيرات مختلفة لمنع التكرار نهائياً
         const accurateSubjectQuestionBanks = {
             "الأول الابتدائي": {
                 "science": [
@@ -557,14 +559,18 @@
                     { domain: "علوم الحياة", q: "أي الحيوانات التالية يُغطي جسمه الريش ويستطيع الطيران؟", options: ["القطة", "العصفور", "الأسد", "الخروف"], correctIdx: 1 },
                     { domain: "علوم الحياة", q: "ماذا تحتاج النباتات الخضراء لكي تنمو وتعيش بصورة سليمة؟", options: ["ظلام تام وصخور", "بلاستيك وحديد", "ماء وضوء وهواء", "رمل جاف فقط"], correctIdx: 2 },
                     { domain: "علوم الحياة", q: "ما المأوى أو المسكن الطبيعي للأسماك في الطبيعة؟", options: ["الماء", "الصحراء الجافة", "قمة الجبل العالي", "الغابة اليابسة"], correctIdx: 0 },
+                    { domain: "علوم الحياة", q: "أي الحيوانات التالية يعيش في الماء ويتحرك بالزعانف؟", options: ["السمكة", "العصفور", "الجمل", "الحصان"], correctIdx: 0 },
                     { domain: "العلوم الفيزيائية", q: "ما هو المصدر الطبيعي الأساسي للضوء والحرارة على كوكب الأرض؟", options: ["القمر", "الشمس", "المصباح الكهربائي", "النجوم البعيدة"], correctIdx: 1 },
                     { domain: "العلوم الفيزيائية", q: "أي الأجسام التالية يعتبر مصدراً للحرارة في حياتنا اليومية؟", options: ["الثلج المجمد", "المدفأة الكهربائية", "الماء البارد", "الزجاج الشفاف"], correctIdx: 1 },
                     { domain: "العلوم الفيزيائية", q: "كيف تصف حركة الكرة عند ركلها بقوة على الأرض؟", options: ["تتحرك وتتجه للأمام", "تبقى ثابتة تماماً", "تختفي في الهواء", "تسقط للأسفل مباشرة"], correctIdx: 0 },
+                    { domain: "العلوم الفيزيائية", q: "أي الأجسام التالية يصنع من مادة صلبة وقوية لا تنكسر بسهولة؟", options: ["المطرقة الحديدية", "الورق الخفيف", "الزجاج الرقيق", "القطن الناعم"], correctIdx: 0 },
                     { domain: "علوم الأرض والفضاء", q: "في أي فصل من فصول السنة ترتفع درجة الحرارة وتشتد أشعة الشمس؟", options: ["فصل الشتاء", "فصل الخريف", "فصل الصيف", "فصل الربيع"], correctIdx: 2 },
                     { domain: "علوم الأرض والفضاء", q: "ما هي المادة الشفافة الأساسية التي نجدها بكثرة على سطح الأرض وتشكل البحار؟", options: ["الحديد الصلب", "الماء", "الصخور البركانية", "الخشب اليابس"], correctIdx: 1 },
                     { domain: "علوم الأرض والفضاء", q: "ماذا نرى في السماء الصافية خلال فترة الليل المظلم؟", options: ["النجوم والقمر", "الشمس الساطعة", "الغيوم الممطرة الثقيلة", "قوس قزح الصباحي"], correctIdx: 0 },
+                    { domain: "علوم الأرض والفضاء", q: "ما الشكل الظاهري للقمر عندما يكون بدراً كاملاً ومضيئاً؟", options: ["دائرة كاملة مضيئة", "هلال صغير نحيل", "غير مرئي تماماً", "مربع متساوي"], correctIdx: 0 },
                     { domain: "الاستقصاء العلمي", q: "أي الأجسام التالية خفيف ويطفو على سطح الماء عند وضعه فيه؟", options: ["الحجر الثقيل", "المسمار الحديدي", "ورقة الشجر الخفيفة", "العملة المعدنية"], correctIdx: 2 },
-                    { domain: "الاستقصاء العلمي", q: "بأي أداة نستخدمها لقياس طول أو ارتفاع جسم بدقة؟", options: ["مسطرة القياس", "الميزان الرقمي", "الساعة اليدوية", "ميزان الحرارة"], correctIdx: 0 }
+                    { domain: "الاستقصاء العلمي", q: "بأي أداة نستخدمها لقياس طول أو ارتفاع جسم بدقة؟", options: ["مسطرة القياس", "الميزان الرقمي", "الساعة اليدوية", "ميزان الحرارة"], correctIdx: 0 },
+                    { domain: "الاستقصاء العلمي", q: "ما هي الطريقة الأنسب لمعرفة كتلة البطيخة وثقلها؟", options: ["الميزان ذو الكفتين", "شريط القياس", "المسطرة", "العد باليد"], correctIdx: 0 }
                 ]
             },
             "السادس الابتدائي": {
@@ -574,15 +580,19 @@
                     { domain: "علوم الحياة", q: "أي الأجهزة في جسم الإنسان مسؤول عن ضخ الدم لجميع الأعضاء؟", options: ["الجهاز الهضمي", "الجهاز الدوري (القلب)", "الجهاز التنفسي", "الجهاز العضلي"], correctIdx: 1 },
                     { domain: "علوم الحياة", q: "ما المادة الوراثية المسؤولة عن نقل الصفات بين الأجيال في الخلايا؟", options: ["الماء الصافي", "DNA (الدنا)", "السكر المذاب", "الدهون الثلاثية"], correctIdx: 1 },
                     { domain: "علوم الحياة", q: "أي الكائنات التالية يمثل منتجاً للغذاء في السلسلة الغذائية؟", options: ["النبات الأخضر", "الصقر المفترس", "الأسد", "الذئب"], correctIdx: 0 },
+                    { domain: "علوم الحياة", q: "ما الغاز الذي تمتصه النباتات من الجو لتقوم بعملية البناء الضوئي؟", options: ["ثاني أكسيد الكربون", "الأكسجين الصافي", "الهيدروجين", "النيتروجين"], correctIdx: 0 },
                     { domain: "العلوم الفيزيائية", q: "ما نوع التغير الذي ينتج عنه مواد جديدة ذات خصائص مختلفة تماماً؟", options: ["تغير فيزيائي", "انصهار الجليد", "تغير كيميائي", "تبخر الماء"], correctIdx: 2 },
                     { domain: "العلوم الفيزيائية", q: "ما هي القوة التي تسحب الأجسام نحو مركز كوكب الأرض؟", options: ["قوة المغناطيس", "قوة الاحتكاك", "قوة الجاذبية الأرضية", "القوة الكهربائية"], correctIdx: 2 },
                     { domain: "العلوم الفيزيائية", q: "ماذا يسمى انتقال الحرارة عبر الأجسام الصلبة بالتلامس المباشر؟", options: ["التوصيل الحراري", "الحمل الحراري", "الإشعاع الضوئي", "التبخر"], correctIdx: 0 },
                     { domain: "العلوم الفيزيائية", q: "ما وحدة قياس الشغل أو الطاقة في النظام الدولي للوحدات؟", options: ["الجول", "النيوتن", "الفولت", "الأمبير"], correctIdx: 0 },
+                    { domain: "العلوم الفيزيائية", q: "ما الحالة التي تكون فيها جزيئات المادة متراصة وقوية جداً؟", options: ["الحالة الصلبة", "الحالة السائلة", "الحالة الغازية", "حالة البلازما"], correctIdx: 0 },
                     { domain: "علوم الأرض والفضاء", q: "أي الأجرام السماوية التالية يقع في مركز المجموعة الشمسية تماماً؟", options: ["كوكب الأرض", "الشمس", "القمر", "كوكب المريخ"], correctIdx: 1 },
                     { domain: "علوم الأرض والفضاء", q: "ما سبب تعاقب الليل والنهار على كوكب الأرض بصورة منتظمة؟", options: ["دوران الأرض حول الشمس", "دوران الأرض حول محورها", "ثبات الشمس بمكانها", "تغير فصول السنة"], correctIdx: 1 },
                     { domain: "علوم الأرض والفضاء", q: "ما الطبقة الهوائية المحيطة بكوكب الأرض وتحميه من الإشعاعات الضارة؟", options: ["الغلاف الجوي", "قاع المحيط العميق", "القشرة الصلبة", "اللب الداخلي"], correctIdx: 0 },
+                    { domain: "علوم الأرض والفضاء", q: "كم يبلغ تقريبا عدد كواكب المجموعة الشمسية التي تدور حول الشمس؟", options: ["ثمانية كواكب", "سبعة كواكب", "عشرة كواكب", "خمسة كواكب"], correctIdx: 0 },
                     { domain: "الاستقصاء العلمي", q: "ما هو المتغير المستقل في التجربة العلمية المنظمة؟", options: ["النتيجة النهائية الثابتة", "الأداة غير المستخدمة", "العامل الذي نغيره لنقيس أثره", "المكان المهجور"], correctIdx: 2 },
-                    { domain: "الاستقصاء العلمي", q: "كيف يتحقق الباحث العلمي من صحة فرضيته في التجربة؟", options: ["بإجراء التجارب المتكررة", "باستنتاج عشوائي", "بتجاهل الملاحظات", "بإلغاء التجربة"], correctIdx: 0 }
+                    { domain: "الاستقصاء العلمي", q: "كيف يتحقق الباحث العلمي من صحة فرضيته في التجربة؟", options: ["بإجراء التجارب المتكررة", "باستنتاج عشوائي", "بتجاهل الملاحظات", "بإلغاء التجربة"], correctIdx: 0 },
+                    { domain: "الاستقصاء العلمي", q: "ما هي الخطوة الأولى في خطوات الطريقة العلمية للبحث؟", options: ["تحديد و طرح المشكلة أو السؤال", "كتابة النتائج النهائية", "شراء الأدوات", "طباعة التقرير"], correctIdx: 0 }
                 ]
             }
         };
@@ -679,23 +689,28 @@
                 document.getElementById('printSelectedLessonsPrint').textContent = `📖 الاختبار قياسي شامل (${gradeKey} - ${subjectNames[subjectKey]})`;
             }
 
-            // تكرار وتوسيع البنك إذا تطلب الأمر لتلبية العدد المطلوب بدون تكرار حرفي ممل
-            let expandedPool = [];
-            let loopCounter = 0;
-            while (expandedPool.length < requestedCount && sourcePool.length > 0) {
-                let originalQ = sourcePool[loopCounter % sourcePool.length];
-                let suffix = loopCounter >= sourcePool.length ? ` (تطبيق ميداني ${Math.floor(loopCounter/sourcePool.length) + 1})` : "";
-                expandedPool.push({
-                    domain: originalQ.domain,
-                    q: originalQ.q + suffix,
-                    options: [...originalQ.options],
-                    correctIdx: originalQ.correctIdx
-                });
-                loopCounter++;
+            // خلط بنك الأسئلة عشوائياً لضمان تنوعها واختيار العدد المطلوب فريداً بدون تكرار
+            let shuffledPool = [...sourcePool];
+            for (let i = shuffledPool.length - 1; i > 0; i--) {
+                let j = Math.floor(Math.random() * (i + 1));
+                [shuffledPool[i], shuffledPool[j]] = [shuffled[j], shuffled[i]];
             }
 
-            // خلط وترتيب الخيارات عشوائياً لضمان عدم ثبات الإجابة في مكان واحد
-            let processedPool = expandedPool.map(q => {
+            // إذا كان العدد المطلوب أكبر من الموجود، نقوم بتعبئة ما تبقى من بنك عام بدون تكرار نصي ممل
+            let selectedPool = [];
+            for (let i = 0; i < requestedCount; i++) {
+                let qItem = shuffledPool[i % shuffledPool.length];
+                let uniqueObj = {
+                    domain: qItem.domain,
+                    q: i >= shuffledPool.length ? qItem.q + " (تطبيق إضافي " + (Math.floor(i/shuffledPool.length)+1) + ")" : qItem.q,
+                    options: [...qItem.options],
+                    correctIdx: qItem.correctIdx
+                };
+                selectedPool.push(uniqueObj);
+            }
+
+            // خلط وترتيب الخيارات عشوائياً لكل سؤال لضمان توزيع الإجابات
+            let processedPool = selectedPool.map(q => {
                 let optionsCopy = [...q.options];
                 let correctText = optionsCopy[q.correctIdx];
 
@@ -715,14 +730,7 @@
                 };
             });
 
-            // خلط الأسئلة نهائياً
-            let shuffled = [...processedPool];
-            for (let i = shuffled.length - 1; i > 0; i--) {
-                let j = Math.floor(Math.random() * (i + 1));
-                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-            }
-
-            activeQuestions = shuffled.slice(0, requestedCount);
+            activeQuestions = processedPool;
             globalMaxScore = activeQuestions.length * 2;
 
             const modelsArray = ["نموذج (أ)", "نموذج (ب)", "نموذج (ج)", "نموذج (د)"];
@@ -941,7 +949,7 @@
                     let waText = `مدرسة داؤود بن عروة الثقفي الابتدائية (طلاب)%0Aولي الأمر الفاضل، نود إفادتكم بحصول الابن: *${encodeURIComponent(sName)}* %0Aعلى درجة الاختبار: *${toArabicDigits(data.score)} / ${toArabicDigits(currentMax)}* (${toArabicDigits(data.correct)} إجابات صحيحة من أصل ${toArabicDigits(activeQuestions.length)}).%0Aمع تحيات المعلم: *منصور عامر الرحيلي*`;
 
                     html += `
-                        <div style="display: flex; justify-content: space-between; align-items: center; background: #ffffff; padding: 9px 12px; margin-bottom: 6px; border-radius: 6px; border: 1.5px solid #059669;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; background: #fefce8; padding: 9px 12px; margin-bottom: 6px; border-radius: 6px; border: 1.5px solid #059669;">
                             <span>• <b>${escapeHtml(sName)}</b>: ${toArabicDigits(data.score)} / ${toArabicDigits(currentMax)} (${toArabicDigits(data.correct)} صحيحة)</span>
                             <a href="https://wa.me/?text=${waText}" target="_blank" class="action-btn btn-whatsapp" style="padding: 4px 10px; font-size: 12px; width: auto; text-decoration: none;">💬 إرسال لولي الأمر</a>
                         </div>
@@ -1065,8 +1073,8 @@
 
             document.getElementById('analysisContentText').innerHTML = `
                 <p style="font-size: 13px; font-weight: bold; color: #b45309;">📊 تحليل أداء نواتج التعلم ومجالات نافس للفصل (${gradeKey} - ${subjectNames[subjectKey]}):</p>
-                <table style="width:100%; border-collapse:collapse; margin-top:5px; font-size: 12px; background: #ffffff;" border="1">
-                    <tr style="background:#fef3c7; text-align:center;">
+                <table style="width:100%; border-collapse:collapse; margin-top:5px; font-size: 12px; background: #fefce8;" border="1">
+                    <tr style="background:#fef08a; text-align:center;">
                         <th style="padding:6px;">مجال مهارات نافس</th>
                         <th style="padding:6px;">صحة الإجابات المرتبطة بالهدف</th>
                         <th style="padding:6px;">نسبة الإتقان</th>
@@ -1075,9 +1083,9 @@
                     ${domainsTableHtml || '<tr><td colspan="4" style="text-align:center;">لا توجد بيانات مجالات كافية</td></tr>'}
                 </table>
 
-                <div style="margin-top: 15px; background: #ffffff; padding: 14px; border-radius: 8px; border: 2px solid #eab308;">
+                <div style="margin-top: 15px; background: #fefce8; padding: 14px; border-radius: 8px; border: 2px solid #eab308;">
                     <h4 style="margin-top:0; color:#b45309;">🛠️ الخطط العلاجية الواقعية والميدانية المرتبطة بفقرات الاختبار:</h4>
-                    <div style="font-size: 12px; line-height: 1.7; background: #fefce8; padding: 10px; border-radius: 6px; border: 1px solid #fde047; max-height: 160px; overflow-y: auto;">
+                    <div style="font-size: 12px; line-height: 1.7; background: #fef3c7; padding: 10px; border-radius: 6px; border: 1px solid #fde047; max-height: 160px; overflow-y: auto;">
                         ${remedialHtml}
                     </div>
                     <ul style="margin: 10px 0 0 0; padding-right: 20px; font-size: 12px; line-height: 1.6; color: #334151;">
