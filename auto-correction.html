@@ -291,7 +291,7 @@
         </div>
 
         <div class="section-box no-print">
-            <h3>📚 أولاً: إعدادات الاختبار، الصف، والمادة، وتحديد عدد الأسئلة المطلوبة</h3>
+            <h3>📚 أولاً: إعدادات الاختبار، الصف، والمادة، وتحديد اسم الطالب المطبوع</h3>
             <div class="form-grid">
                 <div class="form-group">
                     <label>نوع الاختبار:</label>
@@ -325,13 +325,25 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>عدد أسئلة الاختبار المطلوبة:</label>
+                    <label>عدد أسئلة الاختبار:</label>
                     <select id="selectQuestionCount">
                         <option value="5">٥ أسئلة (قصير سريع)</option>
                         <option value="10" selected>١٠ أسئلة (معياري)</option>
                         <option value="15">١٥ سؤالاً (موسع)</option>
                         <option value="20">٢٠ سؤالاً (شامل وكبير)</option>
                     </select>
+                </div>
+                <div class="form-group" style="grid-column: span 2;">
+                    <label>👤 تخصيص اسم الطالب على ورقة الأسئلة المطبوعة:</label>
+                    <select id="selectPrintStudentMode" onchange="toggleStudentSelectionDropdown()">
+                        <option value="blank">خط فارغ لجميع الطلاب (.........)</option>
+                        <option value="random">🎲 اختيار عشوائي لطالب من الكشف تلقائياً</option>
+                        <option value="specific">📌 اختيار طالب محدد من القائمة</option>
+                    </select>
+                </div>
+                <div class="form-group" id="specificStudentBox" style="display: none; grid-column: span 2;">
+                    <label>اختر اسم الطالب:</label>
+                    <select id="selectSpecificStudentName"></select>
                 </div>
             </div>
 
@@ -381,7 +393,7 @@
         </div>
 
         <div class="section-box">
-            <h3>⚙️ ثانياً: توليد ورقة الاختبار المعتمَدة (بدون تكرار وبنك أسئلة واسع وغني)</h3>
+            <h3>⚙️ ثانياً: توليد ورقة الاختبار المعتمَدة</h3>
             <div class="no-print">
                 <button type="button" class="action-btn" onclick="generateTestModel()">⚡ توليد ورقة الاختبار الآن</button>
             </div>
@@ -395,7 +407,7 @@
                     <div id="printSelectedLessonsPrint" style="margin:2px 0; font-size:11.5px; color:#0284c7; font-weight:bold;"></div>
                     <div id="printModelBadge" style="margin:4px 0; font-size:12px; color:#0d9488; font-weight:bold;"></div>
                     <div style="margin-top: 6px; border: 1.5px solid #ca8a04; padding: 4px 10px; border-radius: 5px; display:inline-block; font-size:11.5px; background: #fef3c7;">
-                        <b>اسم الطالب:</b> .................................................................... &nbsp;&nbsp; <b>الصف:</b> ................
+                        <b id="printStudentNameLabel">اسم الطالب:</b> <span id="printStudentNameValue">....................................................................</span> &nbsp;&nbsp; <b>الصف:</b> ................
                     </div>
                 </div>
                 
@@ -620,6 +632,29 @@
             }
         }
 
+        function toggleStudentSelectionDropdown() {
+            const mode = document.getElementById('selectPrintStudentMode').value;
+            const specificBox = document.getElementById('specificStudentBox');
+            if (mode === 'specific') {
+                specificBox.style.display = 'flex';
+                populateSpecificStudentDropdown();
+            } else {
+                specificBox.style.display = 'none';
+            }
+        }
+
+        function populateSpecificStudentDropdown() {
+            fetchAllStudentsFromStorage();
+            const select = document.getElementById('selectSpecificStudentName');
+            select.innerHTML = '';
+            studentsList.forEach(s => {
+                let opt = document.createElement('option');
+                opt.value = s.name;
+                opt.textContent = s.name;
+                select.appendChild(opt);
+            });
+        }
+
         function smartGenerateFromLessonText() {
             const text = document.getElementById('lessonInputText').value.trim();
             if (!text) {
@@ -664,6 +699,22 @@
             const subjectKey = document.getElementById('selectSubject').value;
             const selectEl = document.getElementById('selectQuestionCount');
             const requestedCount = selectEl ? parseInt(selectEl.value) || 10 : 10;
+
+            fetchAllStudentsFromStorage();
+            const studentMode = document.getElementById('selectPrintStudentMode').value;
+            let assignedStudentName = "....................................................................";
+
+            if (studentMode === 'random' && studentsList.length > 0) {
+                let randomStudent = studentsList[Math.floor(Math.random() * studentsList.length)];
+                assignedStudentName = randomStudent.name;
+            } else if (studentMode === 'specific') {
+                let specificVal = document.getElementById('selectSpecificStudentName').value;
+                if (specificVal) {
+                    assignedStudentName = specificVal;
+                }
+            }
+
+            document.getElementById('printStudentNameValue').textContent = assignedStudentName;
 
             let sourcePool = [];
 
@@ -1014,7 +1065,6 @@
             }
         }
 
-        // تقرير الخطط العلاجية معتمد على مجالات ومهارات المنهج بدون ذكر نص السؤال
         function prepareAnalysisContent() {
             const examType = document.getElementById('selectExamType').value;
             const gradeKey = document.getElementById('selectGrade').value;
