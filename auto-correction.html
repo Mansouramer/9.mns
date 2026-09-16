@@ -367,8 +367,8 @@
                         <option value="الثاني الابتدائي">الصف الثاني الابتدائي</option>
                         <option value="الثالث الابتدائي">الصف الثالث الابتدائي</option>
                         <option value="الرابع الابتدائي">الصف الرابع الابتدائي</option>
-                        <option value="الخامس الابتدائي" selected>الصف الخامس الابتدائي</option>
-                        <option value="السادس الابتدائي">الصف السادس الابتدائي</option>
+                        <option value="الخامس الابتدائي">الصف الخامس الابتدائي</option>
+                        <option value="السادس الابتدائي" selected>الصف السادس الابتدائي</option>
                     </select>
                 </div>
 
@@ -378,9 +378,9 @@
                     <select id="selectClassDigit">
                         <option value="١">١</option>
                         <option value="٢">٢</option>
-                        <option value="٣">٣</option>
+                        <option value="٣" selected>٣</option>
                         <option value="٤">٤</option>
-                        <option value="٥" selected>٥</option>
+                        <option value="٥">٥</option>
                         <option value="٦">٦</option>
                     </select>
                 </div>
@@ -555,6 +555,28 @@
                     { chapter: "الوحدة الأولى", title: "المخلوقات الحية في بيئاتها" },
                     { chapter: "الوحدة الثانية", title: "الضوء والحرارة ومصادرها" },
                     { chapter: "الوحدة الثانية", title: "الطقس وتغيرات الفصول" }
+                ],
+                "math": [
+                    { chapter: "الفصل الأول", title: "الاستعداد للرياضيات والأعداد" },
+                    { chapter: "الفصل الثاني", title: "المقارنة والتصنيف" }
+                ]
+            },
+            "الثاني الابتدائي": {
+                "science": [
+                    { chapter: "الوحدة الأولى", title: "plants and animals" },
+                    { chapter: "الوحدة الثانية", title: "حالات المادة والطاقة" }
+                ]
+            },
+            "الثالث الابتدائي": {
+                "science": [
+                    { chapter: "الوحدة الأولى", title: "المهارات الحياتية والنباتات" },
+                    { chapter: "الوحدة الثانية", title: "الضوء والصوت" }
+                ]
+            },
+            "الرابع الابتدائي": {
+                "science": [
+                    { chapter: "الوحدة الأولى", title: "المملكة النباتية والحيوانية" },
+                    { chapter: "الوحدة الثانية", title: "النظم البيئية" }
                 ]
             },
             "الخامس الابتدائي": {
@@ -571,6 +593,14 @@
                     { chapter: "الوحدة الأولى", title: "الوراثة والتكاثر في الكائنات" },
                     { chapter: "الوحدة الثانية", title: "الفضاء والمجموعة الشمسية" },
                     { chapter: "الوحدة الثانية", title: "المادة وخصائصها والتغيرات الكيميائية" }
+                ],
+                "math": [
+                    { chapter: "الفصل الأول", title: "الجبر: المتغيرات والعبارات الجبرية" },
+                    { chapter: "الفصل الثاني", title: "الكسور الاعتيادية والكسور العشرية" }
+                ],
+                "arabic": [
+                    { chapter: "الوحدة الأولى", title: "قدوات ومثُل عليا" },
+                    { chapter: "الوحدة الثانية", title: "الوعي القرائي والمالي" }
                 ]
             }
         };
@@ -579,6 +609,7 @@
             const gradeKey = document.getElementById('selectGrade').value;
             const subjectKey = document.getElementById('selectSubject').value;
             const container = document.getElementById('lessonsSelectionContainer');
+            if (!container) return;
             container.innerHTML = '';
 
             let gradeLessons = (gradeSubjectLessonsMap[gradeKey] && gradeSubjectLessonsMap[gradeKey][subjectKey]) ? 
@@ -705,13 +736,11 @@
             const selectedGrade = document.getElementById('selectGrade').value; // مثال: "السادس الابتدائي"
             const classDigit = document.getElementById('selectClassDigit').value; // مثال: "٣"
             
-            // مطابقة مفاتيح الفصول المحفوظة في الداشبورد الرئيسي أو نظام الإدارة (مثل: "السادس ٣", "السادس-٣", "السادس_٣", أو مطابقة الصف ورقم الفصل)
-            let shortGrade = selectedGrade.replace("الصف ", "").replace(" الابتدائي", "").trim(); // "السادس" أو "الخامس"
+            let shortGrade = selectedGrade.replace("الصف ", "").replace(" الابتدائي", "").trim(); // "السادس"
             
             for (let i = 0; i < localStorage.length; i++) {
                 let key = localStorage.key(i);
                 if (key && key.includes(shortGrade)) {
-                    // التحقق ما إذا كان المفتاح يعبر عن نفس رقم الفصل المحدد بدقة
                     if (key.includes(classDigit) || key.includes(`فصل ${classDigit}`) || key.includes(`رقم ${classDigit}`)) {
                         try {
                             let data = JSON.parse(localStorage.getItem(key));
@@ -727,7 +756,6 @@
                 }
             }
 
-            // إذا لم يتم العثور على مفتاح مطابق بدقة، نبحث عن أي كشف يخص الصف الحالي
             if (studentsList.length === 0) {
                 for (let i = 0; i < localStorage.length; i++) {
                     let key = localStorage.key(i);
@@ -746,7 +774,6 @@
                 }
             }
 
-            // إذا لم يوجد أي كشف مسجل نهائياً، يتم توليد طلاب افتراضيين خاصين بهذا الفصل بالذات دون تداخل مع أي فصل آخر
             if (studentsList.length === 0) {
                 studentsList = [
                     { name: `طالب ${shortGrade} - فصل ${classDigit} (1)` },
@@ -1217,7 +1244,7 @@
                 <div style="margin-top: 15px; background: #fefce8; padding: 14px; border-radius: 8px; border: 2px solid #eab308;">
                     <h4 style="margin-top:0; color:#b45309;">🛠️ الخطط العلاجية الميدانية للتعامل مع المهارات غير المتقنة:</h4>
                     <div style="font-size: 12px; line-height: 1.7; background: #fef3c7; padding: 10px; border-radius: 6px; border: 1px solid #fde047; max-height: 200px; overflow-y: auto;">
-                        ${remedialPlans`
+                        ${remedialPlansHtml}
                     </div>
                 </div>
             `;
