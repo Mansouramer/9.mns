@@ -1231,7 +1231,6 @@
 
         let schoolSchedule = JSON.parse(localStorage.getItem('mansour_school_schedule_v12')) || defaultSchedule;
 
-        // تعيين اليوم الحالي تلقائياً بالاعتماد على التقويم
         function getCurrentDayName() {
             const now = new Date();
             const daysMap = { 0: "الأحد", 1: "الإثنين", 2: "الثلاثاء", 3: "الأربعاء", 4: "الخميس", 5: "الجمعة", 6: "السبت" };
@@ -1328,7 +1327,6 @@
             const now = new Date();
             let currentDayName = getCurrentDayName();
             
-            // مزامنة القائمة المنسدلة للجدول مع اليوم الحالي تلقائياً
             const daySelectElem = document.getElementById('scheduleDaySelect');
             if(daySelectElem && document.activeElement !== daySelectElem) {
                 daySelectElem.value = currentDayName;
@@ -1344,6 +1342,10 @@
 
             for(let p of periods) {
                 if(!p.startTime) continue;
+                
+                // تخطي الحصص التي تحتوي على "لا توجد حصة" تلقائياً والانتقال للتي بعدها
+                if(p.className === "لا توجد حصة") continue;
+
                 const startParts = p.startTime.split(':');
                 if(startParts.length === 2) {
                     const startM = Number(startParts[0]) * 60 + Number(startParts[1]);
@@ -1351,11 +1353,7 @@
                     const endM = startM + duration;
 
                     if(currentMinutes >= startM && currentMinutes < endM) {
-                        if(p.className === "لا توجد حصة") {
-                            activePeriodText = `الحالية: ${p.period} (لا توجد حصة)`;
-                        } else {
-                            activePeriodText = `الحالية: ${p.period} (${p.className})`;
-                        }
+                        activePeriodText = `الحالية: ${p.period} (${p.className})`;
                         
                         let remTotalSecs = (endM * 60) - (currentMinutes * 60 + currentSecs);
                         let remMin = Math.floor(remTotalSecs / 60);
