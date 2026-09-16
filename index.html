@@ -785,12 +785,12 @@
             <h3 style="margin-bottom: 8px;">📌 اختر الصف الدراسي للمتابعة</h3>
             <div class="form-row" style="margin-bottom: 0;">
                 <select id="globalGradeSelect" onchange="changeGradeLevel(this.value)" style="font-weight: bold; font-size: 14px; color: var(--secondary);">
-                    <option value="الأول ">الصف الأول </option>
-                    <option value="الثاني ">الصف الثاني </option>
-                    <option value="الثالث ">الصف الثالث </option>
-                    <option value="الرابع ">الصف الرابع </option>
-                    <option value="الخامس ">الصف الخامس </option>
-                    <option value="السادس ">الصف السادس </option>
+                    <option value="الأول الابتدائي">الصف الأول الابتدائي</option>
+                    <option value="الثاني الابتدائي">الصف الثاني الابتدائي</option>
+                    <option value="الثالث الابتدائي">الصف الثالث الابتدائي</option>
+                    <option value="الرابع الابتدائي">الصف الرابع الابتدائي</option>
+                    <option value="الخامس الابتدائي">الصف الخامس الابتدائي</option>
+                    <option value="السادس الابتدائي">الصف السادس الابتدائي</option>
                 </select>
             </div>
         </div>
@@ -1231,6 +1231,18 @@
 
         let schoolSchedule = JSON.parse(localStorage.getItem('mansour_school_schedule_v12')) || defaultSchedule;
 
+        // تعيين اليوم الحالي تلقائياً بالاعتماد على التقويم
+        function getCurrentDayName() {
+            const now = new Date();
+            const daysMap = { 0: "الأحد", 1: "الإثنين", 2: "الثلاثاء", 3: "الأربعاء", 4: "الخميس", 5: "الجمعة", 6: "السبت" };
+            let currentDayName = daysMap[now.getDay()] || "الأحد";
+            if(currentDayName === "الجمعة" || currentDayName === "السبت") currentDayName = "الأحد";
+            return currentDayName;
+        }
+
+        let currentDayName = getCurrentDayName();
+        document.getElementById('scheduleDaySelect').value = currentDayName;
+
         function toggleScheduleExpansion() {
             const content = document.getElementById('scheduleExpandedContent');
             if(content.style.display === 'block') {
@@ -1275,14 +1287,12 @@
             const days = ["الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس"];
             
             if(field === 'startTime' || field === 'duration') {
-                // جعل أوقات وأزمنة الحصص ثابتة وموحدة في جميع الأيام تلقائياً
                 days.forEach(d => {
                     if(schoolSchedule[d] && schoolSchedule[d][idx]) {
                         schoolSchedule[d][idx][field] = (field === 'duration') ? Number(val) : val.trim();
                     }
                 });
             } else {
-                // اسم الفصل يتبع اليوم المحدد
                 if(schoolSchedule[day] && schoolSchedule[day][idx]) {
                     schoolSchedule[day][idx][field] = val.trim();
                 }
@@ -1316,9 +1326,13 @@
 
         function updateLiveScheduleWidget() {
             const now = new Date();
-            const daysMap = { 0: "الأحد", 1: "الإثنين", 2: "الثلاثاء", 3: "الأربعاء", 4: "الخميس", 5: "الجمعة", 6: "السبت" };
-            let currentDayName = daysMap[now.getDay()] || "الأحد";
-            if(currentDayName === "الجمعة" || currentDayName === "السبت") currentDayName = "الأحد";
+            let currentDayName = getCurrentDayName();
+            
+            // مزامنة القائمة المنسدلة للجدول مع اليوم الحالي تلقائياً
+            const daySelectElem = document.getElementById('scheduleDaySelect');
+            if(daySelectElem && document.activeElement !== daySelectElem) {
+                daySelectElem.value = currentDayName;
+            }
 
             const periods = schoolSchedule[currentDayName] || schoolSchedule["الأحد"];
             const currentMinutes = now.getHours() * 60 + now.getMinutes();
