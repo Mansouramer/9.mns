@@ -731,25 +731,23 @@
             document.getElementById('lessonInputText').value = '';
         }
 
-        // دالة جلب الطلاب المحدثة بدقة لترتبط تماماً مع مفاتيح الفصول في الداشبورد الرئيسي
+        // دالة جلب الطلاب المحدثة لتقرأ الأسماء الحقيقية المخزنة في الـ localStorage بدقة تامة
         function fetchStudentsForSelectedClass() {
             studentsList = [];
-            const selectedGrade = document.getElementById('selectGrade').value; // مثال: "السادس الابتدائي"
-            const classDigit = document.getElementById('selectClassDigit').value; // رقم الفصل (مثال: "١", "٢", "٣", "٤", "٥")
+            const classDigit = document.getElementById('selectClassDigit').value; // رقم الفصل المختار (مثل: ١، ٢، ٣، ٤، ٥)
             
-            // تحويل رقم الفصل المدخل إلى الشكلين (العربي الإعتيادي والهندي لتلافي أي اختلاف في التخزين)
+            // تحويل رقم الفصل إلى الأشكال المحتملة (الهندي والعربي)
             let digitAr = classDigit;
             let digitEn = String(Number(classDigit.replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d))));
 
-            // نبحث في الـ localStorage عن المفاتيح التي تمثل الفصول (مثل مفاتيح أيقونات الصفوف)
+            // فحص مفاتيح التخزين وجلب الطلاب المطابقين للفصل المختار فقط
             for (let i = 0; i < localStorage.length; i++) {
                 let key = localStorage.key(i);
                 if (key) {
                     let cleanKey = key.trim();
-                    // مطابقة دقيقة لرقم الفصل المرتبط بالصف (سواء خزّن كرقم مفرد مثل "1" أو "3" أو مدمج مع اسم الصف)
-                    let isTargetClass = (cleanKey === digitAr || cleanKey === digitEn || cleanKey.endsWith(`_${digitAr}`) || cleanKey.endsWith(`_${digitEn}`) || cleanKey.includes(`فصل ${digitAr}`) || cleanKey.includes(`فصل ${digitEn}`) || cleanKey.includes(`رقم ${digitAr}`) || cleanKey.includes(`رقم ${digitEn}`));
+                    let isTarget = (cleanKey === digitAr || cleanKey === digitEn || cleanKey === `class_${digitAr}` || cleanKey === `class_${digitEn}` || cleanKey.endsWith(`_${digitAr}`) || cleanKey.endsWith(`_${digitEn}`));
                     
-                    if (isTargetClass) {
+                    if (isTarget) {
                         try {
                             let data = JSON.parse(localStorage.getItem(key));
                             if (Array.isArray(data) && data.length > 0) {
@@ -764,12 +762,11 @@
                 }
             }
 
-            // إذا لم يُعثر على المفتاح الرقمي المباشر، نبحث بالمفتاح المركب (الصف ورقم الفصل معاً)
+            // إذا لم يتم العثور على المفتاح الرقمي المباشر، نبحث في أي مفتاح يحتوي على رقم الفصل المختار
             if (studentsList.length === 0) {
-                let shortGrade = selectedGrade.replace("الصف ", "").replace(" الابتدائي", "").trim();
                 for (let i = 0; i < localStorage.length; i++) {
                     let key = localStorage.key(i);
-                    if (key && key.includes(shortGrade) && (key.includes(digitAr) || key.includes(digitEn))) {
+                    if (key && !key.includes('exam') && !key.includes('dashboard') && (key.includes(digitAr) || key.includes(digitEn))) {
                         try {
                             let data = JSON.parse(localStorage.getItem(key));
                             if (Array.isArray(data) && data.length > 0) {
@@ -784,16 +781,9 @@
                 }
             }
 
-            // إذا لم يوجد كشف مخزن نهائياً لهذا الفصل بالذات، يتم توليد طلاب افتراضيين خاصين بهذا الفصل المحدد فقط
+            // إذا لم يتم العثور على أي أسماء مخزنة نهائياً لهذا الفصل، يتم التنبيه لإدخال الأسماء بالداشبورد الرئيسي
             if (studentsList.length === 0) {
-                let shortGradeName = selectedGrade.replace("الصف ", "").replace(" الابتدائي", "");
-                studentsList = [
-                    { name: `طالب ${shortGradeName} - فصل ${classDigit} (1)` },
-                    { name: `طالب ${shortGradeName} - فصل ${classDigit} (2)` },
-                    { name: `طالب ${shortGradeName} - فصل ${classDigit} (3)` },
-                    { name: `طالب ${shortGradeName} - فصل ${classDigit} (4)` },
-                    { name: `طالب ${shortGradeName} - فصل ${classDigit} (5)` }
-                ];
+                alert('⚠️ تنبيه: لا توجد أسماء طلاب مخزنة في الذاكرة لهذا الفصل بالداشبورد الرئيسي. يرجى التأكد من إضافة طلاب الفصل في لوحة التحكم أولاً.');
             }
         }
 
@@ -921,7 +911,7 @@
         function startTouchGradingSession() {
             if (activeQuestions.length === 0) { generateTestModel(); }
             fetchStudentsForSelectedClass();
-            if (studentsList.length === 0) { alert('لا توجد قائمة طلاب مسجلة لهذا الفصل!'); return; }
+            if (studentsList.length === 0) { return; }
             currentStudentIndex = 0;
             document.getElementById('touchGradingCard').style.display = 'block';
             startNewStudentSession();
