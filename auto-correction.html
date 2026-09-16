@@ -372,16 +372,15 @@
                     </select>
                 </div>
 
-                <!-- رقم الفصل (مطابق تماماً لأرقام الداشبورد الأساسي 1, 2, 3, 4, 5) -->
+                <!-- رقم الفصل (أرقام إنجليزية مباشرة 1, 2, 3, 4, 5 تطابق الداشبورد الأساسي تماماً) -->
                 <div class="form-group" style="grid-column: 1 / -1;">
-                    <label>رقم الفصل (تحديد الفصل من 1 إلى 5):</label>
+                    <label>رقم الفصل:</label>
                     <select id="selectClassDigit">
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3" selected>3</option>
                         <option value="4">4</option>
                         <option value="5">5</option>
-                        <option value="6">6</option>
                     </select>
                 </div>
             </div>
@@ -529,7 +528,7 @@
             });
         }
 
-        // دالة تحويل عامة تتخطى تماماً حقل اختيار الفصل لتبقى أرقامه بالإنجليزية المطابقة للداشبورد
+        // دالة تحويل عامة تتخطى تماماً حقل اختيار الفصل لتبقى أرقامه بالإنجليزية بدقة متناهية
         function convertAllNumbersInDOM() {
             const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
             let node;
@@ -738,7 +737,6 @@
             studentsList = [];
             const classDigit = document.getElementById('selectClassDigit').value.trim(); // القيمة الإنجليزية (1, 2, 3, 4, 5)
             
-            // مطابقة مباشرة تامة مع المفتاح في localStorage (مثل "1", "2", "3"...)
             for (let i = 0; i < localStorage.length; i++) {
                 let key = localStorage.key(i);
                 if (key) {
@@ -758,7 +756,6 @@
                 }
             }
 
-            // فحص احتياطي ذكي لأي مفتاح آخر يحتوي على رقم الفصل
             if (studentsList.length === 0) {
                 for (let i = 0; i < localStorage.length; i++) {
                     let key = localStorage.key(i);
@@ -777,7 +774,6 @@
                 }
             }
 
-            // إن لم يوجد كشف مخزن مسبقاً، يتم إنشاء كشف تفاعلي فوري لتبدأ رصد الدرجات مباشرة
             if (studentsList.length === 0) {
                 studentsList = [
                     { name: `طالب فصل ${classDigit} (1)` },
