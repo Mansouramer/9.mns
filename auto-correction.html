@@ -731,17 +731,25 @@
             document.getElementById('lessonInputText').value = '';
         }
 
+        // دالة جلب الطلاب المحدثة بدقة لترتبط تماماً مع مفاتيح الفصول في الداشبورد الرئيسي
         function fetchStudentsForSelectedClass() {
             studentsList = [];
             const selectedGrade = document.getElementById('selectGrade').value; // مثال: "السادس الابتدائي"
-            const classDigit = document.getElementById('selectClassDigit').value; // مثال: "٣"
+            const classDigit = document.getElementById('selectClassDigit').value; // رقم الفصل (مثال: "١", "٢", "٣", "٤", "٥")
             
-            let shortGrade = selectedGrade.replace("الصف ", "").replace(" الابتدائي", "").trim(); // "السادس"
-            
+            // تحويل رقم الفصل المدخل إلى الشكلين (العربي الإعتيادي والهندي لتلافي أي اختلاف في التخزين)
+            let digitAr = classDigit;
+            let digitEn = String(Number(classDigit.replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d))));
+
+            // نبحث في الـ localStorage عن المفاتيح التي تمثل الفصول (مثل مفاتيح أيقونات الصفوف)
             for (let i = 0; i < localStorage.length; i++) {
                 let key = localStorage.key(i);
-                if (key && key.includes(shortGrade)) {
-                    if (key.includes(classDigit) || key.includes(`فصل ${classDigit}`) || key.includes(`رقم ${classDigit}`)) {
+                if (key) {
+                    let cleanKey = key.trim();
+                    // مطابقة دقيقة لرقم الفصل المرتبط بالصف (سواء خزّن كرقم مفرد مثل "1" أو "3" أو مدمج مع اسم الصف)
+                    let isTargetClass = (cleanKey === digitAr || cleanKey === digitEn || cleanKey.endsWith(`_${digitAr}`) || cleanKey.endsWith(`_${digitEn}`) || cleanKey.includes(`فصل ${digitAr}`) || cleanKey.includes(`فصل ${digitEn}`) || cleanKey.includes(`رقم ${digitAr}`) || cleanKey.includes(`رقم ${digitEn}`));
+                    
+                    if (isTargetClass) {
                         try {
                             let data = JSON.parse(localStorage.getItem(key));
                             if (Array.isArray(data) && data.length > 0) {
@@ -756,10 +764,12 @@
                 }
             }
 
+            // إذا لم يُعثر على المفتاح الرقمي المباشر، نبحث بالمفتاح المركب (الصف ورقم الفصل معاً)
             if (studentsList.length === 0) {
+                let shortGrade = selectedGrade.replace("الصف ", "").replace(" الابتدائي", "").trim();
                 for (let i = 0; i < localStorage.length; i++) {
                     let key = localStorage.key(i);
-                    if (key && key.includes(shortGrade) && !key.includes('اختبار') && !key.includes('سجل')) {
+                    if (key && key.includes(shortGrade) && (key.includes(digitAr) || key.includes(digitEn))) {
                         try {
                             let data = JSON.parse(localStorage.getItem(key));
                             if (Array.isArray(data) && data.length > 0) {
@@ -774,13 +784,15 @@
                 }
             }
 
+            // إذا لم يوجد كشف مخزن نهائياً لهذا الفصل بالذات، يتم توليد طلاب افتراضيين خاصين بهذا الفصل المحدد فقط
             if (studentsList.length === 0) {
+                let shortGradeName = selectedGrade.replace("الصف ", "").replace(" الابتدائي", "");
                 studentsList = [
-                    { name: `طالب ${shortGrade} - فصل ${classDigit} (1)` },
-                    { name: `طالب ${shortGrade} - فصل ${classDigit} (2)` },
-                    { name: `طالب ${shortGrade} - فصل ${classDigit} (3)` },
-                    { name: `طالب ${shortGrade} - فصل ${classDigit} (4)` },
-                    { name: `طالب ${shortGrade} - فصل ${classDigit} (5)` }
+                    { name: `طالب ${shortGradeName} - فصل ${classDigit} (1)` },
+                    { name: `طالب ${shortGradeName} - فصل ${classDigit} (2)` },
+                    { name: `طالب ${shortGradeName} - فصل ${classDigit} (3)` },
+                    { name: `طالب ${shortGradeName} - فصل ${classDigit} (4)` },
+                    { name: `طالب ${shortGradeName} - فصل ${classDigit} (5)` }
                 ];
             }
         }
