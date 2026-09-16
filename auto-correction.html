@@ -911,6 +911,9 @@
                 `;
             }
             listContainer.innerHTML = htmlContent;
+
+            // حفظ تفاصيل آخر اختبار تم توليده تلقائياً
+            saveLatestExamState();
             window.scrollTo({ top: previewBox.offsetTop, behavior: 'smooth' });
         }
 
@@ -954,12 +957,12 @@
                 <div id="liveScoreBadge" class="live-score-box">السؤال <span dir="ltr" style="display: inline-block;">${currentQuestionStep + 1} / ${activeQuestions.length}</span></div>
             `;
 
-            let qObj = activeQuestions[currentQuestionStep];
+ مفتاح: qObj = activeQuestions[currentQuestionStep];
             let qNum = currentQuestionStep + 1;
             let savedOpt = studentAnswers[qNum] || '';
 
             const container = document.getElementById('singleQuestionContainer');
-            // تم تعديل الأزرار لتقتصر على حروف الخيارات فقط (أ، ب، ج، د) بشكل كبير وواضح دون نصوص لسرعة التصحيح
+            // أزرار مختصرة بحروف الخيارات (أ، ب، ج، د) فقط لسرعة التصحيح دون قراءة النصوص
             container.innerHTML = `
                 <div class="single-step-question-box">
                     <span style="color: #c2410c; font-size: 12px; font-weight: bold;">[مجال الهدف: ${escapeHtml(qObj.domain)}]</span>
@@ -1062,6 +1065,29 @@
             }
         }
 
+        function saveLatestExamState() {
+            const gradeKey = document.getElementById('selectGrade').value;
+            const subjectKey = document.getElementById('selectSubject').value;
+            const examType = document.getElementById('selectExamType').value;
+            const classDigit = document.getElementById('selectClassDigit').value;
+
+            let examState = {
+                gradeKey: gradeKey,
+                subjectKey: subjectKey,
+                subjectName: subjectNames[subjectKey],
+                examType: examType,
+                classDigit: classDigit,
+                currentModelName: currentModelName,
+                activeQuestions: activeQuestions,
+                globalMaxScore: globalMaxScore,
+                allClassResults: allClassResults,
+                date: new Date().toLocaleDateString('en-GB')
+            };
+
+            // الحفظ الفوري والشامل لبيانات آخر اختبار ونتائجه في localStorage
+            localStorage.setItem('mansour_last_exam_full_state', JSON.stringify(examState));
+        }
+
         function updateLocalStorageAndResults() {
             const examType = document.getElementById('selectExamType').value;
             let maxScore = globalMaxScore || 20;
@@ -1081,6 +1107,9 @@
 
             localStorage.setItem('dashboardLatestExamResults', JSON.stringify(dashboardRecords));
             localStorage.setItem('examResultsHistory', JSON.stringify(dashboardRecords));
+
+            // حفظ الحالة المتكاملة لآخر اختبار والدرجات معاً
+            saveLatestExamState();
 
             filterStudentResults();
             prepareGradesPrintSheet();
@@ -1255,7 +1284,7 @@
                 remedialPlansHtml = '<div style="padding: 10px; background: #ecfdf5; border-radius: 6px; color: #047857; font-weight: bold;">🌟 ممتاز! كافة طلاب الفصل أتقنوا أهداف ومجالات الاختبار بنجاح ولا توجد فجوات مهارية تستدعي خطة علاجية طارئة.</div>';
             }
 
-            document.getElementById('analysisContentText').innerHTML = `
+            let analysisHtmlContent = `
                 <p style="font-size: 13px; font-weight: bold; color: #b45309;">📊 تحليل أداء نواتج التعلم ومجالات نافس للفصل (${gradeKey} - ${subjectNames[subjectKey]}):</p>
                 <table style="width:100%; border-collapse:collapse; margin-top:5px; font-size: 12px; background: #fefce8;" border="1">
                     <tr style="background:#fef08a; text-align:center;">
@@ -1274,6 +1303,16 @@
                     </div>
                 </div>
             `;
+
+            document.getElementById('analysisContentText').innerHTML = analysisHtmlContent;
+
+            // حفظ آخر تحليل ونواتج تعلم في الذاكرة لتثبيتها وعدم فقدانها نهائياً
+            localStorage.setItem('mansour_last_analysis_report', JSON.stringify({
+                gradeKey: gradeKey,
+                subjectKey: subjectKey,
+                content: analysisHtmlContent,
+                date: new Date().toLocaleDateString('en-GB')
+            }));
         }
 
         function printAnalysisBoxOnly() {
@@ -1287,6 +1326,38 @@
 
         window.addEventListener('DOMContentLoaded', () => {
             updateLessonCheckboxes();
+
+            // استرجاع آخر اختبار ودرجات وتحليل محفوظ تلقائياً عند فتح الصفحة لضمان عدم ضياع أي بيانات
+            let savedLastExam = localStorage.getItem('mansour_last_exam_full_state');
+            if (savedLastExam) {
+                try {
+                    let parsed = JSON.parse(savedLastExam);
+                    if (parsed.allClassResults && Object.keys(parsed.allClassResults).length > 0) {
+                        allClassResults = parsed.allClassResults;
+                        activeQuestions = parsed.activeQuestions || [];
+                        globalMaxScore = parsed.globalMaxScore || 20;
+                        currentModelName = parsed.currentModelName || "نموذج (أ)";
+                        
+                        if (parsed.gradeKey) document.getElementById('selectGrade').value = parsed.gradeKey;
+                        if (parsed.subjectKey) document.getElementById('selectSubject').value = parsed.subjectKey;
+                        if (parsed.examType) document.getElementById('selectExamType').value = parsed.examType;
+                        
+                        filterStudentResults();
+                        prepareGradesPrintSheet();
+                    }
+                } catch(e) {}
+            }
+
+            let savedLastAnalysis = localStorage.getItem('mansour_last_analysis_report');
+            if (savedLastAnalysis) {
+                try {
+                    let parsedAnalysis = JSON.parse(savedLastAnalysis);
+                    if (parsedAnalysis.content) {
+                        document.getElementById('analysisContentText').innerHTML = parsedAnalysis.content;
+                    }
+                } catch(e) {}
+            }
+
             filterStudentResults();
         });
     </script>
