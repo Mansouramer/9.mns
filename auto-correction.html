@@ -372,16 +372,16 @@
                     </select>
                 </div>
 
-                <!-- رقم الفصل (أرقام إنجليزية صريحة ومتوافقة مع الداشبورد) -->
+                <!-- رقم الفصل (مطابق تماماً لأرقام الداشبورد الأساسي 1, 2, 3, 4, 5) -->
                 <div class="form-group" style="grid-column: 1 / -1;">
-                    <label>رقم الفصل (بالأرقام الإنجليزية المتوافقة مع الداشبورد):</label>
+                    <label>رقم الفصل (تحديد الفصل من 1 إلى 5):</label>
                     <select id="selectClassDigit">
-                        <option value="1">Class 1</option>
-                        <option value="2">Class 2</option>
-                        <option value="3" selected>Class 3</option>
-                        <option value="4">Class 4</option>
-                        <option value="5">Class 5</option>
-                        <option value="6">Class 6</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3" selected>3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
                     </select>
                 </div>
             </div>
@@ -529,7 +529,7 @@
             });
         }
 
-        // دالة تحويل عامة تتخطى تماماً حقل اختيار الفصل لتبقى أرقامه بالإنجليزية بدقة
+        // دالة تحويل عامة تتخطى تماماً حقل اختيار الفصل لتبقى أرقامه بالإنجليزية المطابقة للداشبورد
         function convertAllNumbersInDOM() {
             const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
             let node;
@@ -733,12 +733,12 @@
             document.getElementById('lessonInputText').value = '';
         }
 
-        // دالة جلب الطلاب المحدثة بالأرقام الإنجليزية المتوافقة كلياً مع مفاتيح الداشبورد الرئيسي
+        // دالة جلب الطلاب المطابقة تماماً لمفاتيح الداشبورد الأساسي
         function fetchStudentsForSelectedClass() {
             studentsList = [];
-            const classDigit = document.getElementById('selectClassDigit').value.trim(); // القيمة الإنجليزية المباشرة (مثل "1", "2", "3"...)
+            const classDigit = document.getElementById('selectClassDigit').value.trim(); // القيمة الإنجليزية (1, 2, 3, 4, 5)
             
-            // مطابقة مباشرة تامة مع المفتاح الإنجليزي المخزن في الداشبورد الأساسي
+            // مطابقة مباشرة تامة مع المفتاح في localStorage (مثل "1", "2", "3"...)
             for (let i = 0; i < localStorage.length; i++) {
                 let key = localStorage.key(i);
                 if (key) {
@@ -758,7 +758,7 @@
                 }
             }
 
-            // فحص احتياطي ذكي لأي مفتاح آخر يحتوي على رقم الفصل المختار
+            // فحص احتياطي ذكي لأي مفتاح آخر يحتوي على رقم الفصل
             if (studentsList.length === 0) {
                 for (let i = 0; i < localStorage.length; i++) {
                     let key = localStorage.key(i);
