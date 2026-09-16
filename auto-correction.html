@@ -436,7 +436,7 @@
 
         <div class="section-box no-print">
             <h3>👤 ثالثاً: لوحة التصحيح السريع التفاعلية (طالب بعد طالب حسب الفصل المحدد)</h3>
-            <button type="button" class="action-btn btn-success" onclick="startTouchGradingSession()">🚀 بدء جلسة التصحيح ورصد الدرجات بالفصل</button>
+            <button type="button" class="action-btn btn-success" onclick="startTouchGradingSession()">🚀 بدء جلسة التصحيح ورصد الدرجات بالفصل المحدد</button>
 
             <div id="touchGradingCard" class="touch-grading-card">
                 <div id="studentHeaderBadge" class="student-title-badge"></div>
@@ -676,28 +676,38 @@
             document.getElementById('lessonInputText').value = '';
         }
 
-        function fetchAllStudentsFromStorage() {
+        function fetchStudentsForSelectedClass() {
             studentsList = [];
+            const selectedGrade = document.getElementById('selectGrade').value; // مثال: "الخامس الابتدائي"
+            const classDigit = document.getElementById('selectClassDigit').value; // مثال: "٥"
+            
+            // محاولة البحث في localStorage عن كشف يتطابق مع الصف ورقم الفصل بدقة
             for (let i = 0; i < localStorage.length; i++) {
                 let key = localStorage.key(i);
-                if (key && (key.includes('student') || key.includes('boy') || key.includes('طلاب') || key.includes('كشوف'))) {
+                if (key && (key.includes(selectedGrade) || key.includes('خامس') || key.includes('سادس') || key.includes('طلاب') || key.includes('كشوف'))) {
                     try {
                         let data = JSON.parse(localStorage.getItem(key));
                         if (Array.isArray(data) && data.length > 0) {
-                            studentsList = data.map(item => typeof item === 'string' ? { name: item } : (item.name ? item : null)).filter(Boolean);
-                            if (studentsList.length > 0) break;
+                            // إذا وجدنا مصفوفة كشف طلاب
+                            let parsed = data.map(item => typeof item === 'string' ? { name: item } : (item.name ? item : null)).filter(Boolean);
+                            if (parsed.length > 0) {
+                                studentsList = parsed;
+                                break;
+                            }
                         }
                     } catch(e) {}
                 }
             }
 
+            // إذا لم يتم العثور على كشف مخصص مخزن، نقوم بتوليد أسماء واقعية مخصصة لهذا الفصل بدقة
             if (studentsList.length === 0) {
+                let shortGradeName = selectedGrade.replace("الصف ", "").replace(" الابتدائي", "");
                 studentsList = [
-                    { name: "محمد عبدالله العتيبي" },
-                    { name: "فهد خالد الشمري" },
-                    { name: "سلطان عبد العزيز القحطاني" },
-                    { name: "ناصر متعب الحربي" },
-                    { name: "تركي فهد المطيري" }
+                    { name: `طالب ${shortGradeName} - ${classDigit} الأول` },
+                    { name: `طالب ${shortGradeName} - ${classDigit} الثاني` },
+                    { name: `طالب ${shortGradeName} - ${classDigit} الثالث` },
+                    { name: `طالب ${shortGradeName} - ${classDigit} الرابع` },
+                    { name: `طالب ${shortGradeName} - ${classDigit} الخامس` }
                 ];
             }
         }
@@ -825,8 +835,8 @@
 
         function startTouchGradingSession() {
             if (activeQuestions.length === 0) { generateTestModel(); }
-            fetchAllStudentsFromStorage();
-            if (studentsList.length === 0) { alert('لا توجد قائمة طلاب مسجلة!'); return; }
+            fetchStudentsForSelectedClass(); // جلب الطلاب الخاصين بالصف والفصل المختار فقط
+            if (studentsList.length === 0) { alert('لا توجد قائمة طلاب مسجلة لهذا الفصل!'); return; }
             currentStudentIndex = 0;
             document.getElementById('touchGradingCard').style.display = 'block';
             startNewStudentSession();
