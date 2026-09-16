@@ -352,10 +352,10 @@
                 <div class="form-group">
                     <label>عدد أسئلة الاختبار:</label>
                     <select id="selectQuestionCount">
-                        <option value="5">٥ أسئلة (قصير سريع)</option>
-                        <option value="10" selected>١٠ أسئلة (معياري)</option>
-                        <option value="15">١٥ سؤالاً (موسع)</option>
-                        <option value="20">٢٠ سؤالاً (شامل وكبير)</option>
+                        <option value="5">5 أسئلة (قصير سريع)</option>
+                        <option value="10" selected>10 أسئلة (معياري)</option>
+                        <option value="15">15 سؤالاً (موسع)</option>
+                        <option value="20">20 سؤالاً (شامل وكبير)</option>
                     </select>
                 </div>
                 
@@ -372,7 +372,7 @@
                     </select>
                 </div>
 
-                <!-- رقم الفصل (أرقام إنجليزية مباشرة 1, 2, 3, 4, 5 تطابق الداشبورد الأساسي تماماً) -->
+                <!-- رقم الفصل -->
                 <div class="form-group" style="grid-column: 1 / -1;">
                     <label>رقم الفصل:</label>
                     <select id="selectClassDigit">
@@ -521,27 +521,6 @@
     </div>
 
     <script>
-        function toArabicDigits(str) {
-            if (str === null || str === undefined) return '';
-            const arabicNumbers = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
-            return String(str).replace(/[0-9]/g, function(d) {
-                return arabicNumbers[parseInt(d)];
-            });
-        }
-
-        // دالة تحويل عامة تتخطى تماماً حقل اختيار الفصل لتبقى أرقامه بالإنجليزية بدقة متناهية
-        function convertAllNumbersInDOM() {
-            const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
-            let node;
-            while (node = walker.nextNode()) {
-                if (node.parentElement && ['SCRIPT', 'STYLE', 'OPTION'].includes(node.parentElement.tagName)) continue;
-                if (node.parentElement && node.parentElement.id === 'selectClassDigit') continue;
-                if (node.nodeValue) {
-                    node.nodeValue = toArabicDigits(node.nodeValue);
-                }
-            }
-        }
-
         const subjectNames = { 
             "science": "مادة العلوم", 
             "math": "مادة الرياضيات", 
@@ -733,7 +712,7 @@
             document.getElementById('lessonInputText').value = '';
         }
 
-        // دالة جلب الطلاب مع تحديد اسم ورقم الفصل الحالي بدقة
+        // دالة جلب الطلاب مع تحديد اسم ورقم الفصل الحالي بدقة بالأرقام الإنجليزية
         function fetchStudentsForSelectedClass() {
             studentsList = [];
             const gradeKey = document.getElementById('selectGrade').value;
@@ -877,7 +856,7 @@
             currentModelName = modelsArray[Math.floor(Math.random() * modelsArray.length)];
 
             document.getElementById('printTestInfo').textContent = `الصف: ${gradeKey} | المادة: ${subjectNames[subjectKey]} | نوع الاختبار: ${examType}`;
-            document.getElementById('printModelBadge').textContent = `رقم النموذج: ${currentModelName} | عدد الأسئلة: ${toArabicDigits(activeQuestions.length)} سؤالاً`;
+            document.getElementById('printModelBadge').textContent = `رقم النموذج: ${currentModelName} | عدد الأسئلة: ${activeQuestions.length} سؤالاً`;
 
             const previewBox = document.getElementById('questionsPreviewBox');
             const listContainer = document.getElementById('generatedQuestionsList');
@@ -888,7 +867,7 @@
                 let qObj = activeQuestions[i];
                 htmlContent += `
                     <div class="question-row">
-                        <b>س${toArabicDigits(i + 1)}: ${escapeHtml(qObj.q)}</b> <span style="color:#b45309; font-size:11px; font-weight: bold;">[المجال: ${escapeHtml(qObj.domain)}]</span>
+                        <b>س${i + 1}: ${escapeHtml(qObj.q)}</b> <span style="color:#b45309; font-size:11px; font-weight: bold;">[المجال: ${escapeHtml(qObj.domain)}]</span>
                         <div class="bubble-options">
                             <div class="bubble-item"><span class="bubble-circle">أ</span> أ) ${escapeHtml(qObj.options[0])}</div>
                             <div class="bubble-item"><span class="bubble-circle">ب</span> ب) ${escapeHtml(qObj.options[1])}</div>
@@ -899,7 +878,6 @@
                 `;
             }
             listContainer.innerHTML = htmlContent;
-            convertAllNumbersInDOM();
             window.scrollTo({ top: previewBox.offsetTop, behavior: 'smooth' });
         }
 
@@ -938,8 +916,8 @@
             const student = studentsList[currentStudentIndex];
             
             document.getElementById('studentHeaderBadge').innerHTML = `
-                <span>👤 الطالب (${toArabicDigits(currentStudentIndex + 1)}/${toArabicDigits(studentsList.length)}): <b>${escapeHtml(student.name)}</b> &nbsp;|&nbsp; 🏫 الفصل: <span style="color:#b45309;">${escapeHtml(student.className)}</span></span>
-                <div id="liveScoreBadge" class="live-score-box">السؤال ${toArabicDigits(currentQuestionStep + 1)} / ${toArabicDigits(activeQuestions.length)}</div>
+                <span>👤 الطالب (${currentStudentIndex + 1} / ${studentsList.length}): <b>${escapeHtml(student.name)}</b> &nbsp;|&nbsp; 🏫 الفصل: <span style="color:#b45309;">${escapeHtml(student.className)}</span></span>
+                <div id="liveScoreBadge" class="live-score-box">السؤال ${currentQuestionStep + 1} / ${activeQuestions.length}</div>
             `;
 
             let qObj = activeQuestions[currentQuestionStep];
@@ -950,7 +928,7 @@
             container.innerHTML = `
                 <div class="single-step-question-box">
                     <span style="color: #c2410c; font-size: 12px; font-weight: bold;">[مجال الهدف: ${escapeHtml(qObj.domain)}]</span>
-                    <h4>سؤال ${toArabicDigits(qNum)}: ${escapeHtml(qObj.q)}</h4>
+                    <h4>سؤال ${qNum}: ${escapeHtml(qObj.q)}</h4>
                     <div class="options-grid-fast">
                         <button type="button" class="opt-fast-btn ${savedOpt === 'أ' ? 'correct-choice' : ''}" onclick="selectFastOpt(${qNum}, 'أ', this)">أ) ${escapeHtml(qObj.options[0])}</button>
                         <button type="button" class="opt-fast-btn ${savedOpt === 'ب' ? 'correct-choice' : ''}" onclick="selectFastOpt(${qNum}, 'ب', this)">ب) ${escapeHtml(qObj.options[1])}</button>
@@ -959,7 +937,6 @@
                     </div>
                 </div>
             `;
-            convertAllNumbersInDOM();
         }
 
         function selectFastOpt(qNum, opt, btn) {
@@ -1063,7 +1040,7 @@
                     score: sData.score,
                     maxScore: sData.maxScore || maxScore,
                     examType: `${examType} - ${currentModelName}`,
-                    date: new Date().toLocaleDateString('ar-SA')
+                    date: new Date().toLocaleDateString('en-GB')
                 });
             }
 
@@ -1086,7 +1063,7 @@
             let maxScore = globalMaxScore || 20;
 
             let enteredCount = Object.keys(allClassResults).length;
-            let html = `✅ تم رصد درجات الطلاب المدخلين (إجمالي: ${toArabicDigits(enteredCount)} طالب):<br><br>`;
+            let html = `✅ تم رصد درجات الطلاب المدخلين (إجمالي: ${enteredCount} طالب):<br><br>`;
             let foundAny = false;
 
             for (let sName in allClassResults) {
@@ -1094,11 +1071,11 @@
                     foundAny = true;
                     let data = allClassResults[sName];
                     let currentMax = data.maxScore || maxScore;
-                    let waText = `مدرسة داؤود بن عروة الثقفي الابتدائية (طلاب)%0Aولي الأمر الفاضل، نود إفادتكم بحصول الابن: *${encodeURIComponent(sName)}* (${encodeURIComponent(data.className)})%0Aعلى درجة الاختبار: *${toArabicDigits(data.score)} / ${toArabicDigits(currentMax)}* (${toArabicDigits(data.correct)} إجابات صحيحة من أصل ${toArabicDigits(activeQuestions.length)}).%0Aمع تحيات المعلم: *منصور عامر الرحيلي*`;
+                    let waText = `مدرسة داؤود بن عروة الثقفي الابتدائية (طلاب)%0Aولي الأمر الفاضل، نود إفادتكم بحصول الابن: *${encodeURIComponent(sName)}* (${encodeURIComponent(data.className)})%0Aعلى درجة الاختبار: *${data.score} / ${currentMax}* (${data.correct} إجابات صحيحة من أصل ${activeQuestions.length}).%0Aمع تحيات المعلم: *منصور عامر الرحيلي*`;
 
                     html += `
                         <div style="display: flex; justify-content: space-between; align-items: center; background: #fefce8; padding: 9px 12px; margin-bottom: 6px; border-radius: 6px; border: 1.5px solid #059669; flex-wrap: wrap; gap: 8px;">
-                            <span>• <b>${escapeHtml(sName)}</b> (<span style="color:#b45309;">${escapeHtml(data.className)}</span>): ${toArabicDigits(data.score)} / ${toArabicDigits(currentMax)} (${toArabicDigits(data.correct)} صحيحة)</span>
+                            <span>• <b>${escapeHtml(sName)}</b> (<span style="color:#b45309;">${escapeHtml(data.className)}</span>): ${data.score} / ${currentMax} (${data.correct} صحيحة)</span>
                             <a href="https://wa.me/?text=${waText}" target="_blank" class="action-btn btn-whatsapp" style="padding: 4px 10px; font-size: 12px; width: auto; text-decoration: none;">💬 إرسال لولي الأمر</a>
                         </div>
                     `;
@@ -1110,7 +1087,6 @@
             }
 
             outputText.innerHTML = html;
-            convertAllNumbersInDOM();
         }
 
         function prepareGradesPrintSheet() {
@@ -1134,16 +1110,15 @@
 
                 tbody.innerHTML += `
                     <tr>
-                        <td style="padding: 6px;">${toArabicDigits(idx++)}</td>
+                        <td style="padding: 6px;">${idx++}</td>
                         <td style="padding: 6px; text-align: right; padding-right: 10px; font-weight: bold;">${escapeHtml(sName)}</td>
                         <td style="padding: 6px; font-weight: bold; color: #b45309;">${escapeHtml(data.className)}</td>
-                        <td style="padding: 6px; font-weight: bold; color: #1e3a8a;">${toArabicDigits(data.score)}</td>
-                        <td style="padding: 6px;">${toArabicDigits(currentMax)}</td>
+                        <td style="padding: 6px; font-weight: bold; color: #1e3a8a;">${data.score}</td>
+                        <td style="padding: 6px;">${currentMax}</td>
                         <td style="padding: 6px; color: ${percentage >= 50 ? '#059669' : '#dc2626'}; font-weight: bold;">${level}</td>
                     </tr>
                 `;
             }
-            convertAllNumbersInDOM();
         }
 
         function printAllGradesSheet() {
@@ -1207,8 +1182,8 @@
                 domainsTableHtml += `
                     <tr>
                         <td style="padding:6px; font-weight:bold; color:var(--primary);">${escapeHtml(dom)}</td>
-                        <td style="text-align:center;">${toArabicDigits(dCorrect)} / ${toArabicDigits(dTotal)} إجابة صحيحة</td>
-                        <td style="text-align:center; font-weight:bold; color:${statusColor};">${toArabicDigits(dPercent)}٪</td>
+                        <td style="text-align:center;">${dCorrect} / ${dTotal} إجابة صحيحة</td>
+                        <td style="text-align:center; font-weight:bold; color:${statusColor};">${dPercent}%</td>
                         <td style="text-align:center; color:${statusColor};">${statusText}</td>
                     </tr>
                 `;
@@ -1236,7 +1211,7 @@
 
                     remedialPlansHtml += `
                         <div style="margin-bottom: 12px; padding: 10px; background: #fefce8; border-radius: 6px; border: 1.5px solid #eab308;">
-                            <b>${toArabicDigits(indexNum++)}. الهدف المهاري غير المتقن:</b> ${remedialTitle}<br>
+                            <b>${indexNum++}. الهدف المهاري غير المتقن:</b> ${remedialTitle}<br>
                             <span style="color: #047857; font-weight: bold;">💡 الخطة العلاجية الميدانية المقترحة:</span> ${remedialAction}
                         </div>
                     `;
@@ -1264,7 +1239,6 @@
                     </div>
                 </div>
             `;
-            convertAllNumbersInDOM();
         }
 
         function printAnalysisBoxOnly() {
@@ -1279,7 +1253,6 @@
         window.addEventListener('DOMContentLoaded', () => {
             updateLessonCheckboxes();
             filterStudentResults();
-            convertAllNumbersInDOM();
         });
     </script>
 </body>
