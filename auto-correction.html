@@ -315,27 +315,27 @@
                 </div>
             </div>
 
-            <!-- صندوق مجالات اختبارات نافس -->
+            <!-- صندوق مجالات اختبارات نافس (محدث لمادة العلوم بالأقسام الأربعة) -->
             <div id="nafisDomainsBox" class="form-group" style="display: none; margin-top: 12px; border: 2px dashed #b45309; background: #fffbeb; padding: 12px; border-radius: 8px;">
                 <label style="color: #b45309; display: flex; align-items: center; gap: 5px; font-size: 14px;">
-                    <span>📊</span> حدد مجالات اختبارات نافس الوطنية المستهدفة (توليد دقيق لـ 10 أسئلة مخصصة):
+                    <span>📊</span> حدد مجالات مادة العلوم المستهدفة في اختبارات نافس:
                 </label>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 8px; margin-top: 8px;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 8px; margin-top: 8px;">
                     <label style="display: flex; align-items: center; gap: 6px; font-size: 13px; background: #fff; padding: 8px; border-radius: 6px; border: 1px solid #fcd34d; cursor: pointer;">
-                        <input type="checkbox" class="nafis-domain-cb" value="مجال العلوم" checked style="width: 16px; height: 16px; accent-color: #b45309;">
-                        <span><b>1. مجال العلوم</b> (البيئة والحياة والمادة)</span>
+                        <input type="checkbox" class="nafis-domain-cb" value="علوم الحياة" checked style="width: 16px; height: 16px; accent-color: #b45309;">
+                        <span><b>1. علوم الحياة</b> (الكائنات الحية والبيئة)</span>
                     </label>
                     <label style="display: flex; align-items: center; gap: 6px; font-size: 13px; background: #fff; padding: 8px; border-radius: 6px; border: 1px solid #fcd34d; cursor: pointer;">
-                        <input type="checkbox" class="nafis-domain-cb" value="مجال الرياضيات" checked style="width: 16px; height: 16px; accent-color: #b45309;">
-                        <span><b>2. مجال الرياضيات</b> (الأعداد والحساب والهندسة)</span>
+                        <input type="checkbox" class="nafis-domain-cb" value="العلوم الفيزيائية" checked style="width: 16px; height: 16px; accent-color: #b45309;">
+                        <span><b>2. العلوم الفيزيائية</b> (المادة والطاقة)</span>
                     </label>
                     <label style="display: flex; align-items: center; gap: 6px; font-size: 13px; background: #fff; padding: 8px; border-radius: 6px; border: 1px solid #fcd34d; cursor: pointer;">
-                        <input type="checkbox" class="nafis-domain-cb" value="مجال القراءة وفهم النصوص" checked style="width: 16px; height: 16px; accent-color: #b45309;">
-                        <span><b>3. مجال القراءة</b> (فهم وتحليل النصوص واللغة)</span>
+                        <input type="checkbox" class="nafis-domain-cb" value="علوم الأرض والفضاء" checked style="width: 16px; height: 16px; accent-color: #b45309;">
+                        <span><b>3. علوم الأرض والفضاء</b> (التضاريس والفضاء)</span>
                     </label>
                     <label style="display: flex; align-items: center; gap: 6px; font-size: 13px; background: #fff; padding: 8px; border-radius: 6px; border: 1px solid #fcd34d; cursor: pointer;">
-                        <input type="checkbox" class="nafis-domain-cb" value="مجال الاستقصاء وحل المشكلات" checked style="width: 16px; height: 16px; accent-color: #b45309;">
-                        <span><b>4. مجال الاستقصاء</b> (التفكير الناقد وحل المشكلات)</span>
+                        <input type="checkbox" class="nafis-domain-cb" value="الاستقصاء العلمي" checked style="width: 16px; height: 16px; accent-color: #b45309;">
+                        <span><b>4. الاستقصاء العلمي</b> (التفكير الناقد والمهارات)</span>
                     </label>
                 </div>
             </div>
@@ -587,11 +587,11 @@
         const accurateSubjectQuestionBanks = {
             "الأول الابتدائي": {
                 "science": [
-                    { domain: "مجال العلوم", q: "ما هو الجزء الرئيسي في النبات المسؤول عن امتصاص الماء والأملاح من التربة؟", options: ["الساق", "الجذر", "الأوراق", "الزهور"], correct: "أ" },
-                    { domain: "مجال العلوم", q: "ما هو المصدر الطبيعي الأساسي للضوء والحرارة على كوكب الأرض؟", options: ["الشمس", "القمر", "المصباح الكهربائي", "النجوم"], correct: "أ" },
-                    { domain: "مجال العلوم", q: "أي الحيوانات التالية يُغطي جسمه الريش ويستطيع الطيران؟", options: ["العصفور", "القطة", "الأسد", "الخروف"], correct: "أ" },
-                    { domain: "مجال الاستقصاء وحل المشكلات", q: "أي الأجسام التالية خفيف ويطفو على سطح الماء؟", options: ["ورقة الشجر", "الحجر الثقيل", "المسمار الحديدي", "العملة المعدنية"], correct: "أ" },
-                    { domain: "مجال الاستقصاء وحل المشكلات", q: "في أي فصل من فصول السنة ترتفع درجة الحرارة وتشتد أشعة الشمس؟", options: ["فصل الصيف", "فصل الشتاء", "فصل الخريف", "فصل الربيع"], correct: "أ" }
+                    { domain: "علوم الحياة", q: "ما هو الجزء الرئيسي في النبات المسؤول عن امتصاص الماء والأملاح من التربة؟", options: ["الساق", "الجذر", "الأوراق", "الزهور"], correct: "أ" },
+                    { domain: "العلوم الفيزيائية", q: "ما هو المصدر الطبيعي الأساسي للضوء والحرارة على كوكب الأرض؟", options: ["الشمس", "القمر", "المصباح الكهربائي", "النجوم"], correct: "أ" },
+                    { domain: "علوم الحياة", q: "أي الحيوانات التالية يُغطي جسمه الريش ويستطيع الطيران؟", options: ["العصفور", "القطة", "الأسد", "الخروف"], correct: "أ" },
+                    { domain: "الاستقصاء العلمي", q: "أي الأجسام التالية خفيف ويطفو على سطح الماء؟", options: ["ورقة الشجر", "الحجر الثقيل", "المسمار الحديدي", "العملة المعدنية"], correct: "أ" },
+                    { domain: "علوم الأرض والفضاء", q: "في أي فصل من فصول السنة ترتفع درجة الحرارة وتشتد أشعة الشمس؟", options: ["فصل الصيف", "فصل الشتاء", "فصل الخريف", "فصل الربيع"], correct: "أ" }
                 ],
                 "math": [
                     { domain: "مجال الرياضيات", q: "ما هو الناتج الصحيح لعملية الجمع الحسابية: ٣ + ٢ = ؟", options: ["٥", "٤", "٦", "٧"], correct: "أ" },
@@ -599,15 +599,16 @@
                     { domain: "مجال الرياضيات", q: "ما هو الناتج الصحيح لعملية الطرح الحسابية: ٨ - ٣ = ؟", options: ["٥", "٤", "٦", "٧"], correct: "أ" }
                 ],
                 "arabic": [
-                    { domain: "مجال القراءة وفهم النصوص", q: "ما هو الحرف الهجائي الذي تبدأ به كلمة (موز)؟", options: ["حرف الميم", "حرف الباء", "حرف اللام", "حرف الدال"], correct: "أ" },
-                    { domain: "مجال القراءة وفهم النصوص", q: "أي الكلمات التالية تحوي حرف تاء مربوطة (ة) في آخرها؟", options: ["تفاحة", "قلم", "ولد", "باب"], correct: "أ" }
+                    { domain: "مجال القراءة", q: "ما هو الحرف الهجائي الذي تبدأ به كلمة (موز)؟", options: ["حرف الميم", "حرف الباء", "حرف اللام", "حرف الدال"], correct: "أ" },
+                    { domain: "مجال القراءة", q: "أي الكلمات التالية تحوي حرف تاء مربوطة (ة) في آخرها؟", options: ["تفاحة", "قلم", "ولد", "باب"], correct: "أ" }
                 ]
             },
             "السادس الابتدائي": {
                 "science": [
-                    { domain: "مجال العلوم", q: "ما هي الوحدة الأساسية لبناء وتنظيم جميع الكائنات الحية في الطبيعة؟", options: ["الخلية", "النسيج الحيوي", "العضو الداخلي", "الجهاز العصبي"], correct: "أ" },
-                    { domain: "مجال العلوم", q: "ما اسم العملية الحيوية التي تصنع بها النباتات الخضراء غذاءها بوجود الضوء؟", options: ["البناء الضوئي", "التنفس الخلوي", "الهضم والامتصاص", "النتح"], correct: "أ" },
-                    { domain: "مجال العلوم", q: "أي الأجرام السماوية التالية يقع في مركز المجموعة الشمسية تماماً؟", options: ["الشمس", "كوكب الأرض", "القمر", "كوكب المريخ"], correct: "أ" }
+                    { domain: "علوم الحياة", q: "ما هي الوحدة الأساسية لبناء وتنظيم جميع الكائنات الحية في الطبيعة؟", options: ["الخلية", "النسيج الحيوي", "العضو الداخلي", "الجهاز العصبي"], correct: "أ" },
+                    { domain: "علوم الحياة", q: "ما اسم العملية الحيوية التي تصنع بها النباتات الخضراء غذاءها بوجود الضوء؟", options: ["البناء الضوئي", "التنفس الخلوي", "الهضم والامتصاص", "النتح"], correct: "أ" },
+                    { domain: "علوم الأرض والفضاء", q: "أي الأجرام السماوية التالية يقع في مركز المجموعة الشمسية تماماً؟", options: ["الشمس", "كوكب الأرض", "القمر", "كوكب المريخ"], correct: "أ" },
+                    { domain: "العلوم الفيزيائية", q: "ما نوع التغير الذي ينتج عنه مواد جديدة ذات خصائص مختلفة؟", options: ["تغير كيميائي", "تغير فيزيائي", "انصهار", "تبخر"], correct: "أ" }
                 ],
                 "math": [
                     { domain: "مجال الرياضيات", q: "ما قيمة المقدار الجبري الآتي: ٥ س + ٣، إذا كانت قيمة س = ٢؟", options: ["١٣", "١٠", "١٥", "١٢"], correct: "أ" },
@@ -615,8 +616,8 @@
                     { domain: "مجال الرياضيات", q: "ما حجم متوازي مستطيلات طوله ٥ سم، وعرضه ٣ سم، وارتفاعه ٢ سم؟", options: ["٣٠ سم٣", "١٠ سم٣", "٢٠ سم٣", "١٥ سم٣"], correct: "أ" }
                 ],
                 "arabic": [
-                    { domain: "مجال القراءة وفهم النصوص", q: "ما المعنى السياقي الأدق لكلمة (دؤوب) في عبارة: (عمل دؤوب ومستمر)؟", options: ["مستمر ومتواصل باجتهاد", "منقطع ومتوقف", "بطيء وضعيف", "قصير وسريع"], correct: "أ" },
-                    { domain: "مجال القراءة وفهم النصوص", q: "ما هو الغرض الرئيسي والأساسي من كتابة النصوص الإرشادية؟", options: ["توجيه القارئ لفعل السلوك الصحيح", "الترفيه والتسلية", "سرد قصة خيالية", "الوصف الجغرافي"], correct: "أ" }
+                    { domain: "مجال القراءة", q: "ما المعنى السياقي الأدق لكلمة (دؤوب) في عبارة: (عمل دؤوب ومستمر)؟", options: ["مستمر ومتواصل باجتهاد", "منقطع ومتوقف", "بطيء وضعيف", "قصير وسريع"], correct: "أ" },
+                    { domain: "مجال القراءة", q: "ما هو الغرض الرئيسي والأساسي من كتابة النصوص الإرشادية؟", options: ["توجيه القارئ لفعل السلوك الصحيح", "الترفيه والتسلية", "سرد قصة خيالية", "الوصف الجغرافي"], correct: "أ" }
                 ]
             }
         };
@@ -626,10 +627,10 @@
                 return accurateSubjectQuestionBanks[gradeKey][subjectKey];
             }
             return [
-                { domain: "مجال العلوم", q: `سؤال قياسي في مادة (${subjectNames[subjectKey]}) للصف (${gradeKey}): ما هي الحقيقة العلمية الأساسية؟`, options: ["الحقيقة العلمية المعتمدة والمعيارية", "افتراض خاطئ", "معلومة ملغاة", "توقع عشوائي"], correct: "أ" },
-                { domain: "مجال الرياضيات", q: `سؤال حسابي رياضي لـ (${gradeKey}) في (${subjectNames[subjectKey]}): ما هو الناتج السليم؟`, options: ["الناتج الحسابي الدقيق والصحيح", "قيمة خاطئة", "رقم افتراضي", "صفر"], correct: "أ" },
-                { domain: "مجال القراءة وفهم النصوص", q: `سؤال فهم وتحليل لـ (${gradeKey}) - (${subjectNames[subjectKey]}): استنتج الفكرة:`, options: ["الفكرة الرئيسية والمغزى الصحيح", "فكرة فرعية مغلوطة", "خارج السياق", "تأويل خاطئ"], correct: "أ" },
-                { domain: "مجال الاستقصاء وحل المشكلات", q: `سؤال تفكير ناقد لـ (${gradeKey}) - (${subjectNames[subjectKey]}): ما الإجراء العلمي السليم؟`, options: ["الخطوات العلمية المنهجية المعتمدة", "تجاهل المشكلة", "حل عشوائي", "الاستسلام"], correct: "أ" }
+                { domain: "علوم الحياة", q: `سؤال قياسي في مادة (${subjectNames[subjectKey]}) للصف (${gradeKey}): ما هي الحقيقة العلمية الأساسية؟`, options: ["الحقيقة العلمية المعتمدة والمعيارية", "افتراض خاطئ", "معلومة ملغاة", "توقع عشوائي"], correct: "أ" },
+                { domain: "العلوم الفيزيائية", q: `سؤال تجريبي لـ (${gradeKey}) في (${subjectNames[subjectKey]}): ما هو الناتج السليم؟`, options: ["الناتج الدقيق والصحيح", "قيمة خاطئة", "رقم افتراضي", "صفر"], correct: "أ" },
+                { domain: "علوم الأرض والفضاء", q: `سؤال فهم لـ (${gradeKey}) - (${subjectNames[subjectKey]}): استنتج الفكرة:`, options: ["الفكرة الرئيسية والمغزى الصحيح", "فكرة فرعية مغلوطة", "خارج السياق", "تأويل خاطئ"], correct: "أ" },
+                { domain: "الاستقصاء العلمي", q: `سؤال تفكير ناقد لـ (${gradeKey}) - (${subjectNames[subjectKey]}): ما الإجراء العلمي السليم؟`, options: ["الخطوات العلمية المنهجية المعتمدة", "تجاهل المشكلة", "حل عشوائي", "الاستسلام"], correct: "أ" }
             ];
         }
 
@@ -874,7 +875,6 @@
             let score = correctCount * 2; 
             allClassResults[student.name] = { score: score, correct: correctCount };
 
-            // تحديث وتخزين الدرجات فورياً لكي تظهر وتتحدث البيانات حتى لو لطالب واحد أو طالبين
             updateLocalStorageAndResults();
 
             currentStudentIndex++;
