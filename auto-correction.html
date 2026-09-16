@@ -9,18 +9,15 @@
         :root {
             --primary: #1e3a8a;
             --secondary: #2563eb;
-            --accent: #dbeafe;
-            --bg: #fef9c3; /* خلفية عامة دافئة بعيدة عن الأبيض */
-            --card-bg: #fefce8; /* خلفية الصناديق أصفر كريمي دافئ */
+            --bg: #fef9c3;
+            --card-bg: #fefce8;
             --box-bg-1: #f0fdf4; 
             --box-bg-2: #eff6ff; 
-            --box-bg-3: #fff7ed; 
             --box-bg-4: #faf5ff; 
             --text: #1e293b;
             --success: #059669;
             --warning: #d97706;
             --danger: #dc2626;
-            --print-btn: #475569;
         }
 
         body {
@@ -109,7 +106,7 @@
             border: 2px solid #cbd5e1;
             border-radius: 8px;
             font-size: 14px;
-            background: #fefce8; /* استبدال الأبيض بتدرج كريمي دافئ */
+            background: #fefce8;
             color: #0f172a;
             outline: none;
             box-sizing: border-box;
@@ -231,7 +228,7 @@
         }
 
         .exam-header h3 { margin: 0; font-size: 15px; color: #1e3a8a; font-weight: bold; }
-        .exam-header h4 { margin: 4px 0; font-size: 13px; color: #334155; }
+        .exam-header h4 { margin: 4px 0; font-size: 13px; color: #334151; }
 
         .question-row {
             margin-bottom: 14px;
@@ -379,14 +376,14 @@
                 <textarea id="lessonInputText" rows="3" placeholder="مثال: أجزاء النباتات أو المخلوقات الحية..."></textarea>
             </div>
             <div style="margin-top: 10px;">
-                <button class="action-btn btn-purple" onclick="smartGenerateFromLessonText()">⚡ توليد وإضافة الأسئلة للدرس</button>
+                <button type="button" class="action-btn btn-purple" onclick="smartGenerateFromLessonText()">⚡ توليد وإضافة الأسئلة للدرس</button>
             </div>
         </div>
 
         <div class="section-box">
             <h3>⚙️ ثانياً: توليد ورقة الاختبار المعتمَدة (بدون تكرار وبنك أسئلة واسع وغني)</h3>
             <div class="no-print">
-                <button class="action-btn" onclick="generateTestModel()">⚡ توليد ورقة الاختبار الآن</button>
+                <button type="button" class="action-btn" onclick="generateTestModel()">⚡ توليد ورقة الاختبار الآن</button>
             </div>
 
             <div id="questionsPreviewBox" class="questions-preview printable-exam-area">
@@ -405,21 +402,21 @@
                 <div id="generatedQuestionsList"></div>
 
                 <div class="no-print" style="margin-top: 15px;">
-                    <button class="action-btn btn-print" onclick="printExamOnly()">🖨️ طباعة الاختبار بملء صفحة A4</button>
+                    <button type="button" class="action-btn btn-print" onclick="printExamOnly()">🖨️ طباعة الاختبار بملء صفحة A4</button>
                 </div>
             </div>
         </div>
 
         <div class="section-box no-print">
             <h3>👤 ثالثاً: لوحة التصحيح السريع التفاعلية</h3>
-            <button class="action-btn btn-success" onclick="startTouchGradingSession()">🚀 بدء جلسة التصحيح ورصد الدرجات</button>
+            <button type="button" class="action-btn btn-success" onclick="startTouchGradingSession()">🚀 بدء جلسة التصحيح ورصد الدرجات</button>
 
             <div id="touchGradingCard" class="touch-grading-card">
                 <div id="studentHeaderBadge" class="student-title-badge"></div>
                 <div id="singleQuestionContainer"></div>
                 <div class="navigation-btns" style="justify-content: space-between;">
-                    <button class="action-btn" style="background: #475569; width: 48%;" onclick="prevQuestionStep()">⬅ السؤال السابق</button>
-                    <button class="action-btn btn-success" style="width: 48%;" onclick="nextQuestionStepOrFinish()">التالي / حفظ ➡</button>
+                    <button type="button" class="action-btn" style="background: #475569; width: 48%;" onclick="prevQuestionStep()">⬅ السؤال السابق</button>
+                    <button type="button" class="action-btn btn-success" style="width: 48%;" onclick="nextQuestionStepOrFinish()">التالي / حفظ ➡</button>
                 </div>
             </div>
         </div>
@@ -432,8 +429,8 @@
             <p id="correctionOutputText" style="font-size: 14px; margin: 8px 0;"></p>
             
             <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;" class="no-print">
-                <button class="action-btn btn-print" style="flex: 1; min-width: 250px;" onclick="printAllGradesSheet()">🖨️ طباعة كشف درجات الطلاب</button>
-                <button class="action-btn btn-nafis-bottom" style="flex: 1; min-width: 250px;" onclick="toggleAnalysisBox()">📊 📈 تقرير التحليل الميداني والخطط العلاجية الواقعية</button>
+                <button type="button" class="action-btn btn-print" style="flex: 1; min-width: 250px;" onclick="printAllGradesSheet()">🖨️ طباعة كشف درجات الطلاب</button>
+                <button type="button" class="action-btn btn-nafis-bottom" style="flex: 1; min-width: 250px;" onclick="toggleAnalysisBox()">📊 📈 تقرير التحليل الميداني والخطط العلاجية الواقعية</button>
             </div>
         </div>
 
@@ -467,7 +464,7 @@
             <h3 style="margin-top:0; color: #b45309; border-bottom: 2px solid #eab308; padding-bottom: 8px; font-size: 16px;">📈 تقرير تحليل نواتج التعلم والخطط العلاجية الميدانية الواقعية</h3>
             <div id="analysisContentText" style="font-size: 12.5px; line-height: 1.6; color: #1e293b;"></div>
             <div class="no-print" style="margin-top: 15px;">
-                <button class="action-btn btn-print" onclick="printAnalysisBoxOnly()">🖨️ طباعة التقرير والخطط العلاجية لوحده</button>
+                <button type="button" class="action-btn btn-print" onclick="printAnalysisBoxOnly()">🖨️ طباعة التقرير والخطط العلاجية لوحده</button>
             </div>
         </div>
     </div>
@@ -551,7 +548,6 @@
             });
         }
 
-        // بنك أسئلة واسع جداً وغني بمتغيرات مختلفة لمنع التكرار نهائياً
         const accurateSubjectQuestionBanks = {
             "الأول الابتدائي": {
                 "science": [
@@ -666,7 +662,8 @@
             const examType = document.getElementById('selectExamType').value;
             const gradeKey = document.getElementById('selectGrade').value;
             const subjectKey = document.getElementById('selectSubject').value;
-            const requestedCount = parseInt(document.getElementById('selectQuestionCount').value) || 10;
+            const selectEl = document.getElementById('selectQuestionCount');
+            const requestedCount = selectEl ? parseInt(selectEl.value) || 10 : 10;
 
             let sourcePool = [];
 
@@ -689,14 +686,12 @@
                 document.getElementById('printSelectedLessonsPrint').textContent = `📖 الاختبار قياسي شامل (${gradeKey} - ${subjectNames[subjectKey]})`;
             }
 
-            // خلط بنك الأسئلة عشوائياً لضمان تنوعها واختيار العدد المطلوب فريداً بدون تكرار
             let shuffledPool = [...sourcePool];
             for (let i = shuffledPool.length - 1; i > 0; i--) {
                 let j = Math.floor(Math.random() * (i + 1));
-                [shuffledPool[i], shuffledPool[j]] = [shuffled[j], shuffled[i]];
+                [shuffledPool[i], shuffledPool[j]] = [shuffledPool[j], shuffledPool[i]];
             }
 
-            // إذا كان العدد المطلوب أكبر من الموجود، نقوم بتعبئة ما تبقى من بنك عام بدون تكرار نصي ممل
             let selectedPool = [];
             for (let i = 0; i < requestedCount; i++) {
                 let qItem = shuffledPool[i % shuffledPool.length];
@@ -709,7 +704,6 @@
                 selectedPool.push(uniqueObj);
             }
 
-            // خلط وترتيب الخيارات عشوائياً لكل سؤال لضمان توزيع الإجابات
             let processedPool = selectedPool.map(q => {
                 let optionsCopy = [...q.options];
                 let correctText = optionsCopy[q.correctIdx];
@@ -1100,7 +1094,7 @@
         function printAnalysisBoxOnly() {
             const analysisBox = document.getElementById('analysisContainer');
             analysisBox.style.display = 'block';
-            setTimeout(() => { window.print(); }, 200);
+            setTimeout => { window.print(); }, 200;
         }
 
         window.addEventListener('DOMContentLoaded', () => {
