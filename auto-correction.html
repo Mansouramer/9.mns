@@ -362,7 +362,7 @@
         </div>
 
         <div class="section-box">
-            <h3>⚙️ ثانياً: توليد ورقة الاختبار المعتمدة (مرتبطة بالدروس المختارة بدقة)</h3>
+            <h3>⚙️ ثانياً: توليد ورقة الاختبار المعتمدة (مرتبطة حصرياً بالصف والدروس المختارة)</h3>
             <div class="no-print">
                 <button class="action-btn" onclick="generateTestModel()">⚡ توليد ورقة الاختبار المعتمدة</button>
             </div>
@@ -484,18 +484,19 @@
             "islamic": "الدراسات الإسلامية" 
         };
 
+        // بنوك أسئلة مخصصة ودقيقة لكل صف دراسي على حدة لمنع التداخل نهائياً
         const accurateGradeQuestionBank = {
             "الأول الابتدائي": {
                 "science": [
                     { q: "أي مما يلي يُعد من أجزاء النبات الرئيسية التي تمتص الماء؟", options: ["الساق", "الجذر", "الأوراق", "الزهور"], correct: "ب", keyword: "أجزاء النباتات" },
                     { q: "ما هو مصدر النور والحرارة الأساسي على سطح الأرض؟", options: ["القمر", "الشمس", "المصباح", "النجوم"], correct: "ب", keyword: "الضوء والحرارة" },
-                    { q: "أي الحيوانات التالية يعيش في الماء؟", options: ["العصفور", "الأسماك", "الجمل", "القطة"], correct: "ب", keyword: "المخلوقات الحية" },
+                    { q: "أي الحيوانات التالية يعيش في اليابسة والماء؟", options: ["العصفور", "الضفدع", "الجمل", "القطة"], correct: "ب", keyword: "المخلوقات الحية" },
                     { q: "ما الحالة الفيزيائية للماء المتجمد (ثلج)؟", options: ["سائلة", "غازية", "صلبة", "بخار"], correct: "ج", keyword: "المادة" },
                     { q: "في أي فصل ترتفع درجة الحرارة وتشتد؟", options: ["الصيف", "الربيع", "الخريف", "الشتاء"], correct: "أ", keyword: "الطقس والفصول" },
                     { q: "ما هو الحيوان الذي يُغطي جسمه الريش؟", options: ["القطة", "الأسد", "العصفور", "الخروف"], correct: "ج", keyword: "المخلوقات الحية" },
                     { q: "أي الأجسام التالية خفيف ويطفو على الماء؟", options: ["المسمار الحديدي", "الحجر", "ورقة الشجر", "العملة المعدنية"], correct: "ج", keyword: "المادة" },
                     { q: "ما الغاز الذي نتنفسه ونجده في الهواء؟", options: ["ثاني أكسيد الكربون", "الأكسجين", "الهيليوم", "النيتروجين"], correct: "ب", keyword: "الهواء والماء" },
-                    { q: "ما اسم الفصول التي يتساقط فيها ورق بعض الأشجار؟", options: ["الربيع", "الصيف", "الخريف", "الشتاء"], correct: "ج", keyword: "الطقس والفصول" },
+                    { q: "ما اسم الفصل الذي يتساقط فيه ورق بعض الأشجار؟", options: ["الربيع", "الصيف", "الخريف", "الشتاء"], correct: "ج", keyword: "الطقس والفصول" },
                     { q: "أي مما يأتي يعد من مصادر الإضاءة الطبيعية؟", options: ["الشمس", "التلفاز", "المصباح اليدوي", "الساعة"], correct: "أ", keyword: "الضوء والحرارة" }
                 ],
                 "math": [
@@ -509,45 +510,16 @@
                     { q: "أي الحروف التالية يعتبر حرف مد بالألف؟", options: ["بَ", "ما", "مُ", "مِ"], correct: "ب", keyword: "المدود" },
                     { q: "الكلمة التي تحوي حرف التاء المربوطة هي:", options: ["تفاحة", "قلم", "ولد", "باب"], correct: "أ", keyword: "التاء المربوطة" }
                 ]
+            },
+            "السادس الابتدائي": {
+                "science": [
+                    { q: "ما هي الوحدة الأساسية لبناء وتنظيم الكائن الحي؟", options: ["النسيج الحيوي", "العضو الداخلي", "الخلية", "الجهاز العصبي"], correct: "ج", keyword: "الخلايا والوراثة" },
+                    { q: "ما العملية الحيوية التي تصنع بها النباتات الخضراء غذاءها؟", options: ["التنفس الخلوي", "البناء الضوئي", "الهضم والامتصاص", "النتح"], correct: "ب", keyword: "عمليات الحياة" },
+                    { q: "أي الأجرام السماوية التالية يقع في مركز المجموعة الشمسية؟", options: ["كوكب الأرض", "القمر التابع", "الشمس", "كوكب المريخ"], correct: "ج", keyword: "الفضاء" },
+                    { q: "ما الحالة الفيزيائية للماء عندما يتحول إلى ثلج صلب؟", options: ["الحالة السائلة", "الحالة الغازية", "الحالة الصلبة", "حالة البلازما"], correct: "ج", keyword: "المادة" }
+                ]
             }
         };
-
-        const fallbackBank = {
-            "science": [
-                { q: "ما هي الوحدة الأساسية لبناء وتنظيم الكائن الحي؟", options: ["النسيج الحيوي", "العضو الداخلي", "الخلية", "الجهاز العصبي"], correct: "ج", keyword: "المخلوقات الحية" },
-                { q: "ما العملية الحيوية التي تصنع بها النباتات الخضراء غذاءها؟", options: ["التنفس الخلوي", "البناء الضوئي", "الهضم والامتصاص", "النتح"], correct: "ب", keyword: "أجزاء النباتات" },
-                { q: "أي الأجرام السماوية التالية يقع في مركز المجموعة الشمسية؟", options: ["كوكب الأرض", "القمر التابع", "الشمس", "كوكب المريخ"], correct: "ج", keyword: "الأرض والفضاء" },
-                { q: "ما الحالة الفيزيائية للماء عندما يتحول إلى ثلج صلب؟", options: ["الحالة السائلة", "الحالة الغازية", "الحالة الصلبة", "حالة البلازما"], correct: "ج", keyword: "المادة" },
-                { q: "أي الكائنات الحية التالية يُعد من الفقاريات؟", options: ["دودة الأرض", "العقرب البحري", "العصفور", "النمل الأبيض"], correct: "ج", keyword: "المخلوقات الحية" },
-                { q: "ما القوة الطبيعية التي تسحب الأجسام دائماً نحو مركز الأرض؟", options: ["قوة الاحتكاك", "قوة الجاذبية", "القوة المغناطيسية", "قوة الطفو"], correct: "ب", keyword: "القوى والحركة" },
-                { q: "أي الألوان الضوئية التالية يعتبر من الألوان الأساسية للضوء؟", options: ["الأصفر", "البنفسجي الداكن", "الأحمر", "البرتقالي"], correct: "ج", keyword: "الضوء" },
-                { q: "ما الغاز الأساسي الذي تستنشقه الكائنات الحية وتستعمله للطاقة؟", options: ["ثاني أكسيد الكربون", "غاز النيتروجين", "غاز الأكسجين", "غاز الهيدروجين"], correct: "ج", keyword: "الهواء" },
-                { q: "كم عدد الفصول الأربعة المناخية في السنة الميلادية الواحدة؟", options: ["فصلان فقط", "ثلاثة فصول", "أربعة فصول", "ستة فصول"], correct: "ج", keyword: "الطقس والفصول" },
-                { q: "أي المواد التالية تعتبر موصلة جيدة للتيار الكهربائي؟", options: ["الخشب الجاف", "البلاستيك المرن", "الأسلاك النحاسية", "الزجاج الشفاف"], correct: "ج", keyword: "الطاقة والكهرباء" }
-            ],
-            "math": [
-                { q: "ما الناتج الصحيح لعملية الجمع: ١٥ + ٢٥ = ؟", options: ["٣٠", "٤٠", "٤٥", "٥٠"], correct: "ب", keyword: "الجمع" },
-                { q: "ما ناتج ضرب: ٨ × ٩ = ؟", options: ["٧٢", "٦٤", "٨١", "٥٦"], correct: "أ", keyword: "الضرب" },
-                { q: "ما ناتج قسمة: ٤٥ ÷ ٥ = ؟", options: ["٧", "٨", "٩", "٦"], correct: "ج", keyword: "القسمة" },
-                { q: "قرب العدد ٣٤٩ لأقرب مئة:", options: ["٣٠٠", "٤٠٠", "٣٥٠", "٢٠٠"], correct: "أ", keyword: "التقريب" },
-                { q: "ما مساحة مربع طول ضلعه ٦ سم؟", options: ["١٢ سم مربّع", "٣٦ سم مربّع", "٢٤ سم مربّع", "١٨ سم مربّع"], correct: "ب", keyword: "المساحة" }
-            ],
-            "arabic": [
-                { q: "ما هو الكلمة التي تعبر عن فعل ماضي فيما يلي؟", options: ["يكتبُ", "اكتبْ", "كتبَ", "سنكتبُ"], correct: "ج", keyword: "الأفعال" },
-                { q: "ما هو حرف الجر في جملة (جلس الطالب على الكرسي)؟", options: ["جلس", "الطالب", "على", "الكرسي"], correct: "ج", keyword: "حروف الجر" },
-                { q: "ما جمع كلمة (طالب)؟", options: ["طالبان", "طالبات", "طلاب", "طالبون"], correct: "ج", keyword: "الجمع" },
-                { q: "نوع الجملة (الشاطئ جميل) هي جملة:", options: ["اسمية", "فعلية", "استفهامية", "شرطية"], correct: "أ", keyword: "الجملة الاسمية" },
-                { q: "الكلمة التي تحتوي على مد بالياء هي:", options: ["باب", "توت", "تين", "قلم"], correct: "ج", keyword: "المدود" }
-            ]
-        };
-
-        let studentsList = [];
-        let currentStudentIndex = 0;
-        let studentAnswers = {}; 
-        let allClassResults = {};
-        let activeQuestions = [];
-        let currentModelName = "نموذج (أ)";
-        let globalMaxScore = 0;
 
         function updateLessonCheckboxes() {
             const gradeKey = document.getElementById('selectGrade').value;
@@ -650,7 +622,7 @@
 
             document.getElementById('lessonInputText').value = '';
             updateLessonCheckboxes();
-            alert(`✨ تم توليد وإضافة أسئلة علمية مرتبطة مباشرة بدرس (${text}) بنجاح!`);
+            alert(`✨ تم توليد وإضافة أسئلة علمية مرتبطة حصرياً بصف (${gradeKey}) ودرس (${text}) بنجاح!`);
         }
 
         function fetchAllStudentsFromStorage() {
@@ -681,7 +653,7 @@
 
         function escapeHtml(text) { return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;"); }
 
-        // --- الدالة المحدثة لفلترة الأسئلة بحسب الدروس المحددة حصراً ---
+        // --- التعديل الجذري: توليد الأسئلة حصرياً بناءً على الصف المختار والدروس المحددة دون تداخل ---
         function generateTestModel() {
             const examType = document.getElementById('selectExamType').value;
             const gradeKey = document.getElementById('selectGrade').value;
@@ -704,27 +676,31 @@
             document.getElementById('printSelectedLessonsPrint').textContent = `📖 الدروس المستهدفة: ${selectedLessonsList.join(' ، ')}`;
             document.getElementById('printModelBadge').textContent = `رقم النموذج: ${currentModelName}`;
 
-            // جلب كل الأسئلة المتاحة للمادة
-            let allAvailableQuestions = [];
+            // جلب بنك الأسئلة الخاص بالصف المختار حصراً
+            let availableQuestions = [];
             if (accurateGradeQuestionBank[gradeKey] && accurateGradeQuestionBank[gradeKey][subjectKey]) {
-                allAvailableQuestions = [...accurateGradeQuestionBank[gradeKey][subjectKey]];
-            } 
-            if (fallbackBank[subjectKey]) {
-                allAvailableQuestions = allAvailableQuestions.concat(fallbackBank[subjectKey]);
-            } else {
-                allAvailableQuestions = allAvailableQuestions.concat(fallbackBank["science"]);
+                availableQuestions = [...accurateGradeQuestionBank[gradeKey][subjectKey]];
             }
 
-            // تصفية الأسئلة بحيث تتطابق حصرياً مع الدروس التي حددها المعلم
-            let filteredQuestions = allAvailableQuestions.filter(q => {
-                if (!q.keyword) return true; // إذا لم يكن السؤال مرتبطاً بكلمة مفتاحية محددة يتم إبداؤه كاحتياطي
+            // تصفية الأسئلة بحسب الدروس المحددة
+            let filteredQuestions = availableQuestions.filter(q => {
+                if (!q.keyword) return true;
                 return selectedLessonsList.some(lesson => q.keyword.includes(lesson) || lesson.includes(q.keyword));
             });
 
-            // إذا كانت الأسئلة المفلترة قليلة، نكملها بباقي بنك الأسئلة للمادة لضمان اكتمال الـ 10 فقرات
-            if (filteredQuestions.length < 10) {
-                let remaining = allAvailableQuestions.filter(q => !filteredQuestions.includes(q));
+            // إذا كانت الأسئلة قليلة، نأخذ بقية أسئلة نفس الصف لضمان الاكتمال دون اللجوء لصفوف أخرى
+            if (filteredQuestions.length < 10 && availableQuestions.length > filteredQuestions.length) {
+                let remaining = availableQuestions.filter(q => !filteredQuestions.includes(q));
                 filteredQuestions = filteredQuestions.concat(remaining);
+            }
+
+            // إذا لم تتوفر أسئلة كافية في بنك الصف الأول، يتم توليد أسئلة بديلة تناسب منهج الصف الأول حصراً
+            if (filteredQuestions.length === 0) {
+                filteredQuestions = [
+                    { q: `سؤال تقويمي حول (${selectedLessonsList[0] || 'الدرس'}): ما هي الميزة الأساسية لهذا الموضوع؟`, options: ["الخصائص الأساسية للدرس", "معلومة غير صحيحة", "افتراض خاطئ", "خارج المنهج"], correct: "أ", keyword: "عام" },
+                    { q: `من خلال دراستك لـ (${selectedLessonsList[0] || 'الدرس'})، أي مما يلي يعد صحيحاً؟`, options: ["معلومة خاطئة", "التطبيق والحقيقة العلمية الصحيحة", "احتمال عكسي", "افتراض غير واقعي"], correct: "ب", keyword: "عام" },
+                    { q: `ما هي النتيجة العلمية عند دراسة (${selectedLessonsList[0] || 'الدرس'})؟`, options: ["تفسير غير مرتبط", "احتمال خطأ شائع", "الناتج العلمي الصحيح والمعتمد", "افتراض عكسي"], correct: "ج", keyword: "عام" }
+                ];
             }
 
             let shuffled = [...filteredQuestions];
@@ -733,6 +709,7 @@
                 [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
             }
 
+            // ضبط عدد الأسئلة لتكون بحد أقصى 10 أو حسب المتاح
             activeQuestions = shuffled.slice(0, 10);
             globalMaxScore = activeQuestions.length * 2;
 
