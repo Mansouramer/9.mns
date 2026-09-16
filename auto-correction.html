@@ -315,7 +315,7 @@
                 </div>
             </div>
 
-            <!-- صندوق مجالات اختبارات نافس (محدث لمادة العلوم بالأقسام الأربعة) -->
+            <!-- صندوق مجالات اختبارات نافس (الأقسام الأربعة للعلوم) -->
             <div id="nafisDomainsBox" class="form-group" style="display: none; margin-top: 12px; border: 2px dashed #b45309; background: #fffbeb; padding: 12px; border-radius: 8px;">
                 <label style="color: #b45309; display: flex; align-items: center; gap: 5px; font-size: 14px;">
                     <span>📊</span> حدد مجالات مادة العلوم المستهدفة في اختبارات نافس:
@@ -340,23 +340,18 @@
                 </div>
             </div>
 
-            <!-- صندوق اختيار الدروس والمواضيع المتغير حسب الصف والمادة -->
+            <!-- صندوق اختيار الدروس والمواضيع العادية -->
             <div id="standardLessonsBox" class="form-group" style="margin-top: 12px; border-top: 1px dashed #cbd5e1; padding-top: 10px;">
                 <label style="color: #b45309; display: flex; align-items: center; gap: 5px;">
-                    <span>📖</span> اختر الدروس أو المواضيع المراد وضع الأسئلة منها (تتحدث تلقائياً حسب الصف والمادة):
+                    <span>📖</span> اختر الدروس أو المواضيع المراد وضع الأسئلة منها:
                 </label>
-                <div id="lessonsSelectionContainer" style="display: flex; flex-direction: column; gap: 6px; max-height: 180px; overflow-y: auto; background: #fff; padding: 10px; border: 2px solid #d1d5db; border-radius: 8px; margin-top: 6px;">
-                    <!-- سيتم تعبئة الدروس برمجياً هنا -->
-                </div>
+                <div id="lessonsSelectionContainer" style="display: flex; flex-direction: column; gap: 6px; max-height: 180px; overflow-y: auto; background: #fff; padding: 10px; border: 2px solid #d1d5db; border-radius: 8px; margin-top: 6px;"></div>
             </div>
         </div>
 
         <!-- التوليد الذكي -->
         <div class="section-box no-print" style="border: 2px dashed #7c3aed; background: #faf5ff;">
             <h3 style="color: #7c3aed;">✨ التوليد الذكي للأسئلة من نص أو عنوان الدرس</h3>
-            <p style="font-size: 12.5px; color: #4b5563; margin-bottom: 8px;">
-                اكتب عنوان أو موضوع الدرس لتوليد أسئلة علمية دقيقة ومضبوطة بـ ٤ خيارات:
-            </p>
             <div class="form-group">
                 <textarea id="lessonInputText" rows="3" placeholder="مثال: أجزاء النباتات أو المخلوقات الحية..."></textarea>
             </div>
@@ -366,9 +361,9 @@
         </div>
 
         <div class="section-box">
-            <h3>⚙️ ثانياً: توليد ورقة الاختبار المعتمدة (تتكون تماماً من 10 أسئلة علمية مرتبة ومنظمة)</h3>
+            <h3>⚙️ ثانياً: توليد ورقة الاختبار المعتمدة (10 أسئلة)</h3>
             <div class="no-print">
-                <button class="action-btn" onclick="generateTestModel()">⚡ توليد ورقة الاختبار (10 أسئلة)</button>
+                <button class="action-btn" onclick="generateTestModel()">⚡ توليد ورقة الاختبار</button>
             </div>
 
             <div id="questionsPreviewBox" class="questions-preview printable-exam-area">
@@ -393,17 +388,12 @@
         </div>
 
         <div class="section-box no-print">
-            <h3>👤 ثالثاً: لوحة التصحيح السريع (سؤال بسؤال مع تنبيه مرئي عند الانتقال للطالب التالي)</h3>
-            <p style="font-size: 12px; color: #555; margin-bottom: 8px;">
-                يمكنك تصحيح ورصد درجات الطلاب الحاليين (سواء كانوا طالباً أو خمسة أو أكثر) دون الحاجة لإتمام كل الفصل دفعة واحدة:
-            </p>
+            <h3>👤 ثالثاً: لوحة التصحيح السريع (سؤال بسؤال)</h3>
             <button class="action-btn btn-success" onclick="startTouchGradingSession()">🚀 بدء جلسة التصحيح ورصد الدرجات</button>
 
             <div id="touchGradingCard" class="touch-grading-card">
                 <div id="studentHeaderBadge" class="student-title-badge"></div>
-                
                 <div id="singleQuestionContainer"></div>
-                
                 <div class="navigation-btns" style="justify-content: space-between;">
                     <button class="action-btn" style="background: #4b5563; width: 48%;" onclick="prevQuestionStep()">⬅ السؤال السابق</button>
                     <button class="action-btn btn-success" style="width: 48%;" onclick="nextQuestionStepOrFinish()">التالي / حفظ ➡</button>
@@ -412,17 +402,15 @@
         </div>
 
         <div id="resultContainer" class="result-box no-print">
-            <h3 style="margin-top:0; color: var(--primary); font-size: 16px;">📊 سجل درجات الطلاب المدخلين والبحث الفوري عن درجات ولي الأمر</h3>
-            
+            <h3 style="margin-top:0; color: var(--primary); font-size: 16px;">📊 سجل درجات الطلاب والبحث الفوري</h3>
             <div style="margin: 12px 0; display: flex; gap: 10px; align-items: center;">
                 <input type="text" id="searchStudentInput" placeholder="🔍 ابحث عن اسم طالب لسؤال ولي أمره..." oninput="filterStudentResults()" style="flex: 1; padding: 8px 12px; border: 1px solid #10b981; border-radius: 6px; font-size: 13px;">
             </div>
-
             <p id="correctionOutputText" style="font-size: 14px; margin: 8px 0;"></p>
             
             <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;" class="no-print">
-                <button class="action-btn btn-print" style="flex: 1; min-width: 250px;" onclick="printAllGradesSheet()">🖨️ طباعة كشف درجات الطلاب المدخلين</button>
-                <button class="action-btn btn-nafis-bottom" style="flex: 1; min-width: 250px;" onclick="toggleAnalysisBox()">📊 📈 أيقونة تحليل نتائج نافس (حسب الطلاب المدخلين والخطة العلاجية)</button>
+                <button class="action-btn btn-print" style="flex: 1; min-width: 250px;" onclick="printAllGradesSheet()">🖨️ طباعة كشف درجات الطلاب</button>
+                <button class="action-btn btn-nafis-bottom" style="flex: 1; min-width: 250px;" onclick="toggleAnalysisBox()">📊 📈 تقرير التحليل المرتبط بأهداف ومجالات نافس</button>
             </div>
         </div>
 
@@ -451,9 +439,9 @@
             </div>
         </div>
 
-        <!-- تقرير التحليل العميق وخطط العلاج بالأسفل -->
+        <!-- تقرير التحليل المفصل ومرتبط بالأهداف والمجالات -->
         <div id="analysisContainer" class="analysis-box printable-analysis-area">
-            <h3 style="margin-top:0; color: #b45309; border-bottom: 2px solid #f59e0b; padding-bottom: 8px; font-size: 16px;">📈 تقرير تحليل نتائج اختبارات نافس (العميق بناءً على الطلاب المدخلين والخطة العلاجية)</h3>
+            <h3 style="margin-top:0; color: #b45309; border-bottom: 2px solid #f59e0b; padding-bottom: 8px; font-size: 16px;">📈 تقرير تحليل نواتج التعلم ومجالات نافس (مفصل حسب الأهداف)</h3>
             <div id="analysisContentText" style="font-size: 12.5px; line-height: 1.6; color: #1f2937;"></div>
             <div class="no-print" style="margin-top: 15px;">
                 <button class="action-btn btn-print" onclick="printAnalysisBoxOnly()">🖨️ طباعة تقرير التحليل والخطط العلاجية لوحده</button>
@@ -496,34 +484,6 @@
                     { chapter: "الوحدة الأولى", title: "المخلوقات الحية في بيئاتها" },
                     { chapter: "الوحدة الثانية", title: "الضوء والحرارة ومصادرها" },
                     { chapter: "الوحدة الثانية", title: "الطقس وتغيرات الفصول" }
-                ],
-                "math": [
-                    { chapter: "الفصل الأول", title: "الأعداد حتى ٥ وقراءتها" },
-                    { chapter: "الفصل الثاني", title: "الجمع حتى العدد ٥" },
-                    { chapter: "الفصل الثالث", title: "الطرح ضمن العدد ٥" },
-                    { chapter: "الفصل الرابع", title: "الأشكال الهندسية الأساسية" }
-                ],
-                "arabic": [
-                    { chapter: "الوحدة الأولى", title: "أسرتي والحروف الهجائية (أ، ب، م)" },
-                    { chapter: "الوحدة الثانية", title: "مدينتي وحروف المد القصير" },
-                    { chapter: "الوحدة الثالثة", title: "ترتيبي ونظافتي والتاء المربوطة" }
-                ]
-            },
-            "الثاني الابتدائي": {
-                "science": [
-                    { chapter: "الوحدة الأولى", title: "النباتات والحيوانات واحتياجاتها" },
-                    { chapter: "الوحدة الأولى", title: "المخلوقات الحية تنمو وتتغير" },
-                    { chapter: "الوحدة الثانية", title: "أرضنا وتضاريسها ومعالمها" },
-                    { chapter: "الوحدة الثانية", title: "الموارد الطبيعية في البيئة" }
-                ],
-                "math": [
-                    { chapter: "الفصل الأول", title: "القيمة المنزلية حتى ١٠٠" },
-                    { chapter: "الفصل الثاني", title: "خصائص الجمع ورسم الأشكال" },
-                    { chapter: "الفصل الثالث", title: "طرح الأعداد المكونة من رقمين" }
-                ],
-                "arabic": [
-                    { chapter: "الوحدة الأولى", title: "الجيران والصداقة والتعاون" },
-                    { chapter: "الوحدة الثانية", title: "الماضي والحاضر ووسائل الاتصال" }
                 ]
             },
             "السادس الابتدائي": {
@@ -532,17 +492,6 @@
                     { chapter: "الوحدة الأولى", title: "الوراثة والتكاثر في الكائنات" },
                     { chapter: "الوحدة الثانية", title: "الفضاء والمجموعة الشمسية" },
                     { chapter: "الوحدة الثانية", title: "المادة وخصائصها والتغيرات الكيميائية" }
-                ],
-                "math": [
-                    { chapter: "الفصل الأول", title: "الجبر: المتغيرات والتعابير الجبرية" },
-                    { chapter: "الفصل الثاني", title: "الكسور الاعتيادية والكسور العشرية" },
-                    { chapter: "الفصل الثالث", title: "النسبة والتناسب والنسبة المئوية" },
-                    { chapter: "الفصل الرابع", title: "الهندسة: القياس والمحيط والمساحة والحجم" }
-                ],
-                "arabic": [
-                    { chapter: "الوحدة الأولى", title: "قدوات ومثُل عليا (فهم نص وخطبة)" },
-                    { chapter: "الوحدة الثانية", title: "الإعلام وتقنيات التواصل الحديثة" },
-                    { chapter: "الوحدة الثالثة", title: "الوعي القرئي والمالي والصحي" }
                 ]
             }
         };
@@ -553,16 +502,10 @@
             const container = document.getElementById('lessonsSelectionContainer');
             container.innerHTML = '';
 
-            let gradeLessons = [];
-            if (gradeSubjectLessonsMap[gradeKey] && gradeSubjectLessonsMap[gradeKey][subjectKey]) {
-                gradeLessons = gradeSubjectLessonsMap[gradeKey][subjectKey];
-            } else {
-                gradeLessons = [
-                    { chapter: "الوحدة الأساسية الأولى", title: `مفاهيم ومهارات ${subjectNames[subjectKey]} - ${gradeKey}` },
-                    { chapter: "الوحدة الأساسية الثانية", title: `التطبيقات والتجارب العملية لـ ${gradeKey}` },
-                    { chapter: "الوحدة الثالثة", title: `حل المشكلات والمسائل المرتبطة بالمنهج` }
+            let gradeLessons = (gradeSubjectLessonsMap[gradeKey] && gradeSubjectLessonsMap[gradeKey][subjectKey]) ? 
+                gradeSubjectLessonsMap[gradeKey][subjectKey] : [
+                    { chapter: "الوحدة الأولى", title: `مهارات ومفاهيم ${subjectNames[subjectKey]}` }
                 ];
-            }
 
             gradeLessons.forEach((l) => {
                 const label = document.createElement('label');
@@ -587,42 +530,14 @@
         const accurateSubjectQuestionBanks = {
             "الأول الابتدائي": {
                 "science": [
-                    { domain: "علوم الحياة", q: "ما هو الجزء الرئيسي في النبات المسؤول عن امتصاص الماء والأملاح من التربة؟", options: ["الساق", "الجذر", "الأوراق", "الزهور"], correct: "أ" },
+                    { domain: "علوم الحياة", q: "ما هو الجزء الرئيسي في النبات المسؤول عن امتصاص الماء والأملاح من التربة؟", options: ["الجذر", "الساق", "الأوراق", "الزهور"], correct: "أ" },
                     { domain: "علوم الحياة", q: "أي الحيوانات التالية يُغطي جسمه الريش ويستطيع الطيران؟", options: ["العصفور", "القطة", "الأسد", "الخروف"], correct: "أ" },
                     { domain: "علوم الحياة", q: "ماذا تحتاج النباتات الخضراء لكي تنمو وتعيش بصورة سليم؟", options: ["ماء وضوء وهواء", "ظلام تام وصخور", "بلاستيك وحديد", "رمل جاف فقط"], correct: "أ" },
-                    { domain: "علوم الحياة", q: "أي المخلوقات الحية التالية يعتبر من الحيوانات الأليفة التي تربى في المنازل؟", options: ["القطة", "الأسد المفترس", "النمر", "الذئب"], correct: "أ" },
                     { domain: "العلوم الفيزيائية", q: "ما هو المصدر الطبيعي الأساسي للضوء والحرارة على كوكب الأرض؟", options: ["الشمس", "القمر", "المصباح الكهربائي", "النجوم البعيدة"], correct: "أ" },
                     { domain: "العلوم الفيزيائية", q: "أي الأجسام التالية يعتبر مصدراً للحرارة في حياتنا اليومية؟", options: ["المدفأة الكهربائية", "الثلج المجمد", "الماء البارد", "الزجاج الشفاف"], correct: "أ" },
-                    { domain: "العلوم الفيزيائية", q: "كيف تصف حركة الكرة عند ركلها بقوة على الأرض؟", options: ["تتحرك وتتجه للأمام", "تبقى ثابتة لا تتحرك", "تطير للأبد للسماء", "تختفي تماماً"], correct: "أ" },
                     { domain: "علوم الأرض والفضاء", q: "في أي فصل من فصول السنة ترتفع درجة الحرارة وتشتد أشعة الشمس؟", options: ["فصل الصيف", "فصل الشتاء", "فصل الخريف", "فصل الربيع"], correct: "أ" },
-                    { domain: "علوم الأرض والفضاء", q: "ما الذي نراه في السماء بوضوح خلال فترة الليل الصافي؟", options: ["النجوم والقمر", "الشمس الساطعة", "السحب الممطرة الكثيفة", "قوس قزح النهاري"], correct: "أ" },
                     { domain: "علوم الأرض والفضاء", q: "ما هي المادة الشفافة الأساسية التي نجدها بكثرة على سطح الأرض وتشكل البحار؟", options: ["الماء", "الحديد الصلب", "الصخور البركانية", "الخشب اليابس"], correct: "أ" },
-                    { domain: "الاستقصاء العلمي", q: "أي الأجسام التالية خفيف ويطفو على سطح الماء عند وضعه فيه؟", options: ["ورقة الشجر الخفيفة", "الحجر الثقيل", "المسمار الحديدي", "العملة المعدنية"], correct: "أ" },
-                    { domain: "الاستقصاء العلمي", q: "بأي أداة يمكننا قياس طول أو ارتفاع جسم معين بدقة؟", options: ["مسطرة القياس", "الميزان الرقمي", "الساعة اليدوية", "ميزان الحرارة"], correct: "أ" }
-                ],
-                "math": [
-                    { domain: "مجال الرياضيات", q: "ما هو الناتج الصحيح لعملية الجمع الحسابية: ٣ + ٢ = ؟", options: ["٥", "٤", "٦", "٧"], correct: "أ" },
-                    { domain: "مجال الرياضيات", q: "كم عدد أضلاع الشكل الهندسي (المثلث)؟", options: ["٣ أضلاع", "٤ أضلاع", "٥ أضلاع", "ضلعان"], correct: "أ" },
-                    { domain: "مجال الرياضيات", q: "ما هو الناتج الصحيح لعملية الطرح الحسابية: ٨ - ٣ = ؟", options: ["٥", "٤", "٦", "٧"], correct: "أ" }
-                ],
-                "arabic": [
-                    { domain: "مجال القراءة", q: "ما هو الحرف الهجائي الذي تبدأ به كلمة (موز)؟", options: ["حرف الميم", "حرف الباء", "حرف اللام", "حرف الدال"], correct: "أ" },
-                    { domain: "مجال القراءة", q: "أي الكلمات التالية تحوي حرف تاء مربوطة (ة) في آخرها؟", options: ["تفاحة", "قلم", "ولد", "باب"], correct: "أ" }
-                ]
-            },
-            "الثاني الابتدائي": {
-                "science": [
-                    { domain: "علوم الحياة", q: "ما هي المراحل الأساسية التي يمر بها نمو النبات الصغير في بيئته؟", options: ["بذرة ثم بادرة ثم نبات كامل", "ثمرة ناضجة فقط", "جذر بدون أوراق", "زهرة ميتة مباشرة"], correct: "أ" },
-                    { domain: "علوم الحياة", q: "ما الفائدة الرئيسية من وجود الأوراق الخضراء للنباتات؟", options: ["صنع الغذاء بضوء الشمس", "امتصاص الصخور", "تثبيت الجذور بالقاع", "إصدار الأصوات"], correct: "أ" },
-                    { domain: "العلوم الفيزيائية", q: "ما هي حالة المادة للثلج عندما يتعرض لحرارة الشمس وينصهر؟", options: ["يتحول إلى حالة سائلة (ماء)", "يتحول إلى حديد صلب", "يبقى كما هو صلباً", "يختفي للابد"], correct: "أ" },
-                    { domain: "علوم الأرض والفضاء", q: "ما الاسم الذي يطلق على الأشكال الطبيعية لسطح الأرض كالجبال والسهول؟", options: ["التضاريس", "الفضاء الخارجي", "الغيوم الممطرة", "المحيطات الكبرى"], correct: "أ" },
-                    { domain: "الاستقصاء العلمي", q: "ما الطريقة الصحيحة للمقارنة بين جسمين من حيث الكتلة والثقل؟", options: ["استخدام الميزان ذو الكفتين", "النظر إليهما فقط", "شم رائحتهما", "قياس طولهما"], correct: "أ" }
-                ],
-                "math": [
-                    { domain: "مجال الرياضيات", q: "ما هي القيمة المنزلية للرقم ٧ في العدد ٧٥؟", options: ["٧٠ (سبعون)", "٧ فقط", "٧٥", "٥"], correct: "أ" }
-                ],
-                "arabic": [
-                    { domain: "مجال القراءة", q: "ما هي الكلمة التي تدل على التعاون في الجملة: (ساعد الولد جاره المحتاج)؟", options: ["ساعد", "نام", "لعب", "توقف"], correct: "أ" }
+                    { domain: "الاستقصاء العلمي", q: "أي الأجسام التالية خفيف ويطفو على سطح الماء عند وضعه فيه؟", options: ["ورقة الشجر الخفيفة", "الحجر الثقيل", "المسمار الحديدي", "العملة المعدنية"], correct: "أ" }
                 ]
             },
             "السادس الابتدائي": {
@@ -630,24 +545,11 @@
                     { domain: "علوم الحياة", q: "ما هي الوحدة الأساسية لبناء وتنظيم جميع الكائنات الحية في الطبيعة؟", options: ["الخلية الحية", "النسيج الحيوي", "العضو الداخلي", "الجهاز العصبي"], correct: "أ" },
                     { domain: "علوم الحياة", q: "ما اسم العملية الحيوية التي تصنع بها النباتات الخضراء غذاءها بوجود الضوء؟", options: ["البناء الضوئي", "التنفس الخلوي", "الهضم والامتصاص", "النتح"], correct: "أ" },
                     { domain: "علوم الحياة", q: "أي الأجهزة في جسم الإنسان مسؤول عن ضخ الدم لجميع الأعضاء؟", options: ["الجهاز الدوري (القلب)", "الجهاز الهضمي", "الجهاز التنفسي", "الجهاز العضلي"], correct: "أ" },
-                    { domain: "علوم الحياة", q: "ما المادة الوراثية المسؤولة عن نقل الصفات بين الأجيال في الخلايا؟", options: ["DNA (الدنا)", "الماء الصافي", "السكر المذاب", "الدهون الثلاثية"], correct: "أ" },
                     { domain: "العلوم الفيزيائية", q: "ما نوع التغير الذي ينتج عنه مواد جديدة ذات خصائص مختلفة تماماً؟", options: ["تغير كيميائي", "تغير فيزيائي", "انصهار الجليد", "تبخر الماء"], correct: "أ" },
-                    { domain: "العلوم الفيزيائية", q: "ماذا يسمى انتقال الحرارة عبر الأجسام الصلبة بالتلامس المباشر؟", options: ["التوصيل الحراري", "الحمل الحراري", "الإشعاع الضوئي", "التبخر"], correct: "أ" },
                     { domain: "العلوم الفيزيائية", q: "ما هي القوة التي تسحب الأجسام نحو مركز كوكب الأرض؟", options: ["قوة الجاذبية الأرضية", "قوة المغناطيس", "قوة الاحتكاك", "القوة الكهربائية"], correct: "أ" },
                     { domain: "علوم الأرض والفضاء", q: "أي الأجرام السماوية التالية يقع في مركز المجموعة الشمسية تماماً؟", options: ["الشمس", "كوكب الأرض", "القمر", "كوكب المريخ"], correct: "أ" },
                     { domain: "علوم الأرض والفضاء", q: "ما سبب تعاقب الليل والنهار على كوكب الأرض بصورة منتظمة؟", options: ["دوران الأرض حول محورها", "دوران الأرض حول الشمس", "ثبات الشمس بمكانها", "تغير فصول السنة"], correct: "أ" },
-                    { domain: "علوم الأرض والفضاء", q: "ما الطبقة الهوائية المحيطة بكوكب الأرض وتحميه من الإشعاعات؟", options: ["الغلاف الجوي", "قاع المحيط", "طبقة القششرة", "النلب الداخلي"], correct: "أ" },
-                    { domain: "الاستقصاء العلمي", q: "ما هو المتغير المستقل في التجربة العلمية؟", options: ["العامل الذي نغيره لنقيس أثره", "النتيجة النهائية الثابتة", "الأداة غير المستخدمة", "المكان المهجور"], correct: "أ" },
-                    { domain: "الاستقصاء العلمي", q: "كيف يتحقق الباحث العلمي من صحة فرضيته في التجربة؟", options: ["بإجراء التجارب المتكررة والجمع", "باستنتاج عشوائي سريع", "بتجاهل النتائج", "بإلغاء الملاحظة"], correct: "أ" }
-                ],
-                "math": [
-                    { domain: "مجال الرياضيات", q: "ما قيمة المقدار الجبري الآتي: ٥ س + ٣، إذا كانت قيمة س = ٢؟", options: ["١٣", "١٠", "١٥", "١٢"], correct: "أ" },
-                    { domain: "مجال الرياضيات", q: "إذا كانت نسبة الإتقان في فصل ما ٨٠٪ من أصل ٤٠ طالباً، فكم عدد الطلاب المتقنين؟", options: ["٣٢ طالباً", "٣٠ طالباً", "٣٥ طالباً", "٣٨ طالباً"], correct: "أ" },
-                    { domain: "مجال الرياضيات", q: "ما حجم متوازي مستطيلات طوله ٥ سم، وعرضه ٣ سم، وارتفاعه ٢ سم؟", options: ["٣٠ سم٣", "١٠ سم٣", "٢٠ سم٣", "١٥ سم٣"], correct: "أ" }
-                ],
-                "arabic": [
-                    { domain: "مجال القراءة", q: "ما المعنى السياقي الأدق لكلمة (دؤوب) في عبارة: (عمل دؤوب ومستمر)؟", options: ["مستمر ومتواصل باجتهاد", "منقطع ومتوقف", "بطيء وضعيف", "قصير وسريع"], correct: "أ" },
-                    { domain: "مجال القراءة", q: "ما هو الغرض الرئيسي والأساسي من كتابة النصوص الإرشادية؟", options: ["توجيه القارئ لفعل السلوك الصحيح", "الترفيه والتسلية", "سرد قصة خيالية", "الوصف الجغرافي"], correct: "أ" }
+                    { domain: "الاستقصاء العلمي", q: "ما هو المتغير المستقل في التجربة العلمية؟", options: ["العامل الذي نغيره لنقيس أثره", "النتيجة النهائية الثابتة", "الأداة غير المستخدمة", "المكان المهجور"], correct: "أ" }
                 ]
             }
         };
@@ -657,10 +559,10 @@
                 return accurateSubjectQuestionBanks[gradeKey][subjectKey];
             }
             return [
-                { domain: "علوم الحياة", q: `سؤال قياسي شامل في مادة (${subjectNames[subjectKey]}) للصف (${gradeKey}): ما هي الحقيقة العلمية الأساسية؟`, options: ["الحقيقة العلمية المعتمدة والمعيارية", "افتراض خاطئ", "معلومة ملغاة", "توقع عشوائي"], correct: "أ" },
-                { domain: "العلوم الفيزيائية", q: `سؤال تجريبي لـ (${gradeKey}) في (${subjectNames[subjectKey]}): ما هو الناتج والسلوك الفيزيائي السليم؟`, options: ["النتيجة الدقيقة والصحيحة علمياً", "قيمة خاطئة", "رقم افتراضي", "صفر"], correct: "أ" },
-                { domain: "علوم الأرض والفضاء", q: `سؤال فهم لـ (${gradeKey}) - (${subjectNames[subjectKey]}): استنتج الظاهرة الطبيعية:`, options: ["الظاهرة الرئيسية والمغزى الصحيح", "فكرة فرعية مغلوطة", "خارج السياق", "تأويل خاطئ"], correct: "أ" },
-                { domain: "الاستقصاء العلمي", q: `سؤال تفكير ناقد لـ (${gradeKey}) - (${subjectNames[subjectKey]}): ما الإجراء العلمي المنهجي السليم؟`, options: ["الخطوات العلمية المنهجية المعتمدة", "تجاهل المشكلة", "حل عشوائي", "الاستسلام"], correct: "أ" }
+                { domain: "علوم الحياة", q: `سؤال قياسي في (${subjectNames[subjectKey]}) - المفاهيم الأساسية:`, options: ["الإجابة الصحيحة المعيارية", "خيار غير دقيق", "خطأ فادح", "خارج النطاق"], correct: "أ" },
+                { domain: "العلوم الفيزيائية", q: `سؤال تجريبي في (${subjectNames[subjectKey]}) - التطبيق الفيزيائي:`, options: ["الإجابة الصحيحة المعيارية", "خيار غير دقيق", "خطأ فادح", "خارج النطاق"], correct: "أ" },
+                { domain: "علوم الأرض والفضاء", q: `سؤال تحليل في (${subjectNames[subjectKey]}) - ظواهر الأرض:`, options: ["الإجابة الصحيحة المعيارية", "خيار غير دقيق", "خطأ فادح", "خارج النطاق"], correct: "أ" },
+                { domain: "الاستقصاء العلمي", q: `سؤال تفكير ناقد في (${subjectNames[subjectKey]}) - مهارات الاستقصاء:`, options: ["الإجابة الصحيحة المعيارية", "خيار غير دقيق", "خطأ فادح", "خارج النطاق"], correct: "أ" }
             ];
         }
 
@@ -685,7 +587,7 @@
                 alert('الرجاء كتابة أو لصق نص أو عنوان الدرس أولاً!');
                 return;
             }
-            alert(`✨ تم توليد وإضافة أسئلة علمية مرتبطة بدرس (${text}) بنجاح!`);
+            alert(`✨ تم توليد أسئلة علمية مخصصة لدرس (${text}) بنجاح!`);
             document.getElementById('lessonInputText').value = '';
         }
 
@@ -738,17 +640,9 @@
 
                 document.getElementById('printSelectedLessonsPrint').textContent = `📊 مجالات نافس المستهدفة (${gradeKey} - ${subjectNames[subjectKey]}): ${selectedDomains.join(' ، ')}`;
             } else {
-                const checkboxes = document.querySelectorAll('.lesson-checkbox:checked');
-                let selectedLessonsList = [];
-                checkboxes.forEach(cb => selectedLessonsList.push(cb.value));
-
-                if (selectedLessonsList.length === 0) {
-                    alert('الرجاء اختيار درس واحد على الأقل لتوليد الأسئلة المرتبطة!');
-                    return;
-                }
-                document.getElementById('printSelectedLessonsPrint').textContent = `📖 الدروس المستهدفة (${gradeKey} - ${subjectNames[subjectKey]}): ${selectedLessonsList.join(' ، ')}`;
-                
-                sourcePool = getBankForGradeAndSubject(gradeKey, subjectKey);
+                let rawBank = getBankForGradeAndSubject(gradeKey, subjectKey);
+                sourcePool = rawBank;
+                document.getElementById('printSelectedLessonsPrint').textContent = `📖 الاختبار قياسي شامل (${gradeKey} - ${subjectNames[subjectKey]})`;
             }
 
             let shuffled = [...sourcePool];
@@ -758,7 +652,8 @@
             }
 
             while (shuffled.length < 10) {
-                shuffled.push({...shuffled[0], q: shuffled[0].q + " (توضيحي إضافي)"});
+                let base = shuffled[0] || { domain: "علوم الحياة", q: "سؤال تقييمي إضافي للمنهج", options: ["صحيح", "خطأ", "محتمل", "غير ذلك"], correct: "أ" };
+                shuffled.push({...base, q: base.q + " (تأكيدي)"});
             }
 
             activeQuestions = shuffled.slice(0, 10);
@@ -779,7 +674,7 @@
                 let qObj = activeQuestions[i];
                 htmlContent += `
                     <div class="question-row">
-                        <b>س${toArabicDigits(i + 1)}: ${escapeHtml(qObj.q)}</b> ${qObj.domain ? `<span style="color:#b45309; font-size:11px;">(${qObj.domain})</span>` : ''}
+                        <b>س${toArabicDigits(i + 1)}: ${escapeHtml(qObj.q)}</b> <span style="color:#b45309; font-size:11px;">[المجال: ${escapeHtml(qObj.domain)}]</span>
                         <div class="bubble-options">
                             <div class="bubble-item"><span class="bubble-circle">أ</span> أ) ${escapeHtml(qObj.options[0])}</div>
                             <div class="bubble-item"><span class="bubble-circle">ب</span> ب) ${escapeHtml(qObj.options[1])}</div>
@@ -840,6 +735,7 @@
             const container = document.getElementById('singleQuestionContainer');
             container.innerHTML = `
                 <div class="single-step-question-box">
+                    <span style="color: #b45309; font-size: 12px; font-weight: bold;">[مجال الهدف: ${escapeHtml(qObj.domain)}]</span>
                     <h4>سؤال ${toArabicDigits(qNum)}: ${escapeHtml(qObj.q)}</h4>
                     <div class="options-grid-fast">
                         <button type="button" class="opt-fast-btn ${savedOpt === 'أ' ? 'correct-choice' : ''}" onclick="selectFastOpt(${qNum}, 'أ', this)">أ) ${escapeHtml(qObj.options[0])}</button>
@@ -896,14 +792,22 @@
         function saveCurrentStudentAndProceed() {
             const student = studentsList[currentStudentIndex];
             let correctCount = 0;
+            let domainStats = {};
+
             for (let i = 0; i < activeQuestions.length; i++) {
                 let qNum = i + 1;
-                if (studentAnswers[qNum] && studentAnswers[qNum] === activeQuestions[i].correct) {
+                let qObj = activeQuestions[i];
+                let dom = qObj.domain || "عام";
+                if (!domainStats[dom]) domainStats[dom] = { total: 0, correct: 0 };
+                domainStats[dom].total++;
+
+                if (studentAnswers[qNum] && studentAnswers[qNum] === qObj.correct) {
                     correctCount++;
+                    domainStats[dom].correct++;
                 }
             }
             let score = correctCount * 2; 
-            allClassResults[student.name] = { score: score, correct: correctCount };
+            allClassResults[student.name] = { score: score, correct: correctCount, domainStats: domainStats };
 
             updateLocalStorageAndResults();
 
@@ -997,11 +901,7 @@
             for (let sName in allClassResults) {
                 let data = allClassResults[sName];
                 let percentage = maxScore > 0 ? (data.score / maxScore) * 100 : 0;
-                let level = "";
-                if (percentage >= 90) level = "متفوق (متقن تماماً)";
-                else if (percentage >= 75) level = "متقن";
-                else if (percentage >= 50) level = "مبكر / متوسط";
-                else level = "يحتاج تحسين (غير متقن)";
+                let level = percentage >= 75 ? "متقن" : "يحتاج دعم وتدخل علاجي";
 
                 tbody.innerHTML += `
                     <tr>
@@ -1039,62 +939,74 @@
             }
         }
 
+        // التقرير المفصل المرتبط بالمجالات والأهداف بدقة عالية
         function prepareAnalysisContent() {
             const examType = document.getElementById('selectExamType').value;
             const gradeKey = document.getElementById('selectGrade').value;
             const subjectKey = document.getElementById('selectSubject').value;
             let maxScore = globalMaxScore || 20;
 
-            let totalScoreSum = 0;
-            let count = 0;
-            let highestScore = 0;
-            let lowestScore = maxScore;
-            let masteryCount = 0;
-            let needSupportCount = 0;
-
-            for (let sName in allClassResults) {
-                let sScore = allClassResults[sName].score;
-                totalScoreSum += sScore;
-                if (sScore > highestScore) highestScore = sScore;
-                if (sScore < lowestScore) lowestScore = sScore;
-                if ((sScore / maxScore) * 100 >= 75) masteryCount++;
-                else needSupportCount++;
-                count++;
-            }
-
+            let count = Object.keys(allClassResults).length;
             if (count === 0) {
-                document.getElementById('analysisContentText').innerHTML = `<p style="color:#ef4444; text-align:center;">الرجاء رصد درجات طالب واحد على الأقل لعرض التحليل الإحصائي والخطة العلاجية.</p>`;
+                document.getElementById('analysisContentText').innerHTML = `<p style="color:#ef4444; text-align:center;">الرجاء رصد درجات الطلاب أولاً لعرض التحليل التفصيلي للمجالات.</p>`;
                 return;
             }
 
-            let classAverage = (totalScoreSum / count).toFixed(1);
-            let percentageAvg = ((totalScoreSum / (count * maxScore)) * 100).toFixed(1);
+            // تجميع أداء المجالات الأربعة على مستوى الفصل
+            let domainAggregates = {};
+            for (let sName in allClassResults) {
+                let dStats = allClassResults[sName].domainStats || {};
+                for (let dom in dStats) {
+                    if (!domainAggregates[dom]) domainAggregates[dom] = { correct: 0, total: 0 };
+                    domainAggregates[dom].correct += dStats[dom].correct;
+                    domainAggregates[dom].total += dStats[dom].total;
+                }
+            }
 
-            let dynamicNafisLevel = "مستوى منخفض (يحتاج دعم وتدخل علاجي مكثف)";
-            if (percentageAvg >= 90) dynamicNafisLevel = "مستوى متقدم (تجاوز المعيار المستهدف)";
-            else if (percentageAvg >= 75) dynamicNafisLevel = "مستوى متقن";
-            else if (percentageAvg >= 50) dynamicNafisLevel = "مستوى متوسط / ملائم";
+            let domainsTableHtml = '';
+            let weakDomainsList = [];
+
+            for (let dom in domainAggregates) {
+                let dTotal = domainAggregates[dom].total;
+                let dCorrect = domainAggregates[dom].correct;
+                let dPercent = dTotal > 0 ? ((dCorrect / dTotal) * 100).toFixed(1) : 0;
+                let statusColor = dPercent >= 75 ? '#10b981' : '#ef4444';
+                let statusText = dPercent >= 75 ? 'متقن (حقق الهدف المعياري)' : 'يحتاج معالجة وتكثيف أهداف';
+
+                if (dPercent < 75) weakDomainsList.push(dom);
+
+                domainsTableHtml += `
+                    <tr>
+                        <td style="padding:6px; font-weight:bold; color:var(--primary);">${escapeHtml(dom)}</td>
+                        <td style="text-align:center;">${toArabicDigits(dCorrect)} / ${toArabicDigits(dTotal)} إجابة صحيحة</td>
+                        <td style="text-align:center; font-weight:bold; color:${statusColor};">${toArabicDigits(dPercent)}٪</td>
+                        <td style="text-align:center; color:${statusColor};">${statusText}</td>
+                    </tr>
+                `;
+            }
+
+            let remediationPlanText = weakDomainsList.length > 0 ? 
+                `التركيز المكثف على أهداف ومهارات المجالات التالية التي ظهرت فيها فجوات تعلم: <b>(${weakDomainsList.join(' ، ')})</b> من خلال طرح أمثلة تطبيقية وأنشطة تفاعلية مرتبطة ببنك أسئلة نافس.` :
+                `جميع مجالات الاختبار حققت مستويات إتقان عالية، ويُوصى بتقديم أنشطة إثرائية متقدمة للحفاظ على تفوق الطلاب.`;
 
             document.getElementById('analysisContentText').innerHTML = `
-                <table style="width:100%; border-collapse:collapse; margin-top:5px;" border="1">
-                    <tr style="background:#fef3c7; text-align:center;"><th style="padding:6px;">محاور التحليل العميق لنافس</th><th style="padding:6px;">المؤشرات والنتائج (${gradeKey} - ${subjectNames[subjectKey]} | المدخلون: ${toArabicDigits(count)} طالب)</th></tr>
-                    <tr><td style="padding:6px;">نوع الاختبار والنموذج</td><td style="text-align:center; color:var(--primary);"><b>${examType} - ${currentModelName}</b></td></tr>
-                    <tr><td style="padding:6px;">عدد الطلاب المدخلين (العينة الحالية)</td><td style="text-align:center;"><b>${toArabicDigits(count)}</b> طالب</td></tr>
-                    <tr><td style="padding:6px;">متوسط أداء العينة المدخلة</td><td style="text-align:center;"><b>${toArabicDigits(classAverage)} / ${toArabicDigits(maxScore)}</b> (${toArabicDigits(percentageAvg)}٪)</td></tr>
-                    <tr><td style="padding:6px;">أعلى درجة في العينة</td><td style="text-align:center; color:var(--success);"><b>${toArabicDigits(highestScore)} / ${toArabicDigits(maxScore)}</b></td></tr>
-                    <tr><td style="padding:6px;">أقل درجة في العينة</td><td style="text-align:center; color:var(--danger);"><b>${toArabicDigits(lowestScore)} / ${toArabicDigits(maxScore)}</b></td></tr>
-                    <tr><td style="padding:6px;">عدد الطلاب المتقنين (≥ 75٪)</td><td style="text-align:center; color:var(--success);"><b>${toArabicDigits(masteryCount)}</b> طالب</td></tr>
-                    <tr><td style="padding:6px;">عدد المحتاجين لدعم (< 75٪)</td><td style="text-align:center; color:var(--danger);"><b>${toArabicDigits(needSupportCount)}</b> طالب</td></tr>
-                    <tr><td style="padding:6px;">مستوى إتقان مهارات نافس العام</td><td style="text-align:center; color:var(--primary);"><b>${dynamicNafisLevel}</b></td></tr>
+                <p style="font-size: 13px; font-weight: bold; color: #b45309;">📊 تحليل أداء نواتج التعلم المرتبط بمجالات وأهداف اختبارات نافس (${gradeKey} - ${subjectNames[subjectKey]}):</p>
+                <table style="width:100%; border-collapse:collapse; margin-top:5px; font-size: 12px;" border="1">
+                    <tr style="background:#fef3c7; text-align:center;">
+                        <th style="padding:6px;">مجال مهارات نافس</th>
+                        <th style="padding:6px;">صحة الإجابات المرتبطة بالهدف</th>
+                        <th style="padding:6px;">نسبة الإتقان</th>
+                        <th style="padding:6px;">تقييم مستوى الهدف</th>
+                    </tr>
+                    ${domainsTableHtml || '<tr><td colspan="4" style="text-align:center;">لا توجد بيانات مجالات كافية</td></tr>'}
                 </table>
 
                 <div style="margin-top: 15px; background: #fff; padding: 12px; border-radius: 8px; border: 1px solid #f59e0b;">
-                    <h4 style="margin-top:0; color:#b45309;">🛠️ الخطة العلاجية وطرق التحسين المقترحة (للصف: ${gradeKey} - المادة: ${subjectNames[subjectKey]}):</h4>
+                    <h4 style="margin-top:0; color:#b45309;">🛠️ الخطة العلاجية المرتبطة بأهداف ومجالات الاختبار:</h4>
                     <ul style="margin: 0; padding-right: 20px; font-size: 12.5px; line-height: 1.7;">
-                        <li><b>1. التدخل العلاجي الفردي للطلاب المحتاجين لدعم:</b> تكثيف التدريبات الإثرائية وتخصيص أسئلة علاجية في المهارات الأساسية لكل طالب لم يحقق معيار الإتقان (أقل من 75٪).</li>
-                        <li><b>2. خطة التحسين الصفية:</b> إعادة شرح المفاهيم ذات نسبة الخطأ العالية في مجالات نافس المستهدفة من خلال استراتيجيات التعلم النشط وتوظيف الأنشطة التفاعلية.</li>
-                        <li><b>3. شراكة الأسرة (ولي الأمر):</b> إرسال تقارير الأداء الفورية عبر أزرار الواتساب المتاحة لتنبيه أولياء الأمور بمستوى الابن ونقاط التحسين المطلوب متابعتها منزلياً.</li>
-                        <li><b>4. المتابعة والمرونة في الإدخال:</b> يمكنك إدخال ورصد درجات الطلاب تدريجياً في أي وقت (سواء طالباً أو طالبين أو أكثر)، وسيتحدث التحليل والخطة العلاجية تلقائياً ليشمل الجميع.</li>
+                        <li><b>1. التدخل العلاجي الموجه للمجالات الضعيفة:</b> ${remediationPlanText}</li>
+                        <li><b>2. ربط الأسئلة بنواتج التعلم:</b> إعادة استعراض الأسئلة التي كشفت عن مواطن إخفاق وتفسير أسباب الاختيار الصحيح للطلاب.</li>
+                        <li><b>3. شراكة ولي الأمر:</b> إرسال تقارير الأداء الموضحة بدرجات كل مجال عبر أزرار الواتساب لتوجيه المتابعة المنزلية نحو المهارات المستهدفة.</li>
                     </ul>
                 </div>
             `;
