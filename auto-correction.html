@@ -318,7 +318,7 @@
             <!-- صندوق مجالات اختبارات نافس -->
             <div id="nafisDomainsBox" class="form-group" style="display: none; margin-top: 12px; border: 2px dashed #b45309; background: #fffbeb; padding: 12px; border-radius: 8px;">
                 <label style="color: #b45309; display: flex; align-items: center; gap: 5px; font-size: 14px;">
-                    <span>📊</span> حدد مجالات اختبارات نافس الوطنية المستهدفة (توليد دقيق لـ 10 أسئلة مخصصة ومنظمة):
+                    <span>📊</span> حدد مجالات اختبارات نافس الوطنية المستهدفة (توليد دقيق لـ 10 أسئلة مخصصة):
                 </label>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 8px; margin-top: 8px;">
                     <label style="display: flex; align-items: center; gap: 6px; font-size: 13px; background: #fff; padding: 8px; border-radius: 6px; border: 1px solid #fcd34d; cursor: pointer;">
@@ -340,10 +340,10 @@
                 </div>
             </div>
 
-            <!-- صندوق اختيار الدروس والمواضيع -->
+            <!-- صندوق اختيار الدروس والمواضيع المتغير حسب الصف والمادة -->
             <div id="standardLessonsBox" class="form-group" style="margin-top: 12px; border-top: 1px dashed #cbd5e1; padding-top: 10px;">
                 <label style="color: #b45309; display: flex; align-items: center; gap: 5px;">
-                    <span>📖</span> اختر الدروس أو المواضيع المراد وضع الأسئلة منها:
+                    <span>📖</span> اختر الدروس أو المواضيع المراد وضع الأسئلة منها (تتحدث تلقائياً حسب الصف والمادة):
                 </label>
                 <div id="lessonsSelectionContainer" style="display: flex; flex-direction: column; gap: 6px; max-height: 180px; overflow-y: auto; background: #fff; padding: 10px; border: 2px solid #d1d5db; border-radius: 8px; margin-top: 6px;">
                     <!-- سيتم تعبئة الدروس برمجياً هنا -->
@@ -489,7 +489,103 @@
             "islamic": "الدراسات الإسلامية" 
         };
 
-        // بنوك أسئلة منظمة ومخصصة بكل دقة لكل صف ومادة
+        // بنوك مواضيع الدروس والوحدات المتغيرة لكل صف ومادة دراسية
+        const gradeSubjectLessonsMap = {
+            "الأول الابتدائي": {
+                "science": [
+                    { chapter: "الوحدة الأولى", title: "أجزاء النباتات وخصائصها" },
+                    { chapter: "الوحدة الأولى", title: "المخلوقات الحية في بيئاتها" },
+                    { chapter: "الوحدة الثانية", title: "الضوء والحرارة ومصادرها" },
+                    { chapter: "الوحدة الثانية", title: "الطقس وتغيرات الفصول" }
+                ],
+                "math": [
+                    { chapter: "الفصل الأول", title: "الأعداد حتى ٥ وقراءتها" },
+                    { chapter: "الفصل الثاني", title: "الجمع حتى العدد ٥" },
+                    { chapter: "الفصل الثالث", title: "الطرح ضمن العدد ٥" },
+                    { chapter: "الفصل الرابع", title: "الأشكال الهندسية الأساسية" }
+                ],
+                "arabic": [
+                    { chapter: "الوحدة الأولى", title: "أسرتي والحروف الهجائية (أ، ب، م)" },
+                    { chapter: "الوحدة الثانية", title: "مدينتي وحروف المد القصير" },
+                    { chapter: "الوحدة الثالثة", title: "ترتيبي ونظافتي والتاء المربوطة" }
+                ]
+            },
+            "الثاني الابتدائي": {
+                "science": [
+                    { chapter: "الوحدة الأولى", title: "plants and animals (النباتات والحيوانات)" },
+                    { chapter: "الوحدة الأولى", title: "المخلوقات الحية تنمو وتتغير" },
+                    { chapter: "الوحدة الثانية", title: "أرضنا وتضاريسها ومعالمها" },
+                    { chapter: "الوحدة الثانية", title: "الموارد الطبيعية في البيئة" }
+                ],
+                "math": [
+                    { chapter: "الفصل الأول", title: "القيمة المنزلية حتى ١٠٠" },
+                    { chapter: "الفصل الثاني", title: "خصائص الجمع ورسم الأشكال" },
+                    { chapter: "الفصل الثالث", title: "طرح الأعداد المكونة من رقمين" }
+                ],
+                "arabic": [
+                    { chapter: "الوحدة الأولى", title: "الجيران والصداقة والتعاون" },
+                    { chapter: "الوحدة الثانية", title: "الماضي والحاضر ووسائل الاتصال" }
+                ]
+            },
+            "السادس الابتدائي": {
+                "science": [
+                    { chapter: "الوحدة الأولى", title: "الخلايا والعمليات الحيوية" },
+                    { chapter: "الوحدة الأولى", title: "الوراثة والتكاثر في الكائنات" },
+                    { chapter: "الوحدة الثانية", title: "الفضاء والمجموعة الشمسية" },
+                    { chapter: "الوحدة الثانية", title: "المادة وخصائصها والتغيرات الكيميائية" }
+                ],
+                "math": [
+                    { chapter: "الفصل الأول", title: "الجبر: المتغيرات والتعابير الجبرية" },
+                    { chapter: "الفصل الثاني", title: "الكسور الاعتيادية والكسور العشرية" },
+                    { chapter: "الفصل الثالث", title: "النسبة والتناسب والنسبة المئوية" },
+                    { chapter: "الفصل الرابع", title: "الهندسة: القياس والمحيط والمساحة والحجم" }
+                ],
+                "arabic": [
+                    { chapter: "الوحدة الأولى", title: "قدوات ومثُل عليا (فهم نص وخطبة)" },
+                    { chapter: "الوحدة الثانية", title: "الإعلام وتقنيات التواصل الحديثة" },
+                    { chapter: "الوحدة الثالثة", title: "الوعي القرئي والمالي والصحي" }
+                ]
+            }
+        };
+
+        function updateLessonCheckboxes() {
+            const gradeKey = document.getElementById('selectGrade').value;
+            const subjectKey = document.getElementById('selectSubject').value;
+            const container = document.getElementById('lessonsSelectionContainer');
+            container.innerHTML = '';
+
+            // جلب الدروس المخصصة للصف والمادة، أو عرض دروس افتراضية عامة مطابقة للمرحلة
+            let gradeLessons = [];
+            if (gradeSubjectLessonsMap[gradeKey] && gradeSubjectLessonsMap[gradeKey][subjectKey]) {
+                gradeLessons = gradeSubjectLessonsMap[gradeKey][subjectKey];
+            } else {
+                gradeLessons = [
+                    { chapter: "الوحدة الأساسية الأولى", title: `مفاهيم ومهارات ${subjectNames[subjectKey]} - ${gradeKey}` },
+                    { chapter: "الوحدة الأساسية الثانية", title: `التطبيقات والتجارب العملية لـ ${gradeKey}` },
+                    { chapter: "الوحدة الثالثة", title: `حل المشكلات والمسائل المرتبطة بالمنهج` }
+                ];
+            }
+
+            gradeLessons.forEach((l) => {
+                const label = document.createElement('label');
+                label.style.display = 'flex';
+                label.style.alignItems = 'center';
+                label.style.gap = '8px';
+                label.style.fontSize = '13px';
+                label.style.cursor = 'pointer';
+                label.style.padding = '4px 6px';
+                label.style.borderRadius = '4px';
+                label.style.background = '#f8fafc';
+                label.style.border = '1px solid #e2e8f0';
+
+                label.innerHTML = `
+                    <input type="checkbox" class="lesson-checkbox" value="${escapeHtml(l.title)}" checked style="width: 16px; height: 16px; accent-color: var(--secondary); cursor: pointer;">
+                    <span><b>[${escapeHtml(l.chapter)}>]</b> ${escapeHtml(l.title)}</span>
+                `;
+                container.appendChild(label);
+            });
+        }
+
         const accurateSubjectQuestionBanks = {
             "الأول الابتدائي": {
                 "science": [
@@ -531,7 +627,6 @@
             if (accurateSubjectQuestionBanks[gradeKey] && accurateSubjectQuestionBanks[gradeKey][subjectKey]) {
                 return accurateSubjectQuestionBanks[gradeKey][subjectKey];
             }
-            // بنك احتياطي علمي دقيق ومنضبط لأي صف أو مادة أخرى
             return [
                 { domain: "مجال العلوم", q: `سؤال قياسي في مادة (${subjectNames[subjectKey]}) للصف (${gradeKey}): ما هي الحقيقة العلمية الأساسية؟`, options: ["الحقيقة العلمية المعتمدة والمعيارية", "افتراض خاطئ", "معلومة ملغاة", "توقع عشوائي"], correct: "أ" },
                 { domain: "مجال الرياضيات", q: `سؤال حسابي رياضي لـ (${gradeKey}) في (${subjectNames[subjectKey]}): ما هو الناتج السليم؟`, options: ["الناتج الحسابي الدقيق والصحيح", "قيمة خاطئة", "رقم افتراضي", "صفر"], correct: "أ" },
@@ -553,39 +648,6 @@
                 standardBox.style.display = 'block';
                 updateLessonCheckboxes();
             }
-        }
-
-        function updateLessonCheckboxes() {
-            const container = document.getElementById('lessonsSelectionContainer');
-            container.innerHTML = '';
-
-            let gradeLessons = [
-                { chapter: "الوحدة الأولى", title: "أجزاء النباتات وخصائصها" },
-                { chapter: "الوحدة الأولى", title: "المخلوقات الحية في بيئاتها" },
-                { chapter: "الوحدة الثانية", title: "الضوء والحرارة ومصادرها" },
-                { chapter: "الوحدة الثانية", title: "الطقس وتغيرات الفصول" },
-                { chapter: "الوحدة الثالثة", title: "المادة وخصائصها الفيزيائية" },
-                { chapter: "الوحدة الرابعة", title: "حركة الأجسام والقوى المؤثرة" }
-            ];
-
-            gradeLessons.forEach((l) => {
-                const label = document.createElement('label');
-                label.style.display = 'flex';
-                label.style.alignItems = 'center';
-                label.style.gap = '8px';
-                label.style.fontSize = '13px';
-                label.style.cursor = 'pointer';
-                label.style.padding = '4px 6px';
-                label.style.borderRadius = '4px';
-                label.style.background = '#f8fafc';
-                label.style.border = '1px solid #e2e8f0';
-
-                label.innerHTML = `
-                    <input type="checkbox" class="lesson-checkbox" value="${escapeHtml(l.title)}" checked style="width: 16px; height: 16px; accent-color: var(--secondary); cursor: pointer;">
-                    <span><b>[${escapeHtml(l.chapter)}>]</b> ${escapeHtml(l.title)}</span>
-                `;
-                container.appendChild(label);
-            });
         }
 
         function smartGenerateFromLessonText() {
@@ -1023,4 +1085,3 @@
     </script>
 </body>
 </html>
-
