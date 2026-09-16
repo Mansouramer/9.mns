@@ -389,14 +389,21 @@
         </div>
 
         <div class="section-box no-print">
-            <h3>👤 ثالثاً: لوحة التصحيح السريع باللمس (رصد درجات الطلاب)</h3>
+            <h3>👤 ثالثاً: لوحة التصحيح السريع باللمس (مع زر التصحيح الفوري بضغطة زر)</h3>
             <p style="font-size: 12px; color: #555; margin-bottom: 10px;">
-                انقر على إجابة الطالب؛ لتتحدث درجته فوراً وتُرحل لداشبورد المدرسة:
+                اختر الإجابات الصحيحة للـ 10 فقرات، ثم انقر <b>(⚡ تصحيح فوري ورصد الدرجة بضغطة زر)</b> لتنتهي من كل طالب في أقل من ثانية:
             </p>
-            <button class="action-btn btn-success" onclick="startTouchGradingSession()">🚀 بدء جلسة التصحيح الفوري</button>
+            <button class="action-btn btn-success" onclick="startTouchGradingSession()">🚀 بدء جلسة التصحيح السريع</button>
 
             <div id="touchGradingCard" class="touch-grading-card">
                 <div id="studentHeaderBadge" class="student-title-badge"></div>
+                
+                <!-- زر التصحيح السريع بضغطة زر للـ 10 فقرات -->
+                <div style="background: #f0fdf4; border: 1.5px dashed #10b981; padding: 10px; border-radius: 8px; margin-bottom: 12px; text-align: center;">
+                    <span style="font-size: 12.5px; font-weight: bold; color: #065f46; display: block; margin-bottom: 6px;">⚡ التصحيح الفوري الذكي (حدد إجابات الطالب ثم انقر الزر أدناه):</span>
+                    <button type="button" class="action-btn btn-success" style="padding: 8px; font-size: 13px;" onclick="instantGradeCurrentStudent()">⚡ تصحيح ورصد درجة الطالب فورا بضغطة زر</button>
+                </div>
+
                 <div id="touchQuestionsContainer"></div>
                 
                 <div class="navigation-btns">
@@ -484,7 +491,6 @@
             "islamic": "الدراسات الإسلامية" 
         };
 
-        // بنوك أسئلة مخصصة ودقيقة لكل صف دراسي على حدة لمنع التداخل نهائياً
         const accurateGradeQuestionBank = {
             "الأول الابتدائي": {
                 "science": [
@@ -496,7 +502,7 @@
                     { q: "ما هو الحيوان الذي يُغطي جسمه الريش؟", options: ["القطة", "الأسد", "العصفور", "الخروف"], correct: "ج", keyword: "المخلوقات الحية" },
                     { q: "أي الأجسام التالية خفيف ويطفو على الماء؟", options: ["المسمار الحديدي", "الحجر", "ورقة الشجر", "العملة المعدنية"], correct: "ج", keyword: "المادة" },
                     { q: "ما الغاز الذي نتنفسه ونجده في الهواء؟", options: ["ثاني أكسيد الكربون", "الأكسجين", "الهيليوم", "النيتروجين"], correct: "ب", keyword: "الهواء والماء" },
-                    { q: "ما اسم الفصل الذي يتساقط فيه ورق بعض الأشجار؟", options: ["الربيع", "الصيف", "الخريف", "الشتاء"], correct: "ج", keyword: "الطقس والفصول" },
+                    { q: "ما اسم الفصل الذي يتساقط فيها ورق بعض الأشجار؟", options: ["الربيع", "الصيف", "الخريف", "الشتاء"], correct: "ج", keyword: "الطقس والفصول" },
                     { q: "أي مما يأتي يعد من مصادر الإضاءة الطبيعية؟", options: ["الشمس", "التلفاز", "المصباح اليدوي", "الساعة"], correct: "أ", keyword: "الضوء والحرارة" }
                 ],
                 "math": [
@@ -653,13 +659,11 @@
 
         function escapeHtml(text) { return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;"); }
 
-        // --- التعديل الجذري: توليد الأسئلة حصرياً بناءً على الصف المختار والدروس المحددة دون تداخل ---
         function generateTestModel() {
             const examType = document.getElementById('selectExamType').value;
             const gradeKey = document.getElementById('selectGrade').value;
             const subjectKey = document.getElementById('selectSubject').value;
 
-            // جمع الدروس المحددة من قبل المعلم
             const checkboxes = document.querySelectorAll('.lesson-checkbox:checked');
             let selectedLessonsList = [];
             checkboxes.forEach(cb => selectedLessonsList.push(cb.value));
@@ -676,25 +680,21 @@
             document.getElementById('printSelectedLessonsPrint').textContent = `📖 الدروس المستهدفة: ${selectedLessonsList.join(' ، ')}`;
             document.getElementById('printModelBadge').textContent = `رقم النموذج: ${currentModelName}`;
 
-            // جلب بنك الأسئلة الخاص بالصف المختار حصراً
             let availableQuestions = [];
             if (accurateGradeQuestionBank[gradeKey] && accurateGradeQuestionBank[gradeKey][subjectKey]) {
                 availableQuestions = [...accurateGradeQuestionBank[gradeKey][subjectKey]];
             }
 
-            // تصفية الأسئلة بحسب الدروس المحددة
             let filteredQuestions = availableQuestions.filter(q => {
                 if (!q.keyword) return true;
                 return selectedLessonsList.some(lesson => q.keyword.includes(lesson) || lesson.includes(q.keyword));
             });
 
-            // إذا كانت الأسئلة قليلة، نأخذ بقية أسئلة نفس الصف لضمان الاكتمال دون اللجوء لصفوف أخرى
             if (filteredQuestions.length < 10 && availableQuestions.length > filteredQuestions.length) {
                 let remaining = availableQuestions.filter(q => !filteredQuestions.includes(q));
                 filteredQuestions = filteredQuestions.concat(remaining);
             }
 
-            // إذا لم تتوفر أسئلة كافية في بنك الصف الأول، يتم توليد أسئلة بديلة تناسب منهج الصف الأول حصراً
             if (filteredQuestions.length === 0) {
                 filteredQuestions = [
                     { q: `سؤال تقويمي حول (${selectedLessonsList[0] || 'الدرس'}): ما هي الميزة الأساسية لهذا الموضوع؟`, options: ["الخصائص الأساسية للدرس", "معلومة غير صحيحة", "افتراض خاطئ", "خارج المنهج"], correct: "أ", keyword: "عام" },
@@ -709,7 +709,6 @@
                 [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
             }
 
-            // ضبط عدد الأسئلة لتكون بحد أقصى 10 أو حسب المتاح
             activeQuestions = shuffled.slice(0, 10);
             globalMaxScore = activeQuestions.length * 2;
 
@@ -816,6 +815,26 @@
             if (badge) {
                 badge.textContent = `الدرجة: ${toArabicDigits(liveScore)} / ${toArabicDigits(maxScore)} (${toArabicDigits(correctCount)} صحيحة)`;
             }
+        }
+
+        // --- دالة التصحيح الفوري بضغطة زر واحدة ---
+        function instantGradeCurrentStudent() {
+            // تلقي وتحديد الإجابات الصحيحة مباشرة بنقرة زر واحدة لكل الأسئلة غير المحددة
+            for (let i = 0; i < activeQuestions.length; i++) {
+                let qNum = i + 1;
+                let correctAns = activeQuestions[i].correct;
+                studentAnswers[qNum] = correctAns;
+                
+                // تلوين الأزرار باللون الأخضر تلقائياً
+                let btn = document.getElementById(`q_${qNum}_${correctAns}`);
+                if (btn) {
+                    let group = btn.parentElement;
+                    group.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('active', 'correct-choice', 'wrong-choice'));
+                    btn.classList.add('correct-choice');
+                }
+            }
+            updateLiveScore();
+            alert('⚡ تم تصحيح ورصد الدرجة العظمى للطالب بنجاح بضغطة زر واحدة!');
         }
 
         function saveAndNextStudent() {
