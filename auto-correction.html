@@ -115,7 +115,7 @@
         }
         .action-btn:hover { opacity: 0.9; }
         .btn-print { background: var(--print-btn); }
-        .btn-success { background: var(--success); }
+        .btn-success { background: #10b981; }
         .btn-whatsapp { background: #059669; }
         .btn-warning { background: #d97706; }
         .btn-purple { background: #7c3aed; }
@@ -152,58 +152,53 @@
             font-weight: bold;
         }
 
-        .touch-question-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        /* تنسيق السؤال الفردي السريع */
+        .single-step-question-box {
             background: #fdfdfd;
-            padding: 10px 12px;
-            margin-bottom: 8px;
-            border-radius: 8px;
-            border: 1px solid #e2e8f0;
+            border: 2px solid #cbd5e1;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
         }
 
-        .touch-question-row span {
-            font-size: 13.5px;
-            font-weight: bold;
+        .single-step-question-box h4 {
+            margin-top: 0;
             color: var(--primary);
+            font-size: 15px;
+            line-height: 1.6;
         }
 
-        .options-group {
-            display: flex;
-            flex-direction: row-reverse;
+        .options-grid-fast {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
             gap: 10px;
+            margin-top: 12px;
         }
 
-        .opt-btn {
-            width: 38px;
-            height: 38px;
-            border: 2px solid var(--primary);
-            border-radius: 50%;
+        .opt-fast-btn {
             background: #fff;
+            border: 2px solid var(--primary);
             color: var(--primary);
-            font-weight: bold;
+            padding: 12px;
+            border-radius: 8px;
             font-size: 14px;
+            font-weight: bold;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: 0.15s;
+            text-align: right;
+            transition: 0.1s;
         }
 
-        .opt-btn.active {
-            background: var(--primary);
-            color: #fff;
-            transform: scale(1.05);
+        .opt-fast-btn:hover {
+            background: var(--accent);
         }
 
-        .opt-btn.correct-choice {
+        .opt-fast-btn.correct-choice {
             background: var(--success) !important;
             border-color: var(--success) !important;
             color: #fff !important;
         }
 
-        .opt-btn.wrong-choice {
+        .opt-fast-btn.wrong-choice {
             background: var(--danger) !important;
             border-color: var(--danger) !important;
             color: #fff !important;
@@ -391,19 +386,21 @@
         </div>
 
         <div class="section-box no-print">
-            <h3>👤 ثالثاً: لوحة التصحيح السريع باللمس (تعبئة فراغات واختيارات ورقة الطالب)</h3>
+            <h3>👤 ثالثاً: لوحة التصحيح السريع (سؤال بسؤال لسرعة الإنجاز والضغطات المتتالية)</h3>
             <p style="font-size: 12px; color: #555; margin-bottom: 10px;">
-                انقر على اختيارات الطالب حسب ما ظلله في ورقته؛ ليقوم النظام بمطابقتها وتصحيحها فوراً:
+                يظهر لك السؤال مع خياراته؛ بمجرد الضغط على إجابة الطالب ينتقل النظام تلقائياً للسؤال التالي مع زر للرجوع عند الحاجة:
             </p>
             <button class="action-btn btn-success" onclick="startTouchGradingSession()">🚀 بدء جلسة التصحيح ورصد الدرجات</button>
 
             <div id="touchGradingCard" class="touch-grading-card">
                 <div id="studentHeaderBadge" class="student-title-badge"></div>
-                <div id="touchQuestionsContainer"></div>
                 
-                <div class="navigation-btns">
-                    <button class="action-btn" style="background: #4b5563;" onclick="prevStudent()">⬅ الطالب السابق</button>
-                    <button class="action-btn btn-success" onclick="saveAndNextStudent()">حفظ والانتقال للتالي ➡</button>
+                <!-- عرض السؤال الحالي فقط -->
+                <div id="singleQuestionContainer"></div>
+                
+                <div class="navigation-btns" style="justify-content: space-between;">
+                    <button class="action-btn" style="background: #4b5563; width: 48%;" onclick="prevQuestionStep()">⬅ السؤال السابق</button>
+                    <button class="action-btn btn-success" style="width: 48%;" onclick="nextQuestionStepOrFinish()">السؤال التالي ➡</button>
                 </div>
             </div>
         </div>
@@ -737,6 +734,16 @@
             setTimeout(() => { window.print(); }, 200);
         }
 
+        // --- المتغيرات الخاصة بجلسة التصحيح الفردي السريع ---
+        let currentStudentIndex = 0;
+        let currentQuestionStep = 0; // مؤشر السؤال الحالي (من 0 إلى 9)
+        let studentsList = [];
+        let activeQuestions = [];
+        let globalMaxScore = 20;
+        let currentModelName = "نموذج (أ)";
+        let studentAnswers = {};
+        let allClassResults = {};
+
         function startTouchGradingSession() {
             if (activeQuestions.length === 0) { generateTestModel(); }
             fetchAllStudentsFromStorage();
@@ -744,75 +751,89 @@
             currentStudentIndex = 0;
             allClassResults = {};
             document.getElementById('touchGradingCard').style.display = 'block';
-            renderCurrentStudentCard();
+            startNewStudentSession();
             window.scrollTo({ top: document.getElementById('touchGradingCard').offsetTop, behavior: 'smooth' });
         }
 
-        function renderCurrentStudentCard() {
+        function startNewStudentSession() {
+            currentQuestionStep = 0;
+            studentAnswers = {};
+            renderCurrentStepView();
+        }
+
+        function renderCurrentStepView() {
             const student = studentsList[currentStudentIndex];
             const maxScore = globalMaxScore;
+            
             document.getElementById('studentHeaderBadge').innerHTML = `
                 <span>👤 الطالب (${toArabicDigits(currentStudentIndex + 1)}/${toArabicDigits(studentsList.length)}): ${escapeHtml(student.name)} [${currentModelName}]</span>
-                <div id="liveScoreBadge" class="live-score-box">الدرجة: ٠ / ${toArabicDigits(maxScore)}</div>
+                <div id="liveScoreBadge" class="live-score-box">السؤال ${toArabicDigits(currentQuestionStep + 1)} / ${toArabicDigits(activeQuestions.length)}</div>
             `;
-            
-            const container = document.getElementById('touchQuestionsContainer');
-            container.innerHTML = '';
-            studentAnswers = {};
 
-            for (let i = 0; i < activeQuestions.length; i++) {
-                let qNum = i + 1;
-                container.innerHTML += `
-                    <div class="touch-question-row">
-                        <span>سؤال ${toArabicDigits(qNum)}</span>
-                        <div class="options-group">
-                            <button type="button" class="opt-btn" id="q_${qNum}_أ" onclick="selectOpt(${qNum}, 'أ', this)">أ</button>
-                            <button type="button" class="opt-btn" id="q_${qNum}_ب" onclick="selectOpt(${qNum}, 'ب', this)">ب</button>
-                            <button type="button" class="opt-btn" id="q_${qNum}_ج" onclick="selectOpt(${qNum}, 'ج', this)">ج</button>
-                            <button type="button" class="opt-btn" id="q_${qNum}_د" onclick="selectOpt(${qNum}, 'د', this)">د</button>
-                        </div>
+            let qObj = activeQuestions[currentQuestionStep];
+            let qNum = currentQuestionStep + 1;
+            let savedOpt = studentAnswers[qNum] || '';
+
+            const container = document.getElementById('singleQuestionContainer');
+            container.innerHTML = `
+                <div class="single-step-question-box">
+                    <h4>سؤال ${toArabicDigits(qNum)}: ${escapeHtml(qObj.q)}</h4>
+                    <div class="options-grid-fast">
+                        <button type="button" class="opt-fast-btn ${savedOpt === 'أ' ? 'correct-choice' : ''}" onclick="selectFastOpt(${qNum}, 'أ', this)">أ) ${escapeHtml(qObj.options[0])}</button>
+                        <button type="button" class="opt-fast-btn ${savedOpt === 'ب' ? 'correct-choice' : ''}" onclick="selectFastOpt(${qNum}, 'ب', this)">ب) ${escapeHtml(qObj.options[1])}</button>
+                        <button type="button" class="opt-fast-btn ${savedOpt === 'ج' ? 'correct-choice' : ''}" onclick="selectFastOpt(${qNum}, 'ج', this)">ج) ${escapeHtml(qObj.options[2])}</button>
+                        <button type="button" class="opt-fast-btn ${savedOpt === 'د' ? 'correct-choice' : ''}" onclick="selectFastOpt(${qNum}, 'د', this)">د) ${escapeHtml(qObj.options[3])}</button>
                     </div>
-                `;
-            }
+                </div>
+            `;
             convertAllNumbersInDOM();
         }
 
-        function selectOpt(qNum, opt, btn) {
-            const group = btn.parentElement;
-            group.querySelectorAll('.opt-btn').forEach(b => {
-                b.classList.remove('active', 'correct-choice', 'wrong-choice');
-            });
-            
+        function selectFastOpt(qNum, opt, btn) {
             studentAnswers[qNum] = opt;
-            let correctAns = activeQuestions[qNum - 1].correct;
+            const parentGrid = btn.parentElement;
+            parentGrid.querySelectorAll('.opt-fast-btn').forEach(b => {
+                b.classList.remove('correct-choice', 'wrong-choice');
+            });
 
+            let correctAns = activeQuestions[qNum - 1].correct;
             if (opt === correctAns) {
                 btn.classList.add('correct-choice');
             } else {
                 btn.classList.add('wrong-choice');
-                let correctBtn = document.getElementById(`q_${qNum}_${correctAns}`);
-                if(correctBtn) correctBtn.classList.add('correct-choice');
+                // إضاءة الزر الصحيح لمساعدتك
+                parentGrid.querySelectorAll('.opt-fast-btn').forEach(b => {
+                    if (b.textContent.startsWith(correctAns)) b.classList.add('correct-choice');
+                });
             }
-            updateLiveScore();
-        }
 
-        function updateLiveScore() {
-            let correctCount = 0;
-            for (let i = 0; i < activeQuestions.length; i++) {
-                let qNum = i + 1;
-                if (studentAnswers[qNum] && studentAnswers[qNum] === activeQuestions[i].correct) {
-                    correctCount++;
+            // انتقال تلقائي سريع للسؤال التالي بعد الضغط بنصف ثانية
+            setTimeout(() => {
+                if (currentQuestionStep < activeQuestions.length - 1) {
+                    currentQuestionStep++;
+                    renderCurrentStepView();
                 }
-            }
-            let liveScore = correctCount * 2;
-            let maxScore = globalMaxScore;
-            const badge = document.getElementById('liveScoreBadge');
-            if (badge) {
-                badge.textContent = `الدرجة: ${toArabicDigits(liveScore)} / ${toArabicDigits(maxScore)} (${toArabicDigits(correctCount)} صحيحة)`;
+            }, 300);
+        }
+
+        function prevQuestionStep() {
+            if (currentQuestionStep > 0) {
+                currentQuestionStep--;
+                renderCurrentStepView();
             }
         }
 
-        function saveAndNextStudent() {
+        function nextQuestionStepOrFinish() {
+            if (currentQuestionStep < activeQuestions.length - 1) {
+                currentQuestionStep++;
+                renderCurrentStepView();
+            } else {
+                // حفظ درجة الطالب الحالي والانتقال للطالب التالي أو إنهاء الجلسة
+                saveCurrentStudentAndProceed();
+            }
+        }
+
+        function saveCurrentStudentAndProceed() {
             const student = studentsList[currentStudentIndex];
             let correctCount = 0;
             for (let i = 0; i < activeQuestions.length; i++) {
@@ -826,17 +847,9 @@
 
             currentStudentIndex++;
             if (currentStudentIndex < studentsList.length) {
-                renderCurrentStudentCard();
-                window.scrollTo({ top: document.getElementById('touchGradingCard').offsetTop, behavior: 'smooth' });
+                startNewStudentSession();
             } else {
                 finishGradingSession();
-            }
-        }
-
-        function prevStudent() {
-            if (currentStudentIndex > 0) {
-                currentStudentIndex--;
-                renderCurrentStudentCard();
             }
         }
 
@@ -875,7 +888,7 @@
             const outputText = document.getElementById('correctionOutputText');
             let maxScore = globalMaxScore || 20;
 
-            let html = `✅ تم رصد الدرجات وترحيلها بنجاح!<br><br>`;
+            let html = `✅ تم رصد درجات الفصل وحفظها في السجل بنجاح!<br><br>`;
             let foundAny = false;
 
             for (let sName in allClassResults) {
