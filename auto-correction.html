@@ -171,16 +171,18 @@
 
         .student-title-badge {
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
             background: #d1fae5;
-            padding: 12px 15px;
+            padding: 10px 15px;
             border-radius: 8px;
             font-weight: bold;
             color: #065f46;
             font-size: 14px;
             margin-bottom: 12px;
             border: 1px solid #34d399;
-            gap: 6px;
+            flex-wrap: wrap;
+            gap: 8px;
         }
 
         .live-score-box {
@@ -361,12 +363,12 @@
                 <div class="form-group">
                     <label>الصف الدراسي:</label>
                     <select id="selectGrade" onchange="updateLessonCheckboxes()">
-                        <option value="الصف الأول الابتدائي">الصف الأول الابتدائي</option>
-                        <option value="الصف الثاني الابتدائي">الصف الثاني الابتدائي</option>
-                        <option value="الصف الثالث الابتدائي">الصف الثالث الابتدائي</option>
-                        <option value="الصف الرابع الابتدائي">الصف الرابع الابتدائي</option>
-                        <option value="الصف الخامس الابتدائي">الصف الخامس الابتدائي</option>
-                        <option value="الصف السادس الابتدائي" selected>الصف السادس الابتدائي</option>
+                        <option value="الأول الابتدائي">الصف الأول الابتدائي</option>
+                        <option value="الثاني الابتدائي">الصف الثاني الابتدائي</option>
+                        <option value="الثالث الابتدائي">الصف الثالث الابتدائي</option>
+                        <option value="الرابع الابتدائي">الصف الرابع الابتدائي</option>
+                        <option value="الخامس الابتدائي">الصف الخامس الابتدائي</option>
+                        <option value="السادس الابتدائي" selected>الصف السادس الابتدائي</option>
                     </select>
                 </div>
 
@@ -494,6 +496,7 @@
                     <tr style="background: #fef08a; color: #1e3a8a;">
                         <th style="padding: 6px; width: 40px;">م</th>
                         <th style="padding: 6px; text-align: right; padding-right: 10px;">اسم الطالب</th>
+                        <th style="padding: 6px; width: 100px;">الفصل الدراسي</th>
                         <th style="padding: 6px; width: 100px;">الدرجة المستحقة</th>
                         <th style="padding: 6px; width: 100px;">الدرجة الكبرى</th>
                         <th style="padding: 6px; width: 120px;">مستوى الإتقان</th>
@@ -548,7 +551,7 @@
         };
 
         const gradeSubjectLessonsMap = {
-            "الصف الأول الابتدائي": {
+            "الأول الابتدائي": {
                 "science": [
                     { chapter: "الوحدة الأولى", title: "أجزاء النباتات وخصائصها" },
                     { chapter: "الوحدة الأولى", title: "المخلوقات الحية في بيئاتها" },
@@ -560,25 +563,25 @@
                     { chapter: "الفصل الثاني", title: "المقارنة والتصنيف" }
                 ]
             },
-            "الصف الثاني الابتدائي": {
+            "الثاني الابتدائي": {
                 "science": [
                     { chapter: "الوحدة الأولى", title: "plants and animals" },
                     { chapter: "الوحدة الثانية", title: "حالات المادة والطاقة" }
                 ]
             },
-            "الصف الثالث الابتدائي": {
+            "الثالث الابتدائي": {
                 "science": [
                     { chapter: "الوحدة الأولى", title: "المهارات الحياتية والنباتات" },
                     { chapter: "الوحدة الثانية", title: "الضوء والصوت" }
                 ]
             },
-            "الصف الرابع الابتدائي": {
+            "الرابع الابتدائي": {
                 "science": [
                     { chapter: "الوحدة الأولى", title: "المملكة النباتية والحيوانية" },
                     { chapter: "الوحدة الثانية", title: "النظم البيئية" }
                 ]
             },
-            "الصف الخامس الابتدائي": {
+            "الخامس الابتدائي": {
                 "science": [
                     { chapter: "الوحدة الأولى", title: "مملكة المخلوقات الحية الدقيقة" },
                     { chapter: "الوحدة الأولى", title: "التكاثر في النباتات والحيوانات" },
@@ -586,7 +589,7 @@
                     { chapter: "الوحدة الثانية", title: "التغيرات والأنظمة البيئية" }
                 ]
             },
-            "الصف السادس الابتدائي": {
+            "السادس الابتدائي": {
                 "science": [
                     { chapter: "الوحدة الأولى", title: "الخلايا والعمليات الحيوية" },
                     { chapter: "الوحدة الأولى", title: "الوراثة والتكاثر في الكائنات" },
@@ -638,7 +641,7 @@
         }
 
         const accurateSubjectQuestionBanks = {
-            "الصف الأول الابتدائي": {
+            "الأول الابتدائي": {
                 "science": [
                     { domain: "علوم الحياة", q: "ما هو الجزء الرئيسي في النبات المسؤول عن امتصاص الماء والأملاح من التربة؟", options: ["الجذر", "الساق", "الأوراق", "الزهور"], correctIdx: 0 },
                     { domain: "علوم الحياة", q: "أي الحيوانات التالية يُغطي جسمه الريش ويستطيع الطيران؟", options: ["القطة", "العصفور", "الأسد", "الخروف"], correctIdx: 1 },
@@ -658,7 +661,7 @@
                     { domain: "الاستقصاء العلمي", q: "ما هي الطريقة الأنسب لمعرفة كتلة البطيخة وثقلها؟", options: ["الميزان ذو الكفتين", "شريط القياس", "المسطرة", "العد باليد"], correctIdx: 0 }
                 ]
             },
-            "الصف الخامس الابتدائي": {
+            "الخامس الابتدائي": {
                 "science": [
                     { domain: "علوم الحياة", q: "ما هي البكتيريا والمخلوقات الحية الدقيقة التي لا تررى بالعين المجردة؟", options: ["مخلوقات حية مجهرية دقيقة", "حيوانات مفترسة ضخمة", "نباتات زهرية عملاقة", "صخور بركانية صلبة"], correctIdx: 0 },
                     { domain: "علوم الحياة", q: "كيف تتكاثر معظم النباتات البذرية في الطبيعة لإنتاج نباتات جديدة؟", options: ["بالبذور والأزهار", "بالتبرعم فقط", "بالانشطار الثنائي", "بالأبواغ المجهرية"], correctIdx: 0 },
@@ -669,7 +672,7 @@
                     { domain: "الاستقصاء العلمي", q: "ما هي الخطوة التي تلي جمع البيانات وملاحظتها في التجربة العلمية؟", options: ["تحليل النتائج واستخلاص الاستنتاج", "شراء أجهزة جديدة", "إلغاء البحث العلمي", "تغيير المدرسة"], correctIdx: 0 }
                 ]
             },
-            "الصف السادس الابتدائي": {
+            "السادس الابتدائي": {
                 "science": [
                     { domain: "علوم الحياة", q: "ما هي الوحدة الأساسية لبناء وتنظيم جميع الكائنات الحية في الطبيعة؟", options: ["النسيج الحيوي", "الخلية الحية", "العضو الداخلي", "الجهاز العصبي"], correctIdx: 1 },
                     { domain: "علوم الحياة", q: "ما اسم العملية الحيوية التي تصنع بها النباتات الخضراء غذاءها بوجود الضوء؟", options: ["التنفس الخلوي", "الهضم والامتصاص", "البناء الضوئي", "النتح"], correctIdx: 2 },
@@ -730,61 +733,66 @@
             document.getElementById('lessonInputText').value = '';
         }
 
-        // دالة جلب الطلاب المحدثة والشاملة لتفادي أخطاء مفاتيح التخزين
+        // دالة جلب الطلاب مع تحديد اسم ورقم الفصل الحالي بدقة
         function fetchStudentsForSelectedClass() {
             studentsList = [];
-            const classDigit = document.getElementById('selectClassDigit').value.trim(); 
-            const gradeKey = document.getElementById('selectGrade').value.trim(); 
+            const gradeKey = document.getElementById('selectGrade').value;
+            const classDigit = document.getElementById('selectClassDigit').value.trim();
+            let shortGradeName = gradeKey.replace("الصف ", "").replace(" الابتدائي", "");
+            let fullClassDescription = `${shortGradeName} - فصل ${classDigit}`;
             
-            const possibleKeys = [
-                classDigit,                               
-                `class_${classDigit}`,                    
-                `فصل ${classDigit}`,                       
-                `الفصل ${classDigit}`,                     
-                `${gradeKey} - فصل ${classDigit}`,        
-                `${gradeKey}_${classDigit}`               
-            ];
-
-            for (let k of possibleKeys) {
-                let rawData = localStorage.getItem(k);
-                if (rawData) {
-                    try {
-                        let parsed = JSON.parse(rawData);
-                        if (Array.isArray(parsed) && parsed.length > 0) {
-                            studentsList = parsed.map(item => typeof item === 'string' ? { name: item } : (item.name ? item : null)).filter(Boolean);
-                            if (studentsList.length > 0) break;
-                        }
-                    } catch(e) {}
+            for (let i = 0; i < localStorage.length; i++) {
+                let key = localStorage.key(i);
+                if (key) {
+                    let cleanKey = key.trim();
+                    if (cleanKey === classDigit || cleanKey === `class_${classDigit}` || cleanKey.endsWith(`_${classDigit}`)) {
+                        try {
+                            let data = JSON.parse(localStorage.getItem(key));
+                            if (Array.isArray(data) && data.length > 0) {
+                                let parsed = data.map(item => {
+                                    if (typeof item === 'string') return { name: item, className: fullClassDescription };
+                                    if (item.name) return { name: item.name, className: item.className || fullClassDescription };
+                                    return null;
+                                }).filter(Boolean);
+                                if (parsed.length > 0) {
+                                    studentsList = parsed;
+                                    break;
+                                }
+                            }
+                        } catch(e) {}
+                    }
                 }
             }
 
             if (studentsList.length === 0) {
                 for (let i = 0; i < localStorage.length; i++) {
                     let key = localStorage.key(i);
-                    if (key && (key.includes(classDigit) || key.includes(`فصل ${classDigit}`))) {
-                        if (!key.includes('exam') && !key.includes('dashboard')) {
-                            try {
-                                let data = JSON.parse(localStorage.getItem(key));
-                                if (Array.isArray(data) && data.length > 0) {
-                                    let parsed = data.map(item => typeof item === 'string' ? { name: item } : (item.name ? item : null)).filter(Boolean);
-                                    if (parsed.length > 0) {
-                                        studentsList = parsed;
-                                        break;
-                                    }
+                    if (key && !key.includes('exam') && !key.includes('dashboard') && key.includes(classDigit)) {
+                        try {
+                            let data = JSON.parse(localStorage.getItem(key));
+                            if (Array.isArray(data) && data.length > 0 && (typeof data[0] === 'string' || data[0].name)) {
+                                let parsed = data.map(item => {
+                                    if (typeof item === 'string') return { name: item, className: fullClassDescription };
+                                    if (item.name) return { name: item.name, className: item.className || fullClassDescription };
+                                    return null;
+                                }).filter(Boolean);
+                                if (parsed.length > 0) {
+                                    studentsList = parsed;
+                                    break;
                                 }
-                            } catch(e) {}
-                        }
+                            }
+                        } catch(e) {}
                     }
                 }
             }
 
             if (studentsList.length === 0) {
                 studentsList = [
-                    { name: `طالب فصل ${classDigit} (1)` },
-                    { name: `طالب فصل ${classDigit} (2)` },
-                    { name: `طالب فصل ${classDigit} (3)` },
-                    { name: `طالب فصل ${classDigit} (4)` },
-                    { name: `طالب فصل ${classDigit} (5)` }
+                    { name: `طالب فصل ${classDigit} (1)`, className: fullClassDescription },
+                    { name: `طالب فصل ${classDigit} (2)`, className: fullClassDescription },
+                    { name: `طالب فصل ${classDigit} (3)`, className: fullClassDescription },
+                    { name: `طالب فصل ${classDigit} (4)`, className: fullClassDescription },
+                    { name: `طالب فصل ${classDigit} (5)`, className: fullClassDescription }
                 ];
             }
         }
@@ -926,21 +934,12 @@
             renderCurrentStepView();
         }
 
-        // الدالة المحدثة لمنع تداخل النصوص والأرقام لعرض اسم الطالب والفصل بشكل مرتب
         function renderCurrentStepView() {
             const student = studentsList[currentStudentIndex];
-            const gradeKey = document.getElementById('selectGrade').value;
-            const classDigit = document.getElementById('selectClassDigit').value;
-            let shortGradeName = gradeKey.replace("الصف ", "").replace(" الابتدائي", "");
-            
-            let displayClassText = `${shortGradeName} (فصل ${classDigit})`;
             
             document.getElementById('studentHeaderBadge').innerHTML = `
-                <div style="width: 100%; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 5px;">
-                    <span>👤 الطالب: <b>${escapeHtml(student.name)}</b> (${toArabicDigits(currentStudentIndex + 1)}/${toArabicDigits(studentsList.length)})</span>
-                    <span style="color: #047857;">🏫 ${escapeHtml(displayClassText)}</span>
-                </div>
-                <div id="liveScoreBadge" class="live-score-box" style="margin-top: 4px; width: 100%; text-align: center;">السؤال ${toArabicDigits(currentQuestionStep + 1)} من ${toArabicDigits(activeQuestions.length)}</div>
+                <span>👤 الطالب (${toArabicDigits(currentStudentIndex + 1)}/${toArabicDigits(studentsList.length)}): <b>${escapeHtml(student.name)}</b> &nbsp;|&nbsp; 🏫 الفصل: <span style="color:#b45309;">${escapeHtml(student.className)}</span></span>
+                <div id="liveScoreBadge" class="live-score-box">السؤال ${toArabicDigits(currentQuestionStep + 1)} / ${toArabicDigits(activeQuestions.length)}</div>
             `;
 
             let qObj = activeQuestions[currentQuestionStep];
@@ -1027,7 +1026,14 @@
             }
             let maxPossible = activeQuestions.length * 2;
             let score = correctCount * 2; 
-            allClassResults[student.name] = { score: score, maxScore: maxPossible, correct: correctCount, domainStats: domainStats, missed: missedQuestions };
+            allClassResults[student.name] = { 
+                score: score, 
+                maxScore: maxPossible, 
+                correct: correctCount, 
+                className: student.className,
+                domainStats: domainStats, 
+                missed: missedQuestions 
+            };
 
             updateLocalStorageAndResults();
 
@@ -1050,11 +1056,12 @@
             let dashboardRecords = [];
 
             for (let sName in allClassResults) {
-                let sScore = allClassResults[sName].score;
+                let sData = allClassResults[sName];
                 dashboardRecords.push({
                     name: sName,
-                    score: sScore,
-                    maxScore: allClassResults[sName].maxScore || maxScore,
+                    className: sData.className,
+                    score: sData.score,
+                    maxScore: sData.maxScore || maxScore,
                     examType: `${examType} - ${currentModelName}`,
                     date: new Date().toLocaleDateString('ar-SA')
                 });
@@ -1087,11 +1094,11 @@
                     foundAny = true;
                     let data = allClassResults[sName];
                     let currentMax = data.maxScore || maxScore;
-                    let waText = `مدرسة داؤود بن عروة الثقفي الابتدائية (طلاب)%0Aولي الأمر الفاضل، نود إفادتكم بحصول الابن: *${encodeURIComponent(sName)}* %0Aعلى درجة الاختبار: *${toArabicDigits(data.score)} / ${toArabicDigits(currentMax)}* (${toArabicDigits(data.correct)} إجابات صحيحة من أصل ${toArabicDigits(activeQuestions.length)}).%0Aمع تحيات المعلم: *منصور عامر الرحيلي*`;
+                    let waText = `مدرسة داؤود بن عروة الثقفي الابتدائية (طلاب)%0Aولي الأمر الفاضل، نود إفادتكم بحصول الابن: *${encodeURIComponent(sName)}* (${encodeURIComponent(data.className)})%0Aعلى درجة الاختبار: *${toArabicDigits(data.score)} / ${toArabicDigits(currentMax)}* (${toArabicDigits(data.correct)} إجابات صحيحة من أصل ${toArabicDigits(activeQuestions.length)}).%0Aمع تحيات المعلم: *منصور عامر الرحيلي*`;
 
                     html += `
-                        <div style="display: flex; justify-content: space-between; align-items: center; background: #fefce8; padding: 9px 12px; margin-bottom: 6px; border-radius: 6px; border: 1.5px solid #059669;">
-                            <span>• <b>${escapeHtml(sName)}</b>: ${toArabicDigits(data.score)} / ${toArabicDigits(currentMax)} (${toArabicDigits(data.correct)} صحيحة)</span>
+                        <div style="display: flex; justify-content: space-between; align-items: center; background: #fefce8; padding: 9px 12px; margin-bottom: 6px; border-radius: 6px; border: 1.5px solid #059669; flex-wrap: wrap; gap: 8px;">
+                            <span>• <b>${escapeHtml(sName)}</b> (<span style="color:#b45309;">${escapeHtml(data.className)}</span>): ${toArabicDigits(data.score)} / ${toArabicDigits(currentMax)} (${toArabicDigits(data.correct)} صحيحة)</span>
                             <a href="https://wa.me/?text=${waText}" target="_blank" class="action-btn btn-whatsapp" style="padding: 4px 10px; font-size: 12px; width: auto; text-decoration: none;">💬 إرسال لولي الأمر</a>
                         </div>
                     `;
@@ -1129,6 +1136,7 @@
                     <tr>
                         <td style="padding: 6px;">${toArabicDigits(idx++)}</td>
                         <td style="padding: 6px; text-align: right; padding-right: 10px; font-weight: bold;">${escapeHtml(sName)}</td>
+                        <td style="padding: 6px; font-weight: bold; color: #b45309;">${escapeHtml(data.className)}</td>
                         <td style="padding: 6px; font-weight: bold; color: #1e3a8a;">${toArabicDigits(data.score)}</td>
                         <td style="padding: 6px;">${toArabicDigits(currentMax)}</td>
                         <td style="padding: 6px; color: ${percentage >= 50 ? '#059669' : '#dc2626'}; font-weight: bold;">${level}</td>
@@ -1162,7 +1170,6 @@
         }
 
         function prepareAnalysisContent() {
-            const examType = document.getElementById('selectExamType').value;
             const gradeKey = document.getElementById('selectGrade').value;
             const subjectKey = document.getElementById('selectSubject').value;
 
