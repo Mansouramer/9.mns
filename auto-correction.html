@@ -211,40 +211,38 @@
             line-height: 1.6;
         }
 
-        /* منع خروج الخيارات وضبطها داخل الإطار (أ وب بالأعلى، ج ود بالأسفل) */
+        /* مربعات خيارات التصحيح السريع (أ، ب، ج، د فقط بدون نص لسرعة النقر) */
         .options-grid-fast {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            margin-top: 12px;
+            gap: 12px;
+            margin-top: 14px;
             width: 100%;
             box-sizing: border-box;
         }
 
         .opt-fast-btn {
             background: linear-gradient(145deg, #fef3c7, #fde68a);
-            border: 2px solid #fb923c;
-            color: #7c2d12;
-            padding: 12px 10px;
-            border-radius: 10px;
-            font-size: 14px;
-            font-weight: bold;
+            border: 3px solid #fb923c;
+            color: #9a3412;
+            padding: 18px 10px;
+            border-radius: 12px;
+            font-size: 20px;
+            font-weight: 900;
             cursor: pointer;
             text-align: center;
             transition: all 0.2s ease;
-            line-height: 1.4;
-            box-shadow: 0 3px 8px rgba(251, 146, 60, 0.15);
+            box-shadow: 0 4px 10px rgba(251, 146, 60, 0.2);
             display: flex;
             align-items: center;
             justify-content: center;
             box-sizing: border-box;
-            word-break: break-word;
         }
 
         .opt-fast-btn:hover { 
             background: linear-gradient(145deg, #fde68a, #fcd34d); 
             transform: translateY(-2px);
-            box-shadow: 0 5px 12px rgba(251, 146, 60, 0.25);
+            box-shadow: 0 6px 15px rgba(251, 146, 60, 0.3);
             border-color: #ea580c;
         }
         
@@ -252,14 +250,14 @@
             background: linear-gradient(145deg, #059669, #047857) !important; 
             border-color: #065f46 !important; 
             color: #f8fafc !important; 
-            box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3) !important;
+            box-shadow: 0 4px 12px rgba(5, 150, 105, 0.4) !important;
         }
         
         .opt-fast-btn.wrong-choice { 
             background: linear-gradient(145deg, #dc2626, #b91c1c) !important; 
             border-color: #991b1b !important; 
             color: #f8fafc !important; 
-            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3) !important;
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4) !important;
         }
 
         .navigation-btns { display: flex; gap: 10px; margin-top: 15px; }
@@ -286,7 +284,6 @@
         .exam-header h3 { margin: 0; font-size: 15px; color: #1e3a8a; font-weight: bold; }
         .exam-header h4 { margin: 4px 0; font-size: 13px; color: #334151; }
 
-        /* تعديل تصميم فقاعات الخيارات في المعاينة والطباعة لتستقر بداخل السطر تماماً دون خروج */
         .question-row {
             margin-bottom: 14px;
             padding: 10px 12px;
@@ -962,15 +959,16 @@
             let savedOpt = studentAnswers[qNum] || '';
 
             const container = document.getElementById('singleQuestionContainer');
+            // تم تعديل الأزرار لتقتصر على حروف الخيارات فقط (أ، ب، ج، د) بشكل كبير وواضح دون نصوص لسرعة التصحيح
             container.innerHTML = `
                 <div class="single-step-question-box">
                     <span style="color: #c2410c; font-size: 12px; font-weight: bold;">[مجال الهدف: ${escapeHtml(qObj.domain)}]</span>
                     <h4>سؤال <span dir="ltr" style="display: inline-block;">${qNum}</span>: ${escapeHtml(qObj.q)}</h4>
                     <div class="options-grid-fast">
-                        <button type="button" class="opt-fast-btn ${savedOpt === 'أ' ? 'correct-choice' : ''}" onclick="selectFastOpt(${qNum}, 'أ', this)">أ) ${escapeHtml(qObj.options[0])}</button>
-                        <button type="button" class="opt-fast-btn ${savedOpt === 'ب' ? 'correct-choice' : ''}" onclick="selectFastOpt(${qNum}, 'ب', this)">ب) ${escapeHtml(qObj.options[1])}</button>
-                        <button type="button" class="opt-fast-btn ${savedOpt === 'ج' ? 'correct-choice' : ''}" onclick="selectFastOpt(${qNum}, 'ج', this)">ج) ${escapeHtml(qObj.options[2])}</button>
-                        <button type="button" class="opt-fast-btn ${savedOpt === 'د' ? 'correct-choice' : ''}" onclick="selectFastOpt(${qNum}, 'د', this)">د) ${escapeHtml(qObj.options[3])}</button>
+                        <button type="button" class="opt-fast-btn ${savedOpt === 'أ' ? 'correct-choice' : ''}" onclick="selectFastOpt(${qNum}, 'أ', this)">أ</button>
+                        <button type="button" class="opt-fast-btn ${savedOpt === 'ب' ? 'correct-choice' : ''}" onclick="selectFastOpt(${qNum}, 'ب', this)">ب</button>
+                        <button type="button" class="opt-fast-btn ${savedOpt === 'ج' ? 'correct-choice' : ''}" onclick="selectFastOpt(${qNum}, 'ج', this)">ج</button>
+                        <button type="button" class="opt-fast-btn ${savedOpt === 'د' ? 'correct-choice' : ''}" onclick="selectFastOpt(${qNum}, 'د', this)">د</button>
                     </div>
                 </div>
             `;
@@ -989,8 +987,8 @@
             } else {
                 btn.classList.add('wrong-choice');
                 parentGrid.querySelectorAll('.opt-fast-btn').forEach(b => {
-                    let letterPrefix = b.textContent.charAt(0);
-                    if (letterPrefix === correctAns) b.classList.add('correct-choice');
+                    let letterText = b.textContent.trim();
+                    if (letterText === correctAns) b.classList.add('correct-choice');
                 });
             }
 
