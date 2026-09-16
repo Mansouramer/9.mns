@@ -100,41 +100,6 @@
         }
         select:focus, input:focus, textarea:focus { border-color: var(--secondary); }
 
-        .stepper-container {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: #fff;
-            border: 2px solid #d1d5db;
-            border-radius: 8px;
-            padding: 4px;
-        }
-        .stepper-container:focus-within { border-color: var(--secondary); }
-        .stepper-container input {
-            border: none !important;
-            padding: 4px !important;
-            text-align: center;
-            font-weight: bold;
-            font-size: 15px;
-            outline: none;
-        }
-        .stepper-btn {
-            background: var(--primary);
-            color: #fff;
-            border: none;
-            width: 32px;
-            height: 32px;
-            border-radius: 6px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: 0.15s;
-        }
-        .stepper-btn:hover { background: var(--secondary); }
-
         .action-btn {
             background: var(--secondary);
             color: white;
@@ -337,11 +302,11 @@
         </div>
 
         <div class="section-box no-print">
-            <h3>📚 أولاً: إعدادات الاختبار والصف والمادة وتحديد الأسابيع</h3>
+            <h3>📚 أولاً: إعدادات الاختبار والصف والمادة وتحديد الدروس والمواضيع المستهدفة</h3>
             <div class="form-grid">
                 <div class="form-group">
                     <label>نوع الاختبار:</label>
-                    <select id="selectExamType" onchange="togglePeriodicLessonsBox()">
+                    <select id="selectExamType">
                         <option value="الاختبار الفتري الأول">الاختبار الفتري الأول</option>
                         <option value="الاختبار الفتري الثاني">الاختبار الفتري الثاني</option>
                         <option value="الاختبار القبلي التشخيصي">الاختبار القبلي (تشخيصي)</option>
@@ -350,7 +315,7 @@
                 </div>
                 <div class="form-group">
                     <label>الصف الدراسي:</label>
-                    <select id="selectGrade">
+                    <select id="selectGrade" onchange="updateLessonCheckboxes()">
                         <option value="الأول الابتدائي">الصف الأول الابتدائي</option>
                         <option value="الثاني الابتدائي">الصف الثاني الابتدائي</option>
                         <option value="الثالث الابتدائي">الصف الثالث الابتدائي</option>
@@ -361,7 +326,7 @@
                 </div>
                 <div class="form-group">
                     <label>المادة الدراسية:</label>
-                    <select id="selectSubject">
+                    <select id="selectSubject" onchange="updateLessonCheckboxes()">
                         <option value="science">مادة العلوم</option>
                         <option value="math">مادة الرياضيات</option>
                         <option value="arabic">مادة لغتي الجميلة</option>
@@ -371,25 +336,13 @@
                 </div>
             </div>
 
-            <div id="periodicLessonsConfigBox" class="form-group" style="margin-top: 10px; border-top: 1px dashed #cbd5e1; padding-top: 10px;">
-                <label style="color: #b45309;">📌 نطاق الأسابيع المستهدفة:</label>
-                <div style="display: flex; gap: 20px; align-items: center; margin-top: 8px; flex-wrap: wrap;">
-                    <div style="display: flex; align-items: center; gap: 8px;">
-                        <span style="font-size: 13px; font-weight: bold;">من الأسبوع:</span>
-                        <div class="stepper-container">
-                            <button type="button" class="stepper-btn" onclick="changeWeek('startWeek', -1)">-</button>
-                            <input type="number" id="inputStartWeek" value="1" min="1" max="18" style="width: 50px;">
-                            <button type="button" class="stepper-btn" onclick="changeWeek('startWeek', 1)">+</button>
-                        </div>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 8px;">
-                        <span style="font-size: 13px; font-weight: bold;">إلى الأسبوع:</span>
-                        <div class="stepper-container">
-                            <button type="button" class="stepper-btn" onclick="changeWeek('endWeek', -1)">-</button>
-                            <input type="number" id="inputEndWeek" value="4" min="1" max="18" style="width: 50px;">
-                            <button type="button" class="stepper-btn" onclick="changeWeek('endWeek', 1)">+</button>
-                        </div>
-                    </div>
+            <!-- صندوق اختيار الدروس والمواضيع -->
+            <div class="form-group" style="margin-top: 12px; border-top: 1px dashed #cbd5e1; padding-top: 10px;">
+                <label style="color: #b45309; display: flex; align-items: center; gap: 5px;">
+                    <span>📖</span> اختر الدروس أو المواضيع المراد وضع الأسئلة منها:
+                </label>
+                <div id="lessonsSelectionContainer" style="display: flex; flex-direction: column; gap: 6px; max-height: 180px; overflow-y: auto; background: #fff; padding: 10px; border: 2px solid #d1d5db; border-radius: 8px; margin-top: 6px;">
+                    <!-- سيتم تعبئة الدروس برمجياً هنا -->
                 </div>
             </div>
         </div>
@@ -420,6 +373,7 @@
                     <h4 id="printSchoolTitle">مدرسة داؤود بن عروة الثقفي الابتدائية</h4>
                     <p style="margin:2px 0; font-size:11.5px; color:#4b5563; font-weight:bold;">معلم المادة: منصور عامر الرحيلي</p>
                     <p id="printTestInfo" style="margin:2px 0; font-size:12px; color:#555; font-weight:bold;"></p>
+                    <div id="printSelectedLessonsPrint" style="margin:2px 0; font-size:11.5px; color:#0284c7; font-weight:bold;"></div>
                     <div id="printModelBadge" style="margin:4px 0; font-size:12px; color:#0d9488; font-weight:bold;"></div>
                     <div style="margin-top: 6px; border: 1.2px solid #64748b; padding: 4px 10px; border-radius: 5px; display:inline-block; font-size:11.5px;">
                         <b>اسم الطالب:</b> .................................................................... &nbsp;&nbsp; <b>الصف:</b> ................
@@ -618,27 +572,55 @@
         let currentModelName = "نموذج (أ)";
         let globalMaxScore = 0;
 
-        function togglePeriodicLessonsBox() {
-            const examType = document.getElementById('selectExamType').value;
-            const configBox = document.getElementById('periodicLessonsConfigBox');
-            if (examType.includes("الفتري")) {
-                configBox.style.display = 'block';
-            } else {
-                configBox.style.display = 'none';
+        // دالة جلب وعرض دروس المادة والصف المحدد لتظهر كخيارات (Checkboxes)
+        function updateLessonCheckboxes() {
+            const gradeKey = document.getElementById('selectGrade').value;
+            const subjectKey = document.getElementById('selectSubject').value;
+            const container = document.getElementById('lessonsSelectionContainer');
+            container.innerHTML = '';
+
+            // محاولة جلب الدروس المسجلة في اللوحة أو استخدام القائمة الافتراضية
+            let gradeLessons = [];
+            let storageKey = 'mansour_custom_lessons_science_' + gradeKey + '_v5';
+            try {
+                let saved = localStorage.getItem(storageKey);
+                if (saved) gradeLessons = JSON.parse(saved);
+            } catch(e) {}
+
+            if (gradeLessons.length === 0) {
+                // إذا لم توجد دروس مخصصة، نضع قائمة افتراضية حسب المادة
+                if (accurateGradeQuestionBank[gradeKey] && accurateGradeQuestionBank[gradeKey][subjectKey]) {
+                    gradeLessons = accurateGradeQuestionBank[gradeKey][subjectKey].map((item, idx) => ({ title: `موضوع / سؤال أساسي (${idx + 1})`, chapter: "الوحدة العامة" }));
+                } else {
+                    gradeLessons = [
+                        { chapter: "الوحدة الأولى", title: "الدرس الأول: المفاهيم العامة والخصائص" },
+                        { chapter: "الوحدة الأولى", title: "الدرس الثاني: التطبيقات والاستكشافات" },
+                        { chapter: "الوحدة الثانية", title: "الدرس الثالث: التفاعلات والمهارات العلمية" },
+                        { chapter: "الوحدة الثانية", title: "الدرس الرابع: التقويم والختام" }
+                    ];
+                }
             }
+
+            gradeLessons.forEach((l, idx) => {
+                const label = document.createElement('label');
+                label.style.display = 'flex';
+                label.style.alignItems = 'center';
+                label.style.gap = '8px';
+                label.style.fontSize = '13px';
+                label.style.cursor = 'pointer';
+                label.style.padding = '4px 6px';
+                label.style.borderRadius = '4px';
+                label.style.background = '#f8fafc';
+                label.style.border = '1px solid #e2e8f0';
+
+                label.innerHTML = `
+                    <input type="checkbox" class="lesson-checkbox" value="${escapeHtml(l.title)}" checked style="width: 16px; height: 16px; accent-color: var(--secondary); cursor: pointer;">
+                    <span><b>[${escapeHtml(l.chapter || 'الدرس')}>]</b> ${escapeHtml(l.title)}</span>
+                `;
+                container.appendChild(label);
+            });
         }
 
-        function changeWeek(fieldId, amount) {
-            const input = document.getElementById(fieldId === 'startWeek' ? 'inputStartWeek' : 'inputEndWeek');
-            if (!input) return;
-            let val = parseInt(input.value) || 1;
-            val += amount;
-            if (val < 1) val = 1;
-            if (val > 18) val = 18;
-            input.value = val;
-        }
-
-        // --- الدالة المحدثة لتوليد أسئلة دقيقة من نص الدرس دون نصوص تجريبية مبهمة ---
         function smartGenerateFromLessonText() {
             const text = document.getElementById('lessonInputText').value.trim();
             const gradeKey = document.getElementById('selectGrade').value;
@@ -652,7 +634,6 @@
             if (!accurateGradeQuestionBank[gradeKey]) accurateGradeQuestionBank[gradeKey] = {};
             if (!accurateGradeQuestionBank[gradeKey][subjectKey]) accurateGradeQuestionBank[gradeKey][subjectKey] = [];
 
-            // توليد أسئلة حقيقية منسقة ببدائل صحيحة ودقيقة بناءً على الموضوع المدخل
             const generatedItems = [
                 {
                     q: `بناءً على درس (${text})، ما هي الفكرة الأساسية أو المفهوم العلمي المرتبط به؟`,
@@ -691,7 +672,8 @@
             });
 
             document.getElementById('lessonInputText').value = '';
-            alert(`✨ تم توليد وإضافة (${generatedItems.length}) أسئلة علمية منظمة ومضبوطة بـ ٤ خيارات استناداً إلى درس (${text}) بنجاح!`);
+            updateLessonCheckboxes();
+            alert(`✨ تم توليد وإضافة أسئلة علمية منظمة استناداً إلى درس (${text}) بنجاح!`);
         }
 
         function fetchAllStudentsFromStorage() {
@@ -727,10 +709,21 @@
             const gradeKey = document.getElementById('selectGrade').value;
             const subjectKey = document.getElementById('selectSubject').value;
 
+            // جمع الدروس المحددة من قبل المعلم
+            const checkboxes = document.querySelectorAll('.lesson-checkbox:checked');
+            let selectedLessonsList = [];
+            checkboxes.forEach(cb => selectedLessonsList.push(cb.value));
+
+            if (selectedLessonsList.length === 0) {
+                alert('الرجاء اختيار درس واحد على الأقل لتوليد الأسئلة!');
+                return;
+            }
+
             const modelsArray = ["نموذج (أ)", "نموذج (ب)", "نموذج (ج)", "نموذج (د)"];
             currentModelName = modelsArray[Math.floor(Math.random() * modelsArray.length)];
 
             document.getElementById('printTestInfo').textContent = `الصف: ${gradeKey} | المادة: ${subjectNames[subjectKey] || "المادة الدراسية"} | نوع الاختبار: ${examType}`;
+            document.getElementById('printSelectedLessonsPrint').textContent = `📖 الدروس المستهدفة: ${selectedLessonsList.join(' ، ')}`;
             document.getElementById('printModelBadge').textContent = `رقم النموذج: ${currentModelName}`;
 
             let rawQuestions = [];
@@ -1054,6 +1047,7 @@
         }
 
         window.addEventListener('DOMContentLoaded', () => {
+            updateLessonCheckboxes();
             convertAllNumbersInDOM();
         });
     </script>
