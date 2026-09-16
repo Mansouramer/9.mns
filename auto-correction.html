@@ -194,12 +194,15 @@
             font-weight: bold;
         }
 
+        /* صندوق السؤال الإطاري المنسق */
         .single-step-question-box {
-            background: #fff7ed;
-            border: 2px solid #f97316;
+            background: #fffbeb;
+            border: 2.5px solid #f97316;
             padding: 16px;
-            border-radius: 10px;
+            border-radius: 12px;
             margin-bottom: 15px;
+            box-sizing: border-box;
+            box-shadow: 0 4px 15px rgba(249, 115, 22, 0.1);
         }
 
         .single-step-question-box h4 {
@@ -209,32 +212,56 @@
             line-height: 1.6;
         }
 
-        /* تثبيت العرض ليكون صندوقين بجانب بعضهما (أ وب فوق، وج ود تحتهم) دائماً */
+        /* تخطيط شبكي متناسق: أ وب بالأعلى، ج ود بالأسفل داخل الإطار حصراً وبأعراض متساوية */
         .options-grid-fast {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
+            gap: 10px;
             margin-top: 12px;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .opt-fast-btn {
-            background: #fef3c7;
+            background: linear-gradient(145deg, #fef3c7, #fde68a);
             border: 2px solid #fb923c;
             color: #7c2d12;
-            padding: 14px 16px;
+            padding: 12px 10px;
             border-radius: 10px;
-            font-size: 14.5px;
+            font-size: 14px;
             font-weight: bold;
             cursor: pointer;
-            text-align: right;
-            transition: 0.15s;
-            line-height: 1.5;
-            box-shadow: 0 2px 6px rgba(251, 146, 60, 0.15);
+            text-align: center;
+            transition: all 0.2s ease;
+            line-height: 1.4;
+            box-shadow: 0 3px 8px rgba(251, 146, 60, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+            word-break: break-word;
         }
 
-        .opt-fast-btn:hover { background: #fde68a; }
-        .opt-fast-btn.correct-choice { background: #059669 !important; border-color: #047857 !important; color: #f8fafc !important; }
-        .opt-fast-btn.wrong-choice { background: #dc2626 !important; border-color: #b91c1c !important; color: #f8fafc !important; }
+        .opt-fast-btn:hover { 
+            background: linear-gradient(145deg, #fde68a, #fcd34d); 
+            transform: translateY(-2px);
+            box-shadow: 0 5px 12px rgba(251, 146, 60, 0.25);
+            border-color: #ea580c;
+        }
+        
+        .opt-fast-btn.correct-choice { 
+            background: linear-gradient(145deg, #059669, #047857) !important; 
+            border-color: #065f46 !important; 
+            color: #f8fafc !important; 
+            box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3) !important;
+        }
+        
+        .opt-fast-btn.wrong-choice { 
+            background: linear-gradient(145deg, #dc2626, #b91c1c) !important; 
+            border-color: #991b1b !important; 
+            color: #f8fafc !important; 
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3) !important;
+        }
 
         .navigation-btns { display: flex; gap: 10px; margin-top: 15px; }
 
@@ -1221,7 +1248,7 @@
                     ${domainsTableHtml || '<tr><td colspan="4" style="text-align:center;">لا توجد بيانات مجالات كافية</td></tr>'}
                 </table>
 
-                <div style="margin-top: 15px; background: #fefce8; padding: 14px; border-radius: 8px; border: 2px solid #eab308;">
+                <div style="margin-top: 15px; background: #fefce8; padding: 14px; border-radius: 8px; border: 2.5px solid #eab308;">
                     <h4 style="margin-top:0; color:#b45309;">🛠️ الخطط العلاجية الميدانية للتعامل مع المهارات غير المتقنة:</h4>
                     <div style="font-size: 12px; line-height: 1.7; background: #fef3c7; padding: 10px; border-radius: 6px; border: 1px solid #fde047; max-height: 200px; overflow-y: auto;">
                         ${remedialPlansHtml}
@@ -1246,3 +1273,4 @@
     </script>
 </body>
 </html>
+
