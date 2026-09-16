@@ -303,7 +303,7 @@
         </div>
 
         <div class="section-box no-print">
-            <h3>📚 أولاً: إعدادات الاختبار، الصف، والمادة، وتحديد الفصل ورقم الفصل (من ١ إلى ٦)</h3>
+            <h3>📚 أولاً: إعدادات الاختبار، المادة، وتحديد الصف ورقم الفصل (من ١ إلى ٦)</h3>
             <div class="form-grid">
                 <div class="form-group">
                     <label>نوع الاختبار:</label>
@@ -313,17 +313,6 @@
                         <option value="الاختبار القبلي التشخيصي">الاختبار القبلي (تشخيصي)</option>
                         <option value="الاختبار البعدي النهائي">الاختبار البعدي (نهائي)</option>
                         <option value="اختبارات نافس الوطنية">📊 اختبارات نافس الوطنية (الرسمية)</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>الصف الدراسي:</label>
-                    <select id="selectGrade" onchange="updateLessonCheckboxes()">
-                        <option value="الأول الابتدائي">الصف الأول الابتدائي</option>
-                        <option value="الثاني الابتدائي">الصف الثاني الابتدائي</option>
-                        <option value="الثالث الابتدائي">الصف الثالث الابتدائي</option>
-                        <option value="الرابع الابتدائي">الصف الرابع الابتدائي</option>
-                        <option value="الخامس الابتدائي">الصف الخامس الابتدائي</option>
-                        <option value="السادس الابتدائي" selected>الصف السادس الابتدائي</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -346,30 +335,29 @@
                     </select>
                 </div>
                 
-                <!-- اختيار الصف الأساسي -->
+                <!-- الصف الدراسي -->
                 <div class="form-group">
-                    <label>اختر الصف:</label>
-                    <select id="selectTargetGrade" onchange="updateClassNumberOptions()">
-                        <option value="سادس">الصف السادس</option>
-                        <option value="خامس">الصف الخامس</option>
-                        <option value="رابع">الصف الرابع</option>
-                        <option value="ثالث">الصف الثالث</option>
-                        <option value="ثاني">الصف الثاني</option>
-                        <option value="أول">الصف الأول</option>
-                        <option value="blank">خط فارغ (.........)</option>
+                    <label>الصف الدراسي:</label>
+                    <select id="selectGrade" onchange="updateLessonCheckboxes()">
+                        <option value="الأول الابتدائي">الصف الأول الابتدائي</option>
+                        <option value="الثاني الابتدائي">الصف الثاني الابتدائي</option>
+                        <option value="الثالث الابتدائي">الصف الثالث الابتدائي</option>
+                        <option value="الرابع الابتدائي">الصف الرابع الابتدائي</option>
+                        <option value="الخامس الابتدائي" selected>الصف الخامس الابتدائي</option>
+                        <option value="السادس الابتدائي">الصف السادس الابتدائي</option>
                     </select>
                 </div>
 
-                <!-- اختيار رقم الفصل من ١ إلى ٦ -->
-                <div class="form-group">
-                    <label>اختر رقم الفصل (من ١ إلى ٦):</label>
+                <!-- رقم الفصل (من ١ إلى ٦) -->
+                <div class="form-group" style="grid-column: 1 / -1;">
+                    <label>رقم الفصل (من ١ إلى ٦):</label>
                     <select id="selectClassDigit">
-                        <option value="١">رقم ١</option>
-                        <option value="٢">رقم ٢</option>
-                        <option value="٣">رقم ٣</option>
-                        <option value="٤">رقم ٤</option>
-                        <option value="٥" selected>رقم ٥</option>
-                        <option value="٦">رقم ٦</option>
+                        <option value="١">١</option>
+                        <option value="٢">٢</option>
+                        <option value="٣">٣</option>
+                        <option value="٤">٤</option>
+                        <option value="٥" selected>٥</option>
+                        <option value="٦">٦</option>
                     </select>
                 </div>
             </div>
@@ -545,6 +533,14 @@
                     { chapter: "الوحدة الثانية", title: "الطقس وتغيرات الفصول" }
                 ]
             },
+            "الخامس الابتدائي": {
+                "science": [
+                    { chapter: "الوحدة الأولى", title: "مملكة المخلوقات الحية الدقيقة" },
+                    { chapter: "الوحدة الأولى", title: "التكاثر في النباتات والحيوانات" },
+                    { chapter: "الوحدة الثانية", title: "المخلوقات الحية وتفاعلاتها في البيئة" },
+                    { chapter: "الوحدة الثانية", title: "التغيرات والأنظمة البيئية" }
+                ]
+            },
             "السادس الابتدائي": {
                 "science": [
                     { chapter: "الوحدة الأولى", title: "الخلايا والعمليات الحيوية" },
@@ -608,6 +604,17 @@
                     { domain: "الاستقصاء العلمي", q: "ما هي الطريقة الأنسب لمعرفة كتلة البطيخة وثقلها؟", options: ["الميزان ذو الكفتين", "شريط القياس", "المسطرة", "العد باليد"], correctIdx: 0 }
                 ]
             },
+            "الخامس الابتدائي": {
+                "science": [
+                    { domain: "علوم الحياة", q: "ما هي البكتيريا والمخلوقات الحية الدقيقة التي لا تررى بالعين المجردة؟", options: ["مخلوقات حية مجهرية دقيقة", "حيوانات مفترسة ضخمة", "نباتات زهرية عملاقة", "صخور بركانية صلبة"], correctIdx: 0 },
+                    { domain: "علوم الحياة", q: "كيف تتكاثر معظم النباتات البذرية في الطبيعة لإنتاج نباتات جديدة؟", options: ["بالبذور والأزهار", "بالتبرعم فقط", "بالانشطار الثنائي", "بالأبواغ المجهرية"], correctIdx: 0 },
+                    { domain: "علوم الحياة", q: "ماذا يُقصد بالنظام البيئي المتوازن في الطبيعة؟", options: ["تفاعل المخلوقات الحية مع العوامل غير الحية باتزان", "غياب الحيوانات تماماً", "كثرة الجفاف والتصحر", "انعدام النباتات الخضراء"], correctIdx: 0 },
+                    { domain: "العلوم الفيزيائية", q: "ما هي المادة التي تسمح للحرارة والكهرباء بالمرور من خلالها بسهولة؟", options: ["الموصل الكهربائي (كالحديد والنحاس)", "العازل البلاستيكي", "الخشب الجاف", "الزجاج السميك"], correctIdx: 0 },
+                    { domain: "العلوم الفيزيائية", q: "ما هو التيار الكهربائي المتردد أو المستمر المتحرك في سلك مغلق؟", options: ["تدفق شحنات كهربائية عبر مسار مغلق", "سكون تام للشحنات", "حرارة الشمس المباشرة", "جاذبية الأرض"], correctIdx: 0 },
+                    { domain: "علوم الأرض والفضاء", q: "ما السبب الرئيسي لحدوث ظاهرة تعاقب فصول السنة الأربعة على الأرض؟", options: ["ميل محور الأرض أثناء دورانها حول الشمس", "دوران القمر حول الأرض", "هبوب الرياح الموسمية", "تغير حركة النجوم"], correctIdx: 0 },
+                    { domain: "الاستقصاء العلمي", q: "ما هي الخطوة التي تلي جمع البيانات وملاحظتها في التجربة العلمية؟", options: ["تحليل النتائج واستخلاص الاستنتاج", "شراء أجهزة جديدة", "إلغاء البحث العلمي", "تغيير المدرسة"], correctIdx: 0 }
+                ]
+            },
             "السادس الابتدائي": {
                 "science": [
                     { domain: "علوم الحياة", q: "ما هي الوحدة الأساسية لبناء وتنظيم جميع الكائنات الحية في الطبيعة؟", options: ["النسيج الحيوي", "الخلية الحية", "العضو الداخلي", "الجهاز العصبي"], correctIdx: 1 },
@@ -659,10 +666,6 @@
             }
         }
 
-        function updateClassNumberOptions() {
-            // دالة مساعدة لتحديث الخيارات إذا لزم الأمر
-        }
-
         function smartGenerateFromLessonText() {
             const text = document.getElementById('lessonInputText').value.trim();
             if (!text) {
@@ -707,17 +710,10 @@
             const subjectKey = document.getElementById('selectSubject').value;
             const selectEl = document.getElementById('selectQuestionCount');
             const requestedCount = selectEl ? parseInt(selectEl.value) || 10 : 10;
-
-            const targetGrade = document.getElementById('selectTargetGrade').value;
             const classDigit = document.getElementById('selectClassDigit').value;
-            let displayClassText = "................";
 
-            if (targetGrade === 'blank') {
-                displayClassText = "................";
-            } else {
-                displayClassText = `${targetGrade} - رقم ${classDigit}`;
-            }
-
+            let shortGradeName = gradeKey.replace("الصف ", "").replace(" الابتدائي", "");
+            let displayClassText = `${shortGradeName} - رقم ${classDigit}`;
             document.getElementById('printClassValue').textContent = displayClassText;
 
             let sourcePool = [];
@@ -845,9 +841,10 @@
 
         function renderCurrentStepView() {
             const student = studentsList[currentStudentIndex];
-            const targetGrade = document.getElementById('selectTargetGrade').value;
+            const gradeKey = document.getElementById('selectGrade').value;
             const classDigit = document.getElementById('selectClassDigit').value;
-            let displayClassText = targetGrade === 'blank' ? "خامس - رقم ٥" : `${targetGrade} - رقم ${classDigit}`;
+            let shortGradeName = gradeKey.replace("الصف ", "").replace(" الابتدائي", "");
+            let displayClassText = `${shortGradeName} - رقم ${classDigit}`;
             
             document.getElementById('studentHeaderBadge').innerHTML = `
                 <span>👤 الطالب (${toArabicDigits(currentStudentIndex + 1)}/${toArabicDigits(studentsList.length)}): ${escapeHtml(student.name)} &nbsp;|&nbsp; 🏫 الفصل: ${escapeHtml(displayClassText)}</span>
