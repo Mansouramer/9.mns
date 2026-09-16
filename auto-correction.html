@@ -9,149 +9,159 @@
         :root {
             --primary: #1e3a8a;
             --secondary: #2563eb;
-            --accent: #bfdbfe;
-            --bg: #eff6ff;
-            --card-bg: #ffffff;
-            --text: #1e3a8a;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-            --print-btn: #4b5563;
+            --accent: #dbeafe;
+            --bg: #f8fafc;
+            --card-bg: #fdfdfd;
+            --box-bg-1: #f0fdf4; /* خلفية تفاعلية خضراء هادئة */
+            --box-bg-2: #eff6ff; /* خلفية تفاعلية زرقاء هادئة */
+            --box-bg-3: #fefce8; /* خلفية تفاعلية صفراء هادئة */
+            --box-bg-4: #faf5ff; /* خلفية تفاعلية بنسق بنفسجي */
+            --text: #1e293b;
+            --success: #059669;
+            --warning: #d97706;
+            --danger: #dc2626;
+            --print-btn: #475569;
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: var(--bg);
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
             color: var(--text);
             margin: 0;
-            padding: 10px;
+            padding: 12px;
             min-height: 100vh;
             box-sizing: border-box;
         }
 
         .container {
-            max-width: 850px;
+            max-width: 900px;
             margin: 0 auto;
-            background: var(--card-bg);
-            padding: 15px;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            background: linear-gradient(145deg, #ffffff, #f1f5f9);
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(30, 58, 138, 0.12);
             box-sizing: border-box;
+            border: 2px solid #cbd5e1;
         }
 
         .header-nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid var(--accent);
-            padding-bottom: 10px;
-            margin-bottom: 15px;
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+            background: #e0f2fe;
+            padding: 12px 15px;
+            border-radius: 10px;
         }
 
-        h2 { color: var(--primary); margin: 0; font-size: 17px; }
+        h2 { color: var(--primary); margin: 0; font-size: 18px; }
 
         .back-btn {
-            background: #4b5563;
+            background: #334155;
             color: white;
-            padding: 8px 12px;
-            border-radius: 6px;
+            padding: 8px 14px;
+            border-radius: 8px;
             text-decoration: none;
             font-size: 13px;
             font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
         .section-box {
-            background: #fafaf9;
-            border: 1px solid #e5e7eb;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 15px;
+            background: var(--box-bg-2);
+            border: 2px solid #93c5fd;
+            padding: 18px;
+            border-radius: 12px;
+            margin-bottom: 18px;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.05);
+        }
+
+        .section-box:nth-child(even) {
+            background: var(--box-bg-4);
+            border-color: #d8b4fe;
         }
 
         .section-box h3 {
             margin-top: 0;
             color: var(--primary);
-            font-size: 15px;
-            border-bottom: 1px solid var(--accent);
-            padding-bottom: 6px;
+            font-size: 16px;
+            border-bottom: 2px dashed #93c5fd;
+            padding-bottom: 8px;
         }
 
         .form-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 12px;
             margin-bottom: 10px;
         }
 
-        .form-group { display: flex; flex-direction: column; gap: 5px; }
+        .form-group { display: flex; flex-direction: column; gap: 6px; }
 
-        label { font-weight: bold; font-size: 13px; color: var(--primary); }
+        label { font-weight: bold; font-size: 13.5px; color: var(--primary); }
 
         select, input[type="text"], input[type="number"], textarea {
             width: 100%;
-            padding: 10px;
-            border: 2px solid #d1d5db;
+            padding: 11px;
+            border: 2px solid #94a3b8;
             border-radius: 8px;
             font-size: 14px;
-            background: #fff;
-            color: #374151;
+            background: #f8fafc;
+            color: #0f172a;
             outline: none;
             box-sizing: border-box;
+            font-weight: 600;
         }
-        select:focus, input:focus, textarea:focus { border-color: var(--secondary); }
+        select:focus, input:focus, textarea:focus { border-color: var(--secondary); background: #ffffff; }
 
         .action-btn {
-            background: var(--secondary);
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
             color: white;
             border: none;
-            padding: 12px;
-            border-radius: 8px;
+            padding: 13px;
+            border-radius: 9px;
             cursor: pointer;
             font-weight: bold;
-            font-size: 14px;
+            font-size: 14.5px;
             width: 100%;
             text-align: center;
-            box-shadow: 0 3px 6px rgba(37, 99, 235, 0.2);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+            transition: 0.2s;
         }
-        .action-btn:hover { opacity: 0.9; }
-        .btn-print { background: var(--print-btn); }
-        .btn-success { background: #10b981; }
-        .btn-whatsapp { background: #059669; }
-        .btn-warning { background: #d97706; }
-        .btn-purple { background: #7c3aed; }
-        .btn-nafis-bottom { background: #b45309; }
+        .action-btn:hover { transform: translateY(-1px); opacity: 0.95; }
+        .btn-print { background: linear-gradient(135deg, #475569, #334155); }
+        .btn-success { background: linear-gradient(135deg, #059669, #047857); }
+        .btn-whatsapp { background: linear-gradient(135deg, #10b981, #059669); }
+        .btn-purple { background: linear-gradient(135deg, #7c3aed, #6d28d9); }
+        .btn-nafis-bottom { background: linear-gradient(135deg, #b45309, #92400e); }
 
         .touch-grading-card {
-            background: #fff;
-            border: 2px solid var(--secondary);
-            border-radius: 10px;
-            padding: 15px;
+            background: #ecfdf5;
+            border: 3px solid #059669;
+            border-radius: 12px;
+            padding: 18px;
             margin-top: 15px;
             display: none;
-            transition: background 0.3s ease;
-        }
-
-        .touch-grading-card.student-changed {
-            background: #d1fae5 !important;
-            border-color: #059669 !important;
         }
 
         .student-title-badge {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: var(--bg);
+            background: #d1fae5;
             padding: 10px 15px;
             border-radius: 8px;
             font-weight: bold;
-            color: var(--primary);
+            color: #065f46;
             font-size: 14px;
             margin-bottom: 12px;
-            border: 1px solid var(--accent);
+            border: 1px solid #34d399;
         }
 
         .live-score-box {
-            background: var(--success);
+            background: #059669;
             color: white;
             padding: 6px 12px;
             border-radius: 6px;
@@ -160,16 +170,16 @@
         }
 
         .single-step-question-box {
-            background: #fdfdfd;
-            border: 2px solid #cbd5e1;
-            padding: 15px;
+            background: #fdf8f6;
+            border: 2px solid #f97316;
+            padding: 16px;
             border-radius: 10px;
             margin-bottom: 15px;
         }
 
         .single-step-question-box h4 {
             margin-top: 0;
-            color: var(--primary);
+            color: #9a3412;
             font-size: 15px;
             line-height: 1.6;
         }
@@ -182,9 +192,9 @@
         }
 
         .opt-fast-btn {
-            background: #fff;
-            border: 2px solid var(--primary);
-            color: var(--primary);
+            background: #fff7ed;
+            border: 2px solid #fb923c;
+            color: #9a3412;
             padding: 12px;
             border-radius: 8px;
             font-size: 14px;
@@ -194,68 +204,71 @@
             transition: 0.1s;
         }
 
-        .opt-fast-btn:hover { background: var(--accent); }
-        .opt-fast-btn.correct-choice { background: var(--success) !important; border-color: var(--success) !important; color: #fff !important; }
-        .opt-fast-btn.wrong-choice { background: var(--danger) !important; border-color: var(--danger) !important; color: #fff !important; }
+        .opt-fast-btn:hover { background: #ffedd5; }
+        .opt-fast-btn.correct-choice { background: #059669 !important; border-color: #047857 !important; color: #fff !important; }
+        .opt-fast-btn.wrong-choice { background: #dc2626 !important; border-color: #b91c1c !important; color: #fff !important; }
 
         .navigation-btns { display: flex; gap: 10px; margin-top: 15px; }
 
         .questions-preview {
-            background: #fff;
-            border: 1px solid #cbd5e1;
+            background: #f8fafc;
+            border: 2px solid #94a3b8;
             padding: 20px;
-            border-radius: 10px;
+            border-radius: 12px;
             margin-top: 15px;
             display: none;
         }
 
         .exam-header {
             text-align: center;
-            border-bottom: 2px solid var(--primary);
+            border-bottom: 3px solid var(--primary);
             padding-bottom: 10px;
             margin-bottom: 15px;
+            background: #e2e8f0;
+            padding: 10px;
+            border-radius: 8px;
         }
 
         .exam-header h3 { margin: 0; font-size: 15px; color: #1e3a8a; font-weight: bold; }
-        .exam-header h4 { margin: 4px 0; font-size: 13px; color: #374151; }
+        .exam-header h4 { margin: 4px 0; font-size: 13px; color: #334155; }
 
         .question-row {
-            margin-bottom: 12px;
-            padding: 8px 10px;
-            background: #fdfdfd;
-            border-radius: 6px;
-            border: 1px solid #e2e8f0;
-            font-size: 12.5px;
-            line-height: 1.5;
+            margin-bottom: 14px;
+            padding: 10px 12px;
+            background: #f1f5f9;
+            border-radius: 8px;
+            border: 1px solid #cbd5e1;
+            font-size: 13px;
+            line-height: 1.6;
         }
 
         .bubble-options {
             display: flex;
             gap: 15px;
-            margin-top: 6px;
+            margin-top: 8px;
             align-items: center;
             flex-wrap: wrap;
         }
 
-        .bubble-item { display: flex; align-items: center; gap: 4px; font-size: 12px; }
+        .bubble-item { display: flex; align-items: center; gap: 5px; font-size: 12.5px; font-weight: 600; }
 
         .bubble-circle {
-            width: 18px;
-            height: 18px;
-            border: 1.5px solid #1e3a8a;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #1e3a8a;
             border-radius: 50%;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            font-size: 10px;
+            font-size: 11px;
             font-weight: bold;
             color: #1e3a8a;
-            background: #fff;
+            background: #e2e8f0;
         }
 
-        .analysis-box { display: none; background: #fffbeb; border: 1px solid #f59e0b; padding: 20px; border-radius: 10px; margin-top: 15px; font-size: 13px; }
-        .result-box { display: block; background: #ecfdf5; border: 1px solid #10b981; padding: 15px; border-radius: 10px; margin-top: 15px; font-size: 14px; }
-        .sheet-print-container { display: none; background: #fff; padding: 20px; border-radius: 10px; border: 1px solid #cbd5e1; margin-top: 15px; }
+        .analysis-box { display: none; background: #fefce8; border: 2px solid #eab308; padding: 20px; border-radius: 12px; margin-top: 15px; font-size: 13px; }
+        .result-box { display: block; background: #f0fdf4; border: 2px solid #34d399; padding: 18px; border-radius: 12px; margin-top: 15px; font-size: 14px; }
+        .sheet-print-container { display: none; background: #f8fafc; padding: 20px; border-radius: 12px; border: 2px solid #94a3b8; margin-top: 15px; }
 
         @media print {
             @page { size: A4 portrait; margin: 10mm; }
@@ -267,7 +280,7 @@
             .printable-analysis-area, .printable-analysis-area * { visibility: visible !important; }
             .printable-analysis-area { position: absolute; left: 0; top: 0; width: 100% !important; background: white !important; padding: 0 !important; border: none !important; box-shadow: none !important; }
             .no-print { display: none !important; }
-            .question-row { break-inside: avoid; page-break-inside: avoid; margin-bottom: 8px; padding: 6px 8px; border: 1px solid #94a3b8; }
+            .question-row { break-inside: avoid; page-break-inside: avoid; margin-bottom: 8px; padding: 6px 8px; border: 1px solid #94a3b8; background: #fff !important; }
         }
     </style>
 </head>
@@ -280,7 +293,7 @@
         </div>
 
         <div class="section-box no-print">
-            <h3>📚 أولاً: إعدادات الاختبار والصف والمادة وتحديد الدروس والمواضيع المستهدفة</h3>
+            <h3>📚 أولاً: إعدادات الاختبار، الصف، والمادة، وتحديد عدد الأسئلة المطلوبة</h3>
             <div class="form-grid">
                 <div class="form-group">
                     <label>نوع الاختبار:</label>
@@ -313,44 +326,53 @@
                         <option value="islamic">الدراسات الإسلامية</option>
                     </select>
                 </div>
+                <div class="form-group">
+                    <label>عدد أسئلة الاختبار المطلوبة:</label>
+                    <select id="selectQuestionCount">
+                        <option value="5">٥ أسئلة (قصير سريع)</option>
+                        <option value="10" selected>١٠ أسئلة (معياري)</option>
+                        <option value="15">١٥ سؤالاً (موسع)</option>
+                        <option value="20">٢٠ سؤالاً (شامل وكبير)</option>
+                    </select>
+                </div>
             </div>
 
-            <!-- صندوق مجالات اختبارات نافس (الأقسام الأربعة للعلوم) -->
-            <div id="nafisDomainsBox" class="form-group" style="display: none; margin-top: 12px; border: 2px dashed #b45309; background: #fffbeb; padding: 12px; border-radius: 8px;">
+            <!-- صندوق مجالات نافس -->
+            <div id="nafisDomainsBox" class="form-group" style="display: none; margin-top: 12px; border: 2px dashed #b45309; background: #fef3c7; padding: 12px; border-radius: 8px;">
                 <label style="color: #b45309; display: flex; align-items: center; gap: 5px; font-size: 14px;">
                     <span>📊</span> حدد مجالات مادة العلوم المستهدفة في اختبارات نافس:
                 </label>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 8px; margin-top: 8px;">
-                    <label style="display: flex; align-items: center; gap: 6px; font-size: 13px; background: #fff; padding: 8px; border-radius: 6px; border: 1px solid #fcd34d; cursor: pointer;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 8px; margin-top: 8px;">
+                    <label style="display: flex; align-items: center; gap: 6px; font-size: 13px; background: #fffbeb; padding: 8px; border-radius: 6px; border: 1px solid #fcd34d; cursor: pointer;">
                         <input type="checkbox" class="nafis-domain-cb" value="علوم الحياة" checked style="width: 16px; height: 16px; accent-color: #b45309;">
-                        <span><b>1. علوم الحياة</b> (الكائنات الحية والبيئة)</span>
+                        <span><b>1. علوم الحياة</b></span>
                     </label>
-                    <label style="display: flex; align-items: center; gap: 6px; font-size: 13px; background: #fff; padding: 8px; border-radius: 6px; border: 1px solid #fcd34d; cursor: pointer;">
+                    <label style="display: flex; align-items: center; gap: 6px; font-size: 13px; background: #fffbeb; padding: 8px; border-radius: 6px; border: 1px solid #fcd34d; cursor: pointer;">
                         <input type="checkbox" class="nafis-domain-cb" value="العلوم الفيزيائية" checked style="width: 16px; height: 16px; accent-color: #b45309;">
-                        <span><b>2. العلوم الفيزيائية</b> (المادة والطاقة)</span>
+                        <span><b>2. العلوم الفيزيائية</b></span>
                     </label>
-                    <label style="display: flex; align-items: center; gap: 6px; font-size: 13px; background: #fff; padding: 8px; border-radius: 6px; border: 1px solid #fcd34d; cursor: pointer;">
+                    <label style="display: flex; align-items: center; gap: 6px; font-size: 13px; background: #fffbeb; padding: 8px; border-radius: 6px; border: 1px solid #fcd34d; cursor: pointer;">
                         <input type="checkbox" class="nafis-domain-cb" value="علوم الأرض والفضاء" checked style="width: 16px; height: 16px; accent-color: #b45309;">
-                        <span><b>3. علوم الأرض والفضاء</b> (التضاريس والفضاء)</span>
+                        <span><b>3. علوم الأرض والفضاء</b></span>
                     </label>
-                    <label style="display: flex; align-items: center; gap: 6px; font-size: 13px; background: #fff; padding: 8px; border-radius: 6px; border: 1px solid #fcd34d; cursor: pointer;">
+                    <label style="display: flex; align-items: center; gap: 6px; font-size: 13px; background: #fffbeb; padding: 8px; border-radius: 6px; border: 1px solid #fcd34d; cursor: pointer;">
                         <input type="checkbox" class="nafis-domain-cb" value="الاستقصاء العلمي" checked style="width: 16px; height: 16px; accent-color: #b45309;">
-                        <span><b>4. الاستقصاء العلمي</b> (التفكير الناقد والمهارات)</span>
+                        <span><b>4. الاستقصاء العلمي</b></span>
                     </label>
                 </div>
             </div>
 
             <!-- صندوق اختيار الدروس -->
-            <div id="standardLessonsBox" class="form-group" style="margin-top: 12px; border-top: 1px dashed #cbd5e1; padding-top: 10px;">
-                <label style="color: #b45309; display: flex; align-items: center; gap: 5px;">
+            <div id="standardLessonsBox" class="form-group" style="margin-top: 12px; border-top: 2px dashed #93c5fd; padding-top: 10px;">
+                <label style="color: var(--primary); display: flex; align-items: center; gap: 5px;">
                     <span>📖</span> اختر الدروس أو المواضيع المراد وضع الأسئلة منها:
                 </label>
-                <div id="lessonsSelectionContainer" style="display: flex; flex-direction: column; gap: 6px; max-height: 180px; overflow-y: auto; background: #fff; padding: 10px; border: 2px solid #d1d5db; border-radius: 8px; margin-top: 6px;"></div>
+                <div id="lessonsSelectionContainer" style="display: flex; flex-direction: column; gap: 6px; max-height: 180px; overflow-y: auto; background: #e0f2fe; padding: 10px; border: 2px solid #93c5fd; border-radius: 8px; margin-top: 6px;"></div>
             </div>
         </div>
 
         <!-- التوليد الذكي -->
-        <div class="section-box no-print" style="border: 2px dashed #7c3aed; background: #faf5ff;">
+        <div class="section-box no-print" style="border: 2px dashed #7c3aed; background: #f3e8ff;">
             <h3 style="color: #7c3aed;">✨ التوليد الذكي للأسئلة من نص أو عنوان الدرس</h3>
             <div class="form-group">
                 <textarea id="lessonInputText" rows="3" placeholder="مثال: أجزاء النباتات أو المخلوقات الحية..."></textarea>
@@ -361,20 +383,20 @@
         </div>
 
         <div class="section-box">
-            <h3>⚙️ ثانياً: توليد ورقة الاختبار المعتمدة (10 أسئلة بخيارات موزعة عشوائياً)</h3>
+            <h3>⚙️ ثانياً: توليد ورقة الاختبار المعتمَدة (بالعدد والخيارات العشوائية والدقيقة)</h3>
             <div class="no-print">
-                <button class="action-btn" onclick="generateTestModel()">⚡ توليد ورقة الاختبار</button>
+                <button class="action-btn" onclick="generateTestModel()">⚡ توليد ورقة الاختبار الآن</button>
             </div>
 
             <div id="questionsPreviewBox" class="questions-preview printable-exam-area">
                 <div class="exam-header">
                     <h3>المملكة العربية السعودية - وزارة التعليم</h3>
                     <h4 id="printSchoolTitle">مدرسة داؤود بن عروة الثقفي الابتدائية</h4>
-                    <p style="margin:2px 0; font-size:11.5px; color:#4b5563; font-weight:bold;">معلم المادة: منصور عامر الرحيلي</p>
-                    <p id="printTestInfo" style="margin:2px 0; font-size:12px; color:#555; font-weight:bold;"></p>
+                    <p style="margin:2px 0; font-size:11.5px; color:#1e293b; font-weight:bold;">معلم المادة: منصور عامر الرحيلي</p>
+                    <p id="printTestInfo" style="margin:2px 0; font-size:12px; color:#1e3a8a; font-weight:bold;"></p>
                     <div id="printSelectedLessonsPrint" style="margin:2px 0; font-size:11.5px; color:#0284c7; font-weight:bold;"></div>
                     <div id="printModelBadge" style="margin:4px 0; font-size:12px; color:#0d9488; font-weight:bold;"></div>
-                    <div style="margin-top: 6px; border: 1.2px solid #64748b; padding: 4px 10px; border-radius: 5px; display:inline-block; font-size:11.5px;">
+                    <div style="margin-top: 6px; border: 1.5px solid #64748b; padding: 4px 10px; border-radius: 5px; display:inline-block; font-size:11.5px; background: #ffffff;">
                         <b>اسم الطالب:</b> .................................................................... &nbsp;&nbsp; <b>الصف:</b> ................
                     </div>
                 </div>
@@ -388,29 +410,29 @@
         </div>
 
         <div class="section-box no-print">
-            <h3>👤 ثالثاً: لوحة التصحيح السريع (سؤال بسؤال)</h3>
+            <h3>👤 ثالثاً: لوحة التصحيح السريع التفاعلية</h3>
             <button class="action-btn btn-success" onclick="startTouchGradingSession()">🚀 بدء جلسة التصحيح ورصد الدرجات</button>
 
             <div id="touchGradingCard" class="touch-grading-card">
                 <div id="studentHeaderBadge" class="student-title-badge"></div>
                 <div id="singleQuestionContainer"></div>
                 <div class="navigation-btns" style="justify-content: space-between;">
-                    <button class="action-btn" style="background: #4b5563; width: 48%;" onclick="prevQuestionStep()">⬅ السؤال السابق</button>
+                    <button class="action-btn" style="background: #475569; width: 48%;" onclick="prevQuestionStep()">⬅ السؤال السابق</button>
                     <button class="action-btn btn-success" style="width: 48%;" onclick="nextQuestionStepOrFinish()">التالي / حفظ ➡</button>
                 </div>
             </div>
         </div>
 
         <div id="resultContainer" class="result-box no-print">
-            <h3 style="margin-top:0; color: var(--primary); font-size: 16px;">📊 سجل درجات الطلاب والبحث الفوري</h3>
+            <h3 style="margin-top:0; color: #065f46; font-size: 16px;">📊 سجل درجات الطلاب والبحث الفوري والواتساب</h3>
             <div style="margin: 12px 0; display: flex; gap: 10px; align-items: center;">
-                <input type="text" id="searchStudentInput" placeholder="🔍 ابحث عن اسم طالب لسؤال ولي أمره..." oninput="filterStudentResults()" style="flex: 1; padding: 8px 12px; border: 1px solid #10b981; border-radius: 6px; font-size: 13px;">
+                <input type="text" id="searchStudentInput" placeholder="🔍 ابحث عن اسم طالب لسؤال ولي أمره..." oninput="filterStudentResults()" style="flex: 1; padding: 9px 12px; border: 2px solid #059669; border-radius: 6px; font-size: 13px; background: #fff;">
             </div>
             <p id="correctionOutputText" style="font-size: 14px; margin: 8px 0;"></p>
             
             <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;" class="no-print">
                 <button class="action-btn btn-print" style="flex: 1; min-width: 250px;" onclick="printAllGradesSheet()">🖨️ طباعة كشف درجات الطلاب</button>
-                <button class="action-btn btn-nafis-bottom" style="flex: 1; min-width: 250px;" onclick="toggleAnalysisBox()">📊 📈 تقرير التحليل الخطي والخطط العلاجية الواقعية</button>
+                <button class="action-btn btn-nafis-bottom" style="flex: 1; min-width: 250px;" onclick="toggleAnalysisBox()">📊 📈 تقرير التحليل الميداني والخطط العلاجية الواقعية</button>
             </div>
         </div>
 
@@ -418,12 +440,12 @@
         <div id="allGradesSheetPrintArea" class="sheet-print-container printable-sheet-area">
             <div style="text-align: center; border-bottom: 2px solid #1e3a8a; padding-bottom: 8px; margin-bottom: 15px;">
                 <h3 style="margin: 0; color: #1e3a8a; font-size: 15px;">المملكة العربية السعودية - وزارة التعليم</h3>
-                <h4 style="margin: 4px 0; font-size: 13px; color: #374151;">مدرسة داؤود بن عروة الثقفي الابتدائية</h4>
-                <p id="sheetPrintMeta" style="margin: 2px 0; font-size: 12px; color: #4b5563; font-weight: bold;"></p>
+                <h4 style="margin: 4px 0; font-size: 13px; color: #334151;">مدرسة داؤود بن عروة الثقفي الابتدائية</h4>
+                <p id="sheetPrintMeta" style="margin: 2px 0; font-size: 12px; color: #475569; font-weight: bold;"></p>
             </div>
             <table style="width: 100%; border-collapse: collapse; font-size: 12px; text-align: center;" border="1">
                 <thead>
-                    <tr style="background: #eff6ff; color: #1e3a8a;">
+                    <tr style="background: #e2e8f0; color: #1e3a8a;">
                         <th style="padding: 6px; width: 40px;">م</th>
                         <th style="padding: 6px; text-align: right; padding-right: 10px;">اسم الطالب</th>
                         <th style="padding: 6px; width: 100px;">الدرجة المستحقة</th>
@@ -441,8 +463,8 @@
 
         <!-- تقرير التحليل والخطط العلاجية الواقعية -->
         <div id="analysisContainer" class="analysis-box printable-analysis-area">
-            <h3 style="margin-top:0; color: #b45309; border-bottom: 2px solid #f59e0b; padding-bottom: 8px; font-size: 16px;">📈 تقرير تحليل نواتج التعلم والخطط العلاجية الميدانية الواقعية</h3>
-            <div id="analysisContentText" style="font-size: 12.5px; line-height: 1.6; color: #1f2937;"></div>
+            <h3 style="margin-top:0; color: #b45309; border-bottom: 2px solid #eab308; padding-bottom: 8px; font-size: 16px;">📈 تقرير تحليل نواتج التعلم والخطط العلاجية الميدانية الواقعية</h3>
+            <div id="analysisContentText" style="font-size: 12.5px; line-height: 1.6; color: #1e293b;"></div>
             <div class="no-print" style="margin-top: 15px;">
                 <button class="action-btn btn-print" onclick="printAnalysisBoxOnly()">🖨️ طباعة التقرير والخطط العلاجية لوحده</button>
             </div>
@@ -504,7 +526,8 @@
 
             let gradeLessons = (gradeSubjectLessonsMap[gradeKey] && gradeSubjectLessonsMap[gradeKey][subjectKey]) ? 
                 gradeSubjectLessonsMap[gradeKey][subjectKey] : [
-                    { chapter: "الوحدة الأولى", title: `مهارات ومفاهيم ${subjectNames[subjectKey]}` }
+                    { chapter: "الوحدة الأولى", title: `مهارات ومفاهيم ${subjectNames[subjectKey]}` },
+                    { chapter: "الوحدة الثانية", title: `التطبيقات والتدريبات الإضافية لـ ${subjectNames[subjectKey]}` }
                 ];
 
             gradeLessons.forEach((l) => {
@@ -514,10 +537,10 @@
                 label.style.gap = '8px';
                 label.style.fontSize = '13px';
                 label.style.cursor = 'pointer';
-                label.style.padding = '4px 6px';
-                label.style.borderRadius = '4px';
-                label.style.background = '#f8fafc';
-                label.style.border = '1px solid #e2e8f0';
+                label.style.padding = '5px 8px';
+                label.style.borderRadius = '6px';
+                label.style.background = '#f0f9ff';
+                label.style.border = '1px solid #bae6fd';
 
                 label.innerHTML = `
                     <input type="checkbox" class="lesson-checkbox" value="${escapeHtml(l.title)}" checked style="width: 16px; height: 16px; accent-color: var(--secondary); cursor: pointer;">
@@ -533,11 +556,15 @@
                     { domain: "علوم الحياة", q: "ما هو الجزء الرئيسي في النبات المسؤول عن امتصاص الماء والأملاح من التربة؟", options: ["الجذر", "الساق", "الأوراق", "الزهور"], correctIdx: 0 },
                     { domain: "علوم الحياة", q: "أي الحيوانات التالية يُغطي جسمه الريش ويستطيع الطيران؟", options: ["القطة", "العصفور", "الأسد", "الخروف"], correctIdx: 1 },
                     { domain: "علوم الحياة", q: "ماذا تحتاج النباتات الخضراء لكي تنمو وتعيش بصورة سليمة؟", options: ["ظلام تام وصخور", "بلاستيك وحديد", "ماء وضوء وهواء", "رمل جاف فقط"], correctIdx: 2 },
+                    { domain: "علوم الحياة", q: "ما المأوى أو المسكن الطبيعي للأسماك في الطبيعة؟", options: ["الماء", "الصحراء الجافة", "قمة الجبل العالي", "الغابة اليابسة"], correctIdx: 0 },
                     { domain: "العلوم الفيزيائية", q: "ما هو المصدر الطبيعي الأساسي للضوء والحرارة على كوكب الأرض؟", options: ["القمر", "الشمس", "المصباح الكهربائي", "النجوم البعيدة"], correctIdx: 1 },
                     { domain: "العلوم الفيزيائية", q: "أي الأجسام التالية يعتبر مصدراً للحرارة في حياتنا اليومية؟", options: ["الثلج المجمد", "المدفأة الكهربائية", "الماء البارد", "الزجاج الشفاف"], correctIdx: 1 },
+                    { domain: "العلوم الفيزيائية", q: "كيف تصف حركة الكرة عند ركلها بقوة على الأرض؟", options: ["تتحرك وتتجه للأمام", "تبقى ثابتة تماماً", "تختفي في الهواء", "تسقط للأسفل مباشرة"], correctIdx: 0 },
                     { domain: "علوم الأرض والفضاء", q: "في أي فصل من فصول السنة ترتفع درجة الحرارة وتشتد أشعة الشمس؟", options: ["فصل الشتاء", "فصل الخريف", "فصل الصيف", "فصل الربيع"], correctIdx: 2 },
                     { domain: "علوم الأرض والفضاء", q: "ما هي المادة الشفافة الأساسية التي نجدها بكثرة على سطح الأرض وتشكل البحار؟", options: ["الحديد الصلب", "الماء", "الصخور البركانية", "الخشب اليابس"], correctIdx: 1 },
-                    { domain: "الاستقصاء العلمي", q: "أي الأجسام التالية خفيف ويطفو على سطح الماء عند وضعه فيه؟", options: ["الحجر الثقيل", "المسمار الحديدي", "ورقة الشجر الخفيفة", "العملة المعدنيةقة"], correctIdx: 2 }
+                    { domain: "علوم الأرض والفضاء", q: "ماذا نرى في السماء الصافية خلال فترة الليل المظلم؟", options: ["النجوم والقمر", "الشمس الساطعة", "الغيوم الممطرة الثقيلة", "قوس قزح الصباحي"], correctIdx: 0 },
+                    { domain: "الاستقصاء العلمي", q: "أي الأجسام التالية خفيف ويطفو على سطح الماء عند وضعه فيه؟", options: ["الحجر الثقيل", "المسمار الحديدي", "ورقة الشجر الخفيفة", "العملة المعدنية"], correctIdx: 2 },
+                    { domain: "الاستقصاء العلمي", q: "بأي أداة نستخدمها لقياس طول أو ارتفاع جسم بدقة؟", options: ["مسطرة القياس", "الميزان الرقمي", "الساعة اليدوية", "ميزان الحرارة"], correctIdx: 0 }
                 ]
             },
             "السادس الابتدائي": {
@@ -545,11 +572,17 @@
                     { domain: "علوم الحياة", q: "ما هي الوحدة الأساسية لبناء وتنظيم جميع الكائنات الحية في الطبيعة؟", options: ["النسيج الحيوي", "الخلية الحية", "العضو الداخلي", "الجهاز العصبي"], correctIdx: 1 },
                     { domain: "علوم الحياة", q: "ما اسم العملية الحيوية التي تصنع بها النباتات الخضراء غذاءها بوجود الضوء؟", options: ["التنفس الخلوي", "الهضم والامتصاص", "البناء الضوئي", "النتح"], correctIdx: 2 },
                     { domain: "علوم الحياة", q: "أي الأجهزة في جسم الإنسان مسؤول عن ضخ الدم لجميع الأعضاء؟", options: ["الجهاز الهضمي", "الجهاز الدوري (القلب)", "الجهاز التنفسي", "الجهاز العضلي"], correctIdx: 1 },
+                    { domain: "علوم الحياة", q: "ما المادة الوراثية المسؤولة عن نقل الصفات بين الأجيال في الخلايا؟", options: ["الماء الصافي", "DNA (الدنا)", "السكر المذاب", "الدهون الثلاثية"], correctIdx: 1 },
+                    { domain: "علوم الحياة", q: "أي الكائنات التالية يمثل منتجاً للغذاء في السلسلة الغذائية؟", options: ["النبات الأخضر", "الصقر المفترس", "الأسد", "الذئب"], correctIdx: 0 },
                     { domain: "العلوم الفيزيائية", q: "ما نوع التغير الذي ينتج عنه مواد جديدة ذات خصائص مختلفة تماماً؟", options: ["تغير فيزيائي", "انصهار الجليد", "تغير كيميائي", "تبخر الماء"], correctIdx: 2 },
                     { domain: "العلوم الفيزيائية", q: "ما هي القوة التي تسحب الأجسام نحو مركز كوكب الأرض؟", options: ["قوة المغناطيس", "قوة الاحتكاك", "قوة الجاذبية الأرضية", "القوة الكهربائية"], correctIdx: 2 },
+                    { domain: "العلوم الفيزيائية", q: "ماذا يسمى انتقال الحرارة عبر الأجسام الصلبة بالتلامس المباشر؟", options: ["التوصيل الحراري", "الحمل الحراري", "الإشعاع الضوئي", "التبخر"], correctIdx: 0 },
+                    { domain: "العلوم الفيزيائية", q: "ما وحدة قياس الشغل أو الطاقة في النظام الدولي للوحدات؟", options: ["الجول", "النيوتن", "الفولت", "الأمبير"], correctIdx: 0 },
                     { domain: "علوم الأرض والفضاء", q: "أي الأجرام السماوية التالية يقع في مركز المجموعة الشمسية تماماً؟", options: ["كوكب الأرض", "الشمس", "القمر", "كوكب المريخ"], correctIdx: 1 },
                     { domain: "علوم الأرض والفضاء", q: "ما سبب تعاقب الليل والنهار على كوكب الأرض بصورة منتظمة؟", options: ["دوران الأرض حول الشمس", "دوران الأرض حول محورها", "ثبات الشمس بمكانها", "تغير فصول السنة"], correctIdx: 1 },
-                    { domain: "الاستقصاء العلمي", q: "ما هو المتغير المستقل في التجربة العلمية؟", options: ["النتيجة النهائية الثابتة", "الأداة غير المستخدمة", "العامل الذي نغيره لنقيس أثره", "المكان المهجور"], correctIdx: 2 }
+                    { domain: "علوم الأرض والفضاء", q: "ما الطبقة الهوائية المحيطة بكوكب الأرض وتحميه من الإشعاعات الضارة؟", options: ["الغلاف الجوي", "قاع المحيط العميق", "القشرة الصلبة", "اللب الداخلي"], correctIdx: 0 },
+                    { domain: "الاستقصاء العلمي", q: "ما هو المتغير المستقل في التجربة العلمية المنظمة؟", options: ["النتيجة النهائية الثابتة", "الأداة غير المستخدمة", "العامل الذي نغيره لنقيس أثره", "المكان المهجور"], correctIdx: 2 },
+                    { domain: "الاستقصاء العلمي", q: "كيف يتحقق الباحث العلمي من صحة فرضيته في التجربة؟", options: ["بإجراء التجارب المتكررة", "باستنتاج عشوائي", "بتجاهل الملاحظات", "بإلغاء التجربة"], correctIdx: 0 }
                 ]
             }
         };
@@ -559,10 +592,10 @@
                 return accurateSubjectQuestionBanks[gradeKey][subjectKey];
             }
             return [
-                { domain: "علوم الحياة", q: `سؤال قياسي في (${subjectNames[subjectKey]}) - المفاهيم الأساسية:`, options: ["خيار غير دقيق", "الإجابة الصحيحة المعيارية", "خطأ فادح", "خارج النطاق"], correctIdx: 1 },
-                { domain: "العلوم الفيزيائية", q: `سؤال تجريبي في (${subjectNames[subjectKey]}) - التطبيق الفيزيائي:`, options: ["خيار غير دقيق", "خطأ فادح", "الإجابة الصحيحة المعيارية", "خارج النطاق"], correctIdx: 2 },
-                { domain: "علوم الأرض والفضاء", q: `سؤال تحليل في (${subjectNames[subjectKey]}) - ظواهر الأرض:`, options: ["الإجابة الصحيحة المعيارية", "خيار غير دقيق", "خطأ فادح", "خارج النطاق"], correctIdx: 0 },
-                { domain: "الاستقصاء العلمي", q: `سؤال تفكير ناقد في (${subjectNames[subjectKey]}) - مهارات الاستقصاء:`, options: ["خيار غير دقيق", "خطأ فادح", "خارج النطاق", "الإجابة الصحيحة المعيارية"], correctIdx: 3 }
+                { domain: "علوم الحياة", q: `سؤال قياسي شامل في (${subjectNames[subjectKey]}) - المفهوم الأول:`, options: ["خيار بديل أ", "الإجابة الصحيحة المعيارية", "خيار بديل ج", "خيار بديل د"], correctIdx: 1 },
+                { domain: "العلوم الفيزيائية", q: `سؤال تجريبي في (${subjectNames[subjectKey]}) - التطبيق الثاني:`, options: ["خيار بديل أ", "خيار بديل ب", "الإجابة الصحيحة المعيارية", "خيار بديل د"], correctIdx: 2 },
+                { domain: "علوم الأرض والفضاء", q: `سؤال تحليل في (${subjectNames[subjectKey]}) - الظاهرة الثالثة:`, options: ["الإجابة الصحيحة المعيارية", "خيار بديل ب", "خيار بديل ج", "خيار بديل د"], correctIdx: 0 },
+                { domain: "الاستقصاء العلمي", q: `سؤال تفكير ناقد في (${subjectNames[subjectKey]}) - المهارة الرابعة:`, options: ["خيار بديل أ", "خيار بديل ب", "خيار بديل ج", "الإجابة الصحيحة المعيارية"], correctIdx: 3 }
             ];
         }
 
@@ -587,7 +620,7 @@
                 alert('الرجاء كتابة أو لصق نص أو عنوان الدرس أولاً!');
                 return;
             }
-            alert(`✨ تم توليد أسئلة علمية مخصصة لدرس (${text}) بنجاح!`);
+            alert(`✨ تم توليد أسئلة علمية واسعة ومتقدمة لدرس (${text}) بنجاح!`);
             document.getElementById('lessonInputText').value = '';
         }
 
@@ -623,6 +656,7 @@
             const examType = document.getElementById('selectExamType').value;
             const gradeKey = document.getElementById('selectGrade').value;
             const subjectKey = document.getElementById('selectSubject').value;
+            const requestedCount = parseInt(document.getElementById('selectQuestionCount').value) || 10;
 
             let sourcePool = [];
 
@@ -645,12 +679,26 @@
                 document.getElementById('printSelectedLessonsPrint').textContent = `📖 الاختبار قياسي شامل (${gradeKey} - ${subjectNames[subjectKey]})`;
             }
 
-            // خلط وترتيب الخيارات عشوائياً لكل سؤال لضمان عدم ثبات الإجابة الصحيحة في الفقرة (أ)
-            let processedPool = sourcePool.map(q => {
+            // تكرار وتوسيع البنك إذا تطلب الأمر لتلبية العدد المطلوب بدون تكرار حرفي ممل
+            let expandedPool = [];
+            let loopCounter = 0;
+            while (expandedPool.length < requestedCount && sourcePool.length > 0) {
+                let originalQ = sourcePool[loopCounter % sourcePool.length];
+                let suffix = loopCounter >= sourcePool.length ? ` (تطبيق ميداني ${Math.floor(loopCounter/sourcePool.length) + 1})` : "";
+                expandedPool.push({
+                    domain: originalQ.domain,
+                    q: originalQ.q + suffix,
+                    options: [...originalQ.options],
+                    correctIdx: originalQ.correctIdx
+                });
+                loopCounter++;
+            }
+
+            // خلط وترتيب الخيارات عشوائياً لضمان عدم ثبات الإجابة في مكان واحد
+            let processedPool = expandedPool.map(q => {
                 let optionsCopy = [...q.options];
                 let correctText = optionsCopy[q.correctIdx];
 
-                // خلط الخيارات عشوائياً (Fisher-Yates shuffle)
                 for (let i = optionsCopy.length - 1; i > 0; i--) {
                     let j = Math.floor(Math.random() * (i + 1));
                     [optionsCopy[i], optionsCopy[j]] = [optionsCopy[j], optionsCopy[i]];
@@ -667,25 +715,21 @@
                 };
             });
 
+            // خلط الأسئلة نهائياً
             let shuffled = [...processedPool];
             for (let i = shuffled.length - 1; i > 0; i--) {
                 let j = Math.floor(Math.random() * (i + 1));
                 [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
             }
 
-            while (shuffled.length < 10) {
-                let base = shuffled[0] || { domain: "علوم الحياة", q: "سؤال تقييمي إضافي للمنهج", options: ["صحيح", "خطأ", "محتمل", "غير ذلك"], correctLetter: "أ" };
-                shuffled.push({...base, q: base.q + " (تأكيدي)"});
-            }
-
-            activeQuestions = shuffled.slice(0, 10);
+            activeQuestions = shuffled.slice(0, requestedCount);
             globalMaxScore = activeQuestions.length * 2;
 
             const modelsArray = ["نموذج (أ)", "نموذج (ب)", "نموذج (ج)", "نموذج (د)"];
             currentModelName = modelsArray[Math.floor(Math.random() * modelsArray.length)];
 
             document.getElementById('printTestInfo').textContent = `الصف: ${gradeKey} | المادة: ${subjectNames[subjectKey]} | نوع الاختبار: ${examType}`;
-            document.getElementById('printModelBadge').textContent = `رقم النموذج: ${currentModelName} | عدد الأسئلة: 10 أسئلة`;
+            document.getElementById('printModelBadge').textContent = `رقم النموذج: ${currentModelName} | عدد الأسئلة: ${toArabicDigits(activeQuestions.length)} سؤالاً`;
 
             const previewBox = document.getElementById('questionsPreviewBox');
             const listContainer = document.getElementById('generatedQuestionsList');
@@ -696,7 +740,7 @@
                 let qObj = activeQuestions[i];
                 htmlContent += `
                     <div class="question-row">
-                        <b>س${toArabicDigits(i + 1)}: ${escapeHtml(qObj.q)}</b> <span style="color:#b45309; font-size:11px;">[المجال: ${escapeHtml(qObj.domain)}]</span>
+                        <b>س${toArabicDigits(i + 1)}: ${escapeHtml(qObj.q)}</b> <span style="color:#b45309; font-size:11px; font-weight: bold;">[المجال: ${escapeHtml(qObj.domain)}]</span>
                         <div class="bubble-options">
                             <div class="bubble-item"><span class="bubble-circle">أ</span> أ) ${escapeHtml(qObj.options[0])}</div>
                             <div class="bubble-item"><span class="bubble-circle">ب</span> ب) ${escapeHtml(qObj.options[1])}</div>
@@ -747,7 +791,7 @@
             
             document.getElementById('studentHeaderBadge').innerHTML = `
                 <span>👤 الطالب (${toArabicDigits(currentStudentIndex + 1)}/${toArabicDigits(studentsList.length)}): ${escapeHtml(student.name)}</span>
-                <div id="liveScoreBadge" class="live-score-box">السؤال ${toArabicDigits(currentQuestionStep + 1)} / ١٠</div>
+                <div id="liveScoreBadge" class="live-score-box">السؤال ${toArabicDigits(currentQuestionStep + 1)} / ${toArabicDigits(activeQuestions.length)}</div>
             `;
 
             let qObj = activeQuestions[currentQuestionStep];
@@ -757,7 +801,7 @@
             const container = document.getElementById('singleQuestionContainer');
             container.innerHTML = `
                 <div class="single-step-question-box">
-                    <span style="color: #b45309; font-size: 12px; font-weight: bold;">[مجال الهدف: ${escapeHtml(qObj.domain)}]</span>
+                    <span style="color: #c2410c; font-size: 12px; font-weight: bold;">[مجال الهدف: ${escapeHtml(qObj.domain)}]</span>
                     <h4>سؤال ${toArabicDigits(qNum)}: ${escapeHtml(qObj.q)}</h4>
                     <div class="options-grid-fast">
                         <button type="button" class="opt-fast-btn ${savedOpt === 'أ' ? 'correct-choice' : ''}" onclick="selectFastOpt(${qNum}, 'أ', this)">أ) ${escapeHtml(qObj.options[0])}</button>
@@ -832,8 +876,9 @@
                     missedQuestions.push({ qNum: qNum, qText: qObj.q, domain: dom });
                 }
             }
+            let maxPossible = activeQuestions.length * 2;
             let score = correctCount * 2; 
-            allClassResults[student.name] = { score: score, correct: correctCount, domainStats: domainStats, missed: missedQuestions };
+            allClassResults[student.name] = { score: score, maxScore: maxPossible, correct: correctCount, domainStats: domainStats, missed: missedQuestions };
 
             updateLocalStorageAndResults();
 
@@ -860,7 +905,7 @@
                 dashboardRecords.push({
                     name: sName,
                     score: sScore,
-                    maxScore: maxScore,
+                    maxScore: allClassResults[sName].maxScore || maxScore,
                     examType: `${examType} - ${currentModelName}`,
                     date: new Date().toLocaleDateString('ar-SA')
                 });
@@ -892,11 +937,12 @@
                 if (query === '' || sName.toLowerCase().includes(query)) {
                     foundAny = true;
                     let data = allClassResults[sName];
-                    let waText = `مدرسة داؤود بن عروة الثقفي الابتدائية (طلاب)%0Aولي الأمر الفاضل، نود إفادتكم بحصول الابن: *${encodeURIComponent(sName)}* %0Aعلى درجة الاختبار: *${toArabicDigits(data.score)} / ${toArabicDigits(maxScore)}* (${toArabicDigits(data.correct)} إجابات صحيحة من أصل ١٠).%0Aمع تحيات المعلم: *منصور عامر الرحيلي*`;
+                    let currentMax = data.maxScore || maxScore;
+                    let waText = `مدرسة داؤود بن عروة الثقفي الابتدائية (طلاب)%0Aولي الأمر الفاضل، نود إفادتكم بحصول الابن: *${encodeURIComponent(sName)}* %0Aعلى درجة الاختبار: *${toArabicDigits(data.score)} / ${toArabicDigits(currentMax)}* (${toArabicDigits(data.correct)} إجابات صحيحة من أصل ${toArabicDigits(activeQuestions.length)}).%0Aمع تحيات المعلم: *منصور عامر الرحيلي*`;
 
                     html += `
-                        <div style="display: flex; justify-content: space-between; align-items: center; background: #fff; padding: 8px 12px; margin-bottom: 6px; border-radius: 6px; border: 1px solid #10b981;">
-                            <span>• <b>${escapeHtml(sName)}</b>: ${toArabicDigits(data.score)} / ${toArabicDigits(maxScore)} (${toArabicDigits(data.correct)} صحيحة)</span>
+                        <div style="display: flex; justify-content: space-between; align-items: center; background: #ffffff; padding: 9px 12px; margin-bottom: 6px; border-radius: 6px; border: 1.5px solid #059669;">
+                            <span>• <b>${escapeHtml(sName)}</b>: ${toArabicDigits(data.score)} / ${toArabicDigits(currentMax)} (${toArabicDigits(data.correct)} صحيحة)</span>
                             <a href="https://wa.me/?text=${waText}" target="_blank" class="action-btn btn-whatsapp" style="padding: 4px 10px; font-size: 12px; width: auto; text-decoration: none;">💬 إرسال لولي الأمر</a>
                         </div>
                     `;
@@ -904,7 +950,7 @@
             }
 
             if (!foundAny) {
-                html += `<p style="color: #ef4444; text-align: center;">قم بتصحيح ورصد درجة طالب واحد على الأقل عبر جلسة التصحيح السريع بالأعلى.</p>`;
+                html += `<p style="color: #dc2626; text-align: center; font-weight: bold;">قم بتصحيح ورصد درجة طالب واحد على الأقل عبر جلسة التصحيح السريع بالأعلى.</p>`;
             }
 
             outputText.innerHTML = html;
@@ -915,7 +961,7 @@
             const gradeKey = document.getElementById('selectGrade').value;
             const subjectKey = document.getElementById('selectSubject').value;
             const examType = document.getElementById('selectExamType').value;
-            const maxScore = globalMaxScore || 20;
+            let maxScore = globalMaxScore || 20;
 
             let enteredCount = Object.keys(allClassResults).length;
             document.getElementById('sheetPrintMeta').textContent = `الصف: ${gradeKey} | المادة: ${subjectNames[subjectKey]} | نوع الاختبار: ${examType} (${currentModelName}) - عدد الطلاب المدخلين: ${enteredCount}`;
@@ -926,16 +972,17 @@
             let idx = 1;
             for (let sName in allClassResults) {
                 let data = allClassResults[sName];
-                let percentage = maxScore > 0 ? (data.score / maxScore) * 100 : 0;
+                let currentMax = data.maxScore || maxScore;
+                let percentage = currentMax > 0 ? (data.score / currentMax) * 100 : 0;
                 let level = percentage >= 75 ? "متقن" : "يحتاج دعم وتدخل علاجي";
 
                 tbody.innerHTML += `
                     <tr>
-                        <td style="padding: 5px;">${toArabicDigits(idx++)}</td>
-                        <td style="padding: 5px; text-align: right; padding-right: 10px; font-weight: bold;">${escapeHtml(sName)}</td>
-                        <td style="padding: 5px; font-weight: bold; color: #1e3a8a;">${toArabicDigits(data.score)}</td>
-                        <td style="padding: 5px;">${toArabicDigits(maxScore)}</td>
-                        <td style="padding: 5px; color: ${percentage >= 50 ? '#10b981' : '#ef4444'}; font-weight: bold;">${level}</td>
+                        <td style="padding: 6px;">${toArabicDigits(idx++)}</td>
+                        <td style="padding: 6px; text-align: right; padding-right: 10px; font-weight: bold;">${escapeHtml(sName)}</td>
+                        <td style="padding: 6px; font-weight: bold; color: #1e3a8a;">${toArabicDigits(data.score)}</td>
+                        <td style="padding: 6px;">${toArabicDigits(currentMax)}</td>
+                        <td style="padding: 6px; color: ${percentage >= 50 ? '#059669' : '#dc2626'}; font-weight: bold;">${level}</td>
                     </tr>
                 `;
             }
@@ -965,7 +1012,6 @@
             }
         }
 
-        // تقرير وتحليل واقعي وميداني مرتبط بالأسئلة والمفقودات الفعلية للطلاب
         function prepareAnalysisContent() {
             const examType = document.getElementById('selectExamType').value;
             const gradeKey = document.getElementById('selectGrade').value;
@@ -973,7 +1019,7 @@
 
             let count = Object.keys(allClassResults).length;
             if (count === 0) {
-                document.getElementById('analysisContentText').innerHTML = `<p style="color:#ef4444; text-align:center;">الرجاء رصد درجات الطلاب أولاً لعرض التحليل والخطط العلاجية الواقعية.</p>`;
+                document.getElementById('analysisContentText').innerHTML = `<p style="color:#dc2626; text-align:center; font-weight: bold;">الرجاء رصد درجات الطلاب أولاً لعرض التحليل والخطط العلاجية الواقعية.</p>`;
                 return;
             }
 
@@ -990,7 +1036,7 @@
                 }
                 if (studentData.missed && studentData.missed.length > 0) {
                     studentData.missed.forEach(m => {
-                        specificRemedialTopics.push(`• الطالب <b>${escapeHtml(sName)}</b> أخطأ في مجال (${escapeHtml(m.domain)}) في السؤال: "${escapeHtml(m.qText)}"`);
+                        specificRemedialTopics.push(`• الطالب <b>${escapeHtml(sName)}</b> أخفق في مجال (${escapeHtml(m.domain)}) بالسؤال: "${escapeHtml(m.qText)}"`);
                     });
                 }
             }
@@ -1000,7 +1046,7 @@
                 let dTotal = domainAggregates[dom].total;
                 let dCorrect = domainAggregates[dom].correct;
                 let dPercent = dTotal > 0 ? ((dCorrect / dTotal) * 100).toFixed(1) : 0;
-                let statusColor = dPercent >= 75 ? '#10b981' : '#ef4444';
+                let statusColor = dPercent >= 75 ? '#059669' : '#dc2626';
                 let statusText = dPercent >= 75 ? 'متقن (حقق الهدف المعياري)' : 'يحتاج معالجة وتكثيف أهداف';
 
                 domainsTableHtml += `
@@ -1014,12 +1060,12 @@
             }
 
             let remedialHtml = specificRemedialTopics.length > 0 ? 
-                specificRemedialTopics.slice(0, 6).join('<br>') : 
+                specificRemedialTopics.slice(0, 8).join('<br>') : 
                 'جميع الطلاب حققوا إجابات صحيحة ومكتملة في هذا الاختبار.';
 
             document.getElementById('analysisContentText').innerHTML = `
                 <p style="font-size: 13px; font-weight: bold; color: #b45309;">📊 تحليل أداء نواتج التعلم ومجالات نافس للفصل (${gradeKey} - ${subjectNames[subjectKey]}):</p>
-                <table style="width:100%; border-collapse:collapse; margin-top:5px; font-size: 12px;" border="1">
+                <table style="width:100%; border-collapse:collapse; margin-top:5px; font-size: 12px; background: #ffffff;" border="1">
                     <tr style="background:#fef3c7; text-align:center;">
                         <th style="padding:6px;">مجال مهارات نافس</th>
                         <th style="padding:6px;">صحة الإجابات المرتبطة بالهدف</th>
@@ -1029,12 +1075,12 @@
                     ${domainsTableHtml || '<tr><td colspan="4" style="text-align:center;">لا توجد بيانات مجالات كافية</td></tr>'}
                 </table>
 
-                <div style="margin-top: 15px; background: #fff; padding: 12px; border-radius: 8px; border: 1px solid #f59e0b;">
+                <div style="margin-top: 15px; background: #ffffff; padding: 14px; border-radius: 8px; border: 2px solid #eab308;">
                     <h4 style="margin-top:0; color:#b45309;">🛠️ الخطط العلاجية الواقعية والميدانية المرتبطة بفقرات الاختبار:</h4>
-                    <div style="font-size: 12px; line-height: 1.7; background: #fafaf9; padding: 10px; border-radius: 6px; border: 1px solid #e5e7eb; max-height: 150px; overflow-y: auto;">
+                    <div style="font-size: 12px; line-height: 1.7; background: #fefce8; padding: 10px; border-radius: 6px; border: 1px solid #fde047; max-height: 160px; overflow-y: auto;">
                         ${remedialHtml}
                     </div>
-                    <ul style="margin: 10px 0 0 0; padding-right: 20px; font-size: 12px; line-height: 1.6;">
+                    <ul style="margin: 10px 0 0 0; padding-right: 20px; font-size: 12px; line-height: 1.6; color: #334151;">
                         <li><b>التوجيه الميداني للمعلم:</b> تقديم حصص تقوية فردية للطلاب في الأسئلة والمهارات المذكورة أعلاه.</li>
                         <li><b>إشراك ولي الأمر:</b> إرسال تنبيهات عبر الواتساب بالمهارات التي أخفق فيها الابن لمتابعتها منزلياً.</li>
                     </ul>
