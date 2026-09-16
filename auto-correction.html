@@ -372,16 +372,16 @@
                     </select>
                 </div>
 
-                <!-- رقم الفصل (بالأרגام الإنجليزية 1, 2, 3.. لتتوافق تماماً مع مفاتيح التخزين) -->
+                <!-- رقم الفصل (أرقام إنجليزية صريحة ومتوافقة مع الداشبورد) -->
                 <div class="form-group" style="grid-column: 1 / -1;">
                     <label>رقم الفصل (بالأرقام الإنجليزية المتوافقة مع الداشبورد):</label>
                     <select id="selectClassDigit">
-                        <option value="1">1 (أو ١)</option>
-                        <option value="2">2 (أو ٢)</option>
-                        <option value="3" selected>3 (أو ٣)</option>
-                        <option value="4">4 (أو ٤)</option>
-                        <option value="5">5 (أو ٥)</option>
-                        <option value="6">6 (أو ٦)</option>
+                        <option value="1">Class 1</option>
+                        <option value="2">Class 2</option>
+                        <option value="3" selected>Class 3</option>
+                        <option value="4">Class 4</option>
+                        <option value="5">Class 5</option>
+                        <option value="6">Class 6</option>
                     </select>
                 </div>
             </div>
@@ -529,11 +529,13 @@
             });
         }
 
+        // دالة تحويل عامة تتخطى تماماً حقل اختيار الفصل لتبقى أرقامه بالإنجليزية بدقة
         function convertAllNumbersInDOM() {
             const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
             let node;
             while (node = walker.nextNode()) {
-                if (node.parentElement && ['SCRIPT', 'STYLE'].includes(node.parentElement.tagName)) continue;
+                if (node.parentElement && ['SCRIPT', 'STYLE', 'OPTION'].includes(node.parentElement.tagName)) continue;
+                if (node.parentElement && node.parentElement.id === 'selectClassDigit') continue;
                 if (node.nodeValue) {
                     node.nodeValue = toArabicDigits(node.nodeValue);
                 }
@@ -734,14 +736,13 @@
         // دالة جلب الطلاب المحدثة بالأرقام الإنجليزية المتوافقة كلياً مع مفاتيح الداشبورد الرئيسي
         function fetchStudentsForSelectedClass() {
             studentsList = [];
-            const classDigit = document.getElementById('selectClassDigit').value.trim(); // الآن بالقيمة الإنجليزية المباشرة (مثل "1", "2", "3"...)
+            const classDigit = document.getElementById('selectClassDigit').value.trim(); // القيمة الإنجليزية المباشرة (مثل "1", "2", "3"...)
             
             // مطابقة مباشرة تامة مع المفتاح الإنجليزي المخزن في الداشبورد الأساسي
             for (let i = 0; i < localStorage.length; i++) {
                 let key = localStorage.key(i);
                 if (key) {
                     let cleanKey = key.trim();
-                    // فحص التطابق مع رقم الفصل الإنجليزي أو كصيغة مخزنة مباشرة
                     if (cleanKey === classDigit || cleanKey === `class_${classDigit}` || cleanKey.endsWith(`_${classDigit}`)) {
                         try {
                             let data = JSON.parse(localStorage.getItem(key));
