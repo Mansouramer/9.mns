@@ -372,9 +372,9 @@
                     </select>
                 </div>
 
-                <!-- رقم الفصل (يتيح الخيار بالعربي أو الإنجليزي لضمان التوافق التام) -->
+                <!-- رقم الفصل (بالأרגام الإنجليزية 1, 2, 3.. لتتوافق تماماً مع مفاتيح التخزين) -->
                 <div class="form-group" style="grid-column: 1 / -1;">
-                    <label>رقم الفصل (يدعم المطابقة التلقائية بالعربي والإنجليزي):</label>
+                    <label>رقم الفصل (بالأرقام الإنجليزية المتوافقة مع الداشبورد):</label>
                     <select id="selectClassDigit">
                         <option value="1">1 (أو ١)</option>
                         <option value="2">2 (أو ٢)</option>
@@ -731,23 +731,18 @@
             document.getElementById('lessonInputText').value = '';
         }
 
-        // دالة جلب الطلاب الشاملة التي تقرأ الأرقام بالعربي والهندي والإنجليزي وتطابقها مع الداشبورد الرئيسي
+        // دالة جلب الطلاب المحدثة بالأرقام الإنجليزية المتوافقة كلياً مع مفاتيح الداشبورد الرئيسي
         function fetchStudentsForSelectedClass() {
             studentsList = [];
-            const rawDigit = document.getElementById('selectClassDigit').value.trim(); // القيمة المختارة (مثل "3" أو "٣")
+            const classDigit = document.getElementById('selectClassDigit').value.trim(); // الآن بالقيمة الإنجليزية المباشرة (مثل "1", "2", "3"...)
             
-            // توليد كافة الاحتمالات الرقمية الممكنة لرقم الفصل (إنجليزي وعربي هندي)
-            let valEn = String(Number(rawDigit.replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d))));
-            let valAr = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'][parseInt(valEn)] || rawDigit;
-
-            // 1. فحص جميع مفاتيح الـ localStorage لمعرفة المفتاح المطابق لرقم الفصل تماماً بأي صيغة
+            // مطابقة مباشرة تامة مع المفتاح الإنجليزي المخزن في الداشبورد الأساسي
             for (let i = 0; i < localStorage.length; i++) {
                 let key = localStorage.key(i);
                 if (key) {
                     let cleanKey = key.trim();
-                    let isMatch = (cleanKey === valEn || cleanKey === valAr || cleanKey.endsWith(`_${valEn}`) || cleanKey.endsWith(`_${valAr}`) || cleanKey.includes(`فصل ${valEn}`) || cleanKey.includes(`فصل ${valAr}`));
-                    
-                    if (isMatch) {
+                    // فحص التطابق مع رقم الفصل الإنجليزي أو كصيغة مخزنة مباشرة
+                    if (cleanKey === classDigit || cleanKey === `class_${classDigit}` || cleanKey.endsWith(`_${classDigit}`)) {
                         try {
                             let data = JSON.parse(localStorage.getItem(key));
                             if (Array.isArray(data) && data.length > 0) {
@@ -762,11 +757,11 @@
                 }
             }
 
-            // 2. فحص احتياطي عام لأي مصفوفة طلاب مسجلة في المتصفح إن لم يتم العثور بالمفتاح المباشر
+            // فحص احتياطي ذكي لأي مفتاح آخر يحتوي على رقم الفصل المختار
             if (studentsList.length === 0) {
                 for (let i = 0; i < localStorage.length; i++) {
                     let key = localStorage.key(i);
-                    if (key && !key.includes('exam') && !key.includes('dashboard') && !key.includes('History')) {
+                    if (key && !key.includes('exam') && !key.includes('dashboard') && key.includes(classDigit)) {
                         try {
                             let data = JSON.parse(localStorage.getItem(key));
                             if (Array.isArray(data) && data.length > 0 && (typeof data[0] === 'string' || data[0].name)) {
@@ -781,14 +776,14 @@
                 }
             }
 
-            // 3. إن لم يتوفر أي كشف مخزن مسبقاً، يتم توليد كشف افتراضي مرتبط برقم الفصل لتتمكن من العمل ورصد الدرجات فوراً
+            // إن لم يوجد كشف مخزن مسبقاً، يتم إنشاء كشف تفاعلي فوري لتبدأ رصد الدرجات مباشرة
             if (studentsList.length === 0) {
                 studentsList = [
-                    { name: `طالب الفصل ${valAr} (1)` },
-                    { name: `طالب الفصل ${valAr} (2)` },
-                    { name: `طالب الفصل ${valAr} (3)` },
-                    { name: `طالب الفصل ${valAr} (4)` },
-                    { name: `طالب الفصل ${valAr} (5)` }
+                    { name: `طالب فصل ${classDigit} (1)` },
+                    { name: `طالب فصل ${classDigit} (2)` },
+                    { name: `طالب فصل ${classDigit} (3)` },
+                    { name: `طالب فصل ${classDigit} (4)` },
+                    { name: `طالب فصل ${classDigit} (5)` }
                 ];
             }
         }
