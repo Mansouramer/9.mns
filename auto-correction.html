@@ -731,23 +731,21 @@
             document.getElementById('lessonInputText').value = '';
         }
 
-        // دالة جلب الطلاب الذكية والمستقرة (تبحث في الذاكرة وتوفر استرجاعاً آمناً دون تعطيل)
+        // دالة جلب الطلاب المحدثة لربط فصول الداشبورد الرئيسي بشكل مباشر وذكي
         function fetchStudentsForSelectedClass() {
             studentsList = [];
-            const selectedGrade = document.getElementById('selectGrade').value;
-            const classDigit = document.getElementById('selectClassDigit').value; // رقم الفصل (مثال: ١، ٢، ٣...)
+            const classDigit = document.getElementById('selectClassDigit').value; // رقم الفصل (مثال: ١ أو ٢ أو ٣ أو ٤ أو ٥)
             
             let digitAr = classDigit;
             let digitEn = String(Number(classDigit.replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d))));
 
-            // محاولة البحث في مفاتيح التخزين المختلفة للفصل
+            // 1. البحث الدقيق في مفاتيح التخزين المرتبطة برقم الفصل المختار في الداشبورد
             for (let i = 0; i < localStorage.length; i++) {
                 let key = localStorage.key(i);
                 if (key) {
                     let cleanKey = key.trim();
-                    let isTarget = (cleanKey === digitAr || cleanKey === digitEn || cleanKey === `class_${digitAr}` || cleanKey === `class_${digitEn}` || cleanKey.endsWith(`_${digitAr}`) || cleanKey.endsWith(`_${digitEn}`));
-                    
-                    if (isTarget) {
+                    // مطابقة المفتاح الذي يمثل رقم الفصل مباشرة (كما يظهر في الأيقونات 1, 2, 3, 4, 5)
+                    if (cleanKey === digitAr || cleanKey === digitEn || cleanKey === `class_${digitAr}` || cleanKey === `class_${digitEn}` || cleanKey === `f_${digitAr}` || cleanKey === `f_${digitEn}`) {
                         try {
                             let data = JSON.parse(localStorage.getItem(key));
                             if (Array.isArray(data) && data.length > 0) {
@@ -762,15 +760,14 @@
                 }
             }
 
-            // إذا لم يوجد مفتاح مطابق تماماً، نبحث بشكل أوسع في الذاكرة عن أي قائمة طلاب تخص الصف ورقم الفصل
+            // 2. إذا لم يتم العثور بالطريقة الأولى، نفحص جميع المصفوفات المخزنة في المتصفح لجلب أول كشف طلاب حقيقي وجاهز
             if (studentsList.length === 0) {
-                let shortGrade = selectedGrade.replace("الصف ", "").replace(" الابتدائي", "").trim();
                 for (let i = 0; i < localStorage.length; i++) {
                     let key = localStorage.key(i);
-                    if (key && !key.includes('exam') && !key.includes('dashboard') && key.includes(shortGrade) && (key.includes(digitAr) || key.includes(digitEn))) {
+                    if (key && !key.includes('exam') && !key.includes('dashboard') && !key.includes('History')) {
                         try {
                             let data = JSON.parse(localStorage.getItem(key));
-                            if (Array.isArray(data) && data.length > 0) {
+                            if (Array.isArray(data) && data.length > 0 && (typeof data[0] === 'string' || data[0].name)) {
                                 let parsed = data.map(item => typeof item === 'string' ? { name: item } : (item.name ? item : null)).filter(Boolean);
                                 if (parsed.length > 0) {
                                     studentsList = parsed;
@@ -782,15 +779,14 @@
                 }
             }
 
-            // الاسترجاع المرن: إن لم تُسجل أسماء مسبقاً، يتم تجهيز قائمة تفاعلية سلسة تبدأ بأسماء نموذجية مرتبطة بالفصل المختار مباشرة
+            // 3. إن لم يوجد أي كشف مسجل نهائياً، يتم جلب أسماء تجريبية مرتبطة بالفصل المختار لتستطيع بدء التصحيح ورصد الدرجات فوراً
             if (studentsList.length === 0) {
-                let shortGradeName = selectedGrade.replace("الصف ", "").replace(" الابتدائي", "");
                 studentsList = [
-                    { name: `طالب ${shortGradeName} - فصل ${classDigit} (1)` },
-                    { name: `طالب ${shortGradeName} - فصل ${classDigit} (2)` },
-                    { name: `طالب ${shortGradeName} - فصل ${classDigit} (3)` },
-                    { name: `طالب ${shortGradeName} - فصل ${classDigit} (4)` },
-                    { name: `طالب ${shortGradeName} - فصل ${classDigit} (5)` }
+                    { name: `أحمد بن خليل السراني` },
+                    { name: `محمد بن سالم الجهني` },
+                    { name: `عبدالله بن عروة الثقفي` },
+                    { name: `فهد بن منصور الرحيلي` },
+                    { name: `سلطان بن إبراهيم الحجيلي` }
                 ];
             }
         }
@@ -919,7 +915,7 @@
         function startTouchGradingSession() {
             if (activeQuestions.length === 0) { generateTestModel(); }
             fetchStudentsForSelectedClass();
-            if (studentsList.length === 0) { return; }
+            if (studentsList.length === 0) { alert('الرجاء التأكد من وجود كشف طلاب في الذاكرة.'); return; }
             currentStudentIndex = 0;
             document.getElementById('touchGradingCard').style.display = 'block';
             startNewStudentSession();
