@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مدرسة داؤود بن عروة الثقفي الابتدائية | نظام الاختبارات الشامل وتحليل نافس (طلاب)</title>
+    <title>مدرسة داؤود بن عروة الثقفي الابتدائية | نظام الاختبارات الشامل والتحليل العميق</title>
     <style>
         :root {
             --primary: #1e3a8a;
@@ -121,12 +121,12 @@
         .btn-warning { background: #d97706; }
         .btn-purple { background: #7c3aed; }
 
-        /* التصحيح الفردي السريع مع تغيير لون الكارت */
+        /* تنسيق بطاقة التصحيح السريع بالطريقة السابقة والمفضلة */
         .touch-grading-card {
-            background: #1e293b;
-            border: 2px solid var(--secondary);
-            border-radius: 10px;
+            background: linear-gradient(to bottom, #1e293b, #1e1b4b);
+            border: 2px solid #4338ca;
             padding: 15px;
+            border-radius: 10px;
             margin-top: 15px;
             display: none;
             transition: background 0.4s ease, border-color 0.4s ease;
@@ -154,15 +154,15 @@
         .live-score-box {
             background: var(--success);
             color: white;
-            padding: 6px 12px;
+            padding: 4px 10px;
             border-radius: 6px;
-            font-size: 14px;
+            font-size: 0.85rem;
             font-weight: bold;
         }
 
         .single-step-question-box {
             background: #0f172a;
-            border: 2px solid #334155;
+            border: 2px solid #475569;
             padding: 15px;
             border-radius: 10px;
             margin-bottom: 15px;
@@ -171,14 +171,14 @@
         .single-step-question-box h4 {
             margin-top: 0;
             color: #f8fafc;
-            font-size: 15px;
+            font-size: 0.95rem;
             line-height: 1.6;
         }
 
         .options-grid-fast {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 10px;
+            gap: 8px;
             margin-top: 12px;
         }
 
@@ -186,9 +186,9 @@
             background: #1e293b;
             border: 2px solid #475569;
             color: #f8fafc;
-            padding: 12px;
+            padding: 12px 16px;
             border-radius: 8px;
-            font-size: 14px;
+            font-size: 0.9rem;
             font-weight: bold;
             cursor: pointer;
             text-align: right;
@@ -198,18 +198,18 @@
             transition: 0.1s;
         }
 
-        .opt-fast-btn:hover { background: #334155; }
+        .opt-fast-btn:hover { background: #334155; border-color: var(--secondary); }
 
         .opt-fast-btn.correct-choice {
             background: #065f46 !important;
             border-color: #34d399 !important;
-            color: #fff !important;
+            color: #ffffff !important;
         }
 
         .opt-fast-btn.wrong-choice {
             background: #7f1d1d !important;
             border-color: #f87171 !important;
-            color: #fff !important;
+            color: #ffffff !important;
         }
 
         .correct-badge-text {
@@ -217,7 +217,7 @@
             color: #a7f3d0;
             padding: 2px 8px;
             border-radius: 4px;
-            font-size: 12px;
+            font-size: 0.75rem;
         }
 
         .navigation-btns { display: flex; gap: 10px; margin-top: 15px; }
@@ -294,7 +294,7 @@
 
     <div class="container">
         <div class="header-nav no-print">
-            <h2>مدرسة داؤود بن عروة الثقفي الابتدائية | نظام الاختبارات الشامل وتحليل نافس</h2>
+            <h2>مدرسة داؤود بن عروة الثقفي الابتدائية | نظام الاختبارات الشامل والتحليل العميق</h2>
             <a href="index.html" class="back-btn">⬅ لوحة التحكم الرئيسية</a>
         </div>
 
@@ -338,23 +338,17 @@
                 </div>
             </div>
 
-            <!-- صندوق اختيار الدروس والمواضيع -->
             <div class="form-group" style="margin-top: 12px; border-top: 1px dashed #334155; padding-top: 10px;">
                 <label style="color: #fbbf24; display: flex; align-items: center; gap: 5px;">
                     <span>📖</span> اختر الدروس أو المواضيع المراد وضع الأسئلة منها:
                 </label>
-                <div id="lessonsSelectionContainer" style="display: flex; flex-direction: column; gap: 6px; max-height: 180px; overflow-y: auto; background: #0f172a; padding: 10px; border: 2px solid #475569; border-radius: 8px; margin-top: 6px;">
-                    <!-- سيتم تعبئة الدروس برمجياً هنا -->
-                </div>
+                <div id="lessonsSelectionContainer" style="display: flex; flex-direction: column; gap: 6px; max-height: 180px; overflow-y: auto; background: #0f172a; padding: 10px; border: 2px solid #475569; border-radius: 8px; margin-top: 6px;"></div>
             </div>
         </div>
 
-        <!-- قسم التوليد الذكي الحقيقي للأسئلة من نص الدرس -->
         <div class="section-box no-print" style="border: 2px dashed #7c3aed; background: #1e1b4b;">
             <h3 style="color: #c084fc;">✨ التوليد الذكي للأسئلة من نص أو عنوان الدرس</h3>
-            <p style="font-size: 12.5px; color: #cbd5e1; margin-bottom: 8px;">
-                اكتب عنوان أو موضوع الدرس لتوليد أسئلة دقيقة بـ ٤ خيارات:
-            </p>
+            <p style="font-size: 12.5px; color: #cbd5e1; margin-bottom: 8px;">اكتب عنوان أو موضوع الدرس لتوليد أسئلة دقيقة بـ ٤ خيارات:</p>
             <div class="form-group">
                 <textarea id="lessonInputText" rows="3" placeholder="مثال: أجزاء النباتات أو المخلوقات الحية..."></textarea>
             </div>
@@ -364,7 +358,7 @@
         </div>
 
         <div class="section-box">
-            <h3>⚙️ ثانياً: توليد ورقة الاختبار المعتمدة (مرتبطة حصرياً بالصف والدروس ومجالات نافس المختارة)</h3>
+            <h3>⚙️ ثانياً: توليد ورقة الاختبار المعتمدة</h3>
             <div class="no-print">
                 <button class="action-btn" onclick="generateTestModel()">⚡ توليد ورقة الاختبار المعتمدة</button>
             </div>
@@ -391,11 +385,16 @@
         </div>
 
         <div class="section-box no-print">
-            <h3>👤 ثالثاً: لوحة التصحيح السريع والذكي (سؤال بسؤال مع تنبيه تلوين الكارت عند الانتقال للطالب التالي)</h3>
+            <h3>👤 ثالثاً: لوحة التصحيح السريع والذكي (سؤال بسؤال بالطريقة المفضلة)</h3>
             <p style="font-size: 12px; color: #94a3b8; margin-bottom: 10px;">
-                تظهر الأسئلة سؤالاً تلو الآخر؛ بمجرد النقر على الإجابة ينتقل النظام تلقائياً، وعند اكتمال الطالب يتغير لون الكارت مؤقتاً إعلاناً للانتقال للطالب التالي:
+                اضغط على إجابة الطالب لينتقل النظام تلقائياً للسؤال التالي، مع إظهار علامة الإجابة النموذجية فوراً:
             </p>
-            <button class="action-btn btn-success" onclick="startTouchGradingSession()">🚀 بدء جلسة التصحيح ورصد الدرجات</button>
+            <div class="form-group">
+                <label for="studentSelect">اختر اسم الطالب للبدء:</label>
+                <select id="studentSelect" onchange="startTouchGradingSession()">
+                    <option value="">-- اضغط لاختيار طالب وبدء التصحيح --</option>
+                </select>
+            </div>
 
             <div id="touchGradingCard" class="touch-grading-card">
                 <div id="studentHeaderBadge" class="student-title-badge"></div>
@@ -424,7 +423,6 @@
             </div>
         </div>
 
-        <!-- كشف الدرجات المستقل للطباعة -->
         <div id="allGradesSheetPrintArea" class="sheet-print-container printable-sheet-area">
             <div style="text-align: center; border-bottom: 2px solid #1e3a8a; padding-bottom: 8px; margin-bottom: 15px;">
                 <h3 style="margin: 0; color: #1e3a8a; font-size: 15px;">المملكة العربية السعودية - وزارة التعليم</h3>
@@ -449,7 +447,6 @@
             </div>
         </div>
 
-        <!-- تقرير التحليل العميق -->
         <div id="analysisContainer" class="analysis-box printable-analysis-area">
             <h3 style="margin-top:0; color: #fbbf24; border-bottom: 2px solid #f59e0b; padding-bottom: 8px; font-size: 16px;">📈 تقرير تحليل نتائج الطلاب ومهارات نافس والتشخيص العميق ومقترحات العلاج</h3>
             <div id="analysisContentText" style="font-size: 12.5px; line-height: 1.6; color: #f8fafc;"></div>
@@ -490,27 +487,27 @@
         const accurateGradeQuestionBank = {
             "الأول الابتدائي": {
                 "science": [
-                    { q: "أي مما يلي يُعد من أجزاء النبات الرئيسية التي تمتص الماء؟", options: ["الساق", "الجذر", "الأوراق", "الزهور"], correct: "ب", keyword: "أجزاء النباتات" },
-                    { q: "ما هو مصدر النور والحرارة الأساسي على سطح الأرض؟", options: ["القمر", "الشمس", "المصباح", "النجوم"], correct: "ب", keyword: "الضوء والحرارة" }
+                    { q: "أي مما يلي يُعد من أجزاء النبات الرئيسية التي تمتص الماء؟", options: ["الساق", "الجذر", "الأوراق", "الزهور"], correct: 1, keyword: "أجزاء النباتات" },
+                    { q: "ما هو مصدر النور والحرارة الأساسي على سطح الأرض؟", options: ["القمر", "الشمس", "المصباح", "النجوم"], correct: 1, keyword: "الضوء والحرارة" }
                 ],
                 "math": [
-                    { q: "ما الناتج الصحيح لعملية الجمع: ٣ + ٢ = ؟", options: ["٤", "٥", "٦", "٧"], correct: "ب", keyword: "الجمع" }
+                    { q: "ما الناتج الصحيح لعملية الجمع: ٣ + ٢ = ؟", options: ["٤", "٥", "٦", "٧"], correct: 1, keyword: "الجمع" }
                 ],
                 "arabic": [
-                    { q: "ما هو الحرف الذي يبدأ به اسم (موز)؟", options: ["ب", "م", "ل", "د"], correct: "ب", keyword: "الحروف الهجائية" }
+                    { q: "ما هو الحرف الذي يبدأ به اسم (موز)؟", options: ["ب", "م", "ل", "د"], correct: 1, keyword: "الحروف الهجائية" }
                 ]
             },
             "السادس الابتدائي": {
                 "science": [
-                    { q: "ما هي الوحدة الأساسية لبناء وتنظيم الكائن الحي؟", options: ["النسيج الحيوي", "العضو الداخلي", "الخلية", "الجهاز العصبي"], correct: "ج", domain: "علوم الحياة", keyword: "علوم الحياة" },
-                    { q: "أي التركيبين التاليين يوجد في الخلايا النباتية فقط ولا يوجد في الحيوانية؟", options: ["الغشاء البلازمي", "الجدار الخلوي", "الميتوكوندريا", "النواة"], correct: "ب", domain: "علوم الحياة", keyword: "علوم الحياة" },
-                    { q: "أي أجهزة الجسم مسؤول عن نقل الغذاء والأكسجين إلى جميع الخلايا؟", options: ["الهضمي", "العصبي", "الدوري", "التنفسي"], correct: "ج", domain: "علوم الحياة", keyword: "علوم الحياة" },
-                    { q: "التغير الذي ينتج عنه مادة جديدة كلياً ذات خصائص مختلفة (مثل الاحتراق) يسمى:", options: ["تغير فيزيائي", "تغير كيميائي", "انصهار", "تبخر"], correct: "ب", domain: "العلوم الفيزيائية والكيميائية", keyword: "العلوم الفيزيائية والكيميائية" },
-                    { q: "القوتان المتساويتان في المقدار والمتعاكستان في الاتجاه وتلغي إحداهما الأخرى تسمى:", options: ["قوى متزنة", "قوى غير متزنة", "الاحتكاك", "الجاذبية"], correct: "أ", domain: "العلوم الفيزيائية والكيميائية", keyword: "العلوم الفيزيائية والكيميائية" },
-                    { q: "الطبقة العليا من التربة التي تحتوي على أعلى نسبة من الدبال والمواد العضوية هي:", options: ["التربة التحتية", "الصخور الأصلية", "التربة السطحية", "الصخور الصلبة"], correct: "ج", domain: "علم الأرض", keyword: "علم الأرض" },
-                    { q: "أي مما يلي يُعد من أفضل الطرق لتقليل النفايات وحماية موارد البيئة؟", options: ["حرق النفايات", "إعادة التدوير", "تلوث بلاستيكي", "قطع الغابات"], correct: "ب", domain: "علم الأرض", keyword: "علم الأرض" },
-                    { q: "تنتج ظاهرة تعاقب الليل والنهار على سطح الأرض بسبب:", options: ["دوران حول الشمس", "دوران الأرض حول محورها", "ميل المحور", "دوران القمر"], correct: "ب", domain: "علم الفلك", keyword: "علم الفلك" },
-                    { q: "أي من الكواكب التالية يعد من الكواكب الصخرية الداخلية في النظام الشمسي؟", options: ["المشتري", "زحل", "الأرض", "نبتون"], correct: "ج", domain: "علم الفلك", keyword: "علم الفلك" }
+                    { q: "ما هي الوحدة الأساسية لبناء وتنظيم الكائن الحي؟", options: ["النسيج الحيوي", "العضو الداخلي", "الخلية", "الجهاز العصبي"], correct: 2, domain: "علوم الحياة", keyword: "علوم الحياة" },
+                    { q: "أي التركيبين التاليين يوجد في الخلايا النباتية فقط ولا يوجد في الحيوانية؟", options: ["الغشاء البلازمي", "الجدار الخلوي", "الميتوكوندريا", "النواة"], correct: 1, domain: "علوم الحياة", keyword: "علوم الحياة" },
+                    { q: "أي أجهزة الجسم مسؤول عن نقل الغذاء والأكسجين إلى جميع الخلايا؟", options: ["الهضمي", "العصبي", "الدوري", "التنفسي"], correct: 2, domain: "علوم الحياة", keyword: "علوم الحياة" },
+                    { q: "التغير الذي ينتج عنه مادة جديدة كلياً ذات خصائص مختلفة (مثل الاحتراق) يسمى:", options: ["تغير فيزيائي", "تغير كيميائي", "انصهار", "تبخر"], correct: 1, domain: "العلوم الفيزيائية والكيميائية", keyword: "العلوم الفيزيائية والكيميائية" },
+                    { q: "القوتان المتساويتان في المقدار والمتعاكستان في الاتجاه وتلغي إحداهما الأخرى تسمى:", options: ["قوى متزنة", "قوى غير متزنة", "الاحتكاك", "الجاذبية"], correct: 0, domain: "العلوم الفيزيائية والكيميائية", keyword: "العلوم الفيزيائية والكيميائية" },
+                    { q: "الطبقة العليا من التربة التي تحتوي على أعلى نسبة من الدبال والمواد العضوية هي:", options: ["التربة التحتية", "الصخور الأصلية", "التربة السطحية", "الصخور الصلبة"], correct: 2, domain: "علم الأرض", keyword: "علم الأرض" },
+                    { q: "أي مما يلي يُعد من أفضل الطرق لتقليل النفايات وحماية موارد البيئة؟", options: ["حرق النفايات", "إعادة التدوير", "تلوث بلاستيكي", "قطع الغابات"], correct: 1, domain: "علم الأرض", keyword: "علم الأرض" },
+                    { q: "تنتج ظاهرة تعاقب الليل والنهار على سطح الأرض بسبب:", options: ["دوران حول الشمس", "دوران الأرض حول محورها", "ميل المحور", "دوران القمر"], correct: 1, domain: "علم الفلك", keyword: "علم الفلك" },
+                    { q: "أي من الكواكب التالية يعد من الكواكب الصخرية الداخلية في النظام الشمسي؟", options: ["المشتري", "زحل", "الأرض", "نبتون"], correct: 2, domain: "علم الفلك", keyword: "علم الفلك" }
                 ]
             }
         };
@@ -565,8 +562,8 @@
             if (!accurateGradeQuestionBank[gradeKey][subjectKey]) accurateGradeQuestionBank[gradeKey][subjectKey] = [];
 
             const generatedItems = [
-                { q: `بناءً على درس (${text})، ما هي الفكرة الأساسية أو المفهوم العلمي المرتبط به؟`, options: [`التعرف على المكونات والخصائص الأساسية لـ (${text})`, `دراسة ظاهرة أخرى`, `افتراض غير قابل للتطبيق`, `تجاهل الخصائص`], correct: "أ", keyword: text },
-                { q: `عند تطبيق المفاهيم الواردة في موضوع (${text})، أي العبارات التالية تُعد النتيجة الصحيحة؟`, options: [`استنتاج خاطئ`, `النتيجة والتطبيق العلمي الصحيح والمعتمد للموضوع`, `افتراض عشوائي`, `معلومة خارج النطاق`], correct: "ب", keyword: text }
+                { q: `بناءً على درس (${text})، ما هي الفكرة الأساسية أو المفهوم العلمي المرتبط به؟`, options: [`التعرف على المكونات والخصائص الأساسية لـ (${text})`, `دراسة ظاهرة أخرى`, `افتراض غير قابل للتطبيق`, `تجاهل الخصائص`], correct: 0, keyword: text },
+                { q: `عند تطبيق المفاهيم الواردة في موضوع (${text})، أي العبارات التالية تُعد النتيجة الصحيحة؟`, options: [`استنتاج خاطئ`, `النتيجة والتطبيق العلمي الصحيح والمعتمد للموضوع`, `افتراض عشوائي`, `معلومة خارج النطاق`], correct: 1, keyword: text }
             ];
 
             generatedItems.forEach(item => {
@@ -579,7 +576,7 @@
         }
 
         function fetchAllStudentsFromStorage() {
-            studentsList = [];
+            let studentsList = [];
             for (let i = 0; i < localStorage.length; i++) {
                 let key = localStorage.key(i);
                 if (key && (key.includes('student') || key.includes('boy') || key.includes('طلاب') || key.includes('كشوف'))) {
@@ -602,6 +599,16 @@
                     { name: "تركي فهد المطيري" }
                 ];
             }
+            return studentsList;
+        }
+
+        function loadStudentsDropdown() {
+            let students = fetchAllStudentsFromStorage();
+            let select = document.getElementById('studentSelect');
+            select.innerHTML = '<option value="">-- اضغط لاختيار طالب وبدء التصحيح --</option>';
+            students.forEach(s => {
+                select.innerHTML += `<option value="${s.name}">${s.name}</option>`;
+            });
         }
 
         function escapeHtml(text) { return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;"); }
@@ -627,7 +634,6 @@
                 availableQuestions = [...accurateGradeQuestionBank[gradeKey][subjectKey]];
             }
 
-            // تصفية الأسئلة بناءً على نوع اختبار نافس إذا تم اختياره
             if (examType.includes("نافس")) {
                 let domainTarget = "";
                 if (examType.includes("علوم الحياة")) domainTarget = "علوم الحياة";
@@ -642,8 +648,8 @@
 
             if (availableQuestions.length === 0) {
                 availableQuestions = [
-                    { q: "سؤال تقويمي أساسي: ما هي الإجابة العلمية الأدق لهذا المفهوم؟", options: ["الإجابة الصحيحة الأولى", "احتمال خطأ", "خيار غير دقيق", "خارج النطاق"], correct: "أ" },
-                    { q: "سؤال قياس وتطبيق عملي: أي الخيارات التالية يُعد تطبيقاً صحيحاً؟", options: ["خيار غير دقيق", "التطبيق والحقيقة العلمية الصحيحة", "افتراض عكسي", "غير ذلك"], correct: "ب" }
+                    { q: "سؤال تقويمي أساسي: ما هي الإجابة العلمية الأدق لهذا المفهوم؟", options: ["الإجابة الصحيحة الأولى", "احتمال خطأ", "خيار غير دقيق", "خارج النطاق"], correct: 0 },
+                    { q: "سؤال قياس وتطبيق عملي: أي الخيارات التالية يُعد تطبيقاً صحيحاً؟", options: ["خيار غير دقيق", "التطبيق والحقيقة العلمية الصحيحة", "افتراض عكسي", "غير ذلك"], correct: 1 }
                 ];
             }
 
@@ -696,43 +702,40 @@
         let allClassResults = {};
 
         function startTouchGradingSession() {
+            const studentName = document.getElementById('studentSelect').value;
+            if (!studentName) {
+                document.getElementById('touchGradingCard').style.display = 'none';
+                return;
+            }
             if (activeQuestions.length === 0) { generateTestModel(); }
-            fetchAllStudentsFromStorage();
-            if (studentsList.length === 0) { alert('لا توجد قائمة طلاب مسجلة!'); return; }
-            currentStudentIndex = 0;
-            allClassResults = {};
-            document.getElementById('touchGradingCard').style.display = 'block';
-            startNewStudentSession();
-            window.scrollTo({ top: document.getElementById('touchGradingCard').offsetTop, behavior: 'smooth' });
-        }
-
-        function startNewStudentSession() {
+            studentsList = fetchAllStudentsFromStorage();
+            
             currentQuestionStep = 0;
             studentAnswers = {};
+            document.getElementById('touchGradingCard').style.display = 'block';
             renderCurrentStepView();
         }
 
         function renderCurrentStepView() {
-            const student = studentsList[currentStudentIndex];
+            const studentName = document.getElementById('studentSelect').value;
             
             document.getElementById('studentHeaderBadge').innerHTML = `
-                <span>👤 الطالب (${toArabicDigits(currentStudentIndex + 1)}/${toArabicDigits(studentsList.length)}): ${escapeHtml(student.name)}</span>
-                <div id="liveScoreBadge" class="live-score-box">السؤال ${toArabicDigits(currentQuestionStep + 1)} / ${toArabicDigits(activeQuestions.length)}</div>
+                <span>👤 الطالب: ${studentName}</span>
+                <div class="live-score-box">السؤال ${toArabicDigits(currentQuestionStep + 1)} / ${toArabicDigits(activeQuestions.length)}</div>
             `;
 
             let qObj = activeQuestions[currentQuestionStep];
             let qNum = currentQuestionStep + 1;
-            let savedOpt = studentAnswers[qNum] || '';
+            let savedOpt = studentAnswers[qNum] !== undefined ? studentAnswers[qNum] : '';
 
             let optionsHtml = '';
-            ['أ', 'ب', 'ج', 'د'].forEach((optChar, idx) => {
-                let optText = qObj.options[idx];
-                let isSelected = (savedOpt === optChar);
-                let btnClass = isSelected ? (optChar === qObj.correct ? 'correct-choice' : 'wrong-choice') : '';
-                let indicator = optChar === qObj.correct ? `<span class="correct-badge-text">الإجابة النموذجية</span>` : '';
+            qObj.options.forEach((opt, optIdx) => {
+                let isSelected = (savedOpt === optIdx);
+                let btnClass = isSelected ? (optIdx === qObj.correct ? 'correct-choice' : 'wrong-choice') : '';
+                let indicator = optIdx === qObj.correct ? `<span class="correct-badge-text">الإجابة النموذجية</span>` : '';
                 optionsHtml += `
-                    <button type="button" class="opt-fast-btn ${btnClass}" onclick="selectFastOpt(${qNum}, '${optChar}', this)">
-                        <span>${optChar}) ${escapeHtml(optText)}</span>
+                    <button type="button" class="opt-fast-btn ${btnClass}" onclick="selectFastOpt(${qNum}, ${optIdx}, this)">
+                        <span>${opt}</span>
                         ${indicator}
                     </button>
                 `;
@@ -741,7 +744,7 @@
             const container = document.getElementById('singleQuestionContainer');
             container.innerHTML = `
                 <div class="single-step-question-box">
-                    <h4>سؤال ${toArabicDigits(qNum)}: ${escapeHtml(qObj.q)}</h4>
+                    <h4>س${toArabicDigits(qNum)}: ${escapeHtml(qObj.q)}</h4>
                     <div class="options-grid-fast">
                         ${optionsHtml}
                     </div>
@@ -750,20 +753,21 @@
             convertAllNumbersInDOM();
         }
 
-        function selectFastOpt(qNum, opt, btn) {
-            studentAnswers[qNum] = opt;
+        function selectFastOpt(qNum, optIdx, btn) {
+            studentAnswers[qNum] = optIdx;
+            let qObj = activeQuestions[qNum - 1];
+
             const parentGrid = btn.parentElement;
             parentGrid.querySelectorAll('.opt-fast-btn').forEach(b => {
                 b.classList.remove('correct-choice', 'wrong-choice');
             });
 
-            let correctAns = activeQuestions[qNum - 1].correct;
-            if (opt === correctAns) {
+            if (optIdx === qObj.correct) {
                 btn.classList.add('correct-choice');
             } else {
                 btn.classList.add('wrong-choice');
-                parentGrid.querySelectorAll('.opt-fast-btn').forEach(b => {
-                    if (b.textContent.includes(correctAns + ')')) b.classList.add('correct-choice');
+                parentGrid.querySelectorAll('.opt-fast-btn').forEach((b, idx) => {
+                    if (idx === qObj.correct) b.classList.add('correct-choice');
                 });
             }
 
@@ -787,64 +791,55 @@
                 currentQuestionStep++;
                 renderCurrentStepView();
             } else {
-                saveCurrentStudentAndProceed();
+                saveStudentGradeAndProceed();
             }
         }
 
-        function saveCurrentStudentAndProceed() {
-            const student = studentsList[currentStudentIndex];
+        function saveStudentGradeAndProceed() {
+            const studentSelect = document.getElementById('studentSelect');
+            const studentName = studentSelect.value;
+            if (!studentName) return;
+
             let correctCount = 0;
             for (let i = 0; i < activeQuestions.length; i++) {
                 let qNum = i + 1;
-                if (studentAnswers[qNum] && studentAnswers[qNum] === activeQuestions[i].correct) {
+                if (studentAnswers[qNum] !== undefined && studentAnswers[qNum] === activeQuestions[i].correct) {
                     correctCount++;
                 }
             }
             let score = correctCount * 2; 
-            allClassResults[student.name] = { score: score, correct: correctCount };
+            allClassResults[studentName] = { score: score, correct: correctCount };
 
-            currentStudentIndex++;
-            if (currentStudentIndex < studentsList.length) {
-                const card = document.getElementById('touchGradingCard');
-                card.classList.add('student-changed');
-                
-                setTimeout(() => {
-                    card.classList.remove('student-changed');
-                    startNewStudentSession();
-                }, 500);
-            } else {
-                finishGradingSession();
-            }
-        }
-
-        function finishGradingSession() {
-            document.getElementById('touchGradingCard').style.display = 'none';
-            const resultBox = document.getElementById('resultContainer');
-            const examType = document.getElementById('selectExamType').value;
-            resultBox.style.display = 'block';
-
-            let maxScore = globalMaxScore;
-            let dashboardRecords = [];
-
-            for (let sName in allClassResults) {
-                let sScore = allClassResults[sName].score;
-                dashboardRecords.push({
-                    name: sName,
-                    score: sScore,
-                    maxScore: maxScore,
-                    examType: `${examType} - ${currentModelName}`,
-                    date: new Date().toLocaleDateString('ar-SA')
-                });
-            }
-
+            let dashboardRecords = JSON.parse(localStorage.getItem('dashboardLatestExamResults') || '[]');
+            dashboardRecords = dashboardRecords.filter(r => r.name !== studentName);
+            dashboardRecords.push({
+                name: studentName,
+                score: score,
+                maxScore: globalMaxScore,
+                examType: `${document.getElementById('selectExamType').value} - ${currentModelName}`,
+                date: new Date().toLocaleDateString('ar-SA')
+            });
             localStorage.setItem('dashboardLatestExamResults', JSON.stringify(dashboardRecords));
-            localStorage.setItem('examResultsHistory', JSON.stringify(dashboardRecords));
 
+            document.getElementById('resultContainer').style.display = 'block';
             filterStudentResults();
             prepareGradesPrintSheet();
             prepareAnalysisContent();
 
-            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            let nextIndex = studentSelect.selectedIndex + 1;
+            if (nextIndex < studentSelect.options.length) {
+                const card = document.getElementById('touchGradingCard');
+                card.classList.add('student-changed');
+                setTimeout(() => {
+                    card.classList.remove('student-changed');
+                    studentSelect.selectedIndex = nextIndex;
+                    startTouchGradingSession();
+                }, 500);
+            } else {
+                alert('🎉 تم رصد وحفظ درجات جميع الطلاب بنجاح!');
+                document.getElementById('touchGradingCard').style.display = 'none';
+                studentSelect.value = '';
+            }
         }
 
         function filterStudentResults() {
@@ -852,7 +847,7 @@
             const outputText = document.getElementById('correctionOutputText');
             let maxScore = globalMaxScore || 20;
 
-            let html = `✅ تم رصد درجات الفصل وحفظها في السجل بنجاح!<br><br>`;
+            let html = `✅ تم رصد الدرجات بنجاح!<br><br>`;
             let foundAny = false;
 
             for (let sName in allClassResults) {
@@ -871,7 +866,7 @@
             }
 
             if (!foundAny) {
-                html += `<p style="color: #ef4444; text-align: center;">لم يتم العثور على طالب بهذا الاسم في نتائج هذا الاختبار.</p>`;
+                html += `<p style="color: #ef4444; text-align: center;">لم يتم العثور على طالب بهذا الاسم.</p>`;
             }
 
             outputText.innerHTML = html;
@@ -893,11 +888,7 @@
             for (let sName in allClassResults) {
                 let data = allClassResults[sName];
                 let percentage = maxScore > 0 ? (data.score / maxScore) * 100 : 0;
-                let level = "";
-                if (percentage >= 90) level = "متفوق (متقن تماماً)";
-                else if (percentage >= 75) level = "متقن";
-                else if (percentage >= 50) level = "مبكر / متوسط";
-                else level = "يحتاج تحسين (غير متقن)";
+                let level = percentage >= 90 ? "متفوق" : (percentage >= 75 ? "متقن" : (percentage >= 50 ? "مبكر / متوسط" : "يحتاج تحسين"));
 
                 tbody.innerHTML += `
                     <tr>
@@ -955,29 +946,15 @@
             let classAverage = count > 0 ? (totalScoreSum / count).toFixed(1) : 0;
             let percentageAvg = count > 0 ? ((totalScoreSum / (count * maxScore)) * 100).toFixed(1) : 0;
 
-            let dynamicLevel = "مستوى منخفض (يحتاج دعم وتدخل علاجي عاجل)";
-            if (percentageAvg >= 90) dynamicLevel = "مستوى متقدم متميز";
-            else if (percentageAvg >= 75) dynamicLevel = "مستوى متقن";
-            else if (percentageAvg >= 50) dynamicLevel = "مستوى متوسط وملائم";
-
             document.getElementById('analysisContentText').innerHTML = `
                 <table style="width:100%; border-collapse:collapse; margin-top:5px;" border="1">
                     <tr style="background:#334155; text-align:center;"><th style="padding:6px;">مؤشر القياس الإحصائي</th><th style="padding:6px;">القيمة التقديرية</th></tr>
                     <tr><td style="padding:6px;">نوع الاختبار والنموذج</td><td style="text-align:center; color:#93c5fd;"><b>${examType} - ${currentModelName}</b></td></tr>
-                    <tr><td style="padding:6px;">إجمالي الطلاب المختبرين</td><td style="text-align:center;"><b>${toArabicDigits(count)}</b> طالب</td></tr>
+                    <tr><td style="padding:6px;">إجمالي الطلاب المرصودين</td><td style="text-align:center;"><b>${toArabicDigits(count)}</b> طالب</td></tr>
                     <tr><td style="padding:6px;">متوسط أداء الفصل العام</td><td style="text-align:center;"><b>${toArabicDigits(classAverage)} / ${toArabicDigits(maxScore)}</b> (${toArabicDigits(percentageAvg)}٪)</td></tr>
                     <tr><td style="padding:6px;">أعلى درجة بالفصل</td><td style="text-align:center; color:var(--success);"><b>${toArabicDigits(highestScore)} / ${toArabicDigits(maxScore)}</b></td></tr>
                     <tr><td style="padding:6px;">أقل درجة بالفصل</td><td style="text-align:center; color:var(--danger);"><b>${toArabicDigits(lowestScore)} / ${toArabicDigits(maxScore)}</b></td></tr>
-                    <tr><td style="padding:6px;">مستوى إتقان المعايير (نافس أو فترية)</td><td style="text-align:center; color:#fbbf24;"><b>${dynamicLevel}</b></td></tr>
                 </table>
-                <div style="margin-top: 15px; background: #0f172a; padding: 12px; border-radius: 8px; border: 1px solid #475569;">
-                    <p style="margin:0 0 6px 0; font-weight:bold; color:#60a5fa;">💡 التوصيات ومقترحات التحسين والعلاج:</p>
-                    <ul style="margin:0; padding-right:20px; font-size:12px; line-height:1.6; color:#cbd5e1;">
-                        <li>تنفيذ حصص علاجية وإثرائية للطلاب الحاصلين على درجات أقل من المتوسط.</li>
-                        <li>تكثيف الأنشطة التفاعلية وتفعيل استراتيجيات التقويم المستمر.</li>
-                        <li>التواصل المباشر مع أولياء الأمور عبر الواتساب لإطلاعهم على نتائج أبنائهم ومستواهم.</li>
-                    </ul>
-                </div>
             `;
             convertAllNumbersInDOM();
         }
@@ -990,6 +967,7 @@
 
         window.addEventListener('DOMContentLoaded', () => {
             updateLessonCheckboxes();
+            loadStudentsDropdown();
             convertAllNumbersInDOM();
         });
     </script>
