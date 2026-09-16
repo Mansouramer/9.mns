@@ -295,7 +295,7 @@
         </div>
 
         <div class="section-box no-print">
-            <h3>📚 أولاً: إعدادات الاختبار، الصف، والمادة، واسم الطالب المطبوع</h3>
+            <h3>📚 أولاً: إعدادات الاختبار، الصف، والمادة، واسم الطالب</h3>
             <div class="form-grid">
                 <div class="form-group">
                     <label>نوع الاختبار:</label>
@@ -338,15 +338,20 @@
                     </select>
                 </div>
                 <div class="form-group" style="grid-column: 1 / -1;">
-                    <label>👤 طريقة عرض اسم الطالب على ورقة الأسئلة المطبوعة:</label>
-                    <select id="selectPrintStudentMode" onchange="toggleStudentSelectionDropdown()">
-                        <option value="blank">خط فارغ لجميع الطلاب (.........)</option>
-                        <option value="random">🎲 اختيار عشوائي لطالب من الكشف تلقائياً</option>
-                        <option value="open">✍️ إدخال أو كتابة الاسم يدوياً (مفتوح)</option>
+                    <label>👤 آلية تحديد اسم الطالب على ورقة الاختبار:</label>
+                    <select id="selectPrintStudentMode" onchange="toggleStudentSelectionMode()">
+                        <option value="blank">خط فارغ بدون اسم (.........)</option>
+                        <option value="random">🎲 اختيار طالب عشوائي من السجل تلقائياً</option>
+                        <option value="list">📋 اختيار من أسماء طلاب السجل (طالب محدد)</option>
+                        <option value="open">✍️ كتابة الاسم يدوياً (مفتوح)</option>
                     </select>
                 </div>
+                <div class="form-group" id="studentDropdownContainer" style="display: none; grid-column: 1 / -1;">
+                    <label>اختر الطالب من كشف السجل:</label>
+                    <select id="selectStudentFromList"></select>
+                </div>
                 <div class="form-group" id="openStudentNameBox" style="display: none; grid-column: 1 / -1;">
-                    <label>اكتب اسم الطالب المراد طباعته على الورقة:</label>
+                    <label>اكتب اسم الطالب:</label>
                     <input type="text" id="customInputStudentName" placeholder="مثال: منصور عامر الرحيلي..." value="">
                 </div>
             </div>
@@ -636,14 +641,32 @@
             }
         }
 
-        function toggleStudentSelectionDropdown() {
+        function toggleStudentSelectionMode() {
             const mode = document.getElementById('selectPrintStudentMode').value;
+            const dropdownBox = document.getElementById('studentDropdownContainer');
             const openBox = document.getElementById('openStudentNameBox');
-            if (mode === 'open') {
+
+            dropdownBox.style.display = 'none';
+            openBox.style.display = 'none';
+
+            if (mode === 'list') {
+                dropdownBox.style.display = 'flex';
+                populateStudentDropdownList();
+            } else if (mode === 'open') {
                 openBox.style.display = 'flex';
-            } else {
-                openBox.style.display = 'none';
             }
+        }
+
+        function populateStudentDropdownList() {
+            fetchAllStudentsFromStorage();
+            const select = document.getElementById('selectStudentFromList');
+            select.innerHTML = '';
+            studentsList.forEach(s => {
+                let opt = document.createElement('option');
+                opt.value = s.name;
+                opt.textContent = s.name;
+                select.appendChild(opt);
+            });
         }
 
         function smartGenerateFromLessonText() {
@@ -700,9 +723,12 @@
             } else if (studentMode === 'random' && studentsList.length > 0) {
                 let randomStudent = studentsList[Math.floor(Math.random() * studentsList.length)];
                 assignedStudentName = randomStudent.name;
+            } else if (studentMode === 'list') {
+                let listVal = document.getElementById('selectStudentFromList').value;
+                if (listVal) assignedStudentName = listVal;
             } else if (studentMode === 'open') {
                 let customVal = document.getElementById('customInputStudentName').value.trim();
-                assignedStudentName = customVal !== "" ? customVal : "....................................................................";
+                if (customVal) assignedStudentName = customVal;
             }
 
             document.getElementById('printStudentNameValue').textContent = assignedStudentName;
