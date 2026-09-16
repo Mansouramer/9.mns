@@ -2,160 +2,252 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مدرسة داؤود بن عروة الثقفي الابتدائية | نظام الاختبارات والتحليل (طلاب)</title>
+    <title>نظام تقييم مهارات العلوم الاحترافي - الصف السادس</title>
     <style>
         :root {
-            --primary: #1e3a8a;
-            --secondary: #2563eb;
-            --accent: #bfdbfe;
-            --bg: #eff6ff;
-            --card-bg: #ffffff;
-            --text: #1e3a8a;
+            --bg-dark: #0f172a;
+            --panel-bg: #1e293b;
+            --card-bg: #334155;
+            --primary: #3b82f6;
             --success: #10b981;
-            --warning: #f59e0b;
             --danger: #ef4444;
-            --print-btn: #4b5563;
+            --warning: #f59e0b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #475569;
+            --border-radius: 12px;
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: var(--bg);
-            color: var(--text);
+            background-color: var(--bg-dark);
+            color: var(--text-main);
             margin: 0;
-            padding: 10px;
-            min-height: 100vh;
-            box-sizing: border-box;
+            padding: 12px;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .container {
-            max-width: 850px;
+            max-width: 900px;
             margin: 0 auto;
-            background: var(--card-bg);
-            padding: 15px;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            box-sizing: border-box;
         }
 
-        .header-nav {
+        h1 {
+            text-align: center;
+            color: var(--text-main);
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+
+        .tabs {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid var(--accent);
-            padding-bottom: 10px;
+            gap: 6px;
             margin-bottom: 15px;
+            overflow-x: auto;
+            padding-bottom: 4px;
         }
 
-        h2 { color: var(--primary); margin: 0; font-size: 17px; }
+        .tab-btn {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 10px 10px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            border-radius: var(--border-radius);
+            white-space: nowrap;
+            flex: 1;
+            text-align: center;
+            color: var(--text-muted);
+            transition: all 0.2s;
+        }
 
-        .back-btn {
-            background: #4b5563;
+        .tab-btn.active {
+            background-color: var(--primary);
             color: white;
-            padding: 8px 12px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: bold;
+            border-color: var(--primary);
         }
 
-        .section-box {
-            background: #fafaf9;
-            border: 1px solid #e5e7eb;
-            padding: 15px;
-            border-radius: 10px;
+        .section-panel {
+            display: none;
+            background: var(--panel-bg);
+            padding: 16px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .section-panel.active {
+            display: block;
+        }
+
+        .form-group {
             margin-bottom: 15px;
         }
 
-        .section-box h3 {
-            margin-top: 0;
-            color: var(--primary);
-            font-size: 15px;
-            border-bottom: 1px solid var(--accent);
-            padding-bottom: 6px;
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--text-main);
         }
 
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 12px;
-            margin-bottom: 10px;
-        }
-
-        .form-group { display: flex; flex-direction: column; gap: 5px; }
-
-        label { font-weight: bold; font-size: 13px; color: var(--primary); }
-
-        select, input[type="text"], input[type="number"], textarea {
+        select, input[type="text"], textarea {
             width: 100%;
-            padding: 10px;
-            border: 2px solid #d1d5db;
-            border-radius: 8px;
-            font-size: 14px;
-            background: #fff;
-            color: #374151;
-            outline: none;
+            padding: 11px;
+            border: 2px solid var(--border-color);
+            border-radius: var(--border-radius);
+            font-size: 0.95rem;
             box-sizing: border-box;
+            outline: none;
+            background: var(--card-bg);
+            color: var(--text-main);
+            cursor: pointer;
         }
-        select:focus, input:focus, textarea:focus { border-color: var(--secondary); }
 
-        .action-btn {
-            background: var(--secondary);
+        button.action-btn {
+            background: var(--primary);
             color: white;
             border: none;
             padding: 12px;
+            font-size: 0.95rem;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .icon-print-btn {
+            background: #059669;
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            font-size: 0.85rem;
             border-radius: 8px;
             cursor: pointer;
             font-weight: bold;
-            font-size: 14px;
-            width: 100%;
-            text-align: center;
-            box-shadow: 0 3px 6px rgba(37, 99, 235, 0.2);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 3px 8px rgba(5, 150, 105, 0.3);
         }
-        .action-btn:hover { opacity: 0.9; }
-        .btn-print { background: var(--print-btn); }
-        .btn-success { background: #10b981; }
-        .btn-whatsapp { background: #059669; }
-        .btn-warning { background: #d97706; }
-        .btn-purple { background: #7c3aed; }
 
+        /* كليشة الاختبار */
+        .exam-header {
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            border: 1.5px solid #3b82f6;
+            padding: 8px 12px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            color: #0f172a;
+        }
+
+        .exam-header p {
+            margin: 2px 0;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        /* شبكة عرض الأسئلة - 3 أعمدة متناسقة */
+        .questions-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 6px 8px;
+            border-radius: 8px;
+        }
+
+        .domain-tag {
+            display: inline-block;
+            background: #1d4ed8;
+            color: #bfdbfe;
+            padding: 1px 5px;
+            border-radius: 4px;
+            font-size: 0.6rem;
+            font-weight: bold;
+            margin-bottom: 2px;
+        }
+
+        .question-title {
+            font-weight: 700;
+            font-size: 0.75rem;
+            color: var(--text-main);
+            margin-bottom: 4px;
+            line-height: 1.2;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-size: 0.68rem;
+            font-weight: 600;
+            color: var(--text-main);
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* --- تنسيقات التصحيح السريع (سؤال بسؤال) --- */
         .touch-grading-card {
-            background: #fff;
-            border: 2px solid var(--secondary);
-            border-radius: 10px;
+            background: linear-gradient(to bottom, #1e293b, #1e1b4b);
+            border: 2px solid #4338ca;
             padding: 15px;
+            border-radius: var(--border-radius);
             margin-top: 15px;
             display: none;
+            transition: background 0.4s ease, border-color 0.4s ease;
+        }
+
+        /* تأثير تغير اللون التنبيهي عند الانتقال للطالب التالي */
+        .touch-grading-card.student-changed {
+            background: #065f46 !important;
+            border-color: #34d399 !important;
         }
 
         .student-title-badge {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: var(--bg);
+            background: #0f172a;
             padding: 10px 15px;
             border-radius: 8px;
             font-weight: bold;
-            color: var(--primary);
-            font-size: 14px;
+            color: #93c5fd;
+            font-size: 0.9rem;
             margin-bottom: 12px;
-            border: 1px solid var(--accent);
+            border: 1px solid var(--border-color);
         }
 
         .live-score-box {
             background: var(--success);
             color: white;
-            padding: 6px 12px;
+            padding: 4px 10px;
             border-radius: 6px;
-            font-size: 14px;
+            font-size: 0.8rem;
             font-weight: bold;
         }
 
-        /* تنسيق السؤال الفردي السريع */
         .single-step-question-box {
-            background: #fdfdfd;
-            border: 2px solid #cbd5e1;
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
             padding: 15px;
             border-radius: 10px;
             margin-bottom: 15px;
@@ -163,8 +255,8 @@
 
         .single-step-question-box h4 {
             margin-top: 0;
-            color: var(--primary);
-            font-size: 15px;
+            color: var(--text-main);
+            font-size: 0.95rem;
             line-height: 1.6;
         }
 
@@ -176,12 +268,12 @@
         }
 
         .opt-fast-btn {
-            background: #fff;
-            border: 2px solid var(--primary);
-            color: var(--primary);
+            background: var(--panel-bg);
+            border: 2px solid var(--border-color);
+            color: var(--text-main);
             padding: 12px;
             border-radius: 8px;
-            font-size: 14px;
+            font-size: 0.85rem;
             font-weight: bold;
             cursor: pointer;
             text-align: right;
@@ -189,19 +281,19 @@
         }
 
         .opt-fast-btn:hover {
-            background: var(--accent);
+            background: #475569;
         }
 
         .opt-fast-btn.correct-choice {
-            background: var(--success) !important;
-            border-color: var(--success) !important;
-            color: #fff !important;
+            background: #065f46 !important;
+            border-color: #34d399 !important;
+            color: #ffffff !important;
         }
 
         .opt-fast-btn.wrong-choice {
-            background: var(--danger) !important;
-            border-color: var(--danger) !important;
-            color: #fff !important;
+            background: #7f1d1d !important;
+            border-color: #f87171 !important;
+            color: #ffffff !important;
         }
 
         .navigation-btns {
@@ -210,821 +302,756 @@
             margin-top: 15px;
         }
 
-        .questions-preview {
-            background: #fff;
-            border: 1px solid #cbd5e1;
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 15px;
-            display: none;
+        .chart-container {
+            margin-top: 12px;
+            background: #0f172a;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
 
-        .exam-header {
-            text-align: center;
-            border-bottom: 2px solid var(--primary);
-            padding-bottom: 10px;
+        .chart-row {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .chart-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.82rem;
+            font-weight: bold;
+        }
+
+        .progress-bar-bg {
+            background: #334155;
+            height: 12px;
+            border-radius: 6px;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            border-radius: 6px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
             margin-bottom: 15px;
         }
 
-        .exam-header h3 { margin: 0; font-size: 15px; color: #1e3a8a; font-weight: bold; }
-        .exam-header h4 { margin: 4px 0; font-size: 13px; color: #374151; }
-
-        .question-row {
-            margin-bottom: 12px;
-            padding: 8px 10px;
-            background: #fdfdfd;
-            border-radius: 6px;
-            border: 1px solid #e2e8f0;
-            font-size: 12.5px;
-            line-height: 1.5;
+        .stat-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            border-radius: var(--border-radius);
+            text-align: center;
         }
 
-        .bubble-options {
-            display: flex;
-            gap: 15px;
-            margin-top: 6px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .bubble-item {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            font-size: 12px;
-        }
-
-        .bubble-circle {
-            width: 18px;
-            height: 18px;
-            border: 1.5px solid #1e3a8a;
-            border-radius: 50%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 10px;
+        .stat-val {
+            font-size: 1.4rem;
             font-weight: bold;
-            color: #1e3a8a;
-            background: #fff;
+            color: var(--primary);
+            margin-top: 4px;
         }
 
-        .analysis-box { display: none; background: #fffbeb; border: 1px solid #f59e0b; padding: 20px; border-radius: 10px; margin-top: 15px; font-size: 13px; }
-        .result-box { display: none; background: #ecfdf5; border: 1px solid #10b981; padding: 15px; border-radius: 10px; margin-top: 15px; font-size: 14px; }
-        .sheet-print-container { display: none; background: #fff; padding: 20px; border-radius: 10px; border: 1px solid #cbd5e1; margin-top: 15px; }
+        .analysis-box {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            border-radius: var(--border-radius);
+            margin-top: 15px;
+        }
 
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            min-width: 500px;
+        }
+
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 9px;
+            text-align: center;
+            font-size: 0.82rem;
+            color: var(--text-main);
+        }
+
+        th {
+            background-color: var(--panel-bg);
+        }
+
+        /* تنسيق الطباعة الذكي */
         @media print {
-            @page { size: A4 portrait; margin: 10mm; }
+            @page { 
+                size: A4 landscape; 
+                margin: 0.4cm; 
+            }
             body * { visibility: hidden !important; }
             
-            .printable-exam-area, .printable-exam-area * { visibility: visible !important; }
-            .printable-exam-area { position: absolute; left: 0; top: 0; width: 100% !important; background: white !important; padding: 0 !important; border: none !important; box-shadow: none !important; }
+            #print-section, #print-section * { visibility: visible !important; }
+            #print-section { 
+                position: fixed !important; 
+                left: 0 !important; 
+                top: 0 !important; 
+                width: 100% !important; 
+                height: 100% !important; 
+                border: 2px solid #0f172a !important;
+                padding: 8px !important;
+                box-sizing: border-box !important;
+                background: white !important;
+                z-index: 999999 !important;
+            }
 
-            .printable-sheet-area, .printable-sheet-area * { visibility: visible !important; }
-            .printable-sheet-area { position: absolute; left: 0; top: 0; width: 100% !important; background: white !important; padding: 0 !important; border: none !important; box-shadow: none !important; }
+            body.print-single #studentDeepAnalysisBox, body.print-single #studentDeepAnalysisBox * { visibility: visible !important; }
+            body.print-single #studentDeepAnalysisBox { position: absolute; left: 0; top: 0; width: 100%; background: white !important; color: black !important; }
 
-            .printable-analysis-area, .printable-analysis-area * { visibility: visible !important; }
-            .printable-analysis-area { position: absolute; left: 0; top: 0; width: 100% !important; background: white !important; padding: 0 !important; border: none !important; box-shadow: none !important; }
+            body.print-all #analytics-print-area, body.print-all #analytics-print-area * { visibility: visible !important; }
+            body.print-all #analytics-print-area { position: absolute; left: 0; top: 0; width: 100%; background: white !important; color: black !important; }
 
             .no-print { display: none !important; }
-            .question-row { break-inside: avoid; page-break-inside: avoid; margin-bottom: 8px; padding: 6px 8px; border: 1px solid #94a3b8; }
+            
+            .exam-header { 
+                background: #f8fafc !important; 
+                border: 1px solid #94a3b8 !important; 
+                color: black !important; 
+                padding: 4px 8px !important; 
+                margin-bottom: 4px !important; 
+            }
+            .exam-header p { color: black !important; font-size: 7.5pt !important; margin: 1px 0 !important; }
+            
+            .questions-grid {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 4px;
+            }
+            .question-card { 
+                background: #ffffff !important; 
+                border: 1px solid #cbd5e1 !important; 
+                color: black !important; 
+                padding: 4px 6px !important; 
+                margin-bottom: 2px !important; 
+            }
+            .question-title { color: #0f172a !important; font-size: 7pt !important; margin-bottom: 3px !important; }
+            .domain-tag { background: #e2e8f0 !important; color: #1e293b !important; font-size: 5.5pt !important; padding: 0px 2px !important; }
+            .options-container { gap: 2px !important; }
+            .option-label { background: #f8fafc !important; border: 1px solid #cbd5e1 !important; color: #1e293b !important; font-size: 6.5pt !important; padding: 1px 3px !important; }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="header-nav no-print">
-            <h2 id="mainSchoolTitle">مدرسة داؤود بن عروة الثقفي الابتدائية (طلاب)</h2>
-            <a href="index.html" class="back-btn">⬅ لوحة التحكم الرئيسية</a>
+<div class="container">
+    <h1>نظام مهارات العلوم الاحترافي (الصف السادس)</h1>
+    
+    <div class="tabs no-print">
+        <button class="tab-btn active" onclick="switchTab('students-tab', this)">إدارة الطلاب</button>
+        <button class="tab-btn" onclick="switchTab('exam-gen', this)">إعداد الاختبار</button>
+        <button class="tab-btn" onclick="switchTab('grading', this)">التصحيح والرصد</button>
+        <button class="tab-btn" onclick="switchTab('analytics', this)">التحليل والرسوم البيانية</button>
+    </div>
+
+    <!-- 1. إدارة الطلاب -->
+    <div id="students-tab" class="section-panel active">
+        <h2 style="font-size: 1rem; margin-top:0; margin-bottom:12px;">قائمة طلاب الفصل</h2>
+        <p style="font-size: 0.85rem; color:var(--text-muted);">أدخل أسماء طلاب الفصل (كل طالب في سطر مستقل):</p>
+        <div class="form-group">
+            <textarea id="studentsListInput" rows="6" placeholder="مثال:&#10;محمد أحمد العتيبي&#10;خالد عبد الله الشمري"></textarea>
+        </div>
+        <button class="action-btn" onclick="saveStudentsList()">حفظ قائمة الطلاب</button>
+    </div>
+
+    <!-- 2. إعداد الاختبار -->
+    <div id="exam-gen" class="section-panel">
+        <h2 style="font-size: 1rem; margin-top:0; margin-bottom:12px;">توليد نموذج الاختبار (صفحة واحدة منسقة تماماً)</h2>
+        
+        <div class="form-group no-print">
+            <label for="domainFilterSelect">اختر المجال المستهدف للاختبار:</label>
+            <select id="domainFilterSelect" onchange="generateNewExam()">
+                <option value="all">جميع المجالات (اختبار شامل 10 أسئلة يغطي المجالات الأربعة)</option>
+                <option value="علوم الحياة">مجال: علوم الحياة</option>
+                <option value="العلوم الفيزيائية والكيميائية">مجال: العلوم الفيزيائية والكيميائية</option>
+                <option value="علم الأرض">مجال: علم الأرض</option>
+                <option value="علم الفلك">مجال: علم الفلك</option>
+            </select>
         </div>
 
-        <div class="section-box no-print">
-            <h3>📚 أولاً: إعدادات الاختبار والصف والمادة وتحديد الدروس والمواضيع المستهدفة</h3>
-            <div class="form-grid">
-                <div class="form-group">
-                    <label>نوع الاختبار:</label>
-                    <select id="selectExamType">
-                        <option value="الاختبار الفتري الأول">الاختبار الفتري الأول</option>
-                        <option value="الاختبار الفتري الثاني">الاختبار الفتري الثاني</option>
-                        <option value="الاختبار القبلي التشخيصي">الاختبار القبلي (تشخيصي)</option>
-                        <option value="الاختبار البعدي النهائي">الاختبار البعدي (نهائي)</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>الصف الدراسي:</label>
-                    <select id="selectGrade" onchange="updateLessonCheckboxes()">
-                        <option value="الأول الابتدائي">الصف الأول الابتدائي</option>
-                        <option value="الثاني الابتدائي">الصف الثاني الابتدائي</option>
-                        <option value="الثالث الابتدائي">الصف الثالث الابتدائي</option>
-                        <option value="الرابع الابتدائي">الصف الرابع الابتدائي</option>
-                        <option value="الخامس الابتدائي">الصف الخامس الابتدائي</option>
-                        <option value="السادس الابتدائي">الصف السادس الابتدائي</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>المادة الدراسية:</label>
-                    <select id="selectSubject" onchange="updateLessonCheckboxes()">
-                        <option value="science">مادة العلوم</option>
-                        <option value="math">مادة الرياضيات</option>
-                        <option value="arabic">مادة لغتي الجميلة</option>
-                        <option value="english">مادة اللغة الإنجليزية</option>
-                        <option value="islamic">الدراسات الإسلامية</option>
-                    </select>
-                </div>
-            </div>
-
-            <!-- صندوق اختيار الدروس والمواضيع -->
-            <div class="form-group" style="margin-top: 12px; border-top: 1px dashed #cbd5e1; padding-top: 10px;">
-                <label style="color: #b45309; display: flex; align-items: center; gap: 5px;">
-                    <span>📖</span> اختر الدروس أو المواضيع المراد وضع الأسئلة منها:
-                </label>
-                <div id="lessonsSelectionContainer" style="display: flex; flex-direction: column; gap: 6px; max-height: 180px; overflow-y: auto; background: #fff; padding: 10px; border: 2px solid #d1d5db; border-radius: 8px; margin-top: 6px;">
-                    <!-- سيتم تعبئة الدروس برمجياً هنا -->
-                </div>
-            </div>
+        <button class="action-btn no-print" onclick="printExam()" style="margin-bottom: 15px;">🖨️ طباعة نموذج الاختبار (A4 عرضي صفحة واحدة)</button>
+        
+        <div id="print-section">
+            <div id="singleExamContainer"></div>
         </div>
+    </div>
 
-        <!-- قسم التوليد الذكي الحقيقي للأسئلة من نص الدرس -->
-        <div class="section-box no-print" style="border: 2px dashed #7c3aed; background: #faf5ff;">
-            <h3 style="color: #7c3aed;">✨ التوليد الذكي للأسئلة من نص أو عنوان الدرس</h3>
-            <p style="font-size: 12.5px; color: #4b5563; margin-bottom: 8px;">
-                اكتب عنوان أو موضوع الدرس لتوليد أسئلة علمية دقيقة ومضبوطة بـ ٤ خيارات:
-            </p>
-            <div class="form-group">
-                <textarea id="lessonInputText" rows="3" placeholder="مثال: أجزاء النباتات أو المخلوقات الحية..."></textarea>
-            </div>
-            <div style="margin-top: 10px;">
-                <button class="action-btn btn-purple" onclick="smartGenerateFromLessonText()">⚡ توليد وإضافة الأسئلة للدرس</button>
-            </div>
+    <!-- 3. التصحيح والرصد -->
+    <div id="grading" class="section-panel">
+        <h2 style="font-size: 1rem; margin-top:0; margin-bottom:12px;">تصحيح الاختبار (سؤال بسؤال لسرعة الإنجاز)</h2>
+        <p style="font-size: 0.85rem; color:var(--text-muted); margin-bottom: 12px;">
+            تظهر الأسئلة سؤالاً تلو الآخر؛ اضغط إجابة الطالب لينتقل النظام تلقائياً للسؤال التالي بسرعة فائقة:
+        </p>
+        
+        <div class="form-group">
+            <label for="studentSelect">اختر اسم الطالب للبدء:</label>
+            <select id="studentSelect" onchange="startTouchGradingSession()">
+                <option value="">-- اضغط لاختيار طالب وبدء التصحيح --</option>
+            </select>
         </div>
-
-        <div class="section-box">
-            <h3>⚙️ ثانياً: توليد ورقة الاختبار المعتمدة (مرتبطة حصرياً بالصف والدروس المختارة)</h3>
-            <div class="no-print">
-                <button class="action-btn" onclick="generateTestModel()">⚡ توليد ورقة الاختبار المعتمدة</button>
-            </div>
-
-            <div id="questionsPreviewBox" class="questions-preview printable-exam-area">
-                <div class="exam-header">
-                    <h3>المملكة العربية السعودية - وزارة التعليم</h3>
-                    <h4 id="printSchoolTitle">مدرسة داؤود بن عروة الثقفي الابتدائية</h4>
-                    <p style="margin:2px 0; font-size:11.5px; color:#4b5563; font-weight:bold;">معلم المادة: منصور عامر الرحيلي</p>
-                    <p id="printTestInfo" style="margin:2px 0; font-size:12px; color:#555; font-weight:bold;"></p>
-                    <div id="printSelectedLessonsPrint" style="margin:2px 0; font-size:11.5px; color:#0284c7; font-weight:bold;"></div>
-                    <div id="printModelBadge" style="margin:4px 0; font-size:12px; color:#0d9488; font-weight:bold;"></div>
-                    <div style="margin-top: 6px; border: 1.2px solid #64748b; padding: 4px 10px; border-radius: 5px; display:inline-block; font-size:11.5px;">
-                        <b>اسم الطالب:</b> .................................................................... &nbsp;&nbsp; <b>الصف:</b> ................
-                    </div>
-                </div>
-                
-                <div id="generatedQuestionsList"></div>
-
-                <div class="no-print" style="margin-top: 15px;">
-                    <button class="action-btn btn-print" onclick="printExamOnly()">🖨️ طباعة الاختبار بملء صفحة A4</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="section-box no-print">
-            <h3>👤 ثالثاً: لوحة التصحيح السريع (سؤال بسؤال لسرعة الإنجاز والضغطات المتتالية)</h3>
-            <p style="font-size: 12px; color: #555; margin-bottom: 10px;">
-                يظهر لك السؤال مع خياراته؛ بمجرد الضغط على إجابة الطالب ينتقل النظام تلقائياً للسؤال التالي مع زر للرجوع عند الحاجة:
-            </p>
-            <button class="action-btn btn-success" onclick="startTouchGradingSession()">🚀 بدء جلسة التصحيح ورصد الدرجات</button>
-
-            <div id="touchGradingCard" class="touch-grading-card">
-                <div id="studentHeaderBadge" class="student-title-badge"></div>
-                
-                <!-- عرض السؤال الحالي فقط -->
-                <div id="singleQuestionContainer"></div>
-                
-                <div class="navigation-btns" style="justify-content: space-between;">
-                    <button class="action-btn" style="background: #4b5563; width: 48%;" onclick="prevQuestionStep()">⬅ السؤال السابق</button>
-                    <button class="action-btn btn-success" style="width: 48%;" onclick="nextQuestionStepOrFinish()">السؤال التالي ➡</button>
-                </div>
-            </div>
-        </div>
-
-        <div id="resultContainer" class="result-box no-print">
-            <h3 style="margin-top:0; color: var(--primary); font-size: 16px;">📊 سجل درجات الفصل المعتمدة والبحث الفوري عن درجات ولي الأمر</h3>
+        
+        <!-- كارت التصحيح السريع الفردي -->
+        <div id="touchGradingCard" class="touch-grading-card">
+            <div id="studentHeaderBadge" class="student-title-badge"></div>
             
-            <div style="margin: 12px 0; display: flex; gap: 10px; align-items: center;">
-                <input type="text" id="searchStudentInput" placeholder="🔍 ابحث عن اسم طالب لسؤال ولي أمره..." oninput="filterStudentResults()" style="flex: 1; padding: 8px 12px; border: 1px solid #10b981; border-radius: 6px; font-size: 13px;">
-            </div>
-
-            <p id="correctionOutputText" style="font-size: 14px; margin: 8px 0;"></p>
+            <div id="singleQuestionContainer"></div>
             
-            <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;" class="no-print">
-                <button class="action-btn btn-print" style="flex: 1; min-width: 250px;" onclick="printAllGradesSheet()">🖨️ طباعة كشف درجات الفصل (أسماء ودرجات فقط)</button>
-                <button class="action-btn btn-warning" style="flex: 1; min-width: 250px;" onclick="toggleAnalysisBox()">📈 فتح/طباعة تقرير التحليل الإحصائي المستقل</button>
-            </div>
-        </div>
-
-        <!-- كشف الدرجات المستقل للطباعة -->
-        <div id="allGradesSheetPrintArea" class="sheet-print-container printable-sheet-area">
-            <div style="text-align: center; border-bottom: 2px solid #1e3a8a; padding-bottom: 8px; margin-bottom: 15px;">
-                <h3 style="margin: 0; color: #1e3a8a; font-size: 15px;">المملكة العربية السعودية - وزارة التعليم</h3>
-                <h4 style="margin: 4px 0; font-size: 13px; color: #374151;">مدرسة داؤود بن عروة الثقفي الابتدائية</h4>
-                <p id="sheetPrintMeta" style="margin: 2px 0; font-size: 12px; color: #4b5563; font-weight: bold;"></p>
-            </div>
-            <table style="width: 100%; border-collapse: collapse; font-size: 12px; text-align: center;" border="1">
-                <thead>
-                    <tr style="background: #eff6ff; color: #1e3a8a;">
-                        <th style="padding: 6px; width: 40px;">م</th>
-                        <th style="padding: 6px; text-align: right; padding-right: 10px;">اسم الطالب</th>
-                        <th style="padding: 6px; width: 100px;">الدرجة المستحقة</th>
-                        <th style="padding: 6px; width: 100px;">الدرجة الكبرى</th>
-                        <th style="padding: 6px; width: 120px;">مستوى الإتقان</th>
-                    </tr>
-                </thead>
-                <tbody id="sheetPrintTableBody"></tbody>
-            </table>
-            <div style="margin-top: 25px; display: flex; justify-content: space-between; font-size: 12px; font-weight: bold;">
-                <div>ختم المدرسة / الإدارة: ........................</div>
-                <div>اسم معلم المادة: منصور عامر الرحيلي</div>
-            </div>
-        </div>
-
-        <!-- تقرير التحليل المستقل -->
-        <div id="analysisContainer" class="analysis-box printable-analysis-area">
-            <h3 style="margin-top:0; color: #b45309; border-bottom: 2px solid #f59e0b; padding-bottom: 8px; font-size: 16px;">📈 تقرير تحليل نتائج الطلاب ومهارات نافس</h3>
-            <div id="analysisContentText" style="font-size: 12.5px; line-height: 1.6; color: #1f2937;"></div>
-            <div class="no-print" style="margin-top: 15px;">
-                <button class="action-btn btn-print" onclick="printAnalysisBoxOnly()">🖨️ طباعة تقرير التحليل لوحده</button>
+            <div class="navigation-btns" style="justify-content: space-between;">
+                <button class="action-btn" style="background: #475569; width: 48%;" onclick="prevQuestionStep()">⬅ السؤال السابق</button>
+                <button class="action-btn" style="background: var(--success); width: 48%;" onclick="nextQuestionStepOrFinish()">التالي / حفظ ➡</button>
             </div>
         </div>
     </div>
 
-    <script>
-        function toArabicDigits(str) {
-            if (str === null || str === undefined) return '';
-            const arabicNumbers = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
-            return String(str).replace(/[0-9]/g, function(d) {
-                return arabicNumbers[parseInt(d)];
+    <!-- 4. التحليل والرسوم البيانية -->
+    <div id="analytics" class="section-panel">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;" class="no-print">
+            <h2 style="font-size: 1rem; margin:0;">لوحة التحليل الدقيق والرسوم البيانية</h2>
+            <button class="icon-print-btn" onclick="printAllAnalytics()">
+                🖨️ طباعة تقرير جميع الطلاب
+            </button>
+        </div>
+
+        <div id="analytics-print-area">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div>الطلاب المرصودين</div>
+                    <div class="stat-val" id="totalStudentsCount">0</div>
+                </div>
+                <div class="stat-card">
+                    <div>متوسط الإتقان العام</div>
+                    <div class="stat-val" id="overallAvgRate">0%</div>
+                </div>
+            </div>
+
+            <div class="form-group no-print" style="margin-top:15px;">
+                <label for="queryStudentSelect">استعلام عن طالب لعرض التقرير الرسومي المفصل ومستواه بكل مجال:</label>
+                <select id="queryStudentSelect" onchange="renderStudentDeepAnalysis()">
+                    <option value="">-- اختر طالباً للعرض الفردي --</option>
+                </select>
+            </div>
+
+            <div id="studentDeepAnalysisBox" class="analysis-box" style="display:none;"></div>
+
+            <h3 style="font-size:0.95rem; margin-top:20px;">سجل النتائج الشامل</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>اسم الطالب</th>
+                            <th>الدرجة الكلية</th>
+                            <th>النسبة</th>
+                            <th>تحليل المجالات (الرسوم والمشاكل)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="resultsTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <button class="action-btn no-print" onclick="clearData()" style="background: var(--danger); margin-top: 15px;">مسح كافة السجلات</button>
+    </div>
+</div>
+
+<script>
+    const skillsData = [
+        { domain: "علوم الحياة", skill: "تحديد مفهوم نظرية الخلية وأهميتها", q: "ما هي الوحدة الأساسية للبناء والوظيفة في جميع المخلوقات الحية؟", options: ["أ) الخلية", "ب) النسيج", "جـ) العضو", "د) الجهاز الحيوي"], correct: 0 },
+        { domain: "علوم الحياة", skill: "التمييز بين الخلية النباتية والحيوانية", q: "أي التركيبين التاليين يوجد في الخلايا النباتية فقط ولا يوجد في الحيوانية؟", options: ["أ) الغشاء البلازمي", "ب) الجدار الخلوي", "جـ) الميتوكوندريا", "د) النواة"], correct: 1 },
+        { domain: "علوم الحياة", skill: "شرح مراحل انقسام الخلايا المتساوي", q: "ماذا يُسمى الانقسام الذي تنتج عنه خلايا تطابق الأصل تماماً للنمو وتعويض التالف؟", options: ["أ) الانقسام المنصف", "ب) الانقسام المتساوي", "جـ) التبرعم", "د) التوالد البكري"], correct: 1 },
+        { domain: "علوم الحياة", skill: "تحديد الصفات السائدة والمتنحية وانتقالها", q: "الصفة الوراثية التي تحجب صفة أخرى ولا تظهر عليها تُسمى:", options: ["أ) متنحية", "ب) سائدة", "جـ) مكتسبة", "د) طفرية"], correct: 1 },
+        { domain: "علوم الحياة", skill: "تفسير البناء الضوئي والتنفس الخلوي", q: "ما العملية التي تستخدم فيها النباتات ضوء الشمس لإنتاج الغذاء والأكسجين؟", options: ["أ) التنفس الخلوي", "ب) التحلل", "جـ) البناء الضوئي", "د) النتح"], correct: 2 },
+        { domain: "علوم الحياة", skill: "توضيح تكاثر النباتات ودور المخلوقات الدقيقة", q: "ما المخلوقات الحية الدقيقة التي تستخدم في تحليل البقايا وإعادة العناصر للتربة؟", options: ["أ) الفطريات والبكتيريا", "ب) الفيروسات", "جـ) الطحالب", "د) النباتات البذرية"], correct: 0 },
+        { domain: "علوم الحياة", skill: "تتبع وظائف أجهزة الجسم الأساسية", q: "أي أجهزة الجسم مسؤول عن نقل الغذاء والأكسجين إلى جميع الخلايا؟", options: ["أ) الهضمي", "ب) العصبي", "جـ) الدوري", "د) التنفسي"], correct: 2 },
+        { domain: "علوم الحياة", skill: "وصف آليات عمل الجهاز العصبي والحواس", q: "أي الأجهزة التالية يتحكم في جميع أنشطة الجسم ويستجيب للمؤثرات؟", options: ["أ) العضلي", "ب) العصبي", "جـ) الهيكلي", "د) الإخراجي"], correct: 1 },
+        { domain: "علوم الحياة", skill: "تتبع مسار الطاقة عبر السلاسل الغذائية", q: "في السلسلة الغذائية، تسمى المخلوقات التي تصنع غذاءها بنفسها بـ:", options: ["أ) المستهلكات الأولى", "ب) المحللات", "جـ) المنتجات", "د) المستهلكات الثانية"], correct: 2 },
+        { domain: "علوم الحياة", skill: "تحديد أدوار الكائنات بالبيئة", q: "الحيوانات التي تتغذى على بقايا الحيوانات الميتة تُصنف ضمن:", options: ["أ) المنتجات", "ب) المحللات", "جـ) المستهلكات (القمامة)", "د) المنتجة للطاقة"], correct: 2 },
+
+        { domain: "العلوم الفيزيائية والكيميائية", skill: "تصنيف حالات المادة وتغيراتها", q: "التغير الذي ينتج عنه مادة جديدة كلياً ذات خصائص مختلفة (مثل الاحتراق) يسمى:", options: ["أ) تغير فيزيائي", "ب) تغير كيميائي", "جـ) انصهار", "د) تبخر"], correct: 1 },
+        { domain: "العلوم الفيزيائية والكيميائية", skill: "وصف مفاهيم الموقع والحركة والسرعة", q: "التغير في مسافة الجسم بمرور الزمن مقسوماً على الزمن يعبر عن:", options: ["أ) التسارع", "ب) السرعة", "جـ) القوة", "د) الكتلة"], correct: 1 },
+        { domain: "العلوم الفيزيائية والكيميائية", skill: "التمييز بين القوى المتزنة وغير المتزنة", q: "القوتان المتساويتان في المقدار والمتعاكستان في الاتجاه وتلغي إحداهما الأخرى تسمى:", options: ["أ) قوى متزنة", "ب) قوى غير متزنة", "جـ) الاحتكاك", "د) الجاذبية"], correct: 0 },
+        { domain: "العلوم الفيزيائية والكيميائية", skill: "استكشاف أشكال الطاقة وتحولاتها", q: "عند تشغيل المصباح الكهربائي، تتحول الطاقة الكهربائية إلى طاقة:", options: ["أ) حركية فقط", "ب) ضوئية وحرارية", "جـ) كيميائية فقط", "د) نووية"], correct: 1 },
+        { domain: "العلوم الفيزيائية والكيميائية", skill: "فهم خصائص الأمواج والصوت والضوء", q: "كيف ينتقل الصوت في الأوساط المختلفة؟", options: ["أ) عبر موجات وسط ناقل", "ب) في الفراغ", "جـ) بدون اهتزاز", "د) كشعاع ضوئي"], correct: 0 },
+
+        { domain: "علم الأرض", skill: "تحليل خصائص التربة وطرق المحافظة عليها", q: "الطبقة العليا من التربة التي تحتوي على أعلى نسبة من الدبال والمواد العضوية هي:", options: ["أ) التربة التحتية", "ب) الصخور الأصلية", "جـ) التربة السطحية", "د) الصخور الصلبة"], correct: 2 },
+        { domain: "علم الأرض", skill: "توضيح أساليب حماية البيئة وترشيد الموارد", q: "أي مما يلي يُعد من أفضل الطرق لتقليل النفايات وحماية موارد البيئة؟", options: ["أ) حرق النفايات", "ب) إعادة التدوير", "جـ) تلوث بلاستيكي", "د) قطع الغابات"], correct: 1 },
+
+        { domain: "علم الفلك", skill: "توضيح تعاقب الليل والنهار والفصول", q: "تنتج ظاهرة تعاقب الليل والنهار على سطح الأرض بسبب:", options: ["أ) دوران حول الشمس", "ب) دوران الأرض حول محورها", "جـ) ميل المحور", "د) دوران القمر"], correct: 1 },
+        { domain: "علم الفلك", skill: "المقارنة بين الكواكب الداخلية والخارجية", q: "أي من الكواكب التالية يعد من الكواكب الصخرية الداخلية في النظام الشمسي؟", options: ["أ) المشتري", "ب) زحل", "جـ) الأرض", "د) نبتون"], correct: 2 },
+        { domain: "علم الفلك", skill: "وصف النجوم والمجرات الفضائية", q: "تُعرف المجرة التي تنتمي إليها شمسنا وكوكب الأرض باسم:", options: ["أ) درب التبانة", "ب) سديم أوريون", "جـ) المرأة المسلسلة", "د) النظام الشمسي"], correct: 0 },
+        { domain: "علم الفلك", skill: "تطبيق مهارات عمليات العلم والقياس", q: "عندما تجمع البيانات ووصف الأشياء باستخدام الحواس الخمس فإنك تمارس مهارة:", options: ["أ) الاستنتاج", "ب) الملاحظة", "جـ) الفرضية", "د) التجربة"], correct: 1 }
+    ];
+
+    let currentExamIndices = [];
+    let currentDomainLabel = "شامل جميع المجالات";
+
+    // المتغيرات الخاصة بجلسة التصحيح الفردي السريع
+    let currentQuestionStep = 0;
+    let studentAnswers = {};
+
+    window.onload = function() {
+        loadOrGenerateExam();
+        loadStudentsDropdowns();
+        loadAnalyticsData();
+    };
+
+    function switchTab(tabId, btn) {
+        document.querySelectorAll('.section-panel').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        btn.classList.add('active');
+    }
+
+    function saveStudentsList() {
+        const text = document.getElementById('studentsListInput').value.trim();
+        if (!text) {
+            alert('يرجى إدخال أسماء الطلاب أولاً.');
+            return;
+        }
+        const students = text.split('\n').map(s => s.trim()).filter(s => s.length > 0);
+        localStorage.setItem('science_students_list_v4', JSON.stringify(students));
+        alert('تم حفظ قائمة الطلاب بنجاح!');
+        loadStudentsDropdowns();
+    }
+
+    function loadStudentsDropdowns() {
+        let students = JSON.parse(localStorage.getItem('science_students_list_v4') || '[]');
+        let studentSelect = document.getElementById('studentSelect');
+        let querySelect = document.getElementById('queryStudentSelect');
+        
+        studentSelect.innerHTML = '<option value="">-- اضغط لاختيار طالب وبدء التصحيح --</option>';
+        querySelect.innerHTML = '<option value="">-- اختر طالباً للعرض الفردي --</option>';
+        
+        let savedText = students.join('\n');
+        document.getElementById('studentsListInput').value = savedText;
+
+        students.forEach(name => {
+            studentSelect.innerHTML += `<option value="${name}">${name}</option>`;
+            querySelect.innerHTML += `<option value="${name}">${name}</option>`;
+        });
+    }
+
+    function loadOrGenerateExam() {
+        let savedExam = JSON.parse(localStorage.getItem('saved_active_exam_v4') || 'null');
+        if (savedExam && savedExam.indices && savedExam.indices.length > 0) {
+            currentExamIndices = savedExam.indices;
+            currentDomainLabel = savedExam.domainLabel;
+            document.getElementById('domainFilterSelect').value = savedExam.domainVal || 'all';
+            renderSystem();
+        } else {
+            generateNewExam();
+        }
+    }
+
+    function generateNewExam() {
+        const selectedDomain = document.getElementById('domainFilterSelect').value;
+        let filteredIndices = [];
+        
+        if (selectedDomain === 'all') {
+            currentDomainLabel = "شامل لجميع المجالات";
+            let life = [], phys = [], earth = [], space = [];
+            skillsData.forEach((item, idx) => {
+                if (item.domain === "علوم الحياة") life.push(idx);
+                else if (item.domain === "العلوم الفيزيائية والكيميائية") phys.push(idx);
+                else if (item.domain === "علم الأرض") earth.push(idx);
+                else if (item.domain === "علم الفلك") space.push(idx);
             });
-        }
+            life.sort(() => Math.random() - 0.5);
+            phys.sort(() => Math.random() - 0.5);
+            earth.sort(() => Math.random() - 0.5);
+            space.sort(() => Math.random() - 0.5);
 
-        function convertAllNumbersInDOM() {
-            const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
-            let node;
-            while (node = walker.nextNode()) {
-                if (node.parentElement && ['SCRIPT', 'STYLE'].includes(node.parentElement.tagName)) continue;
-                if (node.nodeValue) {
-                    node.nodeValue = toArabicDigits(node.nodeValue);
-                }
-            }
-        }
-
-        const subjectNames = { 
-            "science": "مادة العلوم", 
-            "math": "مادة الرياضيات", 
-            "arabic": "مادة لغتي الجميلة", 
-            "english": "مادة اللغة الإنجليزية", 
-            "islamic": "الدراسات الإسلامية" 
-        };
-
-        const accurateGradeQuestionBank = {
-            "الأول الابتدائي": {
-                "science": [
-                    { q: "أي مما يلي يُعد من أجزاء النبات الرئيسية التي تمتص الماء؟", options: ["الساق", "الجذر", "الأوراق", "الزهور"], correct: "ب", keyword: "أجزاء النباتات" },
-                    { q: "ما هو مصدر النور والحرارة الأساسي على سطح الأرض؟", options: ["القمر", "الشمس", "المصباح", "النجوم"], correct: "ب", keyword: "الضوء والحرارة" },
-                    { q: "أي الحيوانات التالية يعيش في اليابسة والماء؟", options: ["العصفور", "الضفدع", "الجمل", "القطة"], correct: "ب", keyword: "المخلوقات الحية" },
-                    { q: "ما الحالة الفيزيائية للماء المتجمد (ثلج)؟", options: ["سائلة", "غازية", "صلبة", "بخار"], correct: "ج", keyword: "المادة" },
-                    { q: "في أي فصل ترتفع درجة الحرارة وتشتد؟", options: ["الصيف", "الربيع", "الخريف", "الشتاء"], correct: "أ", keyword: "الطقس والفصول" },
-                    { q: "ما هو الحيوان الذي يُغطي جسمه الريش؟", options: ["القطة", "الأسد", "العصفور", "الخروف"], correct: "ج", keyword: "المخلوقات الحية" },
-                    { q: "أي الأجسام التالية خفيف ويطفو على الماء؟", options: ["المسمار الحديدي", "الحجر", "ورقة الشجر", "العملة المعدنية"], correct: "ج", keyword: "المادة" },
-                    { q: "ما الغاز الذي نتنفسه ونجده في الهواء؟", options: ["ثاني أكسيد الكربون", "الأكسجين", "الهيليوم", "النيتروجين"], correct: "ب", keyword: "الهواء والماء" },
-                    { q: "ما اسم الفصل الذي يتساقط فيها ورق بعض الأشجار؟", options: ["الربيع", "الصيف", "الخريف", "الشتاء"], correct: "ج", keyword: "الطقس والفصول" },
-                    { q: "أي مما يأتي يعد من مصادر الإضاءة الطبيعية؟", options: ["الشمس", "التلفاز", "المصباح اليدوي", "الساعة"], correct: "أ", keyword: "الضوء والحرارة" }
-                ],
-                "math": [
-                    { q: "ما الناتج الصحيح لعملية الجمع: ٣ + ٢ = ؟", options: ["٤", "٥", "٦", "٧"], correct: "ب", keyword: "الجمع" },
-                    { q: "أي الأعداد التالية أكبر من العدد ٧؟", options: ["٥", "٦", "٩", "٤"], correct: "ج", keyword: "الأعداد" },
-                    { q: "كم عدد أضلاع الشكل الهندسي (المثلث)؟", options: ["٣", "٤", "٥", "٢"], correct: "أ", keyword: "الأشكال الهندسية" },
-                    { q: "ما الناتج الصحيح لعملية الطرح: ٨ - ٣ = ؟", options: ["٤", "٥", "٦", "٧"], correct: "ب", keyword: "الطرح" }
-                ],
-                "arabic": [
-                    { q: "ما هو الحرف الذي يبدأ به اسم (موز)؟", options: ["ب", "م", "ل", "د"], correct: "ب", keyword: "الحروف الهجائية" },
-                    { q: "أي الحروف التالية يعتبر حرف مد بالألف؟", options: ["بَ", "ما", "مُ", "مِ"], correct: "ب", keyword: "المدود" },
-                    { q: "الكلمة التي تحوي حرف التاء المربوطة هي:", options: ["تفاحة", "قلم", "ولد", "باب"], correct: "أ", keyword: "التاء المربوطة" }
-                ]
-            },
-            "السادس الابتدائي": {
-                "science": [
-                    { q: "ما هي الوحدة الأساسية لبناء وتنظيم الكائن الحي؟", options: ["النسيج الحيوي", "العضو الداخلي", "الخلية", "الجهاز العصبي"], correct: "ج", keyword: "الخلايا والوراثة" },
-                    { q: "ما العملية الحيوية التي تصنع بها النباتات الخضراء غذاءها؟", options: ["التنفس الخلوي", "البناء الضوئي", "الهضم والامتصاص", "النتح"], correct: "ب", keyword: "عمليات الحياة" },
-                    { q: "أي الأجرام السماوية التالية يقع في مركز المجموعة الشمسية؟", options: ["كوكب الأرض", "القمر التابع", "الشمس", "كوكب المريخ"], correct: "ج", keyword: "الفضاء" },
-                    { q: "ما الحالة الفيزيائية للماء عندما يتحول إلى ثلج صلب؟", options: ["الحالة السائلة", "الحالة الغازية", "الحالة الصلبة", "حالة البلازما"], correct: "ج", keyword: "المادة" }
-                ]
-            }
-        };
-
-        function updateLessonCheckboxes() {
-            const gradeKey = document.getElementById('selectGrade').value;
-            const subjectKey = document.getElementById('selectSubject').value;
-            const container = document.getElementById('lessonsSelectionContainer');
-            container.innerHTML = '';
-
-            let gradeLessons = [];
-            let storageKey = 'mansour_custom_lessons_science_' + gradeKey + '_v5';
-            try {
-                let saved = localStorage.getItem(storageKey);
-                if (saved) gradeLessons = JSON.parse(saved);
-            } catch(e) {}
-
-            if (gradeLessons.length === 0) {
-                if (accurateGradeQuestionBank[gradeKey] && accurateGradeQuestionBank[gradeKey][subjectKey]) {
-                    gradeLessons = accurateGradeQuestionBank[gradeKey][subjectKey].map((item, idx) => ({ title: item.keyword || `موضوع أساسي (${idx + 1})`, chapter: "الوحدة العامة" }));
-                } else {
-                    gradeLessons = [
-                        { chapter: "الوحدة الأولى", title: "أجزاء النباتات" },
-                        { chapter: "الوحدة الأولى", title: "المخلوقات الحية والأشياء الغير حيه" },
-                        { chapter: "الوحدة الثانية", title: "الضوء والحرارة" },
-                        { chapter: "الوحدة الثانية", title: "الطقس والفصول" }
-                    ];
-                }
-            }
-
-            gradeLessons.forEach((l, idx) => {
-                const label = document.createElement('label');
-                label.style.display = 'flex';
-                label.style.alignItems = 'center';
-                label.style.gap = '8px';
-                label.style.fontSize = '13px';
-                label.style.cursor = 'pointer';
-                label.style.padding = '4px 6px';
-                label.style.borderRadius = '4px';
-                label.style.background = '#f8fafc';
-                label.style.border = '1px solid #e2e8f0';
-
-                label.innerHTML = `
-                    <input type="checkbox" class="lesson-checkbox" value="${escapeHtml(l.title)}" checked style="width: 16px; height: 16px; accent-color: var(--secondary); cursor: pointer;">
-                    <span><b>[${escapeHtml(l.chapter || 'الدرس')}>]</b> ${escapeHtml(l.title)}</span>
-                `;
-                container.appendChild(label);
-            });
-        }
-
-        function smartGenerateFromLessonText() {
-            const text = document.getElementById('lessonInputText').value.trim();
-            const gradeKey = document.getElementById('selectGrade').value;
-            const subjectKey = document.getElementById('selectSubject').value;
-
-            if (!text) {
-                alert('الرجاء كتابة أو لصق نص أو عنوان الدرس أولاً!');
-                return;
-            }
-
-            if (!accurateGradeQuestionBank[gradeKey]) accurateGradeQuestionBank[gradeKey] = {};
-            if (!accurateGradeQuestionBank[gradeKey][subjectKey]) accurateGradeQuestionBank[gradeKey][subjectKey] = [];
-
-            const generatedItems = [
-                {
-                    q: `بناءً على درس (${text})، ما هي الفكرة الأساسية أو المفهوم العلمي المرتبط به؟`,
-                    options: [
-                        `التعرف على المكونات والخصائص الأساسية لـ (${text})`,
-                        `دراسة ظاهرة أخرى غير مرتبطة بالمنهج`,
-                        `اعتبار المفهوم افتراضاً غير قابل للتطبيق`,
-                        `تجاهل الخصائص العلمية للدرس`
-                    ],
-                    correct: "أ",
-                    keyword: text
-                },
-                {
-                    q: `عند تطبيق المفاهيم الواردة في موضوع (${text})، أي العبارات التالية تُعد النتيجة الصحيحة؟`,
-                    options: [
-                        `استنتاج خاطئ يناقض المنهج`,
-                        `النتيجة والتطبيق العلمي الصحيح والمعتمد للموضوع`,
-                        `افتراض عشوائي غير واقعي`,
-                        `معلومة خارج النطاق التعليمي`
-                    ],
-                    correct: "ب",
-                    keyword: text
-                },
-                {
-                    q: `سؤال تقويمي لدرس (${text}): ما التفسير أو القاعدة العلمية الأدق لتفسير هذه الظاهرة؟`,
-                    options: [
-                        `احتمال خطأ شائع`,
-                        `تفسير غير مرتبط بالدرس`,
-                        `التفسير والعلم الصحيح والمثالي المعتمد للدرس`,
-                        `افتراض عكسي خاطئ`
-                    ],
-                    correct: "ج",
-                    keyword: text
-                }
+            filteredIndices = [
+                ...life.slice(0, 3),
+                ...phys.slice(0, 3),
+                ...earth.slice(0, 2),
+                ...space.slice(0, 2)
             ];
-
-            generatedItems.forEach(item => {
-                accurateGradeQuestionBank[gradeKey][subjectKey].unshift(item);
-            });
-
-            document.getElementById('lessonInputText').value = '';
-            updateLessonCheckboxes();
-            alert(`✨ تم توليد وإضافة أسئلة علمية مرتبطة حصرياً بصف (${gradeKey}) ودرس (${text}) بنجاح!`);
-        }
-
-        function fetchAllStudentsFromStorage() {
-            studentsList = [];
-            for (let i = 0; i < localStorage.length; i++) {
-                let key = localStorage.key(i);
-                if (key && (key.includes('student') || key.includes('boy') || key.includes('طلاب') || key.includes('كشوف'))) {
-                    try {
-                        let data = JSON.parse(localStorage.getItem(key));
-                        if (Array.isArray(data) && data.length > 0) {
-                            studentsList = data.map(item => typeof item === 'string' ? { name: item } : (item.name ? item : null)).filter(Boolean);
-                            if (studentsList.length > 0) break;
-                        }
-                    } catch(e) {}
+            filteredIndices.sort(() => Math.random() - 0.5);
+        } else {
+            currentDomainLabel = "مجال: " + selectedDomain;
+            for (let i = 0; i < skillsData.length; i++) {
+                if (skillsData[i].domain === selectedDomain) {
+                    filteredIndices.push(i);
                 }
             }
-
-            if (studentsList.length === 0) {
-                studentsList = [
-                    { name: "محمد عبدالله العتيبي" },
-                    { name: "فهد خالد الشمري" },
-                    { name: "سلطان عبد العزيز القحطاني" },
-                    { name: "ناصر متعب الحربي" },
-                    { name: "تركي فهد المطيري" }
-                ];
-            }
+            filteredIndices.sort(() => Math.random() - 0.5); 
         }
 
-        function escapeHtml(text) { return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;"); }
+        currentExamIndices = filteredIndices;
 
-        function generateTestModel() {
-            const examType = document.getElementById('selectExamType').value;
-            const gradeKey = document.getElementById('selectGrade').value;
-            const subjectKey = document.getElementById('selectSubject').value;
+        localStorage.setItem('saved_active_exam_v4', JSON.stringify({
+            indices: currentExamIndices,
+            domainLabel: currentDomainLabel,
+            domainVal: selectedDomain
+        }));
 
-            const checkboxes = document.querySelectorAll('.lesson-checkbox:checked');
-            let selectedLessonsList = [];
-            checkboxes.forEach(cb => selectedLessonsList.push(cb.value));
+        renderSystem();
+    }
 
-            if (selectedLessonsList.length === 0) {
-                alert('الرجاء اختيار درس واحد على الأقل لتوليد الأسئلة المرتبطة!');
-                return;
-            }
+    function renderSystem() {
+        let singleCont = document.getElementById('singleExamContainer');
+        
+        let examHtml = `
+            <div class="exam-header">
+                <p><strong>المدرسة:</strong> مدرسة داؤود بن عروة الثقفي الابتدائية &nbsp;&nbsp;|&nbsp;&nbsp; <strong>المادة:</strong> العلوم - الصف السادس</p>
+                <p><strong>اسم الطالب:</strong> .............................................................. &nbsp;&nbsp;|&nbsp;&nbsp; <strong>النوع:</strong> ${currentDomainLabel}</p>
+            </div>
+            <div class="questions-grid">
+        `;
 
-            const modelsArray = ["نموذج (أ)", "نموذج (ب)", "نموذج (ج)", "نموذج (د)"];
-            currentModelName = modelsArray[Math.floor(Math.random() * modelsArray.length)];
-
-            document.getElementById('printTestInfo').textContent = `الصف: ${gradeKey} | المادة: ${subjectNames[subjectKey] || "المادة الدراسية"} | نوع الاختبار: ${examType}`;
-            document.getElementById('printSelectedLessonsPrint').textContent = `📖 الدروس المستهدفة: ${selectedLessonsList.join(' ، ')}`;
-            document.getElementById('printModelBadge').textContent = `رقم النموذج: ${currentModelName}`;
-
-            let availableQuestions = [];
-            if (accurateGradeQuestionBank[gradeKey] && accurateGradeQuestionBank[gradeKey][subjectKey]) {
-                availableQuestions = [...accurateGradeQuestionBank[gradeKey][subjectKey]];
-            }
-
-            let filteredQuestions = availableQuestions.filter(q => {
-                if (!q.keyword) return true;
-                return selectedLessonsList.some(lesson => q.keyword.includes(lesson) || lesson.includes(q.keyword));
-            });
-
-            if (filteredQuestions.length < 10 && availableQuestions.length > filteredQuestions.length) {
-                let remaining = availableQuestions.filter(q => !filteredQuestions.includes(q));
-                filteredQuestions = filteredQuestions.concat(remaining);
-            }
-
-            if (filteredQuestions.length === 0) {
-                filteredQuestions = [
-                    { q: `سؤال تقويمي حول (${selectedLessonsList[0] || 'الدرس'}): ما هي الميزة الأساسية لهذا الموضوع؟`, options: ["الخصائص الأساسية للدرس", "معلومة غير صحيحة", "افتراض خاطئ", "خارج المنهج"], correct: "أ", keyword: "عام" },
-                    { q: `من خلال دراستك لـ (${selectedLessonsList[0] || 'الدرس'})، أي مما يلي يعد صحيحاً؟`, options: ["معلومة خاطئة", "التطبيق والحقيقة العلمية الصحيحة", "احتمال عكسي", "افتراض غير واقعي"], correct: "ب", keyword: "عام" },
-                    { q: `ما هي النتيجة العلمية عند دراسة (${selectedLessonsList[0] || 'الدرس'})؟`, options: ["تفسير غير مرتبط", "احتمال خطأ شائع", "الناتج العلمي الصحيح والمعتمد", "افتراض عكسي"], correct: "ج", keyword: "عام" }
-                ];
-            }
-
-            let shuffled = [...filteredQuestions];
-            for (let i = shuffled.length - 1; i > 0; i--) {
-                let j = Math.floor(Math.random() * (i + 1));
-                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-            }
-
-            activeQuestions = shuffled.slice(0, 10);
-            globalMaxScore = activeQuestions.length * 2;
-
-            const previewBox = document.getElementById('questionsPreviewBox');
-            const listContainer = document.getElementById('generatedQuestionsList');
-            previewBox.style.display = 'block';
-            
-            let htmlContent = '';
-            for (let i = 0; i < activeQuestions.length; i++) {
-                let qObj = activeQuestions[i];
-                htmlContent += `
-                    <div class="question-row">
-                        <b>س${toArabicDigits(i + 1)}: ${escapeHtml(qObj.q)}</b>
-                        <div class="bubble-options">
-                            <div class="bubble-item"><span class="bubble-circle">أ</span> أ) ${escapeHtml(qObj.options[0])}</div>
-                            <div class="bubble-item"><span class="bubble-circle">ب</span> ب) ${escapeHtml(qObj.options[1])}</div>
-                            <div class="bubble-item"><span class="bubble-circle">ج</span> ج) ${escapeHtml(qObj.options[2])}</div>
-                            <div class="bubble-item"><span class="bubble-circle">د</span> د) ${escapeHtml(qObj.options[3])}</div>
-                        </div>
-                    </div>
-                `;
-            }
-            listContainer.innerHTML = htmlContent;
-            convertAllNumbersInDOM();
-            window.scrollTo({ top: previewBox.offsetTop, behavior: 'smooth' });
-        }
-
-        function printExamOnly() {
-            const previewBox = document.getElementById('questionsPreviewBox');
-            previewBox.style.display = 'block';
-            setTimeout(() => { window.print(); }, 200);
-        }
-
-        // --- المتغيرات الخاصة بجلسة التصحيح الفردي السريع ---
-        let currentStudentIndex = 0;
-        let currentQuestionStep = 0; // مؤشر السؤال الحالي (من 0 إلى 9)
-        let studentsList = [];
-        let activeQuestions = [];
-        let globalMaxScore = 20;
-        let currentModelName = "نموذج (أ)";
-        let studentAnswers = {};
-        let allClassResults = {};
-
-        function startTouchGradingSession() {
-            if (activeQuestions.length === 0) { generateTestModel(); }
-            fetchAllStudentsFromStorage();
-            if (studentsList.length === 0) { alert('لا توجد قائمة طلاب مسجلة!'); return; }
-            currentStudentIndex = 0;
-            allClassResults = {};
-            document.getElementById('touchGradingCard').style.display = 'block';
-            startNewStudentSession();
-            window.scrollTo({ top: document.getElementById('touchGradingCard').offsetTop, behavior: 'smooth' });
-        }
-
-        function startNewStudentSession() {
-            currentQuestionStep = 0;
-            studentAnswers = {};
-            renderCurrentStepView();
-        }
-
-        function renderCurrentStepView() {
-            const student = studentsList[currentStudentIndex];
-            const maxScore = globalMaxScore;
-            
-            document.getElementById('studentHeaderBadge').innerHTML = `
-                <span>👤 الطالب (${toArabicDigits(currentStudentIndex + 1)}/${toArabicDigits(studentsList.length)}): ${escapeHtml(student.name)} [${currentModelName}]</span>
-                <div id="liveScoreBadge" class="live-score-box">السؤال ${toArabicDigits(currentQuestionStep + 1)} / ${toArabicDigits(activeQuestions.length)}</div>
-            `;
-
-            let qObj = activeQuestions[currentQuestionStep];
-            let qNum = currentQuestionStep + 1;
-            let savedOpt = studentAnswers[qNum] || '';
-
-            const container = document.getElementById('singleQuestionContainer');
-            container.innerHTML = `
-                <div class="single-step-question-box">
-                    <h4>سؤال ${toArabicDigits(qNum)}: ${escapeHtml(qObj.q)}</h4>
-                    <div class="options-grid-fast">
-                        <button type="button" class="opt-fast-btn ${savedOpt === 'أ' ? 'correct-choice' : ''}" onclick="selectFastOpt(${qNum}, 'أ', this)">أ) ${escapeHtml(qObj.options[0])}</button>
-                        <button type="button" class="opt-fast-btn ${savedOpt === 'ب' ? 'correct-choice' : ''}" onclick="selectFastOpt(${qNum}, 'ب', this)">ب) ${escapeHtml(qObj.options[1])}</button>
-                        <button type="button" class="opt-fast-btn ${savedOpt === 'ج' ? 'correct-choice' : ''}" onclick="selectFastOpt(${qNum}, 'ج', this)">ج) ${escapeHtml(qObj.options[2])}</button>
-                        <button type="button" class="opt-fast-btn ${savedOpt === 'د' ? 'correct-choice' : ''}" onclick="selectFastOpt(${qNum}, 'د', this)">د) ${escapeHtml(qObj.options[3])}</button>
+        currentExamIndices.forEach((dataIdx, qNum) => {
+            let item = skillsData[dataIdx];
+            examHtml += `
+                <div class="question-card">
+                    <span class="domain-tag">${item.domain}</span>
+                    <div class="question-title">س${qNum+1}: ${item.q}</div>
+                    <div class="options-container">
+                        <div class="option-label">${item.options[0]}</div>
+                        <div class="option-label">${item.options[1]}</div>
+                        <div class="option-label">${item.options[2]}</div>
+                        <div class="option-label">${item.options[3]}</div>
                     </div>
                 </div>
             `;
-            convertAllNumbersInDOM();
+        });
+
+        examHtml += `</div>`;
+        singleCont.innerHTML = examHtml;
+    }
+
+    // --- نظام التصحيح السريع الجديد (سؤال بسؤال) ---
+    function startTouchGradingSession() {
+        const studentName = document.getElementById('studentSelect').value;
+        if (!studentName) {
+            document.getElementById('touchGradingCard').style.display = 'none';
+            return;
         }
 
-        function selectFastOpt(qNum, opt, btn) {
-            studentAnswers[qNum] = opt;
-            const parentGrid = btn.parentElement;
-            parentGrid.querySelectorAll('.opt-fast-btn').forEach(b => {
-                b.classList.remove('correct-choice', 'wrong-choice');
+        if (currentExamIndices.length === 0) {
+            generateNewExam();
+        }
+
+        currentQuestionStep = 0;
+        studentAnswers = {};
+        document.getElementById('touchGradingCard').style.display = 'block';
+        renderCurrentStepView();
+    }
+
+    function renderCurrentStepView() {
+        const studentName = document.getElementById('studentSelect').value;
+        
+        document.getElementById('studentHeaderBadge').innerHTML = `
+            <span>👤 الطالب: ${studentName}</span>
+            <div class="live-score-box">السؤال ${currentQuestionStep + 1} / ${currentExamIndices.length}</div>
+        `;
+
+        let dataIdx = currentExamIndices[currentQuestionStep];
+        let item = skillsData[dataIdx];
+        let qNum = currentQuestionStep + 1;
+        let savedOpt = studentAnswers[qNum] !== undefined ? studentAnswers[qNum] : '';
+
+        let optionsHtml = '';
+        item.options.forEach((opt, optIdx) => {
+            let isSelected = (savedOpt === optIdx);
+            let btnClass = isSelected ? (optIdx === item.correct ? 'correct-choice' : 'wrong-choice') : '';
+            optionsHtml += `
+                <button type="button" class="opt-fast-btn ${btnClass}" onclick="selectFastOpt(${qNum}, ${optIdx}, this)">${opt}</button>
+            `;
+        });
+
+        const container = document.getElementById('singleQuestionContainer');
+        container.innerHTML = `
+            <div class="single-step-question-box">
+                <span class="domain-tag">${item.domain}</span>
+                <h4>س${qNum}: ${item.q}</h4>
+                <p style="font-size:0.75rem; color:var(--text-muted); margin:0 0 10px 0;">المهارة: ${item.skill}</p>
+                <div class="options-grid-fast">
+                    ${optionsHtml}
+                </div>
+            </div>
+        `;
+    }
+
+    function selectFastOpt(qNum, optIdx, btn) {
+        studentAnswers[qNum] = optIdx;
+        let dataIdx = currentExamIndices[qNum - 1];
+        let item = skillsData[dataIdx];
+
+        const parentGrid = btn.parentElement;
+        parentGrid.querySelectorAll('.opt-fast-btn').forEach(b => {
+            b.classList.remove('correct-choice', 'wrong-choice');
+        });
+
+        if (optIdx === item.correct) {
+            btn.classList.add('correct-choice');
+        } else {
+            btn.classList.add('wrong-choice');
+            parentGrid.querySelectorAll('.opt-fast-btn').forEach((b, idx) => {
+                if (idx === item.correct) b.classList.add('correct-choice');
             });
-
-            let correctAns = activeQuestions[qNum - 1].correct;
-            if (opt === correctAns) {
-                btn.classList.add('correct-choice');
-            } else {
-                btn.classList.add('wrong-choice');
-                // إضاءة الزر الصحيح لمساعدتك
-                parentGrid.querySelectorAll('.opt-fast-btn').forEach(b => {
-                    if (b.textContent.startsWith(correctAns)) b.classList.add('correct-choice');
-                });
-            }
-
-            // انتقال تلقائي سريع للسؤال التالي بعد الضغط بنصف ثانية
-            setTimeout(() => {
-                if (currentQuestionStep < activeQuestions.length - 1) {
-                    currentQuestionStep++;
-                    renderCurrentStepView();
-                }
-            }, 300);
         }
 
-        function prevQuestionStep() {
-            if (currentQuestionStep > 0) {
-                currentQuestionStep--;
-                renderCurrentStepView();
-            }
-        }
-
-        function nextQuestionStepOrFinish() {
-            if (currentQuestionStep < activeQuestions.length - 1) {
+        // الانتقال التلقائي للسؤال التالي بسرعة بعد نصف ثانية إذا لم يكن الأخير
+        setTimeout(() => {
+            if (currentQuestionStep < currentExamIndices.length - 1) {
                 currentQuestionStep++;
                 renderCurrentStepView();
-            } else {
-                // حفظ درجة الطالب الحالي والانتقال للطالب التالي أو إنهاء الجلسة
-                saveCurrentStudentAndProceed();
             }
+        }, 300);
+    }
+
+    function prevQuestionStep() {
+        if (currentQuestionStep > 0) {
+            currentQuestionStep--;
+            renderCurrentStepView();
         }
+    }
 
-        function saveCurrentStudentAndProceed() {
-            const student = studentsList[currentStudentIndex];
-            let correctCount = 0;
-            for (let i = 0; i < activeQuestions.length; i++) {
-                let qNum = i + 1;
-                if (studentAnswers[qNum] && studentAnswers[qNum] === activeQuestions[i].correct) {
-                    correctCount++;
-                }
-            }
-            let score = correctCount * 2; 
-            allClassResults[student.name] = { score: score, correct: correctCount };
-
-            currentStudentIndex++;
-            if (currentStudentIndex < studentsList.length) {
-                startNewStudentSession();
-            } else {
-                finishGradingSession();
-            }
+    function nextQuestionStepOrFinish() {
+        if (currentQuestionStep < currentExamIndices.length - 1) {
+            currentQuestionStep++;
+            renderCurrentStepView();
+        } else {
+            saveStudentGradeAndProceed();
         }
+    }
 
-        function finishGradingSession() {
-            document.getElementById('touchGradingCard').style.display = 'none';
-            const resultBox = document.getElementById('resultContainer');
-            const examType = document.getElementById('selectExamType').value;
-            resultBox.style.display = 'block';
+    function saveStudentGradeAndProceed() {
+        const studentSelect = document.getElementById('studentSelect');
+        const studentName = studentSelect.value;
+        if (!studentName) return;
 
-            let maxScore = globalMaxScore;
-            let dashboardRecords = [];
+        let score = 0;
+        let failedDetails = [];
+        let totalQuestions = currentExamIndices.length;
 
-            for (let sName in allClassResults) {
-                let sScore = allClassResults[sName].score;
-                dashboardRecords.push({
-                    name: sName,
-                    score: sScore,
-                    maxScore: maxScore,
-                    examType: `${examType} - ${currentModelName}`,
-                    date: new Date().toLocaleDateString('ar-SA')
+        let domainStats = {
+            "علوم الحياة": { total: 0, correct: 0 },
+            "العلوم الفيزيائية والكيميائية": { total: 0, correct: 0 },
+            "علم الأرض": { total: 0, correct: 0 },
+            "علم الفلك": { total: 0, correct: 0 }
+        };
+
+        currentExamIndices.forEach((dataIdx, qNumIndex) => {
+            let item = skillsData[dataIdx];
+            let qNum = qNumIndex + 1;
+            if (!domainStats[item.domain]) {
+                domainStats[item.domain] = { total: 0, correct: 0 };
+            }
+            domainStats[item.domain].total++;
+
+            let studentChoice = studentAnswers[qNum];
+            if (studentChoice !== undefined && studentChoice === item.correct) {
+                score++;
+                domainStats[item.domain].correct++;
+            } else {
+                failedDetails.push({
+                    domain: item.domain,
+                    skill: item.skill,
+                    question: item.q
                 });
             }
+        });
 
-            localStorage.setItem('dashboardLatestExamResults', JSON.stringify(dashboardRecords));
-            localStorage.setItem('examResultsHistory', JSON.stringify(dashboardRecords));
-
-            filterStudentResults();
-            prepareGradesPrintSheet();
-            prepareAnalysisContent();
-
-            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        let domainPercentages = {};
+        for (let dom in domainStats) {
+            if (domainStats[dom].total > 0) {
+                domainPercentages[dom] = Math.round((domainStats[dom].correct / domainStats[dom].total) * 100);
+            } else {
+                domainPercentages[dom] = null;
+            }
         }
 
-        function filterStudentResults() {
-            const query = document.getElementById('searchStudentInput').value.toLowerCase().trim();
-            const outputText = document.getElementById('correctionOutputText');
-            let maxScore = globalMaxScore || 20;
+        let percentage = Math.round((score / totalQuestions) * 100);
+        let records = JSON.parse(localStorage.getItem('science_records_v4') || '[]');
+        
+        records = records.filter(r => r.name !== studentName);
+        records.push({
+            name: studentName,
+            domainTested: currentDomainLabel,
+            score: `${score} / ${totalQuestions}`,
+            percentage: percentage,
+            domainPercentages: domainPercentages,
+            failedDetails: failedDetails
+        });
 
-            let html = `✅ تم رصد درجات الفصل وحفظها في السجل بنجاح!<br><br>`;
-            let foundAny = false;
+        localStorage.setItem('science_records_v4', JSON.stringify(records));
+        loadAnalyticsData();
 
-            for (let sName in allClassResults) {
-                if (query === '' || sName.toLowerCase().includes(query)) {
-                    foundAny = true;
-                    let data = allClassResults[sName];
-                    let waText = `مدرسة داؤود بن عروة الثقفي الابتدائية (طلاب)%0Aولي الأمر الفاضل، نود إفادتكم بحصول الابن: *${encodeURIComponent(sName)}* %0Aعلى درجة الاختبار: *${toArabicDigits(data.score)} / ${toArabicDigits(maxScore)}* (${toArabicDigits(data.correct)} إجابات صحيحة).%0Aمع تحيات المعلم: *منصور عامر الرحيلي*`;
+        // الانتقال التلقائي للطالب التالي في القائمة مع تأثير تغير اللون التنبيهي
+        let nextIndex = studentSelect.selectedIndex + 1;
+        if (nextIndex < studentSelect.options.length) {
+            const card = document.getElementById('touchGradingCard');
+            card.classList.add('student-changed');
 
-                    html += `
-                        <div style="display: flex; justify-content: space-between; align-items: center; background: #fff; padding: 8px 12px; margin-bottom: 6px; border-radius: 6px; border: 1px solid #10b981;">
-                            <span>• <b>${escapeHtml(sName)}</b>: ${toArabicDigits(data.score)} / ${toArabicDigits(maxScore)} (${toArabicDigits(data.correct)} صحيحة)</span>
-                            <a href="https://wa.me/?text=${waText}" target="_blank" class="action-btn btn-whatsapp" style="padding: 4px 10px; font-size: 12px; width: auto; text-decoration: none;">💬 إرسال لولي الأمر</a>
+            setTimeout(() => {
+                card.classList.remove('student-changed');
+                studentSelect.selectedIndex = nextIndex;
+                startTouchGradingSession();
+            }, 500);
+        } else {
+            alert('🎉 تم الانتهاء من تصحيح ورصد جميع طلاب القائمة بنجاح!');
+            document.getElementById('touchGradingCard').style.display = 'none';
+            studentSelect.value = '';
+        }
+    }
+
+    function loadAnalyticsData() {
+        let records = JSON.parse(localStorage.getItem('science_records_v4') || '[]');
+        let tbody = document.getElementById('resultsTableBody');
+        tbody.innerHTML = '';
+
+        document.getElementById('totalStudentsCount').textContent = records.length;
+
+        if (records.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="4" style="color:var(--text-muted);">لا توجد سجلات مسجلة حتى الآن</td></tr>`;
+            document.getElementById('overallAvgRate').textContent = '0%';
+            return;
+        }
+
+        let totalSum = 0;
+        records.forEach(rec => {
+            totalSum += rec.percentage;
+            
+            let domainsText = '';
+            if (rec.domainPercentages) {
+                for (let d in rec.domainPercentages) {
+                    if (rec.domainPercentages[d] !== null) {
+                        domainsText += `• ${d}: <b>${rec.domainPercentages[d]}%</b><br>`;
+                    }
+                }
+            }
+
+            let failedText = rec.failedDetails.length > 0 ? rec.failedDetails.map(f => `<span style="color:#f87171;">[${f.domain}] ${f.skill}</span>`).join('<br>') : '<span style="color:var(--success);">متقن تماماً</span>';
+
+            tbody.innerHTML += `
+                <tr>
+                    <td>${rec.name}</td>
+                    <td><strong>${rec.score}</strong></td>
+                    <td><span style="color:var(--success); font-weight:bold;">${rec.percentage}%</span></td>
+                    <td style="text-align:right; font-size:0.75rem; line-height:1.4;">
+                        ${domainsText}
+                        <div style="margin-top:4px; border-top:1px solid #475569; padding-top:4px;">إخفاقات: ${failedText}</div>
+                    </td>
+                </tr>
+            `;
+        });
+
+        let avg = Math.round(totalSum / records.length);
+        document.getElementById('overallAvgRate').textContent = avg + '%';
+    }
+
+    function renderStudentDeepAnalysis() {
+        const studentName = document.getElementById('queryStudentSelect').value;
+        const box = document.getElementById('studentDeepAnalysisBox');
+        
+        if (!studentName) {
+            box.style.display = 'none';
+            return;
+        }
+
+        let records = JSON.parse(localStorage.getItem('science_records_v4') || '[]');
+        let studentRecord = records.find(r => r.name === studentName);
+
+        box.style.display = 'block';
+        if (!studentRecord) {
+            box.innerHTML = `<p style="color:var(--warning); margin:0;">لا توجد اختبارات مسجلة لهذا الطالب.</p>`;
+            return;
+        }
+
+        let chartsHtml = `<div class="chart-container"><p style="margin:0 0 5px 0; font-weight:bold; font-size:0.85rem; color:#60a5fa;">الرسوم البيانية لمستوى الإتقان حسب المجالات:</p>`;
+        if (studentRecord.domainPercentages) {
+            for (let dom in studentRecord.domainPercentages) {
+                let val = studentRecord.domainPercentages[dom];
+                if (val !== null) {
+                    let barColor = val >= 80 ? '#10b981' : (val >= 50 ? '#f59e0b' : '#ef4444');
+                    chartsHtml += `
+                        <div class="chart-row">
+                            <div class="chart-info">
+                                <span>${dom}</span>
+                                <span style="color:${barColor};">${val}%</span>
+                            </div>
+                            <div class="progress-bar-bg">
+                                <div class="progress-bar-fill" style="width: ${val}%; background-color: ${barColor};"></div>
+                            </div>
                         </div>
                     `;
                 }
             }
-
-            if (!foundAny) {
-                html += `<p style="color: #ef4444; text-align: center;">لم يتم العثور على طالب بهذا الاسم في نتائج هذا الاختبار.</p>`;
-            }
-
-            outputText.innerHTML = html;
-            convertAllNumbersInDOM();
         }
+        chartsHtml += `</div>`;
 
-        function prepareGradesPrintSheet() {
-            const gradeKey = document.getElementById('selectGrade').value;
-            const subjectKey = document.getElementById('selectSubject').value;
-            const examType = document.getElementById('selectExamType').value;
-            const maxScore = globalMaxScore || 20;
-
-            document.getElementById('sheetPrintMeta').textContent = `الصف: ${gradeKey} | المادة: ${subjectNames[subjectKey]} | نوع الاختبار: ${examType} (${currentModelName})`;
-            
-            const tbody = document.getElementById('sheetPrintTableBody');
-            tbody.innerHTML = '';
-
-            let idx = 1;
-            for (let sName in allClassResults) {
-                let data = allClassResults[sName];
-                let percentage = maxScore > 0 ? (data.score / maxScore) * 100 : 0;
-                let level = "";
-                if (percentage >= 90) level = "متفوق (متقن تماماً)";
-                else if (percentage >= 75) level = "متقن";
-                else if (percentage >= 50) level = "مبكر / متوسط";
-                else level = "يحتاج تحسين (غير متقن)";
-
-                tbody.innerHTML += `
-                    <tr>
-                        <td style="padding: 5px;">${toArabicDigits(idx++)}</td>
-                        <td style="padding: 5px; text-align: right; padding-right: 10px; font-weight: bold;">${escapeHtml(sName)}</td>
-                        <td style="padding: 5px; font-weight: bold; color: #1e3a8a;">${toArabicDigits(data.score)}</td>
-                        <td style="padding: 5px;">${toArabicDigits(maxScore)}</td>
-                        <td style="padding: 5px; color: ${percentage >= 50 ? '#10b981' : '#ef4444'}; font-weight: bold;">${level}</td>
-                    </tr>
+        let failedHtml = '';
+        if (!studentRecord.failedDetails || studentRecord.failedDetails.length === 0) {
+            failedHtml = `<p style="color:var(--success); font-weight:bold; margin:8px 0 0 0;">ممتاز جداً! أتقن الطالب جميع المهارات المستهدفة.</p>`;
+        } else {
+            failedHtml = `<div style="display:flex; flex-direction:column; gap:6px; margin-top:8px;">`;
+            studentRecord.failedDetails.forEach(f => {
+                failedHtml += `
+                    <div style="background:#451a03; border:1px solid #78350f; padding:8px; border-radius:6px;">
+                        <span style="background:#9a3412; color:#ffedd5; padding:2px 6px; border-radius:4px; font-size:0.75rem; font-weight:bold;">${f.domain}</span>
+                        <p style="margin:4px 0 2px 0; font-size:0.85rem; font-weight:bold; color:#fca5a5;">المهارة التي أخفق فيها: ${f.skill}</p>
+                    </div>
                 `;
-            }
-            convertAllNumbersInDOM();
+            });
+            failedHtml += `</div>`;
         }
 
-        function printAllGradesSheet() {
-            const qPreviewBox = document.getElementById('questionsPreviewBox');
-            if (qPreviewBox) { qPreviewBox.style.display = 'none'; }
-            prepareGradesPrintSheet();
-            const sheetArea = document.getElementById('allGradesSheetPrintArea');
-            sheetArea.style.display = 'block';
-            setTimeout(() => {
-                window.print();
-                sheetArea.style.display = 'none';
-            }, 200);
+        box.innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <h4 style="margin:0; color:var(--primary);">التقرير التحليلي الرسومي: ${studentRecord.name}</h4>
+                <button class="icon-print-btn no-print" onclick="printSingleStudent()">🖨️ طباعة تقرير الطالب</button>
+            </div>
+            <p style="margin:4px 0; font-size:0.9rem;"><strong>الدرجة الكلية:</strong> ${studentRecord.score} (<span style="color:var(--success); font-weight:bold;">${studentRecord.percentage}%</span>)</p>
+            ${chartsHtml}
+            <p style="margin:12px 0 4px 0; font-weight:bold; color:var(--danger);">تشخيص الإخفاقات والمهارات التي تتطلب خطة علاجية:</p>
+            ${failedHtml}
+        `;
+    }
+
+    function printExam() {
+        window.print();
+    }
+
+    function printSingleStudent() {
+        document.body.className = "print-single";
+        window.print();
+        document.body.className = "";
+    }
+
+    function printAllAnalytics() {
+        document.body.className = "print-all";
+        window.print();
+        document.body.className = "";
+    }
+
+    function clearData() {
+        if (confirm('هل أنت متأكد من مسح جميع السجلات؟')) {
+            localStorage.removeItem('science_records_v4');
+            loadAnalyticsData();
+            document.getElementById('studentDeepAnalysisBox').style.display = 'none';
         }
+    }
+</script>
 
-        function toggleAnalysisBox() {
-            const analysisBox = document.getElementById('analysisContainer');
-            if (analysisBox.style.display === 'block') {
-                analysisBox.style.display = 'none';
-            } else {
-                analysisBox.style.display = 'block';
-                prepareAnalysisContent();
-                window.scrollTo({ top: analysisBox.offsetTop, behavior: 'smooth' });
-            }
-        }
-
-        function prepareAnalysisContent() {
-            const examType = document.getElementById('selectExamType').value;
-            let maxScore = globalMaxScore || 20;
-
-            let totalScoreSum = 0;
-            let count = 0;
-            let highestScore = 0;
-            let lowestScore = maxScore;
-
-            for (let sName in allClassResults) {
-                let sScore = allClassResults[sName].score;
-                totalScoreSum += sScore;
-                if (sScore > highestScore) highestScore = sScore;
-                if (sScore < lowestScore) lowestScore = sScore;
-                count++;
-            }
-
-            let classAverage = count > 0 ? (totalScoreSum / count).toFixed(1) : 0;
-            let percentageAvg = count > 0 ? ((totalScoreSum / (count * maxScore)) * 100).toFixed(1) : 0;
-
-            let dynamicNafisLevel = "مستوى منخفض (يحتاج دعم وتدخل علاجي)";
-            if (percentageAvg >= 90) {
-                dynamicNafisLevel = "مستوى متقدم (تجاوز المعيار المستهدف للطلاب)";
-            } else if (percentageAvg >= 75) {
-                dynamicNafisLevel = "مستوى متقن";
-            } else if (percentageAvg >= 50) {
-                dynamicNafisLevel = "مستوى متوسط / ملائم";
-            }
-
-            document.getElementById('analysisContentText').innerHTML = `
-                <table style="width:100%; border-collapse:collapse; margin-top:5px;" border="1">
-                    <tr style="background:#fef3c7; text-align:center;"><th style="padding:6px;">مؤشر القياس الإحصائي</th><th style="padding:6px;">القيمة التقديرية</th></tr>
-                    <tr><td style="padding:6px;">نوع الاختبار والنموذج</td><td style="text-align:center; color:var(--primary);"><b>${examType} - ${currentModelName}</b></td></tr>
-                    <tr><td style="padding:6px;">إجمالي الطلاب المختبرين</td><td style="text-align:center;"><b>${toArabicDigits(count)}</b> طالب</td></tr>
-                    <tr><td style="padding:6px;">متوسط أداء الفصل العام</td><td style="text-align:center;"><b>${toArabicDigits(classAverage)} / ${toArabicDigits(maxScore)}</b> (${toArabicDigits(percentageAvg)}٪)</td></tr>
-                    <tr><td style="padding:6px;">أعلى درجة بالفصل</td><td style="text-align:center; color:var(--success);"><b>${toArabicDigits(highestScore)} / ${toArabicDigits(maxScore)}</b></td></tr>
-                    <tr><td style="padding:6px;">أقل درجة بالفصل</td><td style="text-align:center; color:var(--danger);"><b>${toArabicDigits(lowestScore)} / ${toArabicDigits(maxScore)}</b></td></tr>
-                    <tr><td style="padding:6px;">مستوى إتقان مهارات نافس</td><td style="text-align:center; color:var(--primary);"><b>${dynamicNafisLevel}</b></td></tr>
-                </table>
-            `;
-            convertAllNumbersInDOM();
-        }
-
-        function printAnalysisBoxOnly() {
-            const analysisBox = document.getElementById('analysisContainer');
-            analysisBox.style.display = 'block';
-            setTimeout(() => { window.print(); }, 200);
-        }
-
-        window.addEventListener('DOMContentLoaded', () => {
-            updateLessonCheckboxes();
-            convertAllNumbersInDOM();
-        });
-    </script>
 </body>
 </html>
 
