@@ -340,7 +340,7 @@
                 </div>
             </div>
 
-            <!-- صندوق اختيار الدروس والمواضيع العادية -->
+            <!-- صندوق اختيار الدروس -->
             <div id="standardLessonsBox" class="form-group" style="margin-top: 12px; border-top: 1px dashed #cbd5e1; padding-top: 10px;">
                 <label style="color: #b45309; display: flex; align-items: center; gap: 5px;">
                     <span>📖</span> اختر الدروس أو المواضيع المراد وضع الأسئلة منها:
@@ -361,7 +361,7 @@
         </div>
 
         <div class="section-box">
-            <h3>⚙️ ثانياً: توليد ورقة الاختبار المعتمدة (10 أسئلة)</h3>
+            <h3>⚙️ ثانياً: توليد ورقة الاختبار المعتمدة (10 أسئلة بخيارات موزعة عشوائياً)</h3>
             <div class="no-print">
                 <button class="action-btn" onclick="generateTestModel()">⚡ توليد ورقة الاختبار</button>
             </div>
@@ -410,7 +410,7 @@
             
             <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;" class="no-print">
                 <button class="action-btn btn-print" style="flex: 1; min-width: 250px;" onclick="printAllGradesSheet()">🖨️ طباعة كشف درجات الطلاب</button>
-                <button class="action-btn btn-nafis-bottom" style="flex: 1; min-width: 250px;" onclick="toggleAnalysisBox()">📊 📈 تقرير التحليل المرتبط بأهداف ومجالات نافس</button>
+                <button class="action-btn btn-nafis-bottom" style="flex: 1; min-width: 250px;" onclick="toggleAnalysisBox()">📊 📈 تقرير التحليل الخطي والخطط العلاجية الواقعية</button>
             </div>
         </div>
 
@@ -439,12 +439,12 @@
             </div>
         </div>
 
-        <!-- تقرير التحليل المفصل ومرتبط بالأهداف والمجالات -->
+        <!-- تقرير التحليل والخطط العلاجية الواقعية -->
         <div id="analysisContainer" class="analysis-box printable-analysis-area">
-            <h3 style="margin-top:0; color: #b45309; border-bottom: 2px solid #f59e0b; padding-bottom: 8px; font-size: 16px;">📈 تقرير تحليل نواتج التعلم ومجالات نافس (مفصل حسب الأهداف)</h3>
+            <h3 style="margin-top:0; color: #b45309; border-bottom: 2px solid #f59e0b; padding-bottom: 8px; font-size: 16px;">📈 تقرير تحليل نواتج التعلم والخطط العلاجية الميدانية الواقعية</h3>
             <div id="analysisContentText" style="font-size: 12.5px; line-height: 1.6; color: #1f2937;"></div>
             <div class="no-print" style="margin-top: 15px;">
-                <button class="action-btn btn-print" onclick="printAnalysisBoxOnly()">🖨️ طباعة تقرير التحليل والخطط العلاجية لوحده</button>
+                <button class="action-btn btn-print" onclick="printAnalysisBoxOnly()">🖨️ طباعة التقرير والخطط العلاجية لوحده</button>
             </div>
         </div>
     </div>
@@ -530,26 +530,26 @@
         const accurateSubjectQuestionBanks = {
             "الأول الابتدائي": {
                 "science": [
-                    { domain: "علوم الحياة", q: "ما هو الجزء الرئيسي في النبات المسؤول عن امتصاص الماء والأملاح من التربة؟", options: ["الجذر", "الساق", "الأوراق", "الزهور"], correct: "أ" },
-                    { domain: "علوم الحياة", q: "أي الحيوانات التالية يُغطي جسمه الريش ويستطيع الطيران؟", options: ["العصفور", "القطة", "الأسد", "الخروف"], correct: "أ" },
-                    { domain: "علوم الحياة", q: "ماذا تحتاج النباتات الخضراء لكي تنمو وتعيش بصورة سليم؟", options: ["ماء وضوء وهواء", "ظلام تام وصخور", "بلاستيك وحديد", "رمل جاف فقط"], correct: "أ" },
-                    { domain: "العلوم الفيزيائية", q: "ما هو المصدر الطبيعي الأساسي للضوء والحرارة على كوكب الأرض؟", options: ["الشمس", "القمر", "المصباح الكهربائي", "النجوم البعيدة"], correct: "أ" },
-                    { domain: "العلوم الفيزيائية", q: "أي الأجسام التالية يعتبر مصدراً للحرارة في حياتنا اليومية؟", options: ["المدفأة الكهربائية", "الثلج المجمد", "الماء البارد", "الزجاج الشفاف"], correct: "أ" },
-                    { domain: "علوم الأرض والفضاء", q: "في أي فصل من فصول السنة ترتفع درجة الحرارة وتشتد أشعة الشمس؟", options: ["فصل الصيف", "فصل الشتاء", "فصل الخريف", "فصل الربيع"], correct: "أ" },
-                    { domain: "علوم الأرض والفضاء", q: "ما هي المادة الشفافة الأساسية التي نجدها بكثرة على سطح الأرض وتشكل البحار؟", options: ["الماء", "الحديد الصلب", "الصخور البركانية", "الخشب اليابس"], correct: "أ" },
-                    { domain: "الاستقصاء العلمي", q: "أي الأجسام التالية خفيف ويطفو على سطح الماء عند وضعه فيه؟", options: ["ورقة الشجر الخفيفة", "الحجر الثقيل", "المسمار الحديدي", "العملة المعدنية"], correct: "أ" }
+                    { domain: "علوم الحياة", q: "ما هو الجزء الرئيسي في النبات المسؤول عن امتصاص الماء والأملاح من التربة؟", options: ["الجذر", "الساق", "الأوراق", "الزهور"], correctIdx: 0 },
+                    { domain: "علوم الحياة", q: "أي الحيوانات التالية يُغطي جسمه الريش ويستطيع الطيران؟", options: ["القطة", "العصفور", "الأسد", "الخروف"], correctIdx: 1 },
+                    { domain: "علوم الحياة", q: "ماذا تحتاج النباتات الخضراء لكي تنمو وتعيش بصورة سليمة؟", options: ["ظلام تام وصخور", "بلاستيك وحديد", "ماء وضوء وهواء", "رمل جاف فقط"], correctIdx: 2 },
+                    { domain: "العلوم الفيزيائية", q: "ما هو المصدر الطبيعي الأساسي للضوء والحرارة على كوكب الأرض؟", options: ["القمر", "الشمس", "المصباح الكهربائي", "النجوم البعيدة"], correctIdx: 1 },
+                    { domain: "العلوم الفيزيائية", q: "أي الأجسام التالية يعتبر مصدراً للحرارة في حياتنا اليومية؟", options: ["الثلج المجمد", "المدفأة الكهربائية", "الماء البارد", "الزجاج الشفاف"], correctIdx: 1 },
+                    { domain: "علوم الأرض والفضاء", q: "في أي فصل من فصول السنة ترتفع درجة الحرارة وتشتد أشعة الشمس؟", options: ["فصل الشتاء", "فصل الخريف", "فصل الصيف", "فصل الربيع"], correctIdx: 2 },
+                    { domain: "علوم الأرض والفضاء", q: "ما هي المادة الشفافة الأساسية التي نجدها بكثرة على سطح الأرض وتشكل البحار؟", options: ["الحديد الصلب", "الماء", "الصخور البركانية", "الخشب اليابس"], correctIdx: 1 },
+                    { domain: "الاستقصاء العلمي", q: "أي الأجسام التالية خفيف ويطفو على سطح الماء عند وضعه فيه؟", options: ["الحجر الثقيل", "المسمار الحديدي", "ورقة الشجر الخفيفة", "العملة المعدنيةقة"], correctIdx: 2 }
                 ]
             },
             "السادس الابتدائي": {
                 "science": [
-                    { domain: "علوم الحياة", q: "ما هي الوحدة الأساسية لبناء وتنظيم جميع الكائنات الحية في الطبيعة؟", options: ["الخلية الحية", "النسيج الحيوي", "العضو الداخلي", "الجهاز العصبي"], correct: "أ" },
-                    { domain: "علوم الحياة", q: "ما اسم العملية الحيوية التي تصنع بها النباتات الخضراء غذاءها بوجود الضوء؟", options: ["البناء الضوئي", "التنفس الخلوي", "الهضم والامتصاص", "النتح"], correct: "أ" },
-                    { domain: "علوم الحياة", q: "أي الأجهزة في جسم الإنسان مسؤول عن ضخ الدم لجميع الأعضاء؟", options: ["الجهاز الدوري (القلب)", "الجهاز الهضمي", "الجهاز التنفسي", "الجهاز العضلي"], correct: "أ" },
-                    { domain: "العلوم الفيزيائية", q: "ما نوع التغير الذي ينتج عنه مواد جديدة ذات خصائص مختلفة تماماً؟", options: ["تغير كيميائي", "تغير فيزيائي", "انصهار الجليد", "تبخر الماء"], correct: "أ" },
-                    { domain: "العلوم الفيزيائية", q: "ما هي القوة التي تسحب الأجسام نحو مركز كوكب الأرض؟", options: ["قوة الجاذبية الأرضية", "قوة المغناطيس", "قوة الاحتكاك", "القوة الكهربائية"], correct: "أ" },
-                    { domain: "علوم الأرض والفضاء", q: "أي الأجرام السماوية التالية يقع في مركز المجموعة الشمسية تماماً؟", options: ["الشمس", "كوكب الأرض", "القمر", "كوكب المريخ"], correct: "أ" },
-                    { domain: "علوم الأرض والفضاء", q: "ما سبب تعاقب الليل والنهار على كوكب الأرض بصورة منتظمة؟", options: ["دوران الأرض حول محورها", "دوران الأرض حول الشمس", "ثبات الشمس بمكانها", "تغير فصول السنة"], correct: "أ" },
-                    { domain: "الاستقصاء العلمي", q: "ما هو المتغير المستقل في التجربة العلمية؟", options: ["العامل الذي نغيره لنقيس أثره", "النتيجة النهائية الثابتة", "الأداة غير المستخدمة", "المكان المهجور"], correct: "أ" }
+                    { domain: "علوم الحياة", q: "ما هي الوحدة الأساسية لبناء وتنظيم جميع الكائنات الحية في الطبيعة؟", options: ["النسيج الحيوي", "الخلية الحية", "العضو الداخلي", "الجهاز العصبي"], correctIdx: 1 },
+                    { domain: "علوم الحياة", q: "ما اسم العملية الحيوية التي تصنع بها النباتات الخضراء غذاءها بوجود الضوء؟", options: ["التنفس الخلوي", "الهضم والامتصاص", "البناء الضوئي", "النتح"], correctIdx: 2 },
+                    { domain: "علوم الحياة", q: "أي الأجهزة في جسم الإنسان مسؤول عن ضخ الدم لجميع الأعضاء؟", options: ["الجهاز الهضمي", "الجهاز الدوري (القلب)", "الجهاز التنفسي", "الجهاز العضلي"], correctIdx: 1 },
+                    { domain: "العلوم الفيزيائية", q: "ما نوع التغير الذي ينتج عنه مواد جديدة ذات خصائص مختلفة تماماً؟", options: ["تغير فيزيائي", "انصهار الجليد", "تغير كيميائي", "تبخر الماء"], correctIdx: 2 },
+                    { domain: "العلوم الفيزيائية", q: "ما هي القوة التي تسحب الأجسام نحو مركز كوكب الأرض؟", options: ["قوة المغناطيس", "قوة الاحتكاك", "قوة الجاذبية الأرضية", "القوة الكهربائية"], correctIdx: 2 },
+                    { domain: "علوم الأرض والفضاء", q: "أي الأجرام السماوية التالية يقع في مركز المجموعة الشمسية تماماً؟", options: ["كوكب الأرض", "الشمس", "القمر", "كوكب المريخ"], correctIdx: 1 },
+                    { domain: "علوم الأرض والفضاء", q: "ما سبب تعاقب الليل والنهار على كوكب الأرض بصورة منتظمة؟", options: ["دوران الأرض حول الشمس", "دوران الأرض حول محورها", "ثبات الشمس بمكانها", "تغير فصول السنة"], correctIdx: 1 },
+                    { domain: "الاستقصاء العلمي", q: "ما هو المتغير المستقل في التجربة العلمية؟", options: ["النتيجة النهائية الثابتة", "الأداة غير المستخدمة", "العامل الذي نغيره لنقيس أثره", "المكان المهجور"], correctIdx: 2 }
                 ]
             }
         };
@@ -559,10 +559,10 @@
                 return accurateSubjectQuestionBanks[gradeKey][subjectKey];
             }
             return [
-                { domain: "علوم الحياة", q: `سؤال قياسي في (${subjectNames[subjectKey]}) - المفاهيم الأساسية:`, options: ["الإجابة الصحيحة المعيارية", "خيار غير دقيق", "خطأ فادح", "خارج النطاق"], correct: "أ" },
-                { domain: "العلوم الفيزيائية", q: `سؤال تجريبي في (${subjectNames[subjectKey]}) - التطبيق الفيزيائي:`, options: ["الإجابة الصحيحة المعيارية", "خيار غير دقيق", "خطأ فادح", "خارج النطاق"], correct: "أ" },
-                { domain: "علوم الأرض والفضاء", q: `سؤال تحليل في (${subjectNames[subjectKey]}) - ظواهر الأرض:`, options: ["الإجابة الصحيحة المعيارية", "خيار غير دقيق", "خطأ فادح", "خارج النطاق"], correct: "أ" },
-                { domain: "الاستقصاء العلمي", q: `سؤال تفكير ناقد في (${subjectNames[subjectKey]}) - مهارات الاستقصاء:`, options: ["الإجابة الصحيحة المعيارية", "خيار غير دقيق", "خطأ فادح", "خارج النطاق"], correct: "أ" }
+                { domain: "علوم الحياة", q: `سؤال قياسي في (${subjectNames[subjectKey]}) - المفاهيم الأساسية:`, options: ["خيار غير دقيق", "الإجابة الصحيحة المعيارية", "خطأ فادح", "خارج النطاق"], correctIdx: 1 },
+                { domain: "العلوم الفيزيائية", q: `سؤال تجريبي في (${subjectNames[subjectKey]}) - التطبيق الفيزيائي:`, options: ["خيار غير دقيق", "خطأ فادح", "الإجابة الصحيحة المعيارية", "خارج النطاق"], correctIdx: 2 },
+                { domain: "علوم الأرض والفضاء", q: `سؤال تحليل في (${subjectNames[subjectKey]}) - ظواهر الأرض:`, options: ["الإجابة الصحيحة المعيارية", "خيار غير دقيق", "خطأ فادح", "خارج النطاق"], correctIdx: 0 },
+                { domain: "الاستقصاء العلمي", q: `سؤال تفكير ناقد في (${subjectNames[subjectKey]}) - مهارات الاستقصاء:`, options: ["خيار غير دقيق", "خطأ فادح", "خارج النطاق", "الإجابة الصحيحة المعيارية"], correctIdx: 3 }
             ];
         }
 
@@ -645,14 +645,36 @@
                 document.getElementById('printSelectedLessonsPrint').textContent = `📖 الاختبار قياسي شامل (${gradeKey} - ${subjectNames[subjectKey]})`;
             }
 
-            let shuffled = [...sourcePool];
+            // خلط وترتيب الخيارات عشوائياً لكل سؤال لضمان عدم ثبات الإجابة الصحيحة في الفقرة (أ)
+            let processedPool = sourcePool.map(q => {
+                let optionsCopy = [...q.options];
+                let correctText = optionsCopy[q.correctIdx];
+
+                // خلط الخيارات عشوائياً (Fisher-Yates shuffle)
+                for (let i = optionsCopy.length - 1; i > 0; i--) {
+                    let j = Math.floor(Math.random() * (i + 1));
+                    [optionsCopy[i], optionsCopy[j]] = [optionsCopy[j], optionsCopy[i]];
+                }
+
+                let newCorrectIdx = optionsCopy.indexOf(correctText);
+                let lettersMap = ['أ', 'ب', 'ج', 'د'];
+
+                return {
+                    domain: q.domain,
+                    q: q.q,
+                    options: optionsCopy,
+                    correctLetter: lettersMap[newCorrectIdx]
+                };
+            });
+
+            let shuffled = [...processedPool];
             for (let i = shuffled.length - 1; i > 0; i--) {
                 let j = Math.floor(Math.random() * (i + 1));
                 [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
             }
 
             while (shuffled.length < 10) {
-                let base = shuffled[0] || { domain: "علوم الحياة", q: "سؤال تقييمي إضافي للمنهج", options: ["صحيح", "خطأ", "محتمل", "غير ذلك"], correct: "أ" };
+                let base = shuffled[0] || { domain: "علوم الحياة", q: "سؤال تقييمي إضافي للمنهج", options: ["صحيح", "خطأ", "محتمل", "غير ذلك"], correctLetter: "أ" };
                 shuffled.push({...base, q: base.q + " (تأكيدي)"});
             }
 
@@ -755,13 +777,14 @@
                 b.classList.remove('correct-choice', 'wrong-choice');
             });
 
-            let correctAns = activeQuestions[qNum - 1].correct;
+            let correctAns = activeQuestions[qNum - 1].correctLetter;
             if (opt === correctAns) {
                 btn.classList.add('correct-choice');
             } else {
                 btn.classList.add('wrong-choice');
                 parentGrid.querySelectorAll('.opt-fast-btn').forEach(b => {
-                    if (b.textContent.startsWith(correctAns)) b.classList.add('correct-choice');
+                    let letterPrefix = b.textContent.charAt(0);
+                    if (letterPrefix === correctAns) b.classList.add('correct-choice');
                 });
             }
 
@@ -793,6 +816,7 @@
             const student = studentsList[currentStudentIndex];
             let correctCount = 0;
             let domainStats = {};
+            let missedQuestions = [];
 
             for (let i = 0; i < activeQuestions.length; i++) {
                 let qNum = i + 1;
@@ -801,13 +825,15 @@
                 if (!domainStats[dom]) domainStats[dom] = { total: 0, correct: 0 };
                 domainStats[dom].total++;
 
-                if (studentAnswers[qNum] && studentAnswers[qNum] === qObj.correct) {
+                if (studentAnswers[qNum] && studentAnswers[qNum] === qObj.correctLetter) {
                     correctCount++;
                     domainStats[dom].correct++;
+                } else {
+                    missedQuestions.push({ qNum: qNum, qText: qObj.q, domain: dom });
                 }
             }
             let score = correctCount * 2; 
-            allClassResults[student.name] = { score: score, correct: correctCount, domainStats: domainStats };
+            allClassResults[student.name] = { score: score, correct: correctCount, domainStats: domainStats, missed: missedQuestions };
 
             updateLocalStorageAndResults();
 
@@ -939,41 +965,43 @@
             }
         }
 
-        // التقرير المفصل المرتبط بالمجالات والأهداف بدقة عالية
+        // تقرير وتحليل واقعي وميداني مرتبط بالأسئلة والمفقودات الفعلية للطلاب
         function prepareAnalysisContent() {
             const examType = document.getElementById('selectExamType').value;
             const gradeKey = document.getElementById('selectGrade').value;
             const subjectKey = document.getElementById('selectSubject').value;
-            let maxScore = globalMaxScore || 20;
 
             let count = Object.keys(allClassResults).length;
             if (count === 0) {
-                document.getElementById('analysisContentText').innerHTML = `<p style="color:#ef4444; text-align:center;">الرجاء رصد درجات الطلاب أولاً لعرض التحليل التفصيلي للمجالات.</p>`;
+                document.getElementById('analysisContentText').innerHTML = `<p style="color:#ef4444; text-align:center;">الرجاء رصد درجات الطلاب أولاً لعرض التحليل والخطط العلاجية الواقعية.</p>`;
                 return;
             }
 
-            // تجميع أداء المجالات الأربعة على مستوى الفصل
             let domainAggregates = {};
+            let specificRemedialTopics = [];
+
             for (let sName in allClassResults) {
-                let dStats = allClassResults[sName].domainStats || {};
+                let studentData = allClassResults[sName];
+                let dStats = studentData.domainStats || {};
                 for (let dom in dStats) {
                     if (!domainAggregates[dom]) domainAggregates[dom] = { correct: 0, total: 0 };
                     domainAggregates[dom].correct += dStats[dom].correct;
                     domainAggregates[dom].total += dStats[dom].total;
                 }
+                if (studentData.missed && studentData.missed.length > 0) {
+                    studentData.missed.forEach(m => {
+                        specificRemedialTopics.push(`• الطالب <b>${escapeHtml(sName)}</b> أخطأ في مجال (${escapeHtml(m.domain)}) في السؤال: "${escapeHtml(m.qText)}"`);
+                    });
+                }
             }
 
             let domainsTableHtml = '';
-            let weakDomainsList = [];
-
             for (let dom in domainAggregates) {
                 let dTotal = domainAggregates[dom].total;
                 let dCorrect = domainAggregates[dom].correct;
                 let dPercent = dTotal > 0 ? ((dCorrect / dTotal) * 100).toFixed(1) : 0;
                 let statusColor = dPercent >= 75 ? '#10b981' : '#ef4444';
                 let statusText = dPercent >= 75 ? 'متقن (حقق الهدف المعياري)' : 'يحتاج معالجة وتكثيف أهداف';
-
-                if (dPercent < 75) weakDomainsList.push(dom);
 
                 domainsTableHtml += `
                     <tr>
@@ -985,12 +1013,12 @@
                 `;
             }
 
-            let remediationPlanText = weakDomainsList.length > 0 ? 
-                `التركيز المكثف على أهداف ومهارات المجالات التالية التي ظهرت فيها فجوات تعلم: <b>(${weakDomainsList.join(' ، ')})</b> من خلال طرح أمثلة تطبيقية وأنشطة تفاعلية مرتبطة ببنك أسئلة نافس.` :
-                `جميع مجالات الاختبار حققت مستويات إتقان عالية، ويُوصى بتقديم أنشطة إثرائية متقدمة للحفاظ على تفوق الطلاب.`;
+            let remedialHtml = specificRemedialTopics.length > 0 ? 
+                specificRemedialTopics.slice(0, 6).join('<br>') : 
+                'جميع الطلاب حققوا إجابات صحيحة ومكتملة في هذا الاختبار.';
 
             document.getElementById('analysisContentText').innerHTML = `
-                <p style="font-size: 13px; font-weight: bold; color: #b45309;">📊 تحليل أداء نواتج التعلم المرتبط بمجالات وأهداف اختبارات نافس (${gradeKey} - ${subjectNames[subjectKey]}):</p>
+                <p style="font-size: 13px; font-weight: bold; color: #b45309;">📊 تحليل أداء نواتج التعلم ومجالات نافس للفصل (${gradeKey} - ${subjectNames[subjectKey]}):</p>
                 <table style="width:100%; border-collapse:collapse; margin-top:5px; font-size: 12px;" border="1">
                     <tr style="background:#fef3c7; text-align:center;">
                         <th style="padding:6px;">مجال مهارات نافس</th>
@@ -1002,11 +1030,13 @@
                 </table>
 
                 <div style="margin-top: 15px; background: #fff; padding: 12px; border-radius: 8px; border: 1px solid #f59e0b;">
-                    <h4 style="margin-top:0; color:#b45309;">🛠️ الخطة العلاجية المرتبطة بأهداف ومجالات الاختبار:</h4>
-                    <ul style="margin: 0; padding-right: 20px; font-size: 12.5px; line-height: 1.7;">
-                        <li><b>1. التدخل العلاجي الموجه للمجالات الضعيفة:</b> ${remediationPlanText}</li>
-                        <li><b>2. ربط الأسئلة بنواتج التعلم:</b> إعادة استعراض الأسئلة التي كشفت عن مواطن إخفاق وتفسير أسباب الاختيار الصحيح للطلاب.</li>
-                        <li><b>3. شراكة ولي الأمر:</b> إرسال تقارير الأداء الموضحة بدرجات كل مجال عبر أزرار الواتساب لتوجيه المتابعة المنزلية نحو المهارات المستهدفة.</li>
+                    <h4 style="margin-top:0; color:#b45309;">🛠️ الخطط العلاجية الواقعية والميدانية المرتبطة بفقرات الاختبار:</h4>
+                    <div style="font-size: 12px; line-height: 1.7; background: #fafaf9; padding: 10px; border-radius: 6px; border: 1px solid #e5e7eb; max-height: 150px; overflow-y: auto;">
+                        ${remedialHtml}
+                    </div>
+                    <ul style="margin: 10px 0 0 0; padding-right: 20px; font-size: 12px; line-height: 1.6;">
+                        <li><b>التوجيه الميداني للمعلم:</b> تقديم حصص تقوية فردية للطلاب في الأسئلة والمهارات المذكورة أعلاه.</li>
+                        <li><b>إشراك ولي الأمر:</b> إرسال تنبيهات عبر الواتساب بالمهارات التي أخفق فيها الابن لمتابعتها منزلياً.</li>
                     </ul>
                 </div>
             `;
@@ -1027,3 +1057,4 @@
     </script>
 </body>
 </html>
+
