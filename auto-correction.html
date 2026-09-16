@@ -712,69 +712,54 @@
             document.getElementById('lessonInputText').value = '';
         }
 
-        // دالة جلب الطلاب الأساسية من الكود المخزن والمُرتب مسبقاً حسب الفصل
+        // دالة جلب الطلاب المحدثة لتتطابق تماماً مع نظامك الأساسي في لوحة التحكم
         function fetchStudentsForSelectedClass() {
             studentsList = [];
-            const gradeKey = document.getElementById('selectGrade').value;
-            const classDigit = document.getElementById('selectClassDigit').value.trim();
-            let shortGradeName = gradeKey.replace("الصف ", "").replace(" الابتدائي", "");
-            let fullClassDescription = `${shortGradeName} - فصل ${classDigit}`;
+            const gradeKey = document.getElementById('selectGrade').value; // مثال: السادس الابتدائي
+            const classDigit = document.getElementById('selectClassDigit').value.trim(); // مثال: 3
             
-            // البحث المباشر في الذاكرة عن الكود الأساسي المرتب للفصل المحدد
-            for (let i = 0; i < localStorage.length; i++) {
-                let key = localStorage.key(i);
-                if (key) {
-                    let cleanKey = key.trim();
-                    if (cleanKey === classDigit || cleanKey === `class_${classDigit}` || cleanKey.endsWith(`_${classDigit}`)) {
-                        try {
-                            let data = JSON.parse(localStorage.getItem(key));
-                            if (Array.isArray(data) && data.length > 0) {
-                                let parsed = data.map(item => {
-                                    if (typeof item === 'string') return { name: item, className: fullClassDescription };
-                                    if (item.name) return { name: item.name, className: item.className || fullClassDescription };
-                                    return null;
-                                }).filter(Boolean);
-                                if (parsed.length > 0) {
-                                    studentsList = parsed;
-                                    break;
-                                }
-                            }
-                        } catch(e) {}
+            // مفتاح التخزين المستخدم في لوحة التحكم الأساسية لديك
+            const storageKey = 'mansour_students_science_' + gradeKey + '_v5';
+            let savedData = localStorage.getItem(storageKey);
+
+            if (savedData) {
+                try {
+                    let parsed = JSON.parse(savedData);
+                    if (Array.isArray(parsed) && parsed.length > 0) {
+                        // فلترة الطلاب حسب الفصل المطلوب
+                        let matchedStudents = parsed.filter(item => {
+                            let cCustom = item.classCustom || '';
+                            return cCustom.includes(classDigit) || cCustom.endsWith(classDigit);
+                        });
+
+                        if (matchedStudents.length > 0) {
+                            studentsList = matchedStudents.map(item => ({
+                                name: item.name,
+                                className: item.classCustom || `${gradeKey} - فصل ${classDigit}`
+                            }));
+                            return;
+                        } else {
+                            // إذا لم يجد تطابقاً دقيقاً للفصل، يسحب طلاب الصف بالكامل
+                            studentsList = parsed.map(item => ({
+                                name: item.name,
+                                className: item.classCustom || gradeKey
+                            }));
+                            return;
+                        }
                     }
-                }
+                } catch(e) {}
             }
 
-            if (studentsList.length === 0) {
-                for (let i = 0; i < localStorage.length; i++) {
-                    let key = localStorage.key(i);
-                    if (key && !key.includes('exam') && !key.includes('dashboard') && key.includes(classDigit)) {
-                        try {
-                            let data = JSON.parse(localStorage.getItem(key));
-                            if (Array.isArray(data) && data.length > 0 && (typeof data[0] === 'string' || data[0].name)) {
-                                let parsed = data.map(item => {
-                                    if (typeof item === 'string') return { name: item, className: fullClassDescription };
-                                    if (item.name) return { name: item.name, className: item.className || fullClassDescription };
-                                    return null;
-                                }).filter(Boolean);
-                                if (parsed.length > 0) {
-                                    studentsList = parsed;
-                                    break;
-                                }
-                            }
-                        } catch(e) {}
-                    }
-                }
-            }
-
-            if (studentsList.length === 0) {
-                studentsList = [
-                    { name: `طالب فصل ${classDigit} (1)`, className: fullClassDescription },
-                    { name: `طالب فصل ${classDigit} (2)`, className: fullClassDescription },
-                    { name: `طالب فصل ${classDigit} (3)`, className: fullClassDescription },
-                    { name: `طالب فصل ${classDigit} (4)`, className: fullClassDescription },
-                    { name: `طالب فصل ${classDigit} (5)`, className: fullClassDescription }
-                ];
-            }
+            // قائمة احتياطية إذا لم يتم إدخال طلاب بعد
+            let shortGradeKey = gradeKey.replace("الصف ", "").replace(" الابتدائي", "");
+            let fullClassDescription = `${shortGradeKey} - فصل ${classDigit}`;
+            studentsList = [
+                { name: `طالب فصل ${classDigit} (1)`, className: fullClassDescription },
+                { name: `طالب فصل ${classDigit} (2)`, className: fullClassDescription },
+                { name: `طالب فصل ${classDigit} (3)`, className: fullClassDescription },
+                { name: `طالب فصل ${classDigit} (4)`, className: fullClassDescription },
+                { name: `طالب فصل ${classDigit} (5)`, className: fullClassDescription }
+            ];
         }
 
         function escapeHtml(text) { return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;"); }
@@ -1258,3 +1243,4 @@
     </script>
 </body>
 </html>
+
