@@ -327,7 +327,7 @@
         </div>
 
         <div class="section-box no-print">
-            <h3>📚 أولاً: إعدادات الاختبار، المادة، وتحديد الصف ورقم الفصل (من ١ إلى ٦)</h3>
+            <h3>📚 أولاً: إعدادات الاختبار، المادة، وتحديد الصف ورقم الفصل</h3>
             <div class="form-grid">
                 <div class="form-group">
                     <label>نوع الاختبار:</label>
@@ -372,16 +372,16 @@
                     </select>
                 </div>
 
-                <!-- رقم الفصل (من ١ إلى ٦) -->
+                <!-- رقم الفصل (يتيح الخيار بالعربي أو الإنجليزي لضمان التوافق التام) -->
                 <div class="form-group" style="grid-column: 1 / -1;">
-                    <label>رقم الفصل (من ١ إلى ٦):</label>
+                    <label>رقم الفصل (يدعم المطابقة التلقائية بالعربي والإنجليزي):</label>
                     <select id="selectClassDigit">
-                        <option value="١">١</option>
-                        <option value="٢">٢</option>
-                        <option value="٣" selected>٣</option>
-                        <option value="٤">٤</option>
-                        <option value="٥">٥</option>
-                        <option value="٦">٦</option>
+                        <option value="1">1 (أو ١)</option>
+                        <option value="2">2 (أو ٢)</option>
+                        <option value="3" selected>3 (أو ٣)</option>
+                        <option value="4">4 (أو ٤)</option>
+                        <option value="5">5 (أو ٥)</option>
+                        <option value="6">6 (أو ٦)</option>
                     </select>
                 </div>
             </div>
@@ -459,7 +459,7 @@
         </div>
 
         <div class="section-box no-print">
-            <h3>👤 ثالثاً: لوحة التصحيح السريع التفاعلية (مطابق تماماً للصف والفصل المختار)</h3>
+            <h3>👤 ثالثاً: لوحة التصحيح السريع التفاعلية (مطابق تماماً بالفصل المحدد)</h3>
             <button type="button" class="action-btn btn-success" onclick="startTouchGradingSession()">🚀 بدء جلسة التصحيح ورصد الدرجات بالفصل المحدد</button>
 
             <div id="touchGradingCard" class="touch-grading-card">
@@ -731,21 +731,23 @@
             document.getElementById('lessonInputText').value = '';
         }
 
-        // دالة جلب الطلاب المحدثة لربط فصول الداشبورد الرئيسي بشكل مباشر وذكي
+        // دالة جلب الطلاب الشاملة التي تقرأ الأرقام بالعربي والهندي والإنجليزي وتطابقها مع الداشبورد الرئيسي
         function fetchStudentsForSelectedClass() {
             studentsList = [];
-            const classDigit = document.getElementById('selectClassDigit').value; // رقم الفصل (مثال: ١ أو ٢ أو ٣ أو ٤ أو ٥)
+            const rawDigit = document.getElementById('selectClassDigit').value.trim(); // القيمة المختارة (مثل "3" أو "٣")
             
-            let digitAr = classDigit;
-            let digitEn = String(Number(classDigit.replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d))));
+            // توليد كافة الاحتمالات الرقمية الممكنة لرقم الفصل (إنجليزي وعربي هندي)
+            let valEn = String(Number(rawDigit.replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d))));
+            let valAr = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'][parseInt(valEn)] || rawDigit;
 
-            // 1. البحث الدقيق في مفاتيح التخزين المرتبطة برقم الفصل المختار في الداشبورد
+            // 1. فحص جميع مفاتيح الـ localStorage لمعرفة المفتاح المطابق لرقم الفصل تماماً بأي صيغة
             for (let i = 0; i < localStorage.length; i++) {
                 let key = localStorage.key(i);
                 if (key) {
                     let cleanKey = key.trim();
-                    // مطابقة المفتاح الذي يمثل رقم الفصل مباشرة (كما يظهر في الأيقونات 1, 2, 3, 4, 5)
-                    if (cleanKey === digitAr || cleanKey === digitEn || cleanKey === `class_${digitAr}` || cleanKey === `class_${digitEn}` || cleanKey === `f_${digitAr}` || cleanKey === `f_${digitEn}`) {
+                    let isMatch = (cleanKey === valEn || cleanKey === valAr || cleanKey.endsWith(`_${valEn}`) || cleanKey.endsWith(`_${valAr}`) || cleanKey.includes(`فصل ${valEn}`) || cleanKey.includes(`فصل ${valAr}`));
+                    
+                    if (isMatch) {
                         try {
                             let data = JSON.parse(localStorage.getItem(key));
                             if (Array.isArray(data) && data.length > 0) {
@@ -760,7 +762,7 @@
                 }
             }
 
-            // 2. إذا لم يتم العثور بالطريقة الأولى، نفحص جميع المصفوفات المخزنة في المتصفح لجلب أول كشف طلاب حقيقي وجاهز
+            // 2. فحص احتياطي عام لأي مصفوفة طلاب مسجلة في المتصفح إن لم يتم العثور بالمفتاح المباشر
             if (studentsList.length === 0) {
                 for (let i = 0; i < localStorage.length; i++) {
                     let key = localStorage.key(i);
@@ -779,14 +781,14 @@
                 }
             }
 
-            // 3. إن لم يوجد أي كشف مسجل نهائياً، يتم جلب أسماء تجريبية مرتبطة بالفصل المختار لتستطيع بدء التصحيح ورصد الدرجات فوراً
+            // 3. إن لم يتوفر أي كشف مخزن مسبقاً، يتم توليد كشف افتراضي مرتبط برقم الفصل لتتمكن من العمل ورصد الدرجات فوراً
             if (studentsList.length === 0) {
                 studentsList = [
-                    { name: `أحمد بن خليل السراني` },
-                    { name: `محمد بن سالم الجهني` },
-                    { name: `عبدالله بن عروة الثقفي` },
-                    { name: `فهد بن منصور الرحيلي` },
-                    { name: `سلطان بن إبراهيم الحجيلي` }
+                    { name: `طالب الفصل ${valAr} (1)` },
+                    { name: `طالب الفصل ${valAr} (2)` },
+                    { name: `طالب الفصل ${valAr} (3)` },
+                    { name: `طالب الفصل ${valAr} (4)` },
+                    { name: `طالب الفصل ${valAr} (5)` }
                 ];
             }
         }
@@ -802,7 +804,7 @@
             const classDigit = document.getElementById('selectClassDigit').value;
 
             let shortGradeName = gradeKey.replace("الصف ", "").replace(" الابتدائي", "");
-            let displayClassText = `${shortGradeName} - رقم ${classDigit}`;
+            let displayClassText = `${shortGradeName} - فصل ${classDigit}`;
             document.getElementById('printClassValue').textContent = displayClassText;
 
             let sourcePool = [];
@@ -933,7 +935,7 @@
             const gradeKey = document.getElementById('selectGrade').value;
             const classDigit = document.getElementById('selectClassDigit').value;
             let shortGradeName = gradeKey.replace("الصف ", "").replace(" الابتدائي", "");
-            let displayClassText = `${shortGradeName} - رقم ${classDigit}`;
+            let displayClassText = `${shortGradeName} - فصل ${classDigit}`;
             
             document.getElementById('studentHeaderBadge').innerHTML = `
                 <span>👤 الطالب (${toArabicDigits(currentStudentIndex + 1)}/${toArabicDigits(studentsList.length)}): ${escapeHtml(student.name)} &nbsp;|&nbsp; 🏫 الفصل: ${escapeHtml(displayClassText)}</span>
