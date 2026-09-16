@@ -209,15 +209,12 @@
             line-height: 1.6;
         }
 
+        /* تثبيت العرض ليكون صندوقين بجانب بعضهما (أ وب فوق، وج ود تحتهم) دائماً */
         .options-grid-fast {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 12px;
             margin-top: 12px;
-        }
-
-        @media (max-width: 600px) {
-            .options-grid-fast { grid-template-columns: 1fr; }
         }
 
         .opt-fast-btn {
@@ -612,7 +609,6 @@
             });
         }
 
-        // بنك الأسئلة الموسع والشامل لمادة العلوم (الصف السادس)
         const accurateSubjectQuestionBanks = {
             "السادس الابتدائي": {
                 "science": [
@@ -1250,4 +1246,3 @@
     </script>
 </body>
 </html>
-
