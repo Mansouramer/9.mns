@@ -119,6 +119,7 @@
         .btn-whatsapp { background: #059669; }
         .btn-warning { background: #d97706; }
         .btn-purple { background: #7c3aed; }
+        .btn-nafis-bottom { background: #b45309; }
 
         .touch-grading-card {
             background: #fff;
@@ -393,6 +394,9 @@
 
         <div class="section-box no-print">
             <h3>👤 ثالثاً: لوحة التصحيح السريع (سؤال بسؤال مع تنبيه مرئي عند الانتقال للطالب التالي)</h3>
+            <p style="font-size: 12px; color: #555; margin-bottom: 8px;">
+                يمكنك تصحيح ورصد درجات الطلاب الحاليين (سواء كانوا طالباً أو خمسة أو أكثر) دون الحاجة لإتمام كل الفصل دفعة واحدة:
+            </p>
             <button class="action-btn btn-success" onclick="startTouchGradingSession()">🚀 بدء جلسة التصحيح ورصد الدرجات</button>
 
             <div id="touchGradingCard" class="touch-grading-card">
@@ -408,7 +412,7 @@
         </div>
 
         <div id="resultContainer" class="result-box no-print">
-            <h3 style="margin-top:0; color: var(--primary); font-size: 16px;">📊 سجل درجات الفصل المعتمدة والبحث الفوري عن درجات ولي الأمر</h3>
+            <h3 style="margin-top:0; color: var(--primary); font-size: 16px;">📊 سجل درجات الطلاب المدخلين والبحث الفوري عن درجات ولي الأمر</h3>
             
             <div style="margin: 12px 0; display: flex; gap: 10px; align-items: center;">
                 <input type="text" id="searchStudentInput" placeholder="🔍 ابحث عن اسم طالب لسؤال ولي أمره..." oninput="filterStudentResults()" style="flex: 1; padding: 8px 12px; border: 1px solid #10b981; border-radius: 6px; font-size: 13px;">
@@ -417,8 +421,8 @@
             <p id="correctionOutputText" style="font-size: 14px; margin: 8px 0;"></p>
             
             <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;" class="no-print">
-                <button class="action-btn btn-print" style="flex: 1; min-width: 250px;" onclick="printAllGradesSheet()">🖨️ طباعة كشف درجات الفصل (أسماء ودرجات فقط)</button>
-                <button class="action-btn btn-warning" style="flex: 1; min-width: 250px;" onclick="toggleAnalysisBox()">📈 فتح/طباعة تقرير التحليل الإحصائي المستقل (يشمل الخطة العلاجية)</button>
+                <button class="action-btn btn-print" style="flex: 1; min-width: 250px;" onclick="printAllGradesSheet()">🖨️ طباعة كشف درجات الطلاب المدخلين</button>
+                <button class="action-btn btn-nafis-bottom" style="flex: 1; min-width: 250px;" onclick="toggleAnalysisBox()">📊 📈 أيقونة تحليل نتائج نافس (حسب الطلاب المدخلين والخطة العلاجية)</button>
             </div>
         </div>
 
@@ -447,9 +451,9 @@
             </div>
         </div>
 
-        <!-- تقرير التحليل العميق وخطط العلاج -->
+        <!-- تقرير التحليل العميق وخطط العلاج بالأسفل -->
         <div id="analysisContainer" class="analysis-box printable-analysis-area">
-            <h3 style="margin-top:0; color: #b45309; border-bottom: 2px solid #f59e0b; padding-bottom: 8px; font-size: 16px;">📈 تقرير تحليل نتائج اختبارات نافس (العميق على مستوى الطالب والفصل والخطة العلاجية)</h3>
+            <h3 style="margin-top:0; color: #b45309; border-bottom: 2px solid #f59e0b; padding-bottom: 8px; font-size: 16px;">📈 تقرير تحليل نتائج اختبارات نافس (العميق بناءً على الطلاب المدخلين والخطة العلاجية)</h3>
             <div id="analysisContentText" style="font-size: 12.5px; line-height: 1.6; color: #1f2937;"></div>
             <div class="no-print" style="margin-top: 15px;">
                 <button class="action-btn btn-print" onclick="printAnalysisBoxOnly()">🖨️ طباعة تقرير التحليل والخطط العلاجية لوحده</button>
@@ -485,7 +489,6 @@
             "islamic": "الدراسات الإسلامية" 
         };
 
-        // بنوك أسئلة نافس المخصصة حسب الصفوف والمجالات لمنع أي خلط
         const gradeSpecificNafisBanks = {
             "الأول الابتدائي": [
                 { domain: "مجال العلوم", q: "ما هو الجزء المسؤول عن امتصاص الماء في النبات؟", options: ["الساق", "الجذر", "الأوراق", "الزهور"], correct: "ب" },
@@ -513,12 +516,10 @@
             ]
         };
 
-        // بنك افتراضي لبقية الصفوف لمنع الخلط
         function getNafisBankForGrade(gradeKey) {
             if (gradeSpecificNafisBanks[gradeKey]) {
                 return gradeSpecificNafisBanks[gradeKey];
             }
-            // توليد آلي دقيق مخصص للصف الحالي
             return [
                 { domain: "مجال العلوم", q: `سؤال علمي أساسي مخصص لـ (${gradeKey}): ما هي الظاهرة المرتبطة بالبيئة والمخلوقات الحية؟`, options: ["التكيف والبقاء", "ظاهرة غير مرتبطة", "افتراض وهمي", "معلومة خاطئة"], correct: "أ" },
                 { domain: "مجال العلوم", q: `سؤال تجريبي (${gradeKey}): ما المكون الأساسي لدراسة المواد وخصائصها؟`, options: ["الخصائص الفيزيائية للمادة", "معلومة عشوائية", "توقع خطأ", "خارج النطاق"], correct: "أ" },
@@ -636,7 +637,7 @@
                 
                 let rawBank = getNafisBankForGrade(gradeKey);
                 sourcePool = rawBank.filter(q => selectedDomains.includes(q.domain));
-                if (sourcePool.length === 0) sourcePool = rawBank; // احتياطي شامل
+                if (sourcePool.length === 0) sourcePool = rawBank;
 
                 document.getElementById('printSelectedLessonsPrint').textContent = `📊 مجالات نافس المستهدفة (الصف: ${gradeKey}): ${selectedDomains.join(' ، ')}`;
             } else {
@@ -729,7 +730,7 @@
             fetchAllStudentsFromStorage();
             if (studentsList.length === 0) { alert('لا توجد قائمة طلاب مسجلة!'); return; }
             currentStudentIndex = 0;
-            allClassResults = {};
+            // ملاحظة: لا نفرغ allClassResults بالكامل للسماح بإضافة وتراكم أي عدد مدخل (سواء طالب أو 5 أو 160)
             document.getElementById('touchGradingCard').style.display = 'block';
             startNewStudentSession();
             window.scrollTo({ top: document.getElementById('touchGradingCard').offsetTop, behavior: 'smooth' });
@@ -821,6 +822,8 @@
             let score = correctCount * 2; 
             allClassResults[student.name] = { score: score, correct: correctCount };
 
+            // إتاحة خيار التوقف والانتقال مباشرة للتحليل بعد إدخال أي طالب (مثلاً 5 طلاب)
+            let proceed = true;
             currentStudentIndex++;
             if (currentStudentIndex < studentsList.length) {
                 const card = document.getElementById('touchGradingCard');
@@ -869,7 +872,8 @@
             const outputText = document.getElementById('correctionOutputText');
             let maxScore = globalMaxScore || 20;
 
-            let html = `✅ تم رصد درجات الفصل وحفظها في السجل بنجاح!<br><br>`;
+            let enteredCount = Object.keys(allClassResults).length;
+            let html = `✅ تم رصد درجات الطلاب المدخلين حالياً بنجاح (إجمالي عدد المدخلين: ${toArabicDigits(enteredCount)} طالب):<br><br>`;
             let foundAny = false;
 
             for (let sName in allClassResults) {
@@ -888,7 +892,7 @@
             }
 
             if (!foundAny) {
-                html += `<p style="color: #ef4444; text-align: center;">لم يتم العثور على طالب بهذا الاسم في نتائج هذا الاختبار.</p>`;
+                html += `<p style="color: #ef4444; text-align: center;">لم يتم إدخال درجات لطلاب بهذا الاسم بعد.</p>`;
             }
 
             outputText.innerHTML = html;
@@ -901,7 +905,8 @@
             const examType = document.getElementById('selectExamType').value;
             const maxScore = globalMaxScore || 20;
 
-            document.getElementById('sheetPrintMeta').textContent = `الصف: ${gradeKey} | المادة: ${subjectNames[subjectKey]} | نوع الاختبار: ${examType} (${currentModelName}) - 10 أسئلة`;
+            let enteredCount = Object.keys(allClassResults).length;
+            document.getElementById('sheetPrintMeta').textContent = `الصف: ${gradeKey} | المادة: ${subjectNames[subjectKey]} | نوع الاختبار: ${examType} (${currentModelName}) - عدد الطلاب المدخلين: ${enteredCount}`;
             
             const tbody = document.getElementById('sheetPrintTableBody');
             tbody.innerHTML = '';
@@ -942,6 +947,8 @@
         }
 
         function toggleAnalysisBox() {
+            // إظهار صندوق النتائج أولاً لتأكيد إتاحة زر التحليل بالأسفل
+            document.getElementById('resultContainer').style.display = 'block';
             const analysisBox = document.getElementById('analysisContainer');
             if (analysisBox.style.display === 'block') {
                 analysisBox.style.display = 'none';
@@ -974,8 +981,13 @@
                 count++;
             }
 
-            let classAverage = count > 0 ? (totalScoreSum / count).toFixed(1) : 0;
-            let percentageAvg = count > 0 ? ((totalScoreSum / (count * maxScore)) * 100).toFixed(1) : 0;
+            if (count === 0) {
+                document.getElementById('analysisContentText.innerHTML') = `<p style="color:#ef4444; text-align:center;">الرجاء إدخال ورصد درجات طالب واحد على الأقل لعرض التحليل الإحصائي والخطة العلاجية.</p>`;
+                return;
+            }
+
+            let classAverage = (totalScoreSum / count).toFixed(1);
+            let percentageAvg = ((totalScoreSum / (count * maxScore)) * 100).toFixed(1);
 
             let dynamicNafisLevel = "مستوى منخفض (يحتاج دعم وتدخل علاجي مكثف)";
             if (percentageAvg >= 90) dynamicNafisLevel = "مستوى متقدم (تجاوز المعيار المستهدف)";
@@ -984,24 +996,24 @@
 
             document.getElementById('analysisContentText').innerHTML = `
                 <table style="width:100%; border-collapse:collapse; margin-top:5px;" border="1">
-                    <tr style="background:#fef3c7; text-align:center;"><th style="padding:6px;">محاور التحليل العميق لنافس</th><th style="padding:6px;">المؤشرات والنتائج (الصف: ${gradeKey})</th></tr>
+                    <tr style="background:#fef3c7; text-align:center;"><th style="padding:6px;">محاور التحليل العميق لنافس</th><th style="padding:6px;">المؤشرات والنتائج (بناءً على الطلاب المدخلين: ${toArabicDigits(count)} طالب)</th></tr>
                     <tr><td style="padding:6px;">نوع الاختبار والنموذج</td><td style="text-align:center; color:var(--primary);"><b>${examType} - ${currentModelName}</b></td></tr>
-                    <tr><td style="padding:6px;">إجمالي طلاب الفصل</td><td style="text-align:center;"><b>${toArabicDigits(count)}</b> طالب</td></tr>
-                    <tr><td style="padding:6px;">متوسط أداء الفصل العام</td><td style="text-align:center;"><b>${toArabicDigits(classAverage)} / ${toArabicDigits(maxScore)}</b> (${toArabicDigits(percentageAvg)}٪)</td></tr>
-                    <tr><td style="padding:6px;">أعلى درجة بالفصل</td><td style="text-align:center; color:var(--success);"><b>${toArabicDigits(highestScore)} / ${toArabicDigits(maxScore)}</b></td></tr>
-                    <tr><td style="padding:6px;">أقل درجة بالفصل</td><td style="text-align:center; color:var(--danger);"><b>${toArabicDigits(lowestScore)} / ${toArabicDigits(maxScore)}</b></td></tr>
+                    <tr><td style="padding:6px;">عدد الطلاب المدخلين (العينة الحالية)</td><td style="text-align:center;"><b>${toArabicDigits(count)}</b> طالب</td></tr>
+                    <tr><td style="padding:6px;">متوسط أداء العينة المدخلة</td><td style="text-align:center;"><b>${toArabicDigits(classAverage)} / ${toArabicDigits(maxScore)}</b> (${toArabicDigits(percentageAvg)}٪)</td></tr>
+                    <tr><td style="padding:6px;">أعلى درجة في العينة</td><td style="text-align:center; color:var(--success);"><b>${toArabicDigits(highestScore)} / ${toArabicDigits(maxScore)}</b></td></tr>
+                    <tr><td style="padding:6px;">أقل درجة في العينة</td><td style="text-align:center; color:var(--danger);"><b>${toArabicDigits(lowestScore)} / ${toArabicDigits(maxScore)}</b></td></tr>
                     <tr><td style="padding:6px;">عدد الطلاب المتقنين (≥ 75٪)</td><td style="text-align:center; color:var(--success);"><b>${toArabicDigits(masteryCount)}</b> طالب</td></tr>
-                    <tr><td style="padding:6px;">عدد الطلاب المحتاجين لدعم (< 75٪)</td><td style="text-align:center; color:var(--danger);"><b>${toArabicDigits(needSupportCount)}</b> طالب</td></tr>
+                    <tr><td style="padding:6px;">عدد المحتاجين لدعم (< 75٪)</td><td style="text-align:center; color:var(--danger);"><b>${toArabicDigits(needSupportCount)}</b> طالب</td></tr>
                     <tr><td style="padding:6px;">مستوى إتقان مهارات نافس العام</td><td style="text-align:center; color:var(--primary);"><b>${dynamicNafisLevel}</b></td></tr>
                 </table>
 
                 <div style="margin-top: 15px; background: #fff; padding: 12px; border-radius: 8px; border: 1px solid #f59e0b;">
-                    <h4 style="margin-top:0; color:#b45309;">🛠️ الخطة العلاجية وطرق التحسين المقترحة (على مستوى الطالب والفصل):</h4>
+                    <h4 style="margin-top:0; color:#b45309;">🛠️ الخطة العلاجية وطرق التحسين المقترحة (للعينة المدخلة):</h4>
                     <ul style="margin: 0; padding-right: 20px; font-size: 12.5px; line-height: 1.7;">
-                        <li><b>1. التدخل العلاجي الفردي للطلاب المحتاجين لدعم:</b> تكثيف التدريبات الإثرائية وتخصيص أسئلة علاجية في مهارات الفهم القرائي والاستدلال الرياضي والعلوم لكل طالب لم يحقق معيار الإتقان (أقل من 75٪).</li>
-                        <li><b>2. خطة التحسين الصفية (الفصلية):</b> إعادة شرح المفاهيم ذات نسبة الخطأ العالية في مجالات نافس المستهدفة من خلال استراتيجيات التعلم النشط وتوظيف منصات التعلم التفاعلية.</li>
+                        <li><b>1. التدخل العلاجي الفردي للطلاب المحتاجين لدعم:</b> تكثيف التدريبات الإثرائية وتخصيص أسئلة علاجية في مهارات الفهم القرائي والاستدلال الرياضي لكل طالب لم يحقق معيار الإتقان (أقل من 75٪).</li>
+                        <li><b>2. خطة التحسين الصفية:</b> إعادة شرح المفاهيم ذات نسبة الخطأ العالية في مجالات نافس المستهدفة (الصف: ${gradeKey}) من خلال استراتيجيات التعلم النشط وتوظيف الأنشطة التفاعلية.</li>
                         <li><b>3. شراكة الأسرة (ولي الأمر):</b> إرسال تقارير الأداء الفورية عبر أزرار الواتساب المتاحة لتنبيه أولياء الأمور بمستوى الابن ونقاط التحسين المطلوب متابعتها منزلياً.</li>
-                        <li><b>4. المتابعة والقياس البعدي:</b> تنفيذ اختبار تشخيصي لاحق بعد أسبوعين لقياس مدى تقدم الطلاب وتحسن مؤشرات الأداء والتحصيل الدراسي العام.</li>
+                        <li><b>4. المتابعة والمرونة في الإدخال:</b> يمكنك إدخال ورصد درجات بقية الطلاب تدريجياً في أي وقت، وسيتحدث التحليل والخطة العلاجية تلقائياً ليشمل جميع المدخلين.</li>
                     </ul>
                 </div>
             `;
@@ -1021,4 +1033,3 @@
     </script>
 </body>
 </html>
-
