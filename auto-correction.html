@@ -712,30 +712,55 @@
             document.getElementById('lessonInputText').value = '';
         }
 
-        // دالة جلب الطلاب الشاملة والمضمونة التي تفحص كافة مفاتيح الذاكرة تلقائياً
+        // دالة جلب الطلاب المحدّثة بدقة تامة للفصل المحدد
         function fetchStudentsForSelectedClass() {
             studentsList = [];
+            const gradeKey = document.getElementById('selectGrade').value; // الصف المختار (مثلاً: السادس الابتدائي)
             const classDigit = document.getElementById('selectClassDigit').value.trim(); // رقم الفصل (مثلاً: 3)
             let foundStudents = [];
 
-            // فحص شامل لجميع مفاتيح التخزين في الـ LocalStorage
-            for (let i = 0; i < localStorage.length; i++) {
-                let key = localStorage.key(i);
-                if (key && key.startsWith('mansour_students_science_')) {
-                    try {
-                        let data = JSON.parse(localStorage.getItem(key));
-                        if (Array.isArray(data) && data.length > 0) {
-                            data.forEach(item => {
-                                let cCustom = String(item.classCustom || '');
-                                if (cCustom.includes(classDigit) || cCustom.endsWith(classDigit) || !cCustom) {
-                                    foundStudents.push({
-                                        name: item.name,
-                                        className: cCustom || `فصل ${classDigit}`
-                                    });
-                                }
-                            });
-                        }
-                    } catch(e) {}
+            // البحث بدقة في مفتاح التخزين الخاص بالصف في نظامك
+            const storageKey = 'mansour_students_science_' + gradeKey + '_v5';
+            let savedData = localStorage.getItem(storageKey);
+
+            if (savedData) {
+                try {
+                    let parsed = JSON.parse(savedData);
+                    if (Array.isArray(parsed) && parsed.length > 0) {
+                        parsed.forEach(item => {
+                            let cCustom = String(item.classCustom || '');
+                            // تصفية الطلاب بحيث ينتمون لنفس رقم الفصل المحدد بدقة
+                            if (cCustom.includes(classDigit) || cCustom.endsWith(classDigit) || cCustom === gradeKey) {
+                                foundStudents.push({
+                                    name: item.name,
+                                    className: cCustom || `${gradeKey} - فصل ${classDigit}`
+                                });
+                            }
+                        });
+                    }
+                } catch(e) {}
+            }
+
+            // فحص إضافي شامل في كل المفاتيح كاحتياط
+            if (foundStudents.length === 0) {
+                for (let i = 0; i < localStorage.length; i++) {
+                    let key = localStorage.key(i);
+                    if (key && key.startsWith('mansour_students_science_')) {
+                        try {
+                            let data = JSON.parse(localStorage.getItem(key));
+                            if (Array.isArray(data) && data.length > 0) {
+                                data.forEach(item => {
+                                    let cCustom = String(item.classCustom || '');
+                                    if (cCustom.includes(classDigit) || cCustom.endsWith(classDigit)) {
+                                        foundStudents.push({
+                                            name: item.name,
+                                            className: cCustom
+                                        });
+                                    }
+                                });
+                            }
+                        } catch(e) {}
+                    }
                 }
             }
 
@@ -746,28 +771,13 @@
                 return;
             }
 
-            // كبديل احتياطي: جلب أي طلاب مسجلين في أي صف علوم
-            for (let i = 0; i < localStorage.length; i++) {
-                let key = localStorage.key(i);
-                if (key && key.startsWith('mansour_students_science_')) {
-                    try {
-                        let data = JSON.parse(localStorage.getItem(key));
-                        if (Array.isArray(data) && data.length > 0) {
-                            studentsList = data.map(item => ({
-                                name: item.name,
-                                className: item.classCustom || 'الصف الدراسي'
-                            }));
-                            return;
-                        }
-                    } catch(e) {}
-                }
-            }
-
-            // القائمة الافتراضية إذا كانت الذاكرة فارغة تماماً
+            // قائمة افتراضية إذا لم يتوفر طلاب مسجلين
+            let shortGradeKey = gradeKey.replace("الصف ", "").replace(" الابتدائي", "");
+            let fullClassDescription = `${shortGradeKey} - فصل ${classDigit}`;
             studentsList = [
-                { name: `طالب فصل ${classDigit} (1)`, className: `فصل ${classDigit}` },
-                { name: `طالب فصل ${classDigit} (2)`, className: `فصل ${classDigit}` },
-                { name: `طالب فصل ${classDigit} (3)`, className: `فصل ${classDigit}` }
+                { name: `طالب فصل ${classDigit} (1)`, className: fullClassDescription },
+                { name: `طالب فصل ${classDigit} (2)`, className: fullClassDescription },
+                { name: `طالب فصل ${classDigit} (3)`, className: fullClassDescription }
             ];
         }
 
@@ -909,9 +919,10 @@
 
         function renderCurrentStepView() {
             const student = studentsList[currentStudentIndex];
+            const totalStudentsCount = studentsList.length; // العدد الحقيقي والصحيح للطلاب في الفصل
             
             document.getElementById('studentHeaderBadge').innerHTML = `
-                <span>👤 الطالب (<span dir="ltr" style="display: inline-block;">${currentStudentIndex + 1} / ${studentsList.length}</span>): <b>${escapeHtml(student.name)}</b> &nbsp;|&nbsp; 🏫 الفصل: <span style="color:#b45309;">${escapeHtml(student.className)}</span></span>
+                <span>👤 الطالب (<span dir="ltr" style="display: inline-block;">${currentStudentIndex + 1} / ${totalStudentsCount}</span>): <b>${escapeHtml(student.name)}</b> &nbsp;|&nbsp; 🏫 الفصل: <span style="color:#b45309;">${escapeHtml(student.className)}</span></span>
                 <div id="liveScoreBadge" class="live-score-box">السؤال <span dir="ltr" style="display: inline-block;">${currentQuestionStep + 1} / ${activeQuestions.length}</span></div>
             `;
 
