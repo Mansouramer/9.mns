@@ -211,7 +211,6 @@
             line-height: 1.6;
         }
 
-        /* مربعات خيارات التصحيح السريع (أ، ب، ج، د فقط بدون نص لسرعة النقر) */
         .options-grid-fast {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -343,17 +342,23 @@
         .result-box { display: block; background: #ecfdf5; border: 2px solid #34d399; padding: 18px; border-radius: 12px; margin-top: 15px; font-size: 14px; }
         .sheet-print-container { display: none; background: #fefce8; padding: 20px; border-radius: 12px; border: 2px solid #ca8a04; margin-top: 15px; }
 
+        /* تعديل خاص بنظام الطباعة: عزل منطقة التحليل تماماً لطباعة التحليل والخطط العلاجية وحدها دون أي أسرار أو أسئلة أخرى */
         @media print {
             @page { size: A4 portrait; margin: 10mm; }
             body * { visibility: hidden !important; }
-            .printable-exam-area, .printable-exam-area * { visibility: visible !important; }
-            .printable-exam-area { position: absolute; left: 0; top: 0; width: 100% !important; background: white !important; padding: 0 !important; border: none !important; box-shadow: none !important; }
-            .printable-sheet-area, .printable-sheet-area * { visibility: visible !important; }
-            .printable-sheet-area { position: absolute; left: 0; top: 0; width: 100% !important; background: white !important; padding: 0 !important; border: none !important; box-shadow: none !important; }
             .printable-analysis-area, .printable-analysis-area * { visibility: visible !important; }
-            .printable-analysis-area { position: absolute; left: 0; top: 0; width: 100% !important; background: white !important; padding: 0 !important; border: none !important; box-shadow: none !important; }
+            .printable-analysis-area { 
+                position: absolute !important; 
+                left: 0 !important; 
+                top: 0 !important; 
+                width: 100% !important; 
+                background: white !important; 
+                padding: 10px !important; 
+                border: none !important; 
+                box-shadow: none !important; 
+                display: block !important;
+            }
             .no-print { display: none !important; }
-            .question-row { break-inside: avoid; page-break-inside: avoid; margin-bottom: 8px; padding: 6px 8px; border: 1px solid #94a3b8; background: #fefce8 !important; }
         }
     </style>
 </head>
@@ -467,13 +472,13 @@
             </div>
         </div>
 
-        <div class="section-box">
+        <div class="section-box no-print">
             <h3>⚙️ ثانياً: توليد ورقة الاختبار المعتمَدة</h3>
             <div class="no-print">
                 <button type="button" class="action-btn" onclick="generateTestModel()">⚡ توليد ورقة الاختبار الآن</button>
             </div>
 
-            <div id="questionsPreviewBox" class="questions-preview printable-exam-area">
+            <div id="questionsPreviewBox" class="questions-preview">
                 <div class="exam-header">
                     <h3>المملكة العربية السعودية - وزارة التعليم</h3>
                     <h4 id="printSchoolTitle">مدرسة داؤود بن عروة الثقفي الابتدائية</h4>
@@ -521,7 +526,7 @@
             </div>
         </div>
 
-        <div id="allGradesSheetPrintArea" class="sheet-print-container printable-sheet-area">
+        <div id="allGradesSheetPrintArea" class="sheet-print-container">
             <div style="text-align: center; border-bottom: 2px solid #1e3a8a; padding-bottom: 8px; margin-bottom: 15px;">
                 <h3 style="margin: 0; color: #1e3a8a; font-size: 15px;">المملكة العربية السعودية - وزارة التعليم</h3>
                 <h4 style="margin: 4px 0; font-size: 13px; color: #334151;">مدرسة داؤود بن عروة الثقفي الابتدائية</h4>
@@ -546,7 +551,13 @@
             </div>
         </div>
 
+        <!-- منطقة تحليل نواتج التعلم والخطط العلاجية المعزولة للطباعة وحدها -->
         <div id="analysisContainer" class="analysis-box printable-analysis-area">
+            <div style="text-align: center; border-bottom: 2px solid #1e3a8a; padding-bottom: 8px; margin-bottom: 15px;">
+                <h3 style="margin: 0; color: #1e3a8a; font-size: 15px;">المملكة العربية السعودية - وزارة التعليم</h3>
+                <h4 style="margin: 4px 0; font-size: 13px; color: #334151;">مدرسة داؤود بن عروة الثقفي الابتدائية</h4>
+                <p style="margin: 2px 0; font-size: 12px; color: #475569; font-weight: bold;">معلم المادة: منصور عامر الرحيلي</p>
+            </div>
             <h3 style="margin-top:0; color: #b45309; border-bottom: 2px solid #eab308; padding-bottom: 8px; font-size: 16px;">📈 تقرير تحليل نواتج التعلم والخطط العلاجية الميدانية الواقعية</h3>
             <div id="analysisContentText" style="font-size: 12.5px; line-height: 1.6; color: #1e293b;"></div>
             <div class="no-print" style="margin-top: 15px;">
@@ -912,7 +923,6 @@
             }
             listContainer.innerHTML = htmlContent;
 
-            // حفظ تفاصيل آخر اختبار تم توليده تلقائياً
             saveLatestExamState();
             window.scrollTo({ top: previewBox.offsetTop, behavior: 'smooth' });
         }
@@ -957,12 +967,11 @@
                 <div id="liveScoreBadge" class="live-score-box">السؤال <span dir="ltr" style="display: inline-block;">${currentQuestionStep + 1} / ${activeQuestions.length}</span></div>
             `;
 
- مفتاح: qObj = activeQuestions[currentQuestionStep];
+            let qObj = activeQuestions[currentQuestionStep];
             let qNum = currentQuestionStep + 1;
             let savedOpt = studentAnswers[qNum] || '';
 
             const container = document.getElementById('singleQuestionContainer');
-            // أزرار مختصرة بحروف الخيارات (أ، ب، ج، د) فقط لسرعة التصحيح دون قراءة النصوص
             container.innerHTML = `
                 <div class="single-step-question-box">
                     <span style="color: #c2410c; font-size: 12px; font-weight: bold;">[مجال الهدف: ${escapeHtml(qObj.domain)}]</span>
@@ -1084,7 +1093,6 @@
                 date: new Date().toLocaleDateString('en-GB')
             };
 
-            // الحفظ الفوري والشامل لبيانات آخر اختبار ونتائجه في localStorage
             localStorage.setItem('mansour_last_exam_full_state', JSON.stringify(examState));
         }
 
@@ -1108,7 +1116,6 @@
             localStorage.setItem('dashboardLatestExamResults', JSON.stringify(dashboardRecords));
             localStorage.setItem('examResultsHistory', JSON.stringify(dashboardRecords));
 
-            // حفظ الحالة المتكاملة لآخر اختبار والدرجات معاً
             saveLatestExamState();
 
             filterStudentResults();
@@ -1306,7 +1313,6 @@
 
             document.getElementById('analysisContentText').innerHTML = analysisHtmlContent;
 
-            // حفظ آخر تحليل ونواتج تعلم في الذاكرة لتثبيتها وعدم فقدانها نهائياً
             localStorage.setItem('mansour_last_analysis_report', JSON.stringify({
                 gradeKey: gradeKey,
                 subjectKey: subjectKey,
@@ -1327,7 +1333,6 @@
         window.addEventListener('DOMContentLoaded', () => {
             updateLessonCheckboxes();
 
-            // استرجاع آخر اختبار ودرجات وتحليل محفوظ تلقائياً عند فتح الصفحة لضمان عدم ضياع أي بيانات
             let savedLastExam = localStorage.getItem('mansour_last_exam_full_state');
             if (savedLastExam) {
                 try {
