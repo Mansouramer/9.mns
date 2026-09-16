@@ -712,7 +712,7 @@
             document.getElementById('lessonInputText').value = '';
         }
 
-        // دالة جلب الطلاب مع تحديد اسم ورقم الفصل الحالي بدقة بالأرقام الإنجليزية
+        // دالة جلب الطلاب الأساسية من الكود المخزن والمُرتب مسبقاً حسب الفصل
         function fetchStudentsForSelectedClass() {
             studentsList = [];
             const gradeKey = document.getElementById('selectGrade').value;
@@ -720,6 +720,7 @@
             let shortGradeName = gradeKey.replace("الصف ", "").replace(" الابتدائي", "");
             let fullClassDescription = `${shortGradeName} - فصل ${classDigit}`;
             
+            // البحث المباشر في الذاكرة عن الكود الأساسي المرتب للفصل المحدد
             for (let i = 0; i < localStorage.length; i++) {
                 let key = localStorage.key(i);
                 if (key) {
@@ -916,8 +917,8 @@
             const student = studentsList[currentStudentIndex];
             
             document.getElementById('studentHeaderBadge').innerHTML = `
-                <span>👤 الطالب (${currentStudentIndex + 1} / ${studentsList.length}): <b>${escapeHtml(student.name)}</b> &nbsp;|&nbsp; 🏫 الفصل: <span style="color:#b45309;">${escapeHtml(student.className)}</span></span>
-                <div id="liveScoreBadge" class="live-score-box">السؤال ${currentQuestionStep + 1} / ${activeQuestions.length}</div>
+                <span>👤 الطالب (<span dir="ltr" style="display: inline-block;">${currentStudentIndex + 1} / ${studentsList.length}</span>): <b>${escapeHtml(student.name)}</b> &nbsp;|&nbsp; 🏫 الفصل: <span style="color:#b45309;">${escapeHtml(student.className)}</span></span>
+                <div id="liveScoreBadge" class="live-score-box">السؤال <span dir="ltr" style="display: inline-block;">${currentQuestionStep + 1} / ${activeQuestions.length}</span></div>
             `;
 
             let qObj = activeQuestions[currentQuestionStep];
@@ -928,7 +929,7 @@
             container.innerHTML = `
                 <div class="single-step-question-box">
                     <span style="color: #c2410c; font-size: 12px; font-weight: bold;">[مجال الهدف: ${escapeHtml(qObj.domain)}]</span>
-                    <h4>سؤال ${qNum}: ${escapeHtml(qObj.q)}</h4>
+                    <h4>سؤال <span dir="ltr" style="display: inline-block;">${qNum}</span>: ${escapeHtml(qObj.q)}</h4>
                     <div class="options-grid-fast">
                         <button type="button" class="opt-fast-btn ${savedOpt === 'أ' ? 'correct-choice' : ''}" onclick="selectFastOpt(${qNum}, 'أ', this)">أ) ${escapeHtml(qObj.options[0])}</button>
                         <button type="button" class="opt-fast-btn ${savedOpt === 'ب' ? 'correct-choice' : ''}" onclick="selectFastOpt(${qNum}, 'ب', this)">ب) ${escapeHtml(qObj.options[1])}</button>
@@ -1257,4 +1258,3 @@
     </script>
 </body>
 </html>
-
