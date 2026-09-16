@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مدرسة داؤود بن عروة الثقفي الابتدائية | نظام الاختبارات والتحليل </title>
+    <title>مدرسة داؤود بن عروة الثقفي الابتدائية | نظام الاختبارات والتحليل (طلاب)</title>
     <style>
         :root {
             --primary: #1e3a8a;
@@ -52,20 +52,34 @@
             padding: 12px 15px;
             border-radius: 10px;
             border: 2px solid #fcd34d;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         h2 { color: var(--primary); margin: 0; font-size: 18px; }
 
         .back-btn {
-            background: #334155;
+            background: linear-gradient(135deg, #334155, #1e293b);
             color: #f8fafc;
-            padding: 8px 14px;
-            border-radius: 8px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
             text-decoration: none;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: bold;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+            border: 3px solid #f59e0b;
+            transition: 0.2s;
+            line-height: 1.4;
+            padding: 5px;
+            box-sizing: border-box;
         }
+        .back-btn:hover { transform: scale(1.05); }
 
         .section-box {
             background: var(--box-bg-2);
@@ -299,7 +313,10 @@
     <div class="container">
         <div class="header-nav no-print">
             <h2 id="mainSchoolTitle">مدرسة داؤود بن عروة الثقفي الابتدائية (طلاب)</h2>
-            <a href="index.html" class="back-btn">⬅ لوحة التحكم الرئيسية</a>
+            <a href="index.html" class="back-btn">
+                <span>⬅ لوحة</span>
+                <span>التحكم</span>
+            </a>
         </div>
 
         <div class="section-box no-print">
@@ -678,17 +695,15 @@
 
         function fetchStudentsForSelectedClass() {
             studentsList = [];
-            const selectedGrade = document.getElementById('selectGrade').value; // مثال: "الخامس الابتدائي"
-            const classDigit = document.getElementById('selectClassDigit').value; // مثال: "٥"
+            const selectedGrade = document.getElementById('selectGrade').value;
+            const classDigit = document.getElementById('selectClassDigit').value;
             
-            // محاولة البحث في localStorage عن كشف يتطابق مع الصف ورقم الفصل بدقة
             for (let i = 0; i < localStorage.length; i++) {
                 let key = localStorage.key(i);
                 if (key && (key.includes(selectedGrade) || key.includes('خامس') || key.includes('سادس') || key.includes('طلاب') || key.includes('كشوف'))) {
                     try {
                         let data = JSON.parse(localStorage.getItem(key));
                         if (Array.isArray(data) && data.length > 0) {
-                            // إذا وجدنا مصفوفة كشف طلاب
                             let parsed = data.map(item => typeof item === 'string' ? { name: item } : (item.name ? item : null)).filter(Boolean);
                             if (parsed.length > 0) {
                                 studentsList = parsed;
@@ -699,7 +714,6 @@
                 }
             }
 
-            // إذا لم يتم العثور على كشف مخصص مخزن، نقوم بتوليد أسماء واقعية مخصصة لهذا الفصل بدقة
             if (studentsList.length === 0) {
                 let shortGradeName = selectedGrade.replace("الصف ", "").replace(" الابتدائي", "");
                 studentsList = [
@@ -835,7 +849,7 @@
 
         function startTouchGradingSession() {
             if (activeQuestions.length === 0) { generateTestModel(); }
-            fetchStudentsForSelectedClass(); // جلب الطلاب الخاصين بالصف والفصل المختار فقط
+            fetchStudentsForSelectedClass();
             if (studentsList.length === 0) { alert('لا توجد قائمة طلاب مسجلة لهذا الفصل!'); return; }
             currentStudentIndex = 0;
             document.getElementById('touchGradingCard').style.display = 'block';
