@@ -127,6 +127,13 @@
             padding: 15px;
             margin-top: 15px;
             display: none;
+            transition: background 0.3s ease;
+        }
+
+        /* فئة تنبيه تغير اللون عند الانتقال للطالب التالي */
+        .touch-grading-card.student-changed {
+            background: #d1fae5 !important;
+            border-color: #059669 !important;
         }
 
         .student-title-badge {
@@ -152,7 +159,6 @@
             font-weight: bold;
         }
 
-        /* تنسيق السؤال الفردي السريع */
         .single-step-question-box {
             background: #fdfdfd;
             border: 2px solid #cbd5e1;
@@ -386,9 +392,9 @@
         </div>
 
         <div class="section-box no-print">
-            <h3>👤 ثالثاً: لوحة التصحيح السريع (سؤال بسؤال لسرعة الإنجاز والضغطات المتتالية)</h3>
+            <h3>👤 ثالثاً: لوحة التصحيح السريع (سؤال بسؤال مع تنبيه مرئي عند الانتقال للطالب التالي)</h3>
             <p style="font-size: 12px; color: #555; margin-bottom: 10px;">
-                يظهر لك السؤال مع خياراته؛ بمجرد الضغط على إجابة الطالب ينتقل النظام تلقائياً للسؤال التالي مع زر للرجوع عند الحاجة:
+                عند إجابة السؤال الأخير، يتغير لون الإطار مؤقتاً لتنبيهك بنجاح حفظ درجة الطالب والانتقال التلقائي للطالب التالي:
             </p>
             <button class="action-btn btn-success" onclick="startTouchGradingSession()">🚀 بدء جلسة التصحيح ورصد الدرجات</button>
 
@@ -400,7 +406,7 @@
                 
                 <div class="navigation-btns" style="justify-content: space-between;">
                     <button class="action-btn" style="background: #4b5563; width: 48%;" onclick="prevQuestionStep()">⬅ السؤال السابق</button>
-                    <button class="action-btn btn-success" style="width: 48%;" onclick="nextQuestionStepOrFinish()">السؤال التالي ➡</button>
+                    <button class="action-btn btn-success" style="width: 48%;" onclick="nextQuestionStepOrFinish()">التالي / حفظ ➡</button>
                 </div>
             </div>
         </div>
@@ -736,7 +742,7 @@
 
         // --- المتغيرات الخاصة بجلسة التصحيح الفردي السريع ---
         let currentStudentIndex = 0;
-        let currentQuestionStep = 0; // مؤشر السؤال الحالي (من 0 إلى 9)
+        let currentQuestionStep = 0; 
         let studentsList = [];
         let activeQuestions = [];
         let globalMaxScore = 20;
@@ -763,10 +769,9 @@
 
         function renderCurrentStepView() {
             const student = studentsList[currentStudentIndex];
-            const maxScore = globalMaxScore;
             
             document.getElementById('studentHeaderBadge').innerHTML = `
-                <span>👤 الطالب (${toArabicDigits(currentStudentIndex + 1)}/${toArabicDigits(studentsList.length)}): ${escapeHtml(student.name)} [${currentModelName}]</span>
+                <span>👤 الطالب (${toArabicDigits(currentStudentIndex + 1)}/${toArabicDigits(studentsList.length)}): ${escapeHtml(student.name)}</span>
                 <div id="liveScoreBadge" class="live-score-box">السؤال ${toArabicDigits(currentQuestionStep + 1)} / ${toArabicDigits(activeQuestions.length)}</div>
             `;
 
@@ -801,13 +806,12 @@
                 btn.classList.add('correct-choice');
             } else {
                 btn.classList.add('wrong-choice');
-                // إضاءة الزر الصحيح لمساعدتك
                 parentGrid.querySelectorAll('.opt-fast-btn').forEach(b => {
                     if (b.textContent.startsWith(correctAns)) b.classList.add('correct-choice');
                 });
             }
 
-            // انتقال تلقائي سريع للسؤال التالي بعد الضغط بنصف ثانية
+            // الانتقال التلقائي للسؤال التالي برهة قصيرة إذا لم يكن السؤال الأخير
             setTimeout(() => {
                 if (currentQuestionStep < activeQuestions.length - 1) {
                     currentQuestionStep++;
@@ -828,7 +832,6 @@
                 currentQuestionStep++;
                 renderCurrentStepView();
             } else {
-                // حفظ درجة الطالب الحالي والانتقال للطالب التالي أو إنهاء الجلسة
                 saveCurrentStudentAndProceed();
             }
         }
@@ -847,7 +850,14 @@
 
             currentStudentIndex++;
             if (currentStudentIndex < studentsList.length) {
-                startNewStudentSession();
+                // تفعيل تأثير تغير اللون مؤقتاً للتنبيه بالانتقال للطالب التالي
+                const card = document.getElementById('touchGradingCard');
+                card.classList.add('student-changed');
+                
+                setTimeout(() => {
+                    card.classList.remove('student-changed');
+                    startNewStudentSession();
+                }, 500);
             } else {
                 finishGradingSession();
             }
