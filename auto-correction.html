@@ -712,53 +712,62 @@
             document.getElementById('lessonInputText').value = '';
         }
 
-        // دالة جلب الطلاب المحدثة لتتطابق تماماً مع نظامك الأساسي في لوحة التحكم
+        // دالة جلب الطلاب الشاملة والمضمونة التي تفحص كافة مفاتيح الذاكرة تلقائياً
         function fetchStudentsForSelectedClass() {
             studentsList = [];
-            const gradeKey = document.getElementById('selectGrade').value; // مثال: السادس الابتدائي
-            const classDigit = document.getElementById('selectClassDigit').value.trim(); // مثال: 3
-            
-            // مفتاح التخزين المستخدم في لوحة التحكم الأساسية لديك
-            const storageKey = 'mansour_students_science_' + gradeKey + '_v5';
-            let savedData = localStorage.getItem(storageKey);
+            const classDigit = document.getElementById('selectClassDigit').value.trim(); // رقم الفصل (مثلاً: 3)
+            let foundStudents = [];
 
-            if (savedData) {
-                try {
-                    let parsed = JSON.parse(savedData);
-                    if (Array.isArray(parsed) && parsed.length > 0) {
-                        // فلترة الطلاب حسب الفصل المطلوب
-                        let matchedStudents = parsed.filter(item => {
-                            let cCustom = item.classCustom || '';
-                            return cCustom.includes(classDigit) || cCustom.endsWith(classDigit);
-                        });
+            // فحص شامل لجميع مفاتيح التخزين في الـ LocalStorage
+            for (let i = 0; i < localStorage.length; i++) {
+                let key = localStorage.key(i);
+                if (key && key.startsWith('mansour_students_science_')) {
+                    try {
+                        let data = JSON.parse(localStorage.getItem(key));
+                        if (Array.isArray(data) && data.length > 0) {
+                            data.forEach(item => {
+                                let cCustom = String(item.classCustom || '');
+                                if (cCustom.includes(classDigit) || cCustom.endsWith(classDigit) || !cCustom) {
+                                    foundStudents.push({
+                                        name: item.name,
+                                        className: cCustom || `فصل ${classDigit}`
+                                    });
+                                }
+                            });
+                        }
+                    } catch(e) {}
+                }
+            }
 
-                        if (matchedStudents.length > 0) {
-                            studentsList = matchedStudents.map(item => ({
+            if (foundStudents.length > 0) {
+                const uniqueMap = new Map();
+                foundStudents.forEach(s => uniqueMap.set(s.name, s));
+                studentsList = Array.from(uniqueMap.values());
+                return;
+            }
+
+            // كبديل احتياطي: جلب أي طلاب مسجلين في أي صف علوم
+            for (let i = 0; i < localStorage.length; i++) {
+                let key = localStorage.key(i);
+                if (key && key.startsWith('mansour_students_science_')) {
+                    try {
+                        let data = JSON.parse(localStorage.getItem(key));
+                        if (Array.isArray(data) && data.length > 0) {
+                            studentsList = data.map(item => ({
                                 name: item.name,
-                                className: item.classCustom || `${gradeKey} - فصل ${classDigit}`
-                            }));
-                            return;
-                        } else {
-                            // إذا لم يجد تطابقاً دقيقاً للفصل، يسحب طلاب الصف بالكامل
-                            studentsList = parsed.map(item => ({
-                                name: item.name,
-                                className: item.classCustom || gradeKey
+                                className: item.classCustom || 'الصف الدراسي'
                             }));
                             return;
                         }
-                    }
-                } catch(e) {}
+                    } catch(e) {}
+                }
             }
 
-            // قائمة احتياطية إذا لم يتم إدخال طلاب بعد
-            let shortGradeKey = gradeKey.replace("الصف ", "").replace(" الابتدائي", "");
-            let fullClassDescription = `${shortGradeKey} - فصل ${classDigit}`;
+            // القائمة الافتراضية إذا كانت الذاكرة فارغة تماماً
             studentsList = [
-                { name: `طالب فصل ${classDigit} (1)`, className: fullClassDescription },
-                { name: `طالب فصل ${classDigit} (2)`, className: fullClassDescription },
-                { name: `طالب فصل ${classDigit} (3)`, className: fullClassDescription },
-                { name: `طالب فصل ${classDigit} (4)`, className: fullClassDescription },
-                { name: `طالب فصل ${classDigit} (5)`, className: fullClassDescription }
+                { name: `طالب فصل ${classDigit} (1)`, className: `فصل ${classDigit}` },
+                { name: `طالب فصل ${classDigit} (2)`, className: `فصل ${classDigit}` },
+                { name: `طالب فصل ${classDigit} (3)`, className: `فصل ${classDigit}` }
             ];
         }
 
