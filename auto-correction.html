@@ -254,7 +254,7 @@
         }
 
         .analysis-box { display: none; background: #fffbeb; border: 1px solid #f59e0b; padding: 20px; border-radius: 10px; margin-top: 15px; font-size: 13px; }
-        .result-box { display: none; background: #ecfdf5; border: 1px solid #10b981; padding: 15px; border-radius: 10px; margin-top: 15px; font-size: 14px; }
+        .result-box { display: block; background: #ecfdf5; border: 1px solid #10b981; padding: 15px; border-radius: 10px; margin-top: 15px; font-size: 14px; }
         .sheet-print-container { display: none; background: #fff; padding: 20px; border-radius: 10px; border: 1px solid #cbd5e1; margin-top: 15px; }
 
         @media print {
@@ -489,7 +489,6 @@
             "islamic": "الدراسات الإسلامية" 
         };
 
-        // بنوك مواضيع الدروس والوحدات المتغيرة لكل صف ومادة دراسية
         const gradeSubjectLessonsMap = {
             "الأول الابتدائي": {
                 "science": [
@@ -512,7 +511,7 @@
             },
             "الثاني الابتدائي": {
                 "science": [
-                    { chapter: "الوحدة الأولى", title: "plants and animals (النباتات والحيوانات)" },
+                    { chapter: "الوحدة الأولى", title: "النباتات والحيوانات واحتياجاتها" },
                     { chapter: "الوحدة الأولى", title: "المخلوقات الحية تنمو وتتغير" },
                     { chapter: "الوحدة الثانية", title: "أرضنا وتضاريسها ومعالمها" },
                     { chapter: "الوحدة الثانية", title: "الموارد الطبيعية في البيئة" }
@@ -554,7 +553,6 @@
             const container = document.getElementById('lessonsSelectionContainer');
             container.innerHTML = '';
 
-            // جلب الدروس المخصصة للصف والمادة، أو عرض دروس افتراضية عامة مطابقة للمرحلة
             let gradeLessons = [];
             if (gradeSubjectLessonsMap[gradeKey] && gradeSubjectLessonsMap[gradeKey][subjectKey]) {
                 gradeLessons = gradeSubjectLessonsMap[gradeKey][subjectKey];
@@ -876,6 +874,9 @@
             let score = correctCount * 2; 
             allClassResults[student.name] = { score: score, correct: correctCount };
 
+            // تحديث وتخزين الدرجات فورياً لكي تظهر وتتحدث البيانات حتى لو لطالب واحد أو طالبين
+            updateLocalStorageAndResults();
+
             currentStudentIndex++;
             if (currentStudentIndex < studentsList.length) {
                 const card = document.getElementById('touchGradingCard');
@@ -889,13 +890,9 @@
             }
         }
 
-        function finishGradingSession() {
-            document.getElementById('touchGradingCard').style.display = 'none';
-            const resultBox = document.getElementById('resultContainer');
+        function updateLocalStorageAndResults() {
             const examType = document.getElementById('selectExamType').value;
-            resultBox.style.display = 'block';
-
-            let maxScore = globalMaxScore;
+            let maxScore = globalMaxScore || 20;
             let dashboardRecords = [];
 
             for (let sName in allClassResults) {
@@ -915,8 +912,11 @@
             filterStudentResults();
             prepareGradesPrintSheet();
             prepareAnalysisContent();
+        }
 
-            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        function finishGradingSession() {
+            document.getElementById('touchGradingCard').style.display = 'none';
+            window.scrollTo({ top: document.getElementById('resultContainer').offsetTop, behavior: 'smooth' });
         }
 
         function filterStudentResults() {
@@ -925,7 +925,7 @@
             let maxScore = globalMaxScore || 20;
 
             let enteredCount = Object.keys(allClassResults).length;
-            let html = `✅ تم رصد درجات الطلاب المدخلين حالياً بنجاح (إجمالي عدد المدخلين: ${toArabicDigits(enteredCount)} طالب):<br><br>`;
+            let html = `✅ تم رصد درجات الطلاب المدخلين (إجمالي: ${toArabicDigits(enteredCount)} طالب):<br><br>`;
             let foundAny = false;
 
             for (let sName in allClassResults) {
@@ -944,7 +944,7 @@
             }
 
             if (!foundAny) {
-                html += `<p style="color: #ef4444; text-align: center;">لم يتم إدخال درجات لطلاب بهذا الاسم بعد.</p>`;
+                html += `<p style="color: #ef4444; text-align: center;">قم بتصحيح ورصد درجة طالب واحد على الأقل عبر جلسة التصحيح السريع بالأعلى.</p>`;
             }
 
             outputText.innerHTML = html;
@@ -999,7 +999,6 @@
         }
 
         function toggleAnalysisBox() {
-            document.getElementById('resultContainer').style.display = 'block';
             const analysisBox = document.getElementById('analysisContainer');
             if (analysisBox.style.display === 'block') {
                 analysisBox.style.display = 'none';
@@ -1034,7 +1033,7 @@
             }
 
             if (count === 0) {
-                document.getElementById('analysisContentText').innerHTML = `<p style="color:#ef4444; text-align:center;">الرجاء إدخال ورصد درجات طالب واحد على الأقل لعرض التحليل الإحصائي والخطة العلاجية.</p>`;
+                document.getElementById('analysisContentText').innerHTML = `<p style="color:#ef4444; text-align:center;">الرجاء رصد درجات طالب واحد على الأقل لعرض التحليل الإحصائي والخطة العلاجية.</p>`;
                 return;
             }
 
@@ -1065,7 +1064,7 @@
                         <li><b>1. التدخل العلاجي الفردي للطلاب المحتاجين لدعم:</b> تكثيف التدريبات الإثرائية وتخصيص أسئلة علاجية في المهارات الأساسية لكل طالب لم يحقق معيار الإتقان (أقل من 75٪).</li>
                         <li><b>2. خطة التحسين الصفية:</b> إعادة شرح المفاهيم ذات نسبة الخطأ العالية في مجالات نافس المستهدفة من خلال استراتيجيات التعلم النشط وتوظيف الأنشطة التفاعلية.</li>
                         <li><b>3. شراكة الأسرة (ولي الأمر):</b> إرسال تقارير الأداء الفورية عبر أزرار الواتساب المتاحة لتنبيه أولياء الأمور بمستوى الابن ونقاط التحسين المطلوب متابعتها منزلياً.</li>
-                        <li><b>4. المتابعة والمرونة في الإدخال:</b> يمكنك إدخال ورصد درجات بقية الطلاب تدريجياً في أي وقت، وسيتحدث التحليل والخطة العلاجية تلقائياً ليشمل جميع المدخلين.</li>
+                        <li><b>4. المتابعة والمرونة في الإدخال:</b> يمكنك إدخال ورصد درجات الطلاب تدريجياً في أي وقت (سواء طالباً أو طالبين أو أكثر)، وسيتحدث التحليل والخطة العلاجية تلقائياً ليشمل الجميع.</li>
                     </ul>
                 </div>
             `;
@@ -1080,8 +1079,10 @@
 
         window.addEventListener('DOMContentLoaded', () => {
             updateLessonCheckboxes();
+            filterStudentResults();
             convertAllNumbersInDOM();
         });
     </script>
 </body>
 </html>
+
