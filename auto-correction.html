@@ -194,7 +194,6 @@
             font-weight: bold;
         }
 
-        /* صندوق السؤال الإطاري المنسق */
         .single-step-question-box {
             background: #fffbeb;
             border: 2.5px solid #f97316;
@@ -212,7 +211,7 @@
             line-height: 1.6;
         }
 
-        /* تخطيط شبكي متناسق: أ وب بالأعلى، ج ود بالأسفل داخل الإطار حصراً وبأعراض متساوية */
+        /* منع خروج الخيارات وضبطها داخل الإطار (أ وب بالأعلى، ج ود بالأسفل) */
         .options-grid-fast {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -287,6 +286,7 @@
         .exam-header h3 { margin: 0; font-size: 15px; color: #1e3a8a; font-weight: bold; }
         .exam-header h4 { margin: 4px 0; font-size: 13px; color: #334151; }
 
+        /* تعديل تصميم فقاعات الخيارات في المعاينة والطباعة لتستقر بداخل السطر تماماً دون خروج */
         .question-row {
             margin-bottom: 14px;
             padding: 10px 12px;
@@ -295,21 +295,34 @@
             border: 1.5px solid #fcd34d;
             font-size: 13px;
             line-height: 1.6;
+            box-sizing: border-box;
         }
 
         .bubble-options {
-            display: flex;
-            gap: 15px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
             margin-top: 8px;
-            align-items: center;
-            flex-wrap: wrap;
+            width: 100%;
+            box-sizing: border-box;
         }
 
-        .bubble-item { display: flex; align-items: center; gap: 5px; font-size: 12.5px; font-weight: 600; }
+        .bubble-item { 
+            display: flex; 
+            align-items: center; 
+            gap: 6px; 
+            font-size: 12.5px; 
+            font-weight: 600; 
+            background: #fffbeb;
+            padding: 6px 8px;
+            border-radius: 6px;
+            border: 1px solid #fcd34d;
+            box-sizing: border-box;
+        }
 
         .bubble-circle {
-            width: 20px;
-            height: 20px;
+            width: 22px;
+            height: 22px;
             border: 2px solid #1e3a8a;
             border-radius: 50%;
             display: inline-flex;
@@ -319,6 +332,14 @@
             font-weight: bold;
             color: #1e3a8a;
             background: #fef3c7;
+            flex-shrink: 0;
+            transition: 0.2s;
+        }
+        
+        .bubble-item:hover .bubble-circle {
+            background: #2563eb;
+            color: #fff;
+            border-color: #1d4ed8;
         }
 
         .analysis-box { display: none; background: #fef3c7; border: 2px solid #eab308; padding: 20px; border-radius: 12px; margin-top: 15px; font-size: 13px; }
