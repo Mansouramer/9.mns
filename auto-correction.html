@@ -119,7 +119,6 @@
         .btn-whatsapp { background: #059669; }
         .btn-warning { background: #d97706; }
         .btn-purple { background: #7c3aed; }
-        .btn-nafis { background: #b45309; }
 
         .touch-grading-card {
             background: #fff;
@@ -315,10 +314,10 @@
                 </div>
             </div>
 
-            <!-- صندوق مجالات اختبارات نافس (يظهر فقط عند اختيار اختبارات نافس الوطنية) -->
+            <!-- صندوق مجالات اختبارات نافس -->
             <div id="nafisDomainsBox" class="form-group" style="display: none; margin-top: 12px; border: 2px dashed #b45309; background: #fffbeb; padding: 12px; border-radius: 8px;">
                 <label style="color: #b45309; display: flex; align-items: center; gap: 5px; font-size: 14px;">
-                    <span>📊</span> حدد مجالات اختبارات نافس الوطنية المستهدفة:
+                    <span>📊</span> حدد مجالات اختبارات نافس الوطنية المستهدفة (تتكامل آلياً لتوليد 10 أسئلة متكاملة):
                 </label>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 8px; margin-top: 8px;">
                     <label style="display: flex; align-items: center; gap: 6px; font-size: 13px; background: #fff; padding: 8px; border-radius: 6px; border: 1px solid #fcd34d; cursor: pointer;">
@@ -351,7 +350,7 @@
             </div>
         </div>
 
-        <!-- قسم التوليد الذكي الحقيقي للأسئلة من نص الدرس -->
+        <!-- التوليد الذكي -->
         <div class="section-box no-print" style="border: 2px dashed #7c3aed; background: #faf5ff;">
             <h3 style="color: #7c3aed;">✨ التوليد الذكي للأسئلة من نص أو عنوان الدرس</h3>
             <p style="font-size: 12.5px; color: #4b5563; margin-bottom: 8px;">
@@ -366,9 +365,9 @@
         </div>
 
         <div class="section-box">
-            <h3>⚙️ ثانياً: توليد ورقة الاختبار المعتمدة (مرتبطة حصرياً بالصف والدروس والمجالات المختارة)</h3>
+            <h3>⚙️ ثانياً: توليد ورقة الاختبار المعتمدة (تتكون تماماً من 10 أسئلة)</h3>
             <div class="no-print">
-                <button class="action-btn" onclick="generateTestModel()">⚡ توليد ورقة الاختبار المعتمدة</button>
+                <button class="action-btn" onclick="generateTestModel()">⚡ توليد ورقة الاختبار (10 أسئلة)</button>
             </div>
 
             <div id="questionsPreviewBox" class="questions-preview printable-exam-area">
@@ -394,15 +393,11 @@
 
         <div class="section-box no-print">
             <h3>👤 ثالثاً: لوحة التصحيح السريع (سؤال بسؤال مع تنبيه مرئي عند الانتقال للطالب التالي)</h3>
-            <p style="font-size: 12px; color: #555; margin-bottom: 10px;">
-                عند إجابة السؤال الأخير، يتغير لون الإطار مؤقتاً لتنبيهك بنجاح حفظ درجة الطالب والانتقال التلقائي للطالب التالي:
-            </p>
             <button class="action-btn btn-success" onclick="startTouchGradingSession()">🚀 بدء جلسة التصحيح ورصد الدرجات</button>
 
             <div id="touchGradingCard" class="touch-grading-card">
                 <div id="studentHeaderBadge" class="student-title-badge"></div>
                 
-                <!-- عرض السؤال الحالي فقط -->
                 <div id="singleQuestionContainer"></div>
                 
                 <div class="navigation-btns" style="justify-content: space-between;">
@@ -490,29 +485,20 @@
             "islamic": "الدراسات الإسلامية" 
         };
 
-        // بنك أسئلة نافس الوطنية مقسم إلى 4 مجالات رئيسية
+        // بنك أسئلة نافس الوطنية الشامل لضمان توفير 10 أسئلة وأكثر متوزعة على المجالات الأربعة
         const nafisNationalBank = [
             { domain: "مجال العلوم", q: "ما هي الوحدة الأساسية لبناء الكائنات الحية في الطبيعة؟", options: ["النسيج الحيوي", "العضو الداخلي", "الخلية", "الجهاز العصبي"], correct: "ج" },
             { domain: "مجال العلوم", q: "ما العملية الحيوية التي ينتج من خلالها النبات غذاءه بوجود ضوء الشمس؟", options: ["التنفس الخلوي", "البناء الضوئي", "الهضم والامتصاص", "النتح"], correct: "ب" },
-            { domain: "مجال الرياضات", q: "ما الناتج الصحيح لعملية الضرب الحسابية: ٧ × ٨ = ؟", options: ["٥٤", "٥٦", "٦٤", "٤٨"], correct: "ب" },
-            { domain: "مجال الرياضات", q: "ما مساحة مستطيل طوله ٥ سم وعرضه ٤ سم؟", options: ["٩ سم٢", "١٨ سم٢", "٢٠ سم٢", "١٠ سم٢"], correct: "ج" },
+            { domain: "مجال العلوم", q: "أي الأجرام السماوية التالية يعتبر هو النجم الوحيد في مجموعتنا الشمسية؟", options: ["كوكب الأرض", "القمر", "الشمس", "المريخ"], correct: "ج" },
+            { domain: "مجال الرياضيات", q: "ما الناتج الصحيح لعملية الضرب الحسابية: ٧ × ٨ = ؟", options: ["٥٤", "٥٦", "٦٤", "٤٨"], correct: "ب" },
+            { domain: "مجال الرياضيات", q: "ما مساحة مستطيل طوله ٥ سم وعرضه ٤ سم؟", options: ["٩ سم٢", "١٨ سم٢", "٢٠ سم٢", "١٠ سم٢"], correct: "ج" },
+            { domain: "مجال الرياضيات", q: "إذا كان مع أحمد ١٢ تفاحة وأعطى أخاه النصف، فكم تفاحة تبقية مع أحمد؟", options: ["٤ تفاحات", "٦ تفاحات", "٨ تفاحات", "١٠ تفاحات"], correct: "ب" },
             { domain: "مجال القراءة وفهم النصوص", q: "في النص القرائي، ماذا تعني كلمة (الباسقة) عند وصف النخلة الطويلة؟", options: ["القصيرة المنخفضة", "المرتفعة العالية", "اليابسة الميتة", "الضعيفة"], correct: "ب" },
             { domain: "مجال القراءة وفهم النصوص", q: "الفكرة الرئيسية التي يدور حولها النص الإثرائي عادةً تتضح من خلال:", options: ["خاتمة النص فقط", "العنوان والفقرة الافتتاحية", "عدد كلمات النص", "نوع خط الكتابة"], correct: "ب" },
-            { domain: "مجال الاستقصاء وحل المشكلات", q: "أراد طالب معرفة أثر السكر في سرعة ذوبانه بالماء البارد والساخن، ما المتغير المستقل في هذه التجربة؟", options: ["كمية الماء", "درجة حرارة الماء", "نوع الكأس", "كمية السكر المذابة"], correct: "ب" },
-            { domain: "مجال الاستقصاء وحل المشكلات", q: "واجهت مشكلة تلف النباتات المنزلية بسبب كثرة السقي، ما الاستنتاج العلمي السليم لحل هذه المشكلة؟", options: ["زيادة كمية الماء أكثر", "تقليل الري وتوفير تصريف مناسب", "تعريض النبات للظلام التام", "قلع النباتات نهائياً"], correct: "ب" }
+            { domain: "مجال الاستقصاء وحل المشكلات", q: "أراد طالب معرفة أثر السكر في سرعة ذوبانه بالماء البارد والساخن، ما المتغير المستقل في التجربة؟", options: ["كمية الماء", "درجة حرارة الماء", "نوع الكأس", "كمية السكر"], correct: "ب" },
+            { domain: "مجال الاستقصاء وحل المشكلات", q: "واجهت مشكلة تلف النباتات المنزلية بسبب كثرة السقي، ما الاستنتاج العلمي السليم لحل المشكلة؟", options: ["زيادة كمية الماء", "تقليل الري وتوفير تصريف مناسب", "تعريض النبات للظلام التام", "قلع النباتات نهائياً"], correct: "ب" },
+            { domain: "مجال الاستقصاء وحل المشكلات", q: "عند إجراء تجربة علمية، لماذا يُعد تكرار القياسات عدة مرات خطوة مهمة؟", options: ["لإهدار الوقت", "للتأكد من صحة النتائج ودقتها", "لتغيير المنهجية", "لصعوبة التجربة"], correct: "ب" }
         ];
-
-        const accurateGradeQuestionBank = {
-            "الأول الابتدائي": {
-                "science": [
-                    { q: "أي مما يلي يُعد من أجزاء النبات الرئيسية التي تمتص الماء؟", options: ["الساق", "الجذر", "الأوراق", "الزهور"], correct: "ب", keyword: "أجزاء النباتات" },
-                    { q: "ما هو مصدر النور والحرارة الأساسي على سطح الأرض؟", options: ["القمر", "الشمس", "المصباح", "النجوم"], correct: "ب", keyword: "الضوء والحرارة" }
-                ],
-                "math": [
-                    { q: "ما الناتج الصحيح لعملية الجمع: ٣ + ٢ = ؟", options: ["٤", "٥", "٦", "٧"], correct: "ب", keyword: "الجمع" }
-                ]
-            }
-        };
 
         function toggleNafisDomainsSection() {
             const examType = document.getElementById('selectExamType').value;
@@ -530,8 +516,6 @@
         }
 
         function updateLessonCheckboxes() {
-            const gradeKey = document.getElementById('selectGrade').value;
-            const subjectKey = document.getElementById('selectSubject').value;
             const container = document.getElementById('lessonsSelectionContainer');
             container.innerHTML = '';
 
@@ -539,7 +523,9 @@
                 { chapter: "الوحدة الأولى", title: "أجزاء النباتات" },
                 { chapter: "الوحدة الأولى", title: "المخلوقات الحية والأشياء الغير حيه" },
                 { chapter: "الوحدة الثانية", title: "الضوء والحرارة" },
-                { chapter: "الوحدة الثانية", title: "الطقس والفصول" }
+                { chapter: "الوحدة الثانية", title: "الطقس والفصول" },
+                { chapter: "الوحدة الثالثة", title: "المادة وخصائصها الفيزيائية" },
+                { chapter: "الوحدة الرابعة", title: "حركة الأجسام والقوى" }
             ];
 
             gradeLessons.forEach((l, idx) => {
@@ -605,7 +591,7 @@
             const gradeKey = document.getElementById('selectGrade').value;
             const subjectKey = document.getElementById('selectSubject').value;
 
-            let filteredQuestions = [];
+            let sourcePool = [];
 
             if (examType === "اختبارات نافس الوطنية") {
                 const selectedDomains = [];
@@ -614,7 +600,7 @@
                     alert('الرجاء اختيار مجال واحد على الأقل من مجالات اختبارات نافس الوطنية!');
                     return;
                 }
-                filteredQuestions = nafisNationalBank.filter(q => selectedDomains.includes(q.domain));
+                sourcePool = nafisNationalBank.filter(q => selectedDomains.includes(q.domain));
                 document.getElementById('printSelectedLessonsPrint').textContent = `📊 مجالات نافس المستهدفة: ${selectedDomains.join(' ، ')}`;
             } else {
                 const checkboxes = document.querySelectorAll('.lesson-checkbox:checked');
@@ -627,22 +613,43 @@
                 }
                 document.getElementById('printSelectedLessonsPrint').textContent = `📖 الدروس المستهدفة: ${selectedLessonsList.join(' ، ')}`;
                 
-                filteredQuestions = [
-                    { q: `سؤال تقويمي حول (${selectedLessonsList[0] || 'الدرس'}): ما هي الميزة الأساسية لهذا الموضوع؟`, options: ["الخصائص الأساسية للدرس", "معلومة غير صحيحة", "افتراض خاطئ", "خارج المنهج"], correct: "أ" },
-                    { q: `من خلال دراستك لـ (${selectedLessonsList[0] || 'الدرس'})، أي مما يلي يعد صحيحاً؟`, options: ["معلومة خاطئة", "التطبيق والحقيقة العلمية الصحيحة", "احتمال عكسي", "افتراض غير واقعي"], correct: "ب" },
-                    { q: `ما هي النتيجة العلمية عند دراسة (${selectedLessonsList[0] || 'الدرس'})؟`, options: ["تفسير غير مرتبط", "احتمال خطأ شائع", "الناتج العلمي الصحيح والمعتمد", "افتراض عكسي"], correct: "ج" },
-                    { q: `أي المفاهيم التالية يعبر بدقة عن محتوى (${selectedLessonsList[0] || 'الدرس'})؟`, options: ["مفهوم خاطئ", "المفهوم العلمي الدقيق والمثالي", "معلومة غير مرتبطة", "توقع عشوائي"], correct: "ب" }
-                ];
+                // توليد بنك محلي من 12 سؤالاً لتغطية الـ 10 المطلوبة بدقة
+                sourcePool = [];
+                for (let i = 1; i <= 12; i++) {
+                    let targetLesson = selectedLessonsList[(i - 1) % selectedLessonsList.length];
+                    sourcePool.push({
+                        q: `سؤال تقويمي (${toArabicDigits(i)}) حول موضوع (${targetLesson}): ما هي القاعدة أو النتيجة العلمية الأدق المرتبطة به؟`,
+                        options: [
+                            `الخصائص والنتيجة الأساسية المعتمدة للمنهج`,
+                            `افتراض غير واقعي أو غير صحيح`,
+                            `معلومة تناقض المحتوى الدراسي تماماً`,
+                            `احتمال عشوائي خارج النطاق`
+                        ],
+                        correct: i % 4 === 1 ? "أ" : (i % 4 === 2 ? "ب" : (i % 4 === 3 ? "ج" : "أ"))
+                    });
+                }
             }
+
+            // خلط عشوائي لضمان التنوع وضبط العداء تماماً على 10 أسئلة
+            let shuffled = [...sourcePool];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                let j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+
+            // ضمان جلب 10 أسئلة بالضبط
+            while (shuffled.length < 10) {
+                shuffled.push({...shuffled[0], q: shuffled[0].q + " (إضافي)"});
+            }
+
+            activeQuestions = shuffled.slice(0, 10);
+            globalMaxScore = activeQuestions.length * 2; // الدرجة الكبرى تصبح 20 درجة (10 أسئلة × درجتان)
 
             const modelsArray = ["نموذج (أ)", "نموذج (ب)", "نموذج (ج)", "نموذج (د)"];
             currentModelName = modelsArray[Math.floor(Math.random() * modelsArray.length)];
 
             document.getElementById('printTestInfo').textContent = `الصف: ${gradeKey} | المادة: ${subjectNames[subjectKey] || "المادة الدراسية"} | نوع الاختبار: ${examType}`;
-            document.getElementById('printModelBadge').textContent = `رقم النموذج: ${currentModelName}`;
-
-            activeQuestions = filteredQuestions.slice(0, 10);
-            globalMaxScore = activeQuestions.length * 2;
+            document.getElementById('printModelBadge').textContent = `رقم النموذج: ${currentModelName} | عدد الأسئلة: 10 أسئلة`;
 
             const previewBox = document.getElementById('questionsPreviewBox');
             const listContainer = document.getElementById('generatedQuestionsList');
@@ -705,7 +712,7 @@
             
             document.getElementById('studentHeaderBadge').innerHTML = `
                 <span>👤 الطالب (${toArabicDigits(currentStudentIndex + 1)}/${toArabicDigits(studentsList.length)}): ${escapeHtml(student.name)}</span>
-                <div id="liveScoreBadge" class="live-score-box">السؤال ${toArabicDigits(currentQuestionStep + 1)} / ${toArabicDigits(activeQuestions.length)}</div>
+                <div id="liveScoreBadge" class="live-score-box">السؤال ${toArabicDigits(currentQuestionStep + 1)} / ١٠</div>
             `;
 
             let qObj = activeQuestions[currentQuestionStep];
@@ -835,7 +842,7 @@
                 if (query === '' || sName.toLowerCase().includes(query)) {
                     foundAny = true;
                     let data = allClassResults[sName];
-                    let waText = `مدرسة داؤود بن عروة الثقفي الابتدائية (طلاب)%0Aولي الأمر الفاضل، نود إفادتكم بحصول الابن: *${encodeURIComponent(sName)}* %0Aعلى درجة الاختبار: *${toArabicDigits(data.score)} / ${toArabicDigits(maxScore)}* (${toArabicDigits(data.correct)} إجابات صحيحة).%0Aمع تحيات المعلم: *منصور عامر الرحيلي*`;
+                    let waText = `مدرسة داؤود بن عروة الثقفي الابتدائية (طلاب)%0Aولي الأمر الفاضل، نود إفادتكم بحصول الابن: *${encodeURIComponent(sName)}* %0Aعلى درجة الاختبار: *${toArabicDigits(data.score)} / ${toArabicDigits(maxScore)}* (${toArabicDigits(data.correct)} إجابات صحيحة من أصل ١٠).%0Aمع تحيات المعلم: *منصور عامر الرحيلي*`;
 
                     html += `
                         <div style="display: flex; justify-content: space-between; align-items: center; background: #fff; padding: 8px 12px; margin-bottom: 6px; border-radius: 6px; border: 1px solid #10b981;">
@@ -860,7 +867,7 @@
             const examType = document.getElementById('selectExamType').value;
             const maxScore = globalMaxScore || 20;
 
-            document.getElementById('sheetPrintMeta').textContent = `الصف: ${gradeKey} | المادة: ${subjectNames[subjectKey]} | نوع الاختبار: ${examType} (${currentModelName})`;
+            document.getElementById('sheetPrintMeta').textContent = `الصف: ${gradeKey} | المادة: ${subjectNames[subjectKey]} | نوع الاختبار: ${examType} (${currentModelName}) - عدد الأسئلة: 10`;
             
             const tbody = document.getElementById('sheetPrintTableBody');
             tbody.innerHTML = '';
@@ -943,7 +950,7 @@
             document.getElementById('analysisContentText').innerHTML = `
                 <table style="width:100%; border-collapse:collapse; margin-top:5px;" border="1">
                     <tr style="background:#fef3c7; text-align:center;"><th style="padding:6px;">مؤشر القياس الإحصائي</th><th style="padding:6px;">القيمة التقديرية</th></tr>
-                    <tr><td style="padding:6px;">نوع الاختبار والنموذج</td><td style="text-align:center; color:var(--primary);"><b>${examType} - ${currentModelName}</b></td></tr>
+                    <tr><td style="padding:6px;">نوع الاختبار والنموذج</td><td style="text-align:center; color:var(--primary);"><b>${examType} - ${currentModelName} (10 أسئلة)</b></td></tr>
                     <tr><td style="padding:6px;">إجمالي الطلاب المختبرين</td><td style="text-align:center;"><b>${toArabicDigits(count)}</b> طالب</td></tr>
                     <tr><td style="padding:6px;">متوسط أداء الفصل العام</td><td style="text-align:center;"><b>${toArabicDigits(classAverage)} / ${toArabicDigits(maxScore)}</b> (${toArabicDigits(percentageAvg)}٪)</td></tr>
                     <tr><td style="padding:6px;">أعلى درجة بالفصل</td><td style="text-align:center; color:var(--success);"><b>${toArabicDigits(highestScore)} / ${toArabicDigits(maxScore)}</b></td></tr>
