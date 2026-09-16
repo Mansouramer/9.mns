@@ -303,7 +303,7 @@
         </div>
 
         <div class="section-box no-print">
-            <h3>📚 أولاً: إعدادات الاختبار، الصف، والمادة، وتحديد رقم الفصل</h3>
+            <h3>📚 أولاً: إعدادات الاختبار، الصف، والمادة، وتحديد الفصل ورقم الفصل (من ١ إلى ٦)</h3>
             <div class="form-grid">
                 <div class="form-group">
                     <label>نوع الاختبار:</label>
@@ -345,22 +345,32 @@
                         <option value="20">٢٠ سؤالاً (شامل وكبير)</option>
                     </select>
                 </div>
-                <div class="form-group" style="grid-column: 1 / -1;">
-                    <label>🏫 اختيار الصف ورقم الفصل (أو خط فارغ للطباعة):</label>
-                    <select id="selectClassRoom" onchange="toggleCustomClassInput()">
-                        <option value="blank">خط فارغ لاسم الطالب والصف (.........)</option>
-                        <option value="سادس ١" selected>سادس - رقم ١</option>
-                        <option value="سادس ٢">سادس - رقم ٢</option>
-                        <option value="سادس ٣">سادس - رقم ٣</option>
-                        <option value="خامس ١">خامس - رقم ١</option>
-                        <option value="خامس ٢">خامس - رقم ٢</option>
-                        <option value="رابع ١">رابع - رقم ١</option>
-                        <option value="custom">✍️ كتابة فصل آخر يدوياً</option>
+                
+                <!-- اختيار الصف الأساسي -->
+                <div class="form-group">
+                    <label>اختر الصف:</label>
+                    <select id="selectTargetGrade" onchange="updateClassNumberOptions()">
+                        <option value="سادس">الصف السادس</option>
+                        <option value="خامس">الصف الخامس</option>
+                        <option value="رابع">الصف الرابع</option>
+                        <option value="ثالث">الصف الثالث</option>
+                        <option value="ثاني">الصف الثاني</option>
+                        <option value="أول">الصف الأول</option>
+                        <option value="blank">خط فارغ (.........)</option>
                     </select>
                 </div>
-                <div class="form-group" id="customClassBox" style="display: none; grid-column: 1 / -1;">
-                    <label>اكتب اسم أو رقم الفصل:</label>
-                    <input type="text" id="customInputClassName" placeholder="مثال: سادس ٤..." value="">
+
+                <!-- اختيار رقم الفصل من ١ إلى ٦ -->
+                <div class="form-group">
+                    <label>اختر رقم الفصل (من ١ إلى ٦):</label>
+                    <select id="selectClassDigit">
+                        <option value="١">رقم ١</option>
+                        <option value="٢">رقم ٢</option>
+                        <option value="٣">رقم ٣</option>
+                        <option value="٤">رقم ٤</option>
+                        <option value="٥" selected>رقم ٥</option>
+                        <option value="٦">رقم ٦</option>
+                    </select>
                 </div>
             </div>
 
@@ -437,7 +447,7 @@
         </div>
 
         <div class="section-box no-print">
-            <h3>👤 ثالثاً: لوحة التصحيح السريع التفاعلية (طالب بعد طالب حسب الفصل)</h3>
+            <h3>👤 ثالثاً: لوحة التصحيح السريع التفاعلية (طالب بعد طالب حسب الفصل المحدد)</h3>
             <button type="button" class="action-btn btn-success" onclick="startTouchGradingSession()">🚀 بدء جلسة التصحيح ورصد الدرجات بالفصل</button>
 
             <div id="touchGradingCard" class="touch-grading-card">
@@ -649,14 +659,8 @@
             }
         }
 
-        function toggleCustomClassInput() {
-            const classVal = document.getElementById('selectClassRoom').value;
-            const customBox = document.getElementById('customClassBox');
-            if (classVal === 'custom') {
-                customBox.style.display = 'flex';
-            } else {
-                customBox.style.display = 'none';
-            }
+        function updateClassNumberOptions() {
+            // دالة مساعدة لتحديث الخيارات إذا لزم الأمر
         }
 
         function smartGenerateFromLessonText() {
@@ -704,16 +708,14 @@
             const selectEl = document.getElementById('selectQuestionCount');
             const requestedCount = selectEl ? parseInt(selectEl.value) || 10 : 10;
 
-            const classMode = document.getElementById('selectClassRoom').value;
+            const targetGrade = document.getElementById('selectTargetGrade').value;
+            const classDigit = document.getElementById('selectClassDigit').value;
             let displayClassText = "................";
 
-            if (classMode === 'blank') {
+            if (targetGrade === 'blank') {
                 displayClassText = "................";
-            } else if (classMode === 'custom') {
-                let customVal = document.getElementById('customInputClassName').value.trim();
-                displayClassText = customVal !== "" ? customVal : "................";
             } else {
-                displayClassText = classMode;
+                displayClassText = `${targetGrade} - رقم ${classDigit}`;
             }
 
             document.getElementById('printClassValue').textContent = displayClassText;
@@ -843,8 +845,9 @@
 
         function renderCurrentStepView() {
             const student = studentsList[currentStudentIndex];
-            const classMode = document.getElementById('selectClassRoom').value;
-            let displayClassText = (classMode === 'blank' || classMode === 'custom') ? (document.getElementById('customInputClassName').value || "سادس ١") : classMode;
+            const targetGrade = document.getElementById('selectTargetGrade').value;
+            const classDigit = document.getElementById('selectClassDigit').value;
+            let displayClassText = targetGrade === 'blank' ? "خامس - رقم ٥" : `${targetGrade} - رقم ${classDigit}`;
             
             document.getElementById('studentHeaderBadge').innerHTML = `
                 <span>👤 الطالب (${toArabicDigits(currentStudentIndex + 1)}/${toArabicDigits(studentsList.length)}): ${escapeHtml(student.name)} &nbsp;|&nbsp; 🏫 الفصل: ${escapeHtml(displayClassText)}</span>
