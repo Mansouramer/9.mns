@@ -160,6 +160,8 @@
             font-size: 14px;
             margin-bottom: 12px;
             border: 1px solid #34d399;
+            flex-wrap: wrap;
+            gap: 8px;
         }
 
         .live-score-box {
@@ -167,7 +169,7 @@
             color: #f8fafc;
             padding: 6px 12px;
             border-radius: 6px;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: bold;
         }
 
@@ -182,28 +184,34 @@
         .single-step-question-box h4 {
             margin-top: 0;
             color: #9a3412;
-            font-size: 15px;
+            font-size: 15.5px;
             line-height: 1.6;
         }
 
         .options-grid-fast {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
+            gap: 12px;
             margin-top: 12px;
+        }
+
+        @media (max-width: 600px) {
+            .options-grid-fast { grid-template-columns: 1fr; }
         }
 
         .opt-fast-btn {
             background: #fef3c7;
             border: 2px solid #fb923c;
-            color: #9a3412;
-            padding: 12px;
-            border-radius: 8px;
-            font-size: 14px;
+            color: #7c2d12;
+            padding: 14px 16px;
+            border-radius: 10px;
+            font-size: 14.5px;
             font-weight: bold;
             cursor: pointer;
             text-align: right;
-            transition: 0.1s;
+            transition: 0.15s;
+            line-height: 1.5;
+            box-shadow: 0 2px 6px rgba(251, 146, 60, 0.15);
         }
 
         .opt-fast-btn:hover { background: #fde68a; }
@@ -295,7 +303,7 @@
         </div>
 
         <div class="section-box no-print">
-            <h3>📚 أولاً: إعدادات الاختبار، الصف، والمادة، وتحديد الفصل الدراسي</h3>
+            <h3>📚 أولاً: إعدادات الاختبار، الصف، والمادة، وتحديد رقم الفصل</h3>
             <div class="form-grid">
                 <div class="form-group">
                     <label>نوع الاختبار:</label>
@@ -315,7 +323,7 @@
                         <option value="الثالث الابتدائي">الصف الثالث الابتدائي</option>
                         <option value="الرابع الابتدائي">الصف الرابع الابتدائي</option>
                         <option value="الخامس الابتدائي">الصف الخامس الابتدائي</option>
-                        <option value="السادس الابتدائي">الصف السادس الابتدائي</option>
+                        <option value="السادس الابتدائي" selected>الصف السادس الابتدائي</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -338,15 +346,15 @@
                     </select>
                 </div>
                 <div class="form-group" style="grid-column: 1 / -1;">
-                    <label>🏫 تحديد الفصل الدراسي (أو خط فارغ):</label>
+                    <label>🏫 اختيار الصف ورقم الفصل (أو خط فارغ للطباعة):</label>
                     <select id="selectClassRoom" onchange="toggleCustomClassInput()">
-                        <option value="blank">خط فارغ لاسم الطالب (.........)</option>
-                        <option value="سادس ١">فصل سادس ١</option>
-                        <option value="سادس ٢">فصل سادس ٢</option>
-                        <option value="سادس ٣">فصل سادس ٣</option>
-                        <option value="خامس ١">فصل خامس ١</option>
-                        <option value="خامس ٢">فصل خامس ٢</option>
-                        <option value="رابع ١">فصل رابع ١</option>
+                        <option value="blank">خط فارغ لاسم الطالب والصف (.........)</option>
+                        <option value="سادس ١" selected>سادس - رقم ١</option>
+                        <option value="سادس ٢">سادس - رقم ٢</option>
+                        <option value="سادس ٣">سادس - رقم ٣</option>
+                        <option value="خامس ١">خامس - رقم ١</option>
+                        <option value="خامس ٢">خامس - رقم ٢</option>
+                        <option value="رابع ١">رابع - رقم ١</option>
                         <option value="custom">✍️ كتابة فصل آخر يدوياً</option>
                     </select>
                 </div>
@@ -429,8 +437,8 @@
         </div>
 
         <div class="section-box no-print">
-            <h3>👤 ثالثاً: لوحة التصحيح السريع التفاعلية</h3>
-            <button type="button" class="action-btn btn-success" onclick="startTouchGradingSession()">🚀 بدء جلسة التصحيح ورصد الدرجات</button>
+            <h3>👤 ثالثاً: لوحة التصحيح السريع التفاعلية (طالب بعد طالب حسب الفصل)</h3>
+            <button type="button" class="action-btn btn-success" onclick="startTouchGradingSession()">🚀 بدء جلسة التصحيح ورصد الدرجات بالفصل</button>
 
             <div id="touchGradingCard" class="touch-grading-card">
                 <div id="studentHeaderBadge" class="student-title-badge"></div>
@@ -835,9 +843,11 @@
 
         function renderCurrentStepView() {
             const student = studentsList[currentStudentIndex];
+            const classMode = document.getElementById('selectClassRoom').value;
+            let displayClassText = (classMode === 'blank' || classMode === 'custom') ? (document.getElementById('customInputClassName').value || "سادس ١") : classMode;
             
             document.getElementById('studentHeaderBadge').innerHTML = `
-                <span>👤 الطالب (${toArabicDigits(currentStudentIndex + 1)}/${toArabicDigits(studentsList.length)}): ${escapeHtml(student.name)}</span>
+                <span>👤 الطالب (${toArabicDigits(currentStudentIndex + 1)}/${toArabicDigits(studentsList.length)}): ${escapeHtml(student.name)} &nbsp;|&nbsp; 🏫 الفصل: ${escapeHtml(displayClassText)}</span>
                 <div id="liveScoreBadge" class="live-score-box">السؤال ${toArabicDigits(currentQuestionStep + 1)} / ${toArabicDigits(activeQuestions.length)}</div>
             `;
 
