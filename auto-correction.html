@@ -459,7 +459,7 @@
         </div>
 
         <div class="section-box no-print">
-            <h3>👤 ثالثاً: لوحة التصحيح السريع التفاعلية (طالب بعد طالب حسب الصف ورقم الفصل المحدد بدقة)</h3>
+            <h3>👤 ثالثاً: لوحة التصحيح السريع التفاعلية (مطابق تماماً للصف والفصل المختار)</h3>
             <button type="button" class="action-btn btn-success" onclick="startTouchGradingSession()">🚀 بدء جلسة التصحيح ورصد الدرجات بالفصل المحدد</button>
 
             <div id="touchGradingCard" class="touch-grading-card">
@@ -702,31 +702,17 @@
 
         function fetchStudentsForSelectedClass() {
             studentsList = [];
-            const selectedGrade = document.getElementById('selectGrade').value; // مثل: "السادس الابتدائي"
-            const classDigit = document.getElementById('selectClassDigit').value; // مثل: "٤"
-
-            // البحث بدقة عن كشف مخزن مخصص لهذا الصف ورقم الفصل تحديداً حصراً
+            const selectedGrade = document.getElementById('selectGrade').value; // مثال: "السادس الابتدائي"
+            const classDigit = document.getElementById('selectClassDigit').value; // مثال: "٣"
+            
+            // مطابقة مفاتيح الفصول المحفوظة في الداشبورد الرئيسي أو نظام الإدارة (مثل: "السادس ٣", "السادس-٣", "السادس_٣", أو مطابقة الصف ورقم الفصل)
+            let shortGrade = selectedGrade.replace("الصف ", "").replace(" الابتدائي", "").trim(); // "السادس" أو "الخامس"
+            
             for (let i = 0; i < localStorage.length; i++) {
                 let key = localStorage.key(i);
-                if (key && key.includes(selectedGrade) && (key.includes(`فصل ${classDigit}`) || key.includes(`رقم ${classDigit}`) || key.includes(`-${classDigit}`))) {
-                    try {
-                        let data = JSON.parse(localStorage.getItem(key));
-                        if (Array.isArray(data) && data.length > 0) {
-                            let parsed = data.map(item => typeof item === 'string' ? { name: item } : (item.name ? item : null)).filter(Boolean);
-                            if (parsed.length > 0) {
-                                studentsList = parsed;
-                                break;
-                            }
-                        }
-                    } catch(e) {}
-                }
-            }
-
-            // إذا لم يتم العثور على كشف مخزن لهذا الفصل تحديداً، نبحث عن أي كشف عام يخص نفس الصف
-            if (studentsList.length === 0) {
-                for (let i = 0; i < localStorage.length; i++) {
-                    let key = localStorage.key(i);
-                    if (key && key.includes(selectedGrade) && !key.includes('اختبار')) {
+                if (key && key.includes(shortGrade)) {
+                    // التحقق ما إذا كان المفتاح يعبر عن نفس رقم الفصل المحدد بدقة
+                    if (key.includes(classDigit) || key.includes(`فصل ${classDigit}`) || key.includes(`رقم ${classDigit}`)) {
                         try {
                             let data = JSON.parse(localStorage.getItem(key));
                             if (Array.isArray(data) && data.length > 0) {
@@ -741,15 +727,33 @@
                 }
             }
 
-            // إذا لم يوجد أي كشف نهائياً، نقوم بتوليد طلاب افتراضيين خاصين بهذا الصف والفصل حصرياً وبدقة تامة
+            // إذا لم يتم العثور على مفتاح مطابق بدقة، نبحث عن أي كشف يخص الصف الحالي
             if (studentsList.length === 0) {
-                let shortGradeName = selectedGrade.replace("الصف ", "").replace(" الابتدائي", "");
+                for (let i = 0; i < localStorage.length; i++) {
+                    let key = localStorage.key(i);
+                    if (key && key.includes(shortGrade) && !key.includes('اختبار') && !key.includes('سجل')) {
+                        try {
+                            let data = JSON.parse(localStorage.getItem(key));
+                            if (Array.isArray(data) && data.length > 0) {
+                                let parsed = data.map(item => typeof item === 'string' ? { name: item } : (item.name ? item : null)).filter(Boolean);
+                                if (parsed.length > 0) {
+                                    studentsList = parsed;
+                                    break;
+                                }
+                            }
+                        } catch(e) {}
+                    }
+                }
+            }
+
+            // إذا لم يوجد أي كشف مسجل نهائياً، يتم توليد طلاب افتراضيين خاصين بهذا الفصل بالذات دون تداخل مع أي فصل آخر
+            if (studentsList.length === 0) {
                 studentsList = [
-                    { name: `طالب ${shortGradeName} - فصل ${classDigit} الأول` },
-                    { name: `طالب ${shortGradeName} - فصل ${classDigit} الثاني` },
-                    { name: `طالب ${shortGradeName} - فصل ${classDigit} الثالث` },
-                    { name: `طالب ${shortGradeName} - فصل ${classDigit} الرابع` },
-                    { name: `طالب ${shortGradeName} - فصل ${classDigit} الخامس` }
+                    { name: `طالب ${shortGrade} - فصل ${classDigit} (1)` },
+                    { name: `طالب ${shortGrade} - فصل ${classDigit} (2)` },
+                    { name: `طالب ${shortGrade} - فصل ${classDigit} (3)` },
+                    { name: `طالب ${shortGrade} - فصل ${classDigit} (4)` },
+                    { name: `طالب ${shortGrade} - فصل ${classDigit} (5)` }
                 ];
             }
         }
@@ -1213,7 +1217,7 @@
                 <div style="margin-top: 15px; background: #fefce8; padding: 14px; border-radius: 8px; border: 2px solid #eab308;">
                     <h4 style="margin-top:0; color:#b45309;">🛠️ الخطط العلاجية الميدانية للتعامل مع المهارات غير المتقنة:</h4>
                     <div style="font-size: 12px; line-height: 1.7; background: #fef3c7; padding: 10px; border-radius: 6px; border: 1px solid #fde047; max-height: 200px; overflow-y: auto;">
-                        ${remedialPlansHtml}
+                        ${remedialPlans`
                     </div>
                 </div>
             `;
