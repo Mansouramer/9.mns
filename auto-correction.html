@@ -293,6 +293,8 @@
             font-size: 13px;
             line-height: 1.6;
             box-sizing: border-box;
+            page-break-inside: avoid;
+            break-inside: avoid;
         }
 
         .bubble-options {
@@ -343,28 +345,59 @@
         .result-box { display: block; background: #ecfdf5; border: 2px solid #34d399; padding: 18px; border-radius: 12px; margin-top: 15px; font-size: 14px; }
         .sheet-print-container { display: none; background: #fefce8; padding: 20px; border-radius: 12px; border: 2px solid #ca8a04; margin-top: 15px; }
 
-        /* فصل تام ودقيق لمناطق الطباعة لمنع تداخل الاختبار مع التحليل */
+        /* تعديلات قوية وحاسمة لمنع أي صفحة فارغة عند طباعة الأسئلة */
         @media print {
-            @page { size: A4 portrait; margin: 10mm; }
+            @page { 
+                size: A4 portrait; 
+                margin: 8mm; 
+            }
             body * { visibility: hidden !important; }
             
-            /* إذا كان المطلوب طباعة الأسئلة */
-            body.print-exam-mode .questions-preview, 
-            body.print-exam-mode .questions-preview * { 
+            body.print-exam-mode, 
+            body.print-exam-mode * { 
                 visibility: visible !important; 
             }
+            
+            body.print-exam-mode {
+                background: white !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
+            body.print-exam-mode .container {
+                max-width: 100% !important;
+                width: 100% !important;
+                background: white !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                border: none !important;
+                box-shadow: none !important;
+            }
+
+            body.print-exam-mode .section-box {
+                display: none !important;
+            }
+
             body.print-exam-mode .questions-preview { 
-                position: absolute !important; 
+                position: relative !important; 
                 left: 0 !important; 
                 top: 0 !important; 
                 width: 100% !important; 
                 background: white !important; 
+                padding: 0 !important; 
+                margin: 0 !important;
                 border: none !important; 
                 box-shadow: none !important; 
                 display: block !important;
             }
 
-            /* إذا كان المطلوب طباعة كشف الدرجات */
+            /* منع تداخل أو توليد صفحات فارغة خلف العناصر */
+            .questions-preview {
+                page-break-after: avoid;
+                break-after: avoid;
+            }
+
+            /* طباعة كشف الدرجات */
             body.print-sheet-mode .sheet-print-container, 
             body.print-sheet-mode .sheet-print-container * { 
                 visibility: visible !important; 
@@ -379,7 +412,7 @@
                 display: block !important;
             }
 
-            /* إذا كان المطلوب طباعة التحليل والخطط العلاجية */
+            /* طباعة التحليل والخطط */
             body.print-analysis-mode .printable-analysis-area, 
             body.print-analysis-mode .printable-analysis-area * { 
                 visibility: visible !important; 
