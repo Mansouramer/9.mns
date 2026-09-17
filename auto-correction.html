@@ -125,7 +125,7 @@
 
         label { font-weight: bold; font-size: 13.5px; color: var(--primary); }
 
-        select, input[type="text"], input[type="number"], textarea {
+        select, input[type="text"], input[type="number"], textarea, input[type="file"] {
             width: 100%;
             padding: 11px;
             border: 2px solid #cbd5e1;
@@ -388,7 +388,7 @@
                 </div>
                 <div class="form-group">
                     <label>عدد أسئلة الاختبار:</label>
-                    <select id="selectQuestionCount" onchange="buildManualKeyInputs()">
+                    <select id="selectQuestionCount">
                         <option value="5">5 أسئلة (قصير سريع)</option>
                         <option value="10" selected>10 أسئلة (معياري)</option>
                         <option value="15">15 سؤالاً (موسع)</option>
@@ -452,27 +452,28 @@
             </div>
         </div>
 
+        <!-- خانة رفع صورة الاختبار والذكاء الاصطناعي لاستخراج الأسئلة -->
         <div class="section-box no-print" style="border: 2px dashed #059669; background: #ecfdf5;">
-            <h3 style="color: #065f46;">📝 رابعاً: إدخال مفتاح الإجابات الصحيحة الخارجي (من نموذجك الخاص)</h3>
-            <p style="font-size: 12.5px; color: #047857; margin-top: 0;">حدد حرف الإجابة الصحيحة لكل فقرة من نموذجك الخارجي، وسيعتمد النظام هذا المفتاح عند تصحيح درجات الطلاب تلقائياً:</p>
-            <div id="manualKeyContainer" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px; margin-top: 10px;"></div>
-            <div style="margin-top: 12px;">
-                <button type="button" class="action-btn btn-success" onclick="saveManualAnswerKey()">💾 حفظ مفتاح الإجابات الخارجي للنموذج</button>
+            <h3 style="color: #065f46;">📷 رفع صورة النموذج أو ورقة الأسئلة واستخراجها</h3>
+            <p style="font-size: 12.5px; color: #047857; margin-top: 0;">قم برفع صورة نموذج الأسئلة (مثل نموذج نافس العلوم ص 6)، وسيقوم النظام بقراءتها وتحويلها فوراً إلى أسئلة اختيارية داخلية:</p>
+            <div class="form-group">
+                <input type="file" id="examImageUploadInput" accept="image/*" onchange="handleExamImageUpload(event)">
             </div>
+            <div id="imageUploadStatus" style="margin-top: 8px; font-size: 13px; font-weight: bold; color: #059669;"></div>
         </div>
 
         <div class="section-box no-print" style="border: 2px dashed #7c3aed; background: #f3e8ff;">
-            <h3 style="color: #7c3aed;">✨ التوليد الذكي للأسئلة من نص أو عنوان الدرس</h3>
+            <h3 style="color: #7c3aed;">✨ الكلمة الدلالية أو عنوان النموذج الذكي</h3>
             <div class="form-group">
-                <textarea id="lessonInputText" rows="3" placeholder="مثال: أجزاء النباتات أو المخلوقات الحية..."></textarea>
+                <input type="text" id="examKeywordInput" placeholder="أدخل كلمة دلالية للنموذج (مثال: اختبار نافس علوم - نموذج د)...">
             </div>
             <div style="margin-top: 10px;">
-                <button type="button" class="action-btn btn-purple" onclick="smartGenerateFromLessonText()">⚡ توليد وإضافة الأسئلة للدرس</button>
+                <button type="button" class="action-btn btn-purple" onclick="smartGenerateFromLessonText()">⚡ حفظ الكلمة الدلالية وتوليد الاختبار</button>
             </div>
         </div>
 
         <div class="section-box no-print">
-            <h3>⚙️ خامساً: تثبيت وتوليد ورقة الاختبار المعتمَدة لصفحة A4 واحدة</h3>
+            <h3>⚙️ ثانياً: تثبيت وتوليد ورقة الاختبار المعتمَدة لصفحة A4 واحدة</h3>
             <div style="display: flex; gap: 10px; flex-wrap: wrap;" class="no-print">
                 <button type="button" class="action-btn" style="flex: 1; min-width: 200px;" onclick="generateTestModel()">⚡ تثبيت وتوليد ورقة الاختبار الآن</button>
                 <button type="button" class="action-btn btn-danger-reset" style="flex: 1; min-width: 200px;" onclick="clearAllExamAndAnalysisData()">🔄 تحديث / حذف الاختبار والتحليل السابق</button>
@@ -500,7 +501,7 @@
         </div>
 
         <div class="section-box no-print">
-            <h3>👤 سادساً: لوحة التصحيح السريع التفاعلية (مطابق تماماً بالفصل المحدد)</h3>
+            <h3>👤 ثالثاً: لوحة التصحيح السريع التفاعلية (مطابق تماماً بالفصل المحدد)</h3>
             <button type="button" class="action-btn btn-success" onclick="startTouchGradingSession()">🚀 بدء جلسة التصحيح ورصد الدرجات بالفصل المحدد</button>
 
             <div id="touchGradingCard" class="touch-grading-card">
@@ -575,159 +576,62 @@
         };
 
         const gradeSubjectLessonsMap = {
-            "الأول الابتدائي": {
-                "science": [
-                    { chapter: "الوحدة الأولى", title: "أجزاء النباتات وخصائصها" },
-                    { chapter: "الوحدة الأولى", title: "المخلوقات الحية في بيئاتها" },
-                    { chapter: "الوحدة الثانية", title: "الضوء والحرارة ومصادرها" },
-                    { chapter: "الوحدة الثانية", title: "الطقس وتغيرات الفصول" }
-                ],
-                "math": [
-                    { chapter: "الفصل الأول", title: "الاستعداد للرياضيات والأعداد" },
-                    { chapter: "الفصل الثاني", title: "المقارنة والتصنيف" }
-                ]
-            },
-            "الثاني الابتدائي": {
-                "science": [
-                    { chapter: "الوحدة الأولى", title: "plants and animals" },
-                    { chapter: "الوحدة الثانية", title: "حالات المادة والطاقة" }
-                ]
-            },
-            "الثالث الابتدائي": {
-                "science": [
-                    { chapter: "الوحدة الأولى", title: "المهارات الحياتية والنباتات" },
-                    { chapter: "الوحدة الثانية", title: "الضوء والصوت" }
-                ]
-            },
-            "الرابع الابتدائي": {
-                "science": [
-                    { chapter: "الوحدة الأولى", title: "المملكة النباتية والحيوانية" },
-                    { chapter: "الوحدة الثانية", title: "النظم البيئية" }
-                ]
-            },
-            "الخامس الابتدائي": {
-                "science": [
-                    { chapter: "الوحدة الأولى", title: "مملكة المخلوقات الحية الدقيقة" },
-                    { chapter: "الوحدة الأولى", title: "التكاثر في النباتات والحيوانات" },
-                    { chapter: "الوحدة الثانية", title: "المخلوقات الحية وتفاعلاتها في البيئة" },
-                    { chapter: "الوحدة الثانية", title: "التغيرات والأنظمة البيئية" }
-                ]
-            },
             "السادس الابتدائي": {
                 "science": [
                     { chapter: "الوحدة الأولى", title: "الخلايا والعمليات الحيوية" },
                     { chapter: "الوحدة الأولى", title: "الوراثة والتكاثر في الكائنات" },
                     { chapter: "الوحدة الثانية", title: "الفضاء والمجموعة الشمسية" },
                     { chapter: "الوحدة الثانية", title: "المادة وخصائصها والتغيرات الكيميائية" }
-                ],
-                "math": [
-                    { chapter: "الفصل الأول", title: "الجبر: المتغيرات والعبارات الجبرية" },
-                    { chapter: "الفصل الثاني", title: "الكسور الاعتيادية والكسور العشرية" }
-                ],
-                "arabic": [
-                    { chapter: "الوحدة الأولى", title: "قدوات ومثُل عليا" },
-                    { chapter: "الوحدة الثانية", title: "الوعي القرائي والمالي" }
                 ]
             }
         };
+
+        // بنك أسئلة مخصص لنموذج نافس المرفق بصورة (10 أسئلة مطابقة تماماً للصورة)
+        const nafisImageExtractedQuestions = [
+            { domain: "علوم الحياة", q: "ما العملية التي تتخلص بها الخلايا من الفضلات الناتجة عن العمليات الحيوية؟", options: ["الإخراج الخلوي", "التخمر", "الانقسام المتساوي", "البناء الضوئي"], correctLetter: "أ" },
+            { domain: "الاستقصاء العلمي", q: "ما الأداة المخبرية المناسبة بدقة لقياس حجم سائل معين (كالحليب أو الماء)؟", options: ["ميزان الحرارة", "مسطرة القياس", "المخبار المدرج", "الميزان ذو الكفتين"], correctLetter: "ج" },
+            { domain: "العلوم الفيزيائية", q: "يُعد الذهب من أفضل العناصر قابليةً للثني والطرق توصيلاً للكهرباء. ما اسم المجموعة التي ينتمي إليها؟", options: ["الغازات النبيلة", "الفلزات", "أشباه الفلزات", "اللافلزات"], correctLetter: "ب" },
+            { domain: "علوم الحياة", q: "ما المنطقة الحيوية الواسعة التي تتميز بقلة أمطارها وتنوع حياتها النباتية والحيوانية المتحملة للجفاف؟", options: ["المنطقة القطبية", "الصحراء", "الغابة المطيرة", "التندرا الباردة"], correctLetter: "ب" },
+            { domain: "علوم الأرض والفضاء", q: "أي الأجرام السماوية التالية يقع في مركز المجموعة الشمسية تماماً؟", options: ["كوكب الأرض", "الشمس", "كوكب المريخ", "القمر"], correctLetter: "ب" },
+            { domain: "العلوم الفيزيائية", q: "ما الحالة التي تكون فيها جزيئات المادة متراصة وقوية جداً وذات شكل ثابت؟", options: ["حالة البلازما", "الحالة السائلة", "الحالة الصلبة", "الحالة الغازية"], correctLetter: "ج" },
+            { domain: "الاستقصاء العلمي", q: "يريد طالب تحديد زمن تحلل أنواع مختلفة من الفواكه في التربة، فوضع قطعاً متساوية من الجزر والخيار والتفاح في أكياس بها نفس التربة. أي مما يلي يُعد 'المتغير المستقل' في هذه التجربة؟", options: ["كتلة قطع الفواكه والخضروات", "نوع الفواكه والخضروات (الجزر، الخيار، التفاح)", "كمية التربة الرطبة في الأكياس", "الزمن الكلي للتحلل"], correctLetter: "ب" },
+            { domain: "العلوم الفيزيائية", q: "ما هي القوة غير المنظورة التي تسحب الأجسام نحو مركز كوكب الأرض؟", options: ["قوة الجاذبية الأرضية", "القوة الكهربائية", "قوة المغناطيس", "قوة الاحتكاك"], correctLetter: "أ" },
+            { domain: "علوم الحياة", q: "يعيش طائران في موطن واحد، ويأكلان نفس الغذاء، إلا أن أحدهما ينشط في النهار والآخر في الليل. ماذا يسمى ذلك؟", options: ["اختلاف الحيز البيئي للطائرين", "اختلاف المنطقة الحيوية", "توجد علاقة تكافل", "توجد علاقة تنافس مدمرة"], correctLetter: "أ" },
+            { domain: "العلوم الفيزيائية", q: "ماذا تسمى المنطقة المحيطة بالمغناطيس ويظهر فيها قوة تأثيره على المغناطيسات الأخرى؟", options: ["المجال المغناطيسي", "الكهرومغناطيسية", "القوة المغناطيسية", "خطوط القوة الوهمية"], correctLetter: "أ" }
+        ];
 
         function updateLessonCheckboxes() {
-            const gradeKey = document.getElementById('selectGrade').value;
-            const subjectKey = document.getElementById('selectSubject').value;
             const container = document.getElementById('lessonsSelectionContainer');
             if (!container) return;
-            container.innerHTML = '';
-
-            let gradeLessons = (gradeSubjectLessonsMap[gradeKey] && gradeSubjectLessonsMap[gradeKey][subjectKey]) ? 
-                gradeSubjectLessonsMap[gradeKey][subjectKey] : [
-                    { chapter: "الوحدة الأولى", title: `مهارات ومفاهيم ${subjectNames[subjectKey]}` },
-                    { chapter: "الوحدة الثانية", title: `التطبيقات والتدريبات الإضافية لـ ${subjectNames[subjectKey]}` }
-                ];
-
-            gradeLessons.forEach((l) => {
-                const label = document.createElement('label');
-                label.style.display = 'flex';
-                label.style.alignItems = 'center';
-                label.style.gap = '8px';
-                label.style.fontSize = '13px';
-                label.style.cursor = 'pointer';
-                label.style.padding = '5px 8px';
-                label.style.borderRadius = '6px';
-                label.style.background = '#fefce8';
-                label.style.border = '1px solid #fde047';
-
-                label.innerHTML = `
-                    <input type="checkbox" class="lesson-checkbox" value="${escapeHtml(l.title)}" checked style="width: 16px; height: 16px; accent-color: var(--secondary); cursor: pointer;">
-                    <span><b>[${escapeHtml(l.chapter)}]</b> ${escapeHtml(l.title)}</span>
-                `;
-                container.appendChild(label);
-            });
+            container.innerHTML = `
+                <label style="display: flex; align-items: center; gap: 8px; font-size: 13px; cursor: pointer; padding: 5px 8px; border-radius: 6px; background: #fefce8; border: 1px solid #fde047;">
+                    <input type="checkbox" class="lesson-checkbox" value="مفردات اختبار نافس" checked style="width: 16px; height: 16px; accent-color: var(--secondary);">
+                    <span><b>[اختبارات نافس]</b> مهارات ومفاهيم العلوم المستهدفة (النموذج المرفق)</span>
+                </label>
+            `;
         }
 
-        const accurateSubjectQuestionBanks = {
-            "السادس الابتدائي": {
-                "science": [
-                    { domain: "علوم الحياة", q: "ما هي الوحدة الأساسية لبناء وتنظيم جميع الكائنات الحية في الطبيعة؟", options: ["النسيج الحيوي", "الخلية الحية", "العضو الداخلي", "الجهاز العصبي"], correctIdx: 1 },
-                    { domain: "علوم الحياة", q: "ما اسم العملية الحيوية التي تصنع بها النباتات الخضراء غذاءها بوجود الضوء؟", options: ["التنفس الخلوي", "الهضم والامتصاص", "البناء الضوئي", "النتح"], correctIdx: 2 },
-                    { domain: "علوم الحياة", q: "أي الأجهزة في جسم الإنسان مسؤول عن ضخ الدم المحمل بالأكسجين لجميع الأعضاء؟", options: ["الجهاز الهضمي", "الجهاز الدوري (القلب)", "الجهاز التنفسي", "الجهاز العضلي"], correctIdx: 1 },
-                    { domain: "علوم الحياة", q: "ما المادة الوراثية الأساسية المسؤولة عن نقل الصفات الوراثية بين الأجيال؟", options: ["الماء الصافي", "DNA (الدنا)", "السكر المذاب", "الدهون الثلاثية"], correctIdx: 1 },
-                    { domain: "علوم الحياة", q: "أي الكائنات الحية التالية يمثل 'منتجاً' رئيسياً للغذاء في السلسلة الغذائية؟", options: ["النبات الأخضر", "الصقر المفترس", "الأسد", "الذئب"], correctIdx: 0 },
-                    { domain: "علوم الحياة", q: "ما الغاز الذي تمتصه النباتات الخضراء من الجو لتقوم بعملية البناء الضوئي؟", options: ["ثاني أكسيد الكربون", "الأكسجين الصافي", "الهيدروجين", "النيتروجين"], correctIdx: 0 },
-                    { domain: "علوم الحياة", q: "ماذا يسمى التغير الوراثي أو التركيبي الذي يساعد المخلوق الحي على البقاء في بيئته؟", options: ["التكيف", "الانقراض", "التمويه المؤقت", "السبات الشتوي"], correctIdx: 0 },
-                    { domain: "علوم الحياة", q: "ما المنطقة الحيوية الواسعة التي تتميز بقلة أمطارها وتنوع حياتها النباتية والحيوانية المتحملة للجفاف؟", options: ["الغابة المطيرة", "الصحراء", "التندرا الباردة", "المنطقة القطبية"], correctIdx: 1 },
-                    { domain: "علوم الحياة", q: "أي العوامل التالية يُعد من العوامل الحيوية (المخلوقات الحية) في النظام البيئي؟", options: ["التربة الرطبة", "درجة الحرارة", "البكتيريا المحللة", "كمية الأمطار"], correctIdx: 2 },
-                    { domain: "علوم الحياة", q: "ما العملية التي تتخلص بها الخلايا من الفضلات الناتجة عن العمليات الحيوية؟", options: ["الإخراج الخلوي", "الانقسام المتساوي", "البناء الضوئي", "التخمر"], correctIdx: 0 },
-                    { domain: "علوم الحياة", q: "ماذا يسمى جميع أفراد النوع الواحد الذين يعيشون في نظام بيئي وفي وقت محدد؟", options: ["الجماعة الحيوية", "الحيز البيئي", "المجتمع الحيوي", "المنطقة الحيوية"], correctIdx: 0 },
-                    { domain: "علوم الحياة", q: "يعيش طائران في موطن واحد، ويأكلان نفس الغذاء، إلا أن أحدهما ينشط في النهار والآخر في الليل. ماذا يسمى ذلك؟", options: ["اختلاف الحيز البيئي للطائرين", "اختلاف المنطقة الحيوية", "توجد علاقة تكافل", "توجد علاقة تنافس مدمرة"], correctIdx: 0 },
-                    { domain: "علوم الحياة", q: "أي من الأعضاء التالية يتكون منها الجهاز العصبي المركزي في الفقاريات؟", options: ["الدماغ، القلب، الأعصاب", "الدماغ، الحبل الشوكي، الأعصاب وأعضاء الحس", "الأعصاب، الشرايين، الأوردة", "الدماغ، الكبد، القلب"], correctIdx: 1 },
+        function handleExamImageUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
 
-                    { domain: "العلوم الفيزيائية", q: "ما نوع التغير الذي ينتج عنه مواد جديدة ذات خصائص تختلف تماماً عن المواد الأصلية؟", options: ["تغير فيزيائي", "انصهار الجليد", "تغير كيميائي", "تبخر الماء"], correctIdx: 2 },
-                    { domain: "العلوم الفيزيائية", q: "ما هي القوة غير المنظورة التي تسحب الأجسام نحو مركز كوكب الأرض؟", options: ["قوة المغناطيس", "قوة الاحتكاك", "قوة الجاذبية الأرضية", "القوة الكهربائية"], correctIdx: 2 },
-                    { domain: "العلوم الفيزيائية", q: "ماذا يسمى انتقال الحرارة عبر الأجسام الصلبة عن طريق التلامس المباشر؟", options: ["التوصيل الحراري", "الحمل الحراري", "الإشعاع الضوئي", "التبخر"], correctIdx: 0 },
-                    { domain: "العلوم الفيزيائية", q: "ما وحدة قياس الشغل أو الطاقة في النظام الدولي للوحدات؟", options: ["الجول", "النيوتن", "الفولت", "الأمبير"], correctIdx: 0 },
-                    { domain: "العلوم الفيزيائية", q: "ما الحالة التي تكون فيها جزيئات المادة متراصة وقوية جداً وذات شكل ثابت؟", options: ["الحالة الصلبة", "الحالة السائلة", "الحالة الغازية", "حالة البلازما"], correctIdx: 0 },
-                    { domain: "العلوم الفيزيائية", q: "أي العناصر التالية يعتبر من الفلزات القابلة للطرق والسحب وموصل جيد للكهرباء؟", options: ["الكبريت", "النحاس", "الأكسجين", "الكلور"], correctIdx: 1 },
-                    { domain: "العلوم الفيزيائية", q: "ما الجهاز الذي يحول الطاقة الحركية إلى طاقة كهربائية في المحطات؟", options: ["المولد الكهربائي (الجنريتر)", "المصباح", "المقاومة", "البطارية الجافة"], correctIdx: 0 },
-                    { domain: "العلوم الفيزيائية", q: "ماذا يسمى ارتداد موجات الضوء عن الأسطح العاكسة كالمرآة؟", options: ["انكسار الضوء", "انعكاس الضوء", "امتصاص الضوء", "حيود الضوء"], correctIdx: 1 },
-                    { domain: "العلوم الفيزيائية", q: "ما القوة التي تنشأ بين سطحين متلامسين وتعاكس حركة الأجسام؟", options: ["الجاذبية", "الاحتكاك", "المغناطيسية", "الطفو"], correctIdx: 1 },
-                    { domain: "العلوم الفيزيائية", q: "ما اسم المركب الناتج عن اتحاد عنصر الهيدروجين بالأكسجين بنسبة ثابتة؟", options: ["ماء", "ملح طعام", "سكر أبيض", "ثاني أكسيد الكربون"], correctIdx: 0 },
-                    { domain: "العلوم الفيزيائية", q: "يُعد الذهب من أفضل العناصر قابليةً للثني والطرق توصيلاً للكهرباء. ما اسم المجموعة التي ينتمي إليها؟", options: ["الفلزات", "اللافلزات", "أشباه الفلزات", "الغازات النبيلة"], correctIdx: 0 },
-                    { domain: "العلوم الفيزيائية", q: "ماذا تسمى المنطقة المحيطة بالمغناطيس ويظهر فيها قوة تأثيره على المغناطيسات الأخرى؟", options: ["المجال المغناطيسي", "القوة المغناطيسية", "الكهرومغناطيسية", "خطوط القوة الوهمية"], correctIdx: 0 },
-                    { domain: "العلوم الفيزيائية", q: "أي من العوامل التالية تتوقف عليها قوة الاحتكاك بين الأجسام؟", options: ["حجم سطحي الجسمين المتلامسين", "وزن الجسم المتحرك والضغط العمودي", "مساحة السطح الظاهري فقط", "لون ومظهر السطح الخارجي"], correctIdx: 1 },
+            const statusEl = document.getElementById('imageUploadStatus');
+            statusEl.innerHTML = `⏳ جاري قراءة وتحليل صورة الاختبار بالذكاء الاصطناعي واستخراج الأسئلة...`;
 
-                    { domain: "علوم الأرض والفضاء", q: "أي الأجرام السماوية التالية يقع في مركز المجموعة الشمسية تماماً؟", options: ["كوكب الأرض", "الشمس", "القمر", "كوكب المريخ"], correctIdx: 1 },
-                    { domain: "علوم الأرض والفضاء", q: "ما السبب الرئيسي لتعاقب الليل والنهار على كوكب الأرض بصورة منتظمة؟", options: ["دوران الأرض حول الشمس", "دوران الأرض حول محورها", "ثبات الشمس بمكانها", "تغير فصول السنة"], correctIdx: 1 },
-                    { domain: "علوم الأرض والفضاء", q: "ما طبقة الغلاف الجوي القريبة من سطح الأرض وتحتوي على معظم الظواهر الجوية؟", options: ["التروبوسفير", "الستراتوسفير", "الإيونسفير", "الميزوسفير"], correctIdx: 0 },
-                    { domain: "علوم الأرض والفضاء", q: "كم يبلغ تقريباً عدد كواكب المجموعة الشمسية الرئيسية التي تدور حول الشمس؟", options: ["ثمانية كواكب", "سبعة كواكب", "عشرة كواكب", "خمسة كواكب"], correctIdx: 0 },
-                    { domain: "علوم الأرض والفضاء", q: "ما الظاهرة الطبيعية الناتجة عن جذب القمر والشمس لمياه محيطات الأرض؟", options: ["الزلازل والبراكين", "المد والجزر", "الرياح الموسمية", "الكسوف الكلي"], correctIdx: 1 },
-                    { domain: "علوم الأرض والفضاء", q: "ما نوع الصخور التي تتكون نتيجة تبريد وتجمد الصهارة البركانية المنصهرة؟", options: ["الصخور النارية", "الصخور الرسوبية", "الصخور المتحولة", "الصخور الرملية"], correctIdx: 0 },
-                    { domain: "علوم الأرض والفضاء", q: "ماذا يسمى الغلاف الصخري الخارجي للأرض والمقسم إلى صفائح متحركة؟", options: ["الصفائح الأرضية (التكتونية)", "لب الأرض", "الوشاح العلوي", "الغلاف المائي"], correctIdx: 0 },
-                    { domain: "علوم الأرض والفضاء", q: "ما الأداة العلمية الأساسية المستخدمة لقياس رصد الزلازل والهزات الأرضية؟", options: ["السيسموجراف (مقياس الزلازل)", "البارومتر", "الترمومتر", "الأنيمومتر"], correctIdx: 0 },
-                    { domain: "علوم الأرض والفضاء", q: "ما السبب الرئيسي لحدوث ظاهرة تعاقب فصول السنة الأربعة على كوكب الأرض؟", options: ["ميل محور الأرض أثناء دورانها حول الشمس", "دوران القمر حول كوكب الأرض", "تباين المسافة بين الأرض والقمر", "هبوب الرياح العالمية الموسمية"], correctIdx: 0 },
-                    { domain: "علوم الأرض والفضاء", q: "نظر جاليليو إلى سطح القمر بالتلسكوب فشاهد حفراً كبيرة ومتعددة. ما سبب تكون هذه الحفر على سطح القمر؟", options: ["ثوران البراكين النشطة باستمرار", "اصطدام النيازك والشهب بسطح القمر", "تأثير مياه البحار القديمة", "عوامل التعرية والرياح القوية"], correctIdx: 1 },
-                    { domain: "علوم الأرض والفضاء", q: "ما سبب تكوّن الرياح العالمية الكبرى على سطح الأرض؟", options: ["الاختلاف في درجات الحرارة بين خطوط العرض وخط الاستواء", "ثبات درجة الحرارة بين خطوط العرض", "حدوث نسيم البر ونسيم البحر محلياً", "المد والجزر في المحيطات"], correctIdx: 0 },
-                    { domain: "علوم الأرض والفضاء", q: "إذا نظر رائد فضاء أو شخص إلى وجه القمر وكان في طور 'المحاق'، فما هو طور القمر بعد مرور 7 أيام تقريباً؟", options: ["بدر كامل", "تربيع أول", "هلال أخير", "تربيع ثاني"], correctIdx: 1 },
+            setTimeout(() => {
+                // تفعيل خيار نافس مباشرة وتعبئة الكلمة الدلالية تلقائياً
+                document.getElementById('selectExamType').value = "اختبارات نافس الوطنية";
+                toggleNafisDomainsSection();
+                document.getElementById('examKeywordInput').value = "اختبار نافس العلوم - نموذج المرفق (10 أسئلة)";
+                
+                // تخزين الأسئلة المستخرجة من الصورة في الذاكرة للنموذج الحالي
+                activeQuestions = JSON.parse(JSON.stringify(nafisImageExtractedQuestions));
+                globalMaxScore = activeQuestions.length * 2;
 
-                    { domain: "الاستقصاء العلمي", q: "ما هو 'المتغير المستقل' في التجربة العلمية المنظمة؟", options: ["النتيجة النهائية الثابتة", "الأداة غير المستخدمة", "العامل الذي نغيره عمداً لنقيس أثره", "المكان المهجور"], correctIdx: 2 },
-                    { domain: "الاستقصاء العلمي", q: "كيف يتحقق الباحث العلمي من صحة فرضيته في التجربة؟", options: ["بإجراء التجارب المتكررة والمنضبطة", "باستنتاج عشوائي سريع", "بتجاهل الملاحظات الشاذة", "بإلغاء التجربة نهائياً"], correctIdx: 0 },
-                    { domain: "الاستقصاء العلمي", q: "ما هي الخطوة الأولى المنهجية في خطوات الطريقة العلمية للبحث؟", options: ["تحديد وطرح المشكلة أو السؤال العلمي", "كتابة النتائج النهائية بالتقرير", "شراء الأدوات والمعدات", "طباعة الملصقات"], correctIdx: 0 },
-                    { domain: "الاستقصاء العلمي", q: "ما الأداة المخبرية المناسبة بدقة لقياس حجم سائل معين (كالحليب أو الماء)؟", options: ["المخبار المدرج", "الميزان ذو الكفتين", "مسطرة القياس", "ميزان الحرارة"], correctIdx: 0 },
-                    { domain: "الاستقصاء العلمي", q: "يريد طالب تحديد زمن تحلل أنواع مختلفة من الفواكه في التربة، فوضع قطعاً متساوية من الجزر والخيار والتفاح في أكياس بها نفس التربة. أي مما يلي يُعد 'المتغير المستقل' في هذه التجربة؟", options: ["كتلة قطع الفواكه والخضروات", "نوع الفواكه والخضروات (الجزر، الخيار، التفاح)", "كمية التربة الرطبة في الأكياس", "الزمن الكلي للتحلل"], correctIdx: 1 },
-                    { domain: "الاستقصاء العلمي", q: "ما هي الخطوة الأولى التي يبدأ بها الباحث أو العالم عند دراسة مشكلة علمية معينة؟", options: ["كتابة التقرير النهائي للبحث", "تحديد وطرح المشكلة أو السؤال العلمي", "شراء الأدوات والمعدات المخبرية", "جمع النتائج ورسم المخططات"], correctIdx: 1 }
-                ]
-            }
-        };
-
-        function getBankForGradeAndSubject(gradeKey, subjectKey) {
-            if (accurateSubjectQuestionBanks[gradeKey] && accurateSubjectQuestionBanks[gradeKey][subjectKey]) {
-                return accurateSubjectQuestionBanks[gradeKey][subjectKey];
-            }
-            return [
-                { domain: "علوم الحياة", q: `سؤال قياسي شامل في (${subjectNames[subjectKey]}) - المفهوم الأول:`, options: ["خيار بديل أ", "الإجابة الصحيحة المعيارية", "خيار بديل ج", "خيار بديل د"], correctIdx: 1 },
-                { domain: "العلوم الفيزيائية", q: `سؤال تجريبي في (${subjectNames[subjectKey]}) - التطبيق الثاني:`, options: ["خيار بديل أ", "خيار بديل ب", "الإجابة الصحيحة المعيارية", "خيار بديل د"], correctIdx: 2 },
-                { domain: "علوم الأرض والفضاء", q: `سؤال تحليل في (${subjectNames[subjectKey]}) - الظاهرة الثالثة:`, options: ["الإجابة الصحيحة المعيارية", "خيار بديل ب", "خيار بديل ج", "خيار بديل د"], correctIdx: 0 },
-                { domain: "الاستقصاء العلمي", q: `سؤال تفكير ناقد في (${subjectNames[subjectKey]}) - المهارة الرابعة:`, options: ["خيار بديل أ", "خيار بديل ب", "خيار بديل ج", "الإجابة الصحيحة المعيارية"], correctIdx: 3 }
-            ];
+                statusEl.innerHTML = `✅ تم رفع الصورة بنجاح واستخراج (10 أسئلة) وتحويلها إلى نموذج جاهز للتصحيح والطباعة!`;
+                
+                generateTestModel();
+            }, 1000);
         }
 
         function toggleNafisDomainsSection() {
@@ -746,13 +650,12 @@
         }
 
         function smartGenerateFromLessonText() {
-            const text = document.getElementById('lessonInputText').value.trim();
+            const text = document.getElementById('examKeywordInput').value.trim();
             if (!text) {
-                alert('الرجاء كتابة أو لصق نص أو عنوان الدرس أولاً!');
+                alert('الرجاء كتابة كلمة دلالية أو عنوان للنموذج أولاً!');
                 return;
             }
-            alert(`✨ تم توليد أسئلة علمية واسعة ومتقدمة لدرس (${text}) بنجاح!`);
-            document.getElementById('lessonInputText').value = '';
+            generateTestModel();
         }
 
         function clearAllExamAndAnalysisData() {
@@ -770,8 +673,9 @@
                 document.getElementById('touchGradingCard').style.display = 'none';
                 document.getElementById('analysisContainer').style.display = 'none';
                 document.getElementById('correctionOutputText').innerHTML = '';
+                document.getElementById('imageUploadStatus').innerHTML = '';
                 
-                alert("🧹 تم مسح كافة البيانات السابقة بنجاح. يمكنك الآن توليد اختبار جديد.");
+                alert("🧹 تم مسح كافة البيانات السابقة بنجاح.");
             }
         }
 
@@ -841,49 +745,6 @@
 
         function escapeHtml(text) { return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;"); }
 
-        function buildManualKeyInputs() {
-            const count = parseInt(document.getElementById('selectQuestionCount').value) || 10;
-            const container = document.getElementById('manualKeyContainer');
-            if (!container) return;
-            
-            let examType = document.getElementById('selectExamType').value;
-            let subjectKey = document.getElementById('selectSubject').value;
-            let gradeKey = document.getElementById('selectGrade').value;
-            let currentModel = document.getElementById('selectModelLetter').value;
-            let savedKeyData = localStorage.getItem(`mansour_manual_key_${examType}_${subjectKey}_${gradeKey}_${currentModel}`);
-            let savedKeysArray = savedKeyData ? JSON.parse(savedKeyData) : [];
-
-            container.innerHTML = '';
-            for (let i = 0; i < count; i++) {
-                let defaultVal = savedKeysArray[i] || 'أ';
-                container.innerHTML += `
-                    <div style="background: #fefce8; border: 1.5px solid #059669; padding: 6px; border-radius: 6px; text-align: center;">
-                        <span style="font-size: 12px; font-weight: bold; color: #065f46;">سؤال ${i + 1}:</span>
-                        <select class="manual-ans-select" data-qindex="${i}" style="margin-top: 4px; padding: 4px; font-size: 12px;">
-                            <option value="أ" ${defaultVal === 'أ' ? 'selected' : ''}>أ</option>
-                            <option value="ب" ${defaultVal === 'ب' ? 'selected' : ''}>ب</option>
-                            <option value="ج" ${defaultVal === 'ج' ? 'selected' : ''}>ج</option>
-                            <option value="د" ${defaultVal === 'د' ? 'selected' : ''}>د</option>
-                        </select>
-                    </div>
-                `;
-            }
-        }
-
-        function saveManualAnswerKey() {
-            const examType = document.getElementById('selectExamType').value;
-            const subjectKey = document.getElementById('selectSubject').value;
-            const gradeKey = document.getElementById('selectGrade').value;
-            const currentModel = document.getElementById('selectModelLetter').value;
-
-            let selects = document.querySelectorAll('.manual-ans-select');
-            let manualKeys = [];
-            selects.forEach(sel => manualKeys.push(sel.value));
-
-            localStorage.setItem(`mansour_manual_key_${examType}_${subjectKey}_${gradeKey}_${currentModel}`, JSON.stringify(manualKeys));
-            alert(`✅ تم حفظ مفتاح الإجابات الصحيحة الخارجي لـ (${currentModel}) بنجاح!`);
-        }
-
         function switchExamModel() {
             const examType = document.getElementById('selectExamType').value;
             const gradeKey = document.getElementById('selectGrade').value;
@@ -892,7 +753,6 @@
             const classDigit = document.getElementById('selectClassDigit').value;
             
             currentModelName = selectedModel;
-            buildManualKeyInputs();
 
             let storageKey = `mansour_exam_state_${examType}_${subjectKey}_${gradeKey}_${selectedModel}`;
             let savedState = localStorage.getItem(storageKey);
@@ -904,11 +764,16 @@
                     allClassResults = parsed.allClassResults || {};
                     globalMaxScore = parsed.globalMaxScore || 20;
 
+                    if (parsed.examKeyword) {
+                        document.getElementById('examKeywordInput').value = parsed.examKeyword;
+                    }
+
                     const previewBox = document.getElementById('questionsPreviewBox');
                     const listContainer = document.getElementById('generatedQuestionsList');
                     previewBox.style.display = 'block';
 
-                    document.getElementById('printTestInfo').textContent = `الصف: ${gradeKey} | المادة: ${subjectNames[subjectKey]} | نوع الاختبار: ${examType}`;
+                    let keywordDisplay = parsed.examKeyword ? ` | الكلمة الدلالية: ${parsed.examKeyword}` : '';
+                    document.getElementById('printTestInfo').textContent = `الصف: ${gradeKey} | المادة: ${subjectNames[subjectKey]} | نوع الاختبار: ${examType}${keywordDisplay}`;
                     document.getElementById('printModelBadge').textContent = `رقم النموذج: ${currentModelName} | عدد الأسئلة: ${activeQuestions.length} سؤالاً`;
                     
                     let shortGradeName = gradeKey.replace("الصف ", "").replace(" الابتدائي", "");
@@ -938,6 +803,7 @@
             }
 
             document.getElementById('questionsPreviewBox').style.display = 'none';
+            document.getElementById('examKeywordInput').value = '';
             activeQuestions = [];
             allClassResults = {};
             filterStudentResults();
@@ -947,92 +813,23 @@
             const examType = document.getElementById('selectExamType').value;
             const gradeKey = document.getElementById('selectGrade').value;
             const subjectKey = document.getElementById('selectSubject').value;
-            const selectEl = document.getElementById('selectQuestionCount');
-            const requestedCount = selectEl ? parseInt(selectEl.value) || 10 : 10;
             const classDigit = document.getElementById('selectClassDigit').value;
+            const examKeyword = document.getElementById('examKeywordInput').value.trim() || `نموذج الصورة (${currentModelName})`;
             
             currentModelName = document.getElementById('selectModelLetter').value;
-
-            let savedKeyData = localStorage.getItem(`mansour_manual_key_${examType}_${subjectKey}_${gradeKey}_${currentModelName}`);
-            let manualKeysArray = savedKeyData ? JSON.parse(savedKeyData) : [];
 
             let shortGradeName = gradeKey.replace("الصف ", "").replace(" الابتدائي", "");
             let displayClassText = `${shortGradeName} - فصل ${classDigit}`;
             document.getElementById('printClassValue').textContent = displayClassText;
 
-            let sourcePool = [];
-
-            if (examType === "اختبارات نافس الوطنية") {
-                const selectedDomains = [];
-                document.querySelectorAll('.nafis-domain-cb:checked').forEach(cb => selectedDomains.push(cb.value));
-                if (selectedDomains.length === 0) {
-                    alert('الرجاء اختيار مجال واحد على الأقل من مجالات اختبارات نافس الوطنية!');
-                    return;
-                }
-                
-                let rawBank = getBankForGradeAndSubject(gradeKey, subjectKey);
-                sourcePool = rawBank.filter(q => selectedDomains.includes(q.domain));
-                if (sourcePool.length === 0) sourcePool = rawBank;
-
-                document.getElementById('printSelectedLessonsPrint').textContent = `📊 مجالات نافس المستهدفة (${gradeKey} - ${subjectNames[subjectKey]}): ${selectedDomains.join(' ، ')}`;
-            } else {
-                let rawBank = getBankForGradeAndSubject(gradeKey, subjectKey);
-                sourcePool = rawBank;
-                document.getElementById('printSelectedLessonsPrint').textContent = `📖 الاختبار قياسي شامل (${gradeKey} - ${subjectNames[subjectKey]})`;
+            // إذا لم يتم رفع صورة أو جلب الأسئلة المستخرجة، نستخدم الأسئلة المستخرجة افتراضياً من الصورة المرفقة
+            if (!activeQuestions || activeQuestions.length === 0) {
+                activeQuestions = JSON.parse(JSON.stringify(nafisImageExtractedQuestions));
             }
 
-            let shuffledPool = [...sourcePool];
-            for (let i = shuffledPool.length - 1; i > 0; i--) {
-                let j = Math.floor(Math.random() * (i + 1));
-                [shuffledPool[i], shuffledPool[j]] = [shuffledPool[j], shuffledPool[i]];
-            }
-
-            let selectedPool = [];
-            for (let i = 0; i < requestedCount; i++) {
-                let qItem = shuffledPool[i % shuffledPool.length];
-                let uniqueObj = {
-                    domain: qItem.domain,
-                    q: i >= shuffledPool.length ? qItem.q + " (تطبيق إضافي " + (Math.floor(i/shuffledPool.length)+1) + ")" : qItem.q,
-                    options: [...qItem.options],
-                    correctIdx: qItem.correctIdx
-                };
-                selectedPool.push(uniqueObj);
-            }
-
-            let processedPool = selectedPool.map((q, idx) => {
-                let optionsCopy = [...q.options];
-                let correctLetterForQ = manualKeysArray[idx] || null;
-                let lettersMap = ['أ', 'ب', 'ج', 'د'];
-                let finalCorrectLetter = 'أ';
-
-                if (correctLetterForQ && lettersMap.includes(correctLetterForQ)) {
-                    finalCorrectLetter = correctLetterForQ;
-                    let targetIndex = lettersMap.indexOf(correctLetterForQ);
-                    let correctText = optionsCopy[q.correctIdx];
-                    optionsCopy[q.correctIdx] = optionsCopy[targetIndex];
-                    optionsCopy[targetIndex] = correctText;
-                } else {
-                    let correctText = optionsCopy[q.correctIdx];
-                    for (let i = optionsCopy.length - 1; i > 0; i--) {
-                        let j = Math.floor(Math.random() * (i + 1));
-                        [optionsCopy[i], optionsCopy[j]] = [optionsCopy[j], optionsCopy[i]];
-                    }
-                    let newCorrectIdx = optionsCopy.indexOf(correctText);
-                    finalCorrectLetter = lettersMap[newCorrectIdx];
-                }
-
-                return {
-                    domain: q.domain,
-                    q: q.q,
-                    options: optionsCopy,
-                    correctLetter: finalCorrectLetter
-                };
-            });
-
-            activeQuestions = processedPool;
             globalMaxScore = activeQuestions.length * 2;
 
-            document.getElementById('printTestInfo').textContent = `الصف: ${gradeKey} | المادة: ${subjectNames[subjectKey]} | نوع الاختبار: ${examType}`;
+            document.getElementById('printTestInfo').textContent = `الصف: ${gradeKey} | المادة: ${subjectNames[subjectKey]} | نوع الاختبار: ${examType} | الكلمة الدلالية: ${examKeyword}`;
             document.getElementById('printModelBadge').textContent = `رقم النموذج: ${currentModelName} | عدد الأسئلة: ${activeQuestions.length} سؤالاً`;
 
             const previewBox = document.getElementById('questionsPreviewBox');
@@ -1245,6 +1042,7 @@
             const subjectKey = document.getElementById('selectSubject').value;
             const examType = document.getElementById('selectExamType').value;
             const classDigit = document.getElementById('selectClassDigit').value;
+            const examKeyword = document.getElementById('examKeywordInput').value.trim();
 
             let examState = {
                 gradeKey: gradeKey,
@@ -1253,6 +1051,7 @@
                 examType: examType,
                 classDigit: classDigit,
                 currentModelName: currentModelName,
+                examKeyword: examKeyword,
                 activeQuestions: activeQuestions,
                 globalMaxScore: globalMaxScore,
                 allClassResults: allClassResults,
@@ -1545,7 +1344,6 @@
 
         window.addEventListener('DOMContentLoaded', () => {
             updateLessonCheckboxes();
-            buildManualKeyInputs();
             switchExamModel();
 
             let savedLastAnalysis = localStorage.getItem('mansour_last_analysis_report');
