@@ -343,21 +343,58 @@
         .result-box { display: block; background: #ecfdf5; border: 2px solid #34d399; padding: 18px; border-radius: 12px; margin-top: 15px; font-size: 14px; }
         .sheet-print-container { display: none; background: #fefce8; padding: 20px; border-radius: 12px; border: 2px solid #ca8a04; margin-top: 15px; }
 
+        /* فصل تام ودقيق لمناطق الطباعة لمنع تداخل الاختبار مع التحليل */
         @media print {
             @page { size: A4 portrait; margin: 10mm; }
             body * { visibility: hidden !important; }
-            .printable-analysis-area, .printable-analysis-area * { visibility: visible !important; }
-            .printable-analysis-area { 
+            
+            /* إذا كان المطلوب طباعة الأسئلة */
+            body.print-exam-mode .questions-preview, 
+            body.print-exam-mode .questions-preview * { 
+                visibility: visible !important; 
+            }
+            body.print-exam-mode .questions-preview { 
                 position: absolute !important; 
                 left: 0 !important; 
                 top: 0 !important; 
                 width: 100% !important; 
                 background: white !important; 
-                padding: 10px !important; 
                 border: none !important; 
                 box-shadow: none !important; 
                 display: block !important;
             }
+
+            /* إذا كان المطلوب طباعة كشف الدرجات */
+            body.print-sheet-mode .sheet-print-container, 
+            body.print-sheet-mode .sheet-print-container * { 
+                visibility: visible !important; 
+            }
+            body.print-sheet-mode .sheet-print-container { 
+                position: absolute !important; 
+                left: 0 !important; 
+                top: 0 !important; 
+                width: 100% !important; 
+                background: white !important; 
+                border: none !important; 
+                display: block !important;
+            }
+
+            /* إذا كان المطلوب طباعة التحليل والخطط العلاجية */
+            body.print-analysis-mode .printable-analysis-area, 
+            body.print-analysis-mode .printable-analysis-area * { 
+                visibility: visible !important; 
+            }
+            body.print-analysis-mode .printable-analysis-area { 
+                position: absolute !important; 
+                left: 0 !important; 
+                top: 0 !important; 
+                width: 100% !important; 
+                background: white !important; 
+                border: none !important; 
+                box-shadow: none !important; 
+                display: block !important;
+            }
+
             .no-print { display: none !important; }
         }
     </style>
@@ -948,9 +985,14 @@
         }
 
         function printExamOnly() {
+            document.body.classList.remove('print-sheet-mode', 'print-analysis-mode');
+            document.body.classList.add('print-exam-mode');
             const previewBox = document.getElementById('questionsPreviewBox');
             previewBox.style.display = 'block';
-            setTimeout(() => { window.print(); }, 200);
+            setTimeout(() => { 
+                window.print(); 
+                document.body.classList.remove('print-exam-mode');
+            }, 200);
         }
 
         let currentStudentIndex = 0;
@@ -1213,6 +1255,8 @@
         }
 
         function printAllGradesSheet() {
+            document.body.classList.remove('print-exam-mode', 'print-analysis-mode');
+            document.body.classList.add('print-sheet-mode');
             const qPreviewBox = document.getElementById('questionsPreviewBox');
             if (qPreviewBox) { qPreviewBox.style.display = 'none'; }
             prepareGradesPrintSheet();
@@ -1221,6 +1265,7 @@
             setTimeout(() => {
                 window.print();
                 sheetArea.style.display = 'none';
+                document.body.classList.remove('print-sheet-mode');
             }, 200);
         }
 
@@ -1342,11 +1387,14 @@
         }
 
         function printAnalysisBoxOnly() {
+            document.body.classList.remove('print-exam-mode', 'print-sheet-mode');
+            document.body.classList.add('print-analysis-mode');
             const analysisBox = document.getElementById('analysisContainer');
             analysisBox.style.display = 'block';
             prepareAnalysisContent();
             setTimeout(() => { 
                 window.print(); 
+                document.body.classList.remove('print-analysis-mode');
             }, 300);
         }
 
