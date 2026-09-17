@@ -359,7 +359,7 @@
             <div class="form-grid">
                 <div class="form-group">
                     <label>نوع الاختبار:</label>
-                    <select id="selectExamType" onchange="toggleNafisDomainsSection()">
+                    <select id="selectExamType" onchange="toggleNafisDomainsSection(); switchExamModel();">
                         <option value="الاختبار الفتري الأول">الاختبار الفتري الأول</option>
                         <option value="الاختبار الفتري الثاني">الاختبار الفتري الثاني</option>
                         <option value="الاختبار القبلي التشخيصي">الاختبار القبلي (تشخيصي)</option>
@@ -369,7 +369,7 @@
                 </div>
                 <div class="form-group">
                     <label>المادة الدراسية:</label>
-                    <select id="selectSubject" onchange="updateLessonCheckboxes()">
+                    <select id="selectSubject" onchange="updateLessonCheckboxes(); switchExamModel();">
                         <option value="science">مادة العلوم</option>
                         <option value="math">مادة الرياضيات</option>
                         <option value="arabic">مادة لغتي الجميلة</option>
@@ -378,7 +378,7 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>رقم نموذج الأسئلة الثابت:</label>
+                    <label>رقم نموذج الأسئلة (استرجاع فوري وثابت):</label>
                     <select id="selectModelLetter" onchange="switchExamModel()">
                         <option value="نموذج (أ)">نموذج (أ)</option>
                         <option value="نموذج (ب)">نموذج (ب)</option>
@@ -398,7 +398,7 @@
                 
                 <div class="form-group">
                     <label>الصف الدراسي:</label>
-                    <select id="selectGrade" onchange="updateLessonCheckboxes()">
+                    <select id="selectGrade" onchange="updateLessonCheckboxes(); switchExamModel();">
                         <option value="الأول الابتدائي">الصف الأول الابتدائي</option>
                         <option value="الثاني الابتدائي">الصف الثاني الابتدائي</option>
                         <option value="الثالث الابتدائي">الصف الثالث الابتدائي</option>
@@ -472,9 +472,9 @@
         </div>
 
         <div class="section-box no-print">
-            <h3>⚙️ خامساً: توليد ورقة الاختبار المعتمَدة لصفحة A4 واحدة</h3>
+            <h3>⚙️ خامساً: تثبيت وتوليد ورقة الاختبار المعتمَدة لصفحة A4 واحدة</h3>
             <div style="display: flex; gap: 10px; flex-wrap: wrap;" class="no-print">
-                <button type="button" class="action-btn" style="flex: 1; min-width: 200px;" onclick="generateTestModel()">⚡ توليد ورقة الاختبار الآن</button>
+                <button type="button" class="action-btn" style="flex: 1; min-width: 200px;" onclick="generateTestModel()">⚡ تثبيت وتوليد ورقة الاختبار الآن</button>
                 <button type="button" class="action-btn btn-danger-reset" style="flex: 1; min-width: 200px;" onclick="clearAllExamAndAnalysisData()">🔄 تحديث / حذف الاختبار والتحليل السابق</button>
             </div>
 
@@ -841,13 +841,11 @@
 
         function escapeHtml(text) { return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;"); }
 
-        // إنشاء حقول اختيار الإجابات الصحيحة يدوياً بناءً على عدد الأسئلة
         function buildManualKeyInputs() {
             const count = parseInt(document.getElementById('selectQuestionCount').value) || 10;
             const container = document.getElementById('manualKeyContainer');
             if (!container) return;
             
-            // محاولة جلب الإجابات المحفوظة سابقاً إن وجدت
             let examType = document.getElementById('selectExamType').value;
             let subjectKey = document.getElementById('selectSubject').value;
             let gradeKey = document.getElementById('selectGrade').value;
@@ -955,7 +953,6 @@
             
             currentModelName = document.getElementById('selectModelLetter').value;
 
-            // جلب مفتاح الإجابات الخارجي المدخل يدوياً إن وجد
             let savedKeyData = localStorage.getItem(`mansour_manual_key_${examType}_${subjectKey}_${gradeKey}_${currentModelName}`);
             let manualKeysArray = savedKeyData ? JSON.parse(savedKeyData) : [];
 
@@ -1004,8 +1001,6 @@
 
             let processedPool = selectedPool.map((q, idx) => {
                 let optionsCopy = [...q.options];
-                
-                // إذا كان هناك مفتاح إجابة خارجي يدوي، نقوم بضبط موقع الخيار الصحيح ليطابق إجابتك
                 let correctLetterForQ = manualKeysArray[idx] || null;
                 let lettersMap = ['أ', 'ب', 'ج', 'د'];
                 let finalCorrectLetter = 'أ';
@@ -1013,7 +1008,6 @@
                 if (correctLetterForQ && lettersMap.includes(correctLetterForQ)) {
                     finalCorrectLetter = correctLetterForQ;
                     let targetIndex = lettersMap.indexOf(correctLetterForQ);
-                    // تبديل موضع النص الصحيح في الخيارات ليتوافق مع الحرف المختار يدوياً
                     let correctText = optionsCopy[q.correctIdx];
                     optionsCopy[q.correctIdx] = optionsCopy[targetIndex];
                     optionsCopy[targetIndex] = correctText;
