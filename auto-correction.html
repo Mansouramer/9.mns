@@ -379,7 +379,7 @@
                 </div>
                 <div class="form-group">
                     <label>رقم نموذج الأسئلة الثابت:</label>
-                    <select id="selectModelLetter">
+                    <select id="selectModelLetter" onchange="switchExamModel()">
                         <option value="نموذج (أ)">نموذج (أ)</option>
                         <option value="نموذج (ب)">نموذج (ب)</option>
                         <option value="نموذج (ج)">نموذج (ج)</option>
@@ -388,7 +388,7 @@
                 </div>
                 <div class="form-group">
                     <label>عدد أسئلة الاختبار:</label>
-                    <select id="selectQuestionCount">
+                    <select id="selectQuestionCount" onchange="buildManualKeyInputs()">
                         <option value="5">5 أسئلة (قصير سريع)</option>
                         <option value="10" selected>10 أسئلة (معياري)</option>
                         <option value="15">15 سؤالاً (موسع)</option>
@@ -452,6 +452,15 @@
             </div>
         </div>
 
+        <div class="section-box no-print" style="border: 2px dashed #059669; background: #ecfdf5;">
+            <h3 style="color: #065f46;">📝 رابعاً: إدخال مفتاح الإجابات الصحيحة الخارجي (من نموذجك الخاص)</h3>
+            <p style="font-size: 12.5px; color: #047857; margin-top: 0;">حدد حرف الإجابة الصحيحة لكل فقرة من نموذجك الخارجي، وسيعتمد النظام هذا المفتاح عند تصحيح درجات الطلاب تلقائياً:</p>
+            <div id="manualKeyContainer" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px; margin-top: 10px;"></div>
+            <div style="margin-top: 12px;">
+                <button type="button" class="action-btn btn-success" onclick="saveManualAnswerKey()">💾 حفظ مفتاح الإجابات الخارجي للنموذج</button>
+            </div>
+        </div>
+
         <div class="section-box no-print" style="border: 2px dashed #7c3aed; background: #f3e8ff;">
             <h3 style="color: #7c3aed;">✨ التوليد الذكي للأسئلة من نص أو عنوان الدرس</h3>
             <div class="form-group">
@@ -463,9 +472,9 @@
         </div>
 
         <div class="section-box no-print">
-            <h3>⚙️ ثانياً: تثبيت وتوليد ورقة الاختبار المعتمَدة لصفحة A4 واحدة</h3>
+            <h3>⚙️ خامساً: توليد ورقة الاختبار المعتمَدة لصفحة A4 واحدة</h3>
             <div style="display: flex; gap: 10px; flex-wrap: wrap;" class="no-print">
-                <button type="button" class="action-btn" style="flex: 1; min-width: 200px;" onclick="generateTestModel()">⚡ تثبيت وتوليد ورقة الاختبار الآن</button>
+                <button type="button" class="action-btn" style="flex: 1; min-width: 200px;" onclick="generateTestModel()">⚡ توليد ورقة الاختبار الآن</button>
                 <button type="button" class="action-btn btn-danger-reset" style="flex: 1; min-width: 200px;" onclick="clearAllExamAndAnalysisData()">🔄 تحديث / حذف الاختبار والتحليل السابق</button>
             </div>
 
@@ -491,7 +500,7 @@
         </div>
 
         <div class="section-box no-print">
-            <h3>👤 ثالثاً: لوحة التصحيح السريع التفاعلية (مطابق تماماً بالفصل المحدد)</h3>
+            <h3>👤 سادساً: لوحة التصحيح السريع التفاعلية (مطابق تماماً بالفصل المحدد)</h3>
             <button type="button" class="action-btn btn-success" onclick="startTouchGradingSession()">🚀 بدء جلسة التصحيح ورصد الدرجات بالفصل المحدد</button>
 
             <div id="touchGradingCard" class="touch-grading-card">
@@ -832,6 +841,110 @@
 
         function escapeHtml(text) { return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;"); }
 
+        // إنشاء حقول اختيار الإجابات الصحيحة يدوياً بناءً على عدد الأسئلة
+        function buildManualKeyInputs() {
+            const count = parseInt(document.getElementById('selectQuestionCount').value) || 10;
+            const container = document.getElementById('manualKeyContainer');
+            if (!container) return;
+            
+            // محاولة جلب الإجابات المحفوظة سابقاً إن وجدت
+            let examType = document.getElementById('selectExamType').value;
+            let subjectKey = document.getElementById('selectSubject').value;
+            let gradeKey = document.getElementById('selectGrade').value;
+            let currentModel = document.getElementById('selectModelLetter').value;
+            let savedKeyData = localStorage.getItem(`mansour_manual_key_${examType}_${subjectKey}_${gradeKey}_${currentModel}`);
+            let savedKeysArray = savedKeyData ? JSON.parse(savedKeyData) : [];
+
+            container.innerHTML = '';
+            for (let i = 0; i < count; i++) {
+                let defaultVal = savedKeysArray[i] || 'أ';
+                container.innerHTML += `
+                    <div style="background: #fefce8; border: 1.5px solid #059669; padding: 6px; border-radius: 6px; text-align: center;">
+                        <span style="font-size: 12px; font-weight: bold; color: #065f46;">سؤال ${i + 1}:</span>
+                        <select class="manual-ans-select" data-qindex="${i}" style="margin-top: 4px; padding: 4px; font-size: 12px;">
+                            <option value="أ" ${defaultVal === 'أ' ? 'selected' : ''}>أ</option>
+                            <option value="ب" ${defaultVal === 'ب' ? 'selected' : ''}>ب</option>
+                            <option value="ج" ${defaultVal === 'ج' ? 'selected' : ''}>ج</option>
+                            <option value="د" ${defaultVal === 'د' ? 'selected' : ''}>د</option>
+                        </select>
+                    </div>
+                `;
+            }
+        }
+
+        function saveManualAnswerKey() {
+            const examType = document.getElementById('selectExamType').value;
+            const subjectKey = document.getElementById('selectSubject').value;
+            const gradeKey = document.getElementById('selectGrade').value;
+            const currentModel = document.getElementById('selectModelLetter').value;
+
+            let selects = document.querySelectorAll('.manual-ans-select');
+            let manualKeys = [];
+            selects.forEach(sel => manualKeys.push(sel.value));
+
+            localStorage.setItem(`mansour_manual_key_${examType}_${subjectKey}_${gradeKey}_${currentModel}`, JSON.stringify(manualKeys));
+            alert(`✅ تم حفظ مفتاح الإجابات الصحيحة الخارجي لـ (${currentModel}) بنجاح!`);
+        }
+
+        function switchExamModel() {
+            const examType = document.getElementById('selectExamType').value;
+            const gradeKey = document.getElementById('selectGrade').value;
+            const subjectKey = document.getElementById('selectSubject').value;
+            const selectedModel = document.getElementById('selectModelLetter').value;
+            const classDigit = document.getElementById('selectClassDigit').value;
+            
+            currentModelName = selectedModel;
+            buildManualKeyInputs();
+
+            let storageKey = `mansour_exam_state_${examType}_${subjectKey}_${gradeKey}_${selectedModel}`;
+            let savedState = localStorage.getItem(storageKey);
+
+            if (savedState) {
+                try {
+                    let parsed = JSON.parse(savedState);
+                    activeQuestions = parsed.activeQuestions || [];
+                    allClassResults = parsed.allClassResults || {};
+                    globalMaxScore = parsed.globalMaxScore || 20;
+
+                    const previewBox = document.getElementById('questionsPreviewBox');
+                    const listContainer = document.getElementById('generatedQuestionsList');
+                    previewBox.style.display = 'block';
+
+                    document.getElementById('printTestInfo').textContent = `الصف: ${gradeKey} | المادة: ${subjectNames[subjectKey]} | نوع الاختبار: ${examType}`;
+                    document.getElementById('printModelBadge').textContent = `رقم النموذج: ${currentModelName} | عدد الأسئلة: ${activeQuestions.length} سؤالاً`;
+                    
+                    let shortGradeName = gradeKey.replace("الصف ", "").replace(" الابتدائي", "");
+                    document.getElementById('printClassValue').textContent = `${shortGradeName} - فصل ${classDigit}`;
+
+                    let htmlContent = '';
+                    for (let i = 0; i < activeQuestions.length; i++) {
+                        let qObj = activeQuestions[i];
+                        htmlContent += `
+                            <div class="question-row">
+                                <b>س${i + 1}: ${escapeHtml(qObj.q)}</b> <span style="color:#b45309; font-size:10px; font-weight: bold;">[المجال: ${escapeHtml(qObj.domain)}]</span>
+                                <div class="bubble-options">
+                                    <div class="bubble-item"><span class="bubble-circle">أ</span> أ) ${escapeHtml(qObj.options[0])}</div>
+                                    <div class="bubble-item"><span class="bubble-circle">ب</span> ب) ${escapeHtml(qObj.options[1])}</div>
+                                    <div class="bubble-item"><span class="bubble-circle">ج</span> ج) ${escapeHtml(qObj.options[2])}</div>
+                                    <div class="bubble-item"><span class="bubble-circle">د</span> د) ${escapeHtml(qObj.options[3])}</div>
+                                </div>
+                            </div>
+                        `;
+                    }
+                    listContainer.innerHTML = htmlContent;
+
+                    filterStudentResults();
+                    prepareGradesPrintSheet();
+                    return;
+                } catch(e) {}
+            }
+
+            document.getElementById('questionsPreviewBox').style.display = 'none';
+            activeQuestions = [];
+            allClassResults = {};
+            filterStudentResults();
+        }
+
         function generateTestModel() {
             const examType = document.getElementById('selectExamType').value;
             const gradeKey = document.getElementById('selectGrade').value;
@@ -841,6 +954,10 @@
             const classDigit = document.getElementById('selectClassDigit').value;
             
             currentModelName = document.getElementById('selectModelLetter').value;
+
+            // جلب مفتاح الإجابات الخارجي المدخل يدوياً إن وجد
+            let savedKeyData = localStorage.getItem(`mansour_manual_key_${examType}_${subjectKey}_${gradeKey}_${currentModelName}`);
+            let manualKeysArray = savedKeyData ? JSON.parse(savedKeyData) : [];
 
             let shortGradeName = gradeKey.replace("الصف ", "").replace(" الابتدائي", "");
             let displayClassText = `${shortGradeName} - فصل ${classDigit}`;
@@ -885,23 +1002,36 @@
                 selectedPool.push(uniqueObj);
             }
 
-            let processedPool = selectedPool.map(q => {
+            let processedPool = selectedPool.map((q, idx) => {
                 let optionsCopy = [...q.options];
-                let correctText = optionsCopy[q.correctIdx];
-
-                for (let i = optionsCopy.length - 1; i > 0; i--) {
-                    let j = Math.floor(Math.random() * (i + 1));
-                    [optionsCopy[i], optionsCopy[j]] = [optionsCopy[j], optionsCopy[i]];
-                }
-
-                let newCorrectIdx = optionsCopy.indexOf(correctText);
+                
+                // إذا كان هناك مفتاح إجابة خارجي يدوي، نقوم بضبط موقع الخيار الصحيح ليطابق إجابتك
+                let correctLetterForQ = manualKeysArray[idx] || null;
                 let lettersMap = ['أ', 'ب', 'ج', 'د'];
+                let finalCorrectLetter = 'أ';
+
+                if (correctLetterForQ && lettersMap.includes(correctLetterForQ)) {
+                    finalCorrectLetter = correctLetterForQ;
+                    let targetIndex = lettersMap.indexOf(correctLetterForQ);
+                    // تبديل موضع النص الصحيح في الخيارات ليتوافق مع الحرف المختار يدوياً
+                    let correctText = optionsCopy[q.correctIdx];
+                    optionsCopy[q.correctIdx] = optionsCopy[targetIndex];
+                    optionsCopy[targetIndex] = correctText;
+                } else {
+                    let correctText = optionsCopy[q.correctIdx];
+                    for (let i = optionsCopy.length - 1; i > 0; i--) {
+                        let j = Math.floor(Math.random() * (i + 1));
+                        [optionsCopy[i], optionsCopy[j]] = [optionsCopy[j], optionsCopy[i]];
+                    }
+                    let newCorrectIdx = optionsCopy.indexOf(correctText);
+                    finalCorrectLetter = lettersMap[newCorrectIdx];
+                }
 
                 return {
                     domain: q.domain,
                     q: q.q,
                     options: optionsCopy,
-                    correctLetter: lettersMap[newCorrectIdx]
+                    correctLetter: finalCorrectLetter
                 };
             });
 
@@ -1135,6 +1265,8 @@
                 date: new Date().toLocaleDateString('en-GB')
             };
 
+            let storageKey = `mansour_exam_state_${examType}_${subjectKey}_${gradeKey}_${currentModelName}`;
+            localStorage.setItem(storageKey, JSON.stringify(examState));
             localStorage.setItem('mansour_last_exam_full_state', JSON.stringify(examState));
         }
 
@@ -1419,58 +1551,8 @@
 
         window.addEventListener('DOMContentLoaded', () => {
             updateLessonCheckboxes();
-
-            let savedLastExam = localStorage.getItem('mansour_last_exam_full_state');
-            if (savedLastExam) {
-                try {
-                    let parsed = JSON.parse(savedLastExam);
-                    if (parsed.activeQuestions && parsed.activeQuestions.length > 0) {
-                        activeQuestions = parsed.activeQuestions;
-                        allClassResults = parsed.allClassResults || {};
-                        globalMaxScore = parsed.globalMaxScore || 20;
-                        currentModelName = parsed.currentModelName || "نموذج (د)";
-                        
-                        if (parsed.gradeKey) document.getElementById('selectGrade').value = parsed.gradeKey;
-                        if (parsed.subjectKey) document.getElementById('selectSubject').value = parsed.subjectKey;
-                        if (parsed.examType) document.getElementById('selectExamType').value = parsed.examType;
-                        if (parsed.currentModelName) {
-                            let modelSelect = document.getElementById('selectModelLetter');
-                            if (modelSelect) modelSelect.value = parsed.currentModelName;
-                        }
-
-                        // استرجاع عرض معاينة الأسئلة تلقائياً
-                        const previewBox = document.getElementById('questionsPreviewBox');
-                        const listContainer = document.getElementById('generatedQuestionsList');
-                        previewBox.style.display = 'block';
-
-                        document.getElementById('printTestInfo').textContent = `الصف: ${parsed.gradeKey || ''} | المادة: ${subjectNames[parsed.subjectKey] || ''} | نوع الاختبار: ${parsed.examType || ''}`;
-                        document.getElementById('printModelBadge').textContent = `رقم النموذج: ${currentModelName} | عدد الأسئلة: ${activeQuestions.length} سؤالاً`;
-                        
-                        let shortGradeName = (parsed.gradeKey || '').replace("الصف ", "").replace(" الابتدائي", "");
-                        document.getElementById('printClassValue').textContent = `${shortGradeName} - فصل ${parsed.classDigit || '3'}`;
-
-                        let htmlContent = '';
-                        for (let i = 0; i < activeQuestions.length; i++) {
-                            let qObj = activeQuestions[i];
-                            htmlContent += `
-                                <div class="question-row">
-                                    <b>س${i + 1}: ${escapeHtml(qObj.q)}</b> <span style="color:#b45309; font-size:10px; font-weight: bold;">[المجال: ${escapeHtml(qObj.domain)}]</span>
-                                    <div class="bubble-options">
-                                        <div class="bubble-item"><span class="bubble-circle">أ</span> أ) ${escapeHtml(qObj.options[0])}</div>
-                                        <div class="bubble-item"><span class="bubble-circle">ب</span> ب) ${escapeHtml(qObj.options[1])}</div>
-                                        <div class="bubble-item"><span class="bubble-circle">ج</span> ج) ${escapeHtml(qObj.options[2])}</div>
-                                        <div class="bubble-item"><span class="bubble-circle">د</span> د) ${escapeHtml(qObj.options[3])}</div>
-                                    </div>
-                                </div>
-                            `;
-                        }
-                        listContainer.innerHTML = htmlContent;
-
-                        filterStudentResults();
-                        prepareGradesPrintSheet();
-                    }
-                } catch(e) {}
-            }
+            buildManualKeyInputs();
+            switchExamModel();
 
             let savedLastAnalysis = localStorage.getItem('mansour_last_analysis_report');
             if (savedLastAnalysis) {
