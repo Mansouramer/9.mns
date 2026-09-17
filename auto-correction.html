@@ -340,6 +340,7 @@
 
         @media print {
             .no-print { display: none !important; }
+            .analysis-box { display: block !important; border: none !important; background: #fff !important; padding: 0 !important; }
         }
     </style>
 </head>
@@ -452,7 +453,6 @@
             </div>
         </div>
 
-        <!-- خانة رفع صورة الاختبار والذكاء الاصطناعي لاستخراج الأسئلة -->
         <div class="section-box no-print" style="border: 2px dashed #059669; background: #ecfdf5;">
             <h3 style="color: #065f46;">📷 رفع صورة النموذج أو ورقة الأسئلة واستخراجها</h3>
             <p style="font-size: 12.5px; color: #047857; margin-top: 0;">قم برفع صورة نموذج الأسئلة (مثل نموذج نافس العلوم ص 6)، وسيقوم النظام بقراءتها وتحويلها فوراً إلى أسئلة اختيارية داخلية:</p>
@@ -575,18 +575,6 @@
             "islamic": "الدراسات الإسلامية" 
         };
 
-        const gradeSubjectLessonsMap = {
-            "السادس الابتدائي": {
-                "science": [
-                    { chapter: "الوحدة الأولى", title: "الخلايا والعمليات الحيوية" },
-                    { chapter: "الوحدة الأولى", title: "الوراثة والتكاثر في الكائنات" },
-                    { chapter: "الوحدة الثانية", title: "الفضاء والمجموعة الشمسية" },
-                    { chapter: "الوحدة الثانية", title: "المادة وخصائصها والتغيرات الكيميائية" }
-                ]
-            }
-        };
-
-        // بنك أسئلة مخصص لنموذج نافس المرفق بصورة (10 أسئلة مطابقة تماماً للصورة)
         const nafisImageExtractedQuestions = [
             { domain: "علوم الحياة", q: "ما العملية التي تتخلص بها الخلايا من الفضلات الناتجة عن العمليات الحيوية؟", options: ["الإخراج الخلوي", "التخمر", "الانقسام المتساوي", "البناء الضوئي"], correctLetter: "أ" },
             { domain: "الاستقصاء العلمي", q: "ما الأداة المخبرية المناسبة بدقة لقياس حجم سائل معين (كالحليب أو الماء)؟", options: ["ميزان الحرارة", "مسطرة القياس", "المخبار المدرج", "الميزان ذو الكفتين"], correctLetter: "ج" },
@@ -619,12 +607,10 @@
             statusEl.innerHTML = `⏳ جاري قراءة وتحليل صورة الاختبار بالذكاء الاصطناعي واستخراج الأسئلة...`;
 
             setTimeout(() => {
-                // تفعيل خيار نافس مباشرة وتعبئة الكلمة الدلالية تلقائياً
                 document.getElementById('selectExamType').value = "اختبارات نافس الوطنية";
                 toggleNafisDomainsSection();
                 document.getElementById('examKeywordInput').value = "اختبار نافس العلوم - نموذج المرفق (10 أسئلة)";
                 
-                // تخزين الأسئلة المستخرجة من الصورة في الذاكرة للنموذج الحالي
                 activeQuestions = JSON.parse(JSON.stringify(nafisImageExtractedQuestions));
                 globalMaxScore = activeQuestions.length * 2;
 
@@ -822,7 +808,6 @@
             let displayClassText = `${shortGradeName} - فصل ${classDigit}`;
             document.getElementById('printClassValue').textContent = displayClassText;
 
-            // إذا لم يتم رفع صورة أو جلب الأسئلة المستخرجة، نستخدم الأسئلة المستخرجة افتراضياً من الصورة المرفقة
             if (!activeQuestions || activeQuestions.length === 0) {
                 activeQuestions = JSON.parse(JSON.stringify(nafisImageExtractedQuestions));
             }
@@ -1293,7 +1278,7 @@
 
                 <div style="margin-top: 15px; background: #fefce8; padding: 14px; border-radius: 8px; border: 2.5px solid #eab308;">
                     <h4 style="margin-top:0; color:#b45309;">🛠️ الخطط العلاجية الميدانية للتعامل مع المهارات غير المتقنة:</h4>
-                    <div style="font-size: 12px; line-height: 1.7; background: #fef3c7; padding: 10px; border-radius: 6px; border: 1px solid #fde047; max-height: 200px; overflow-y: auto;">
+                    <div style="font-size: 12px; line-height: 1.7; background: #fef3c7; padding: 10px; border-radius: 6px; border: 1px solid #fde047;">
                         ${remedialPlansHtml}
                     </div>
                 </div>
