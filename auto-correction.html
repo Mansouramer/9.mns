@@ -345,32 +345,7 @@
         .result-box { display: block; background: #ecfdf5; border: 2px solid #34d399; padding: 18px; border-radius: 12px; margin-top: 15px; font-size: 14px; }
         .sheet-print-container { display: none; background: #fefce8; padding: 20px; border-radius: 12px; border: 2px solid #ca8a04; margin-top: 15px; }
 
-        /* قواعد طباعة دقيقة ومباشرة تضمن ظهور الأسئلة وعدم وجود صفحات فارغة */
         @media print {
-            @page { 
-                size: A4 portrait; 
-                margin: 8mm; 
-            }
-            
-            body * { visibility: hidden !important; }
-            
-            .print-active-exam, .print-active-exam * { 
-                visibility: visible !important; 
-            }
-            
-            .print-active-exam { 
-                position: absolute !important; 
-                left: 0 !important; 
-                top: 0 !important; 
-                width: 100% !important; 
-                background: white !important; 
-                padding: 0 !important; 
-                margin: 0 !important; 
-                border: none !important; 
-                box-shadow: none !important; 
-                display: block !important;
-            }
-
             .no-print { display: none !important; }
         }
     </style>
@@ -593,7 +568,7 @@
                 "science": [
                     { chapter: "الوحدة الأولى", title: "أجزاء النباتات وخصائصها" },
                     { chapter: "الوحدة الأولى", title: "المخلوقات الحية في بيئاتها" },
-                    { chapter: "الوحدة الثانية", title: "الضوء والحرارة ومصادرها" },
+                    { chapter: "الوحدة الثانية", title: "الضوء الحرارة ومصادرها" },
                     { chapter: "الوحدة الثانية", title: "الطقس وتغيرات الفصول" }
                 ],
                 "math": [
@@ -962,12 +937,41 @@
 
         function printExamOnly() {
             const previewBox = document.getElementById('questionsPreviewBox');
-            previewBox.classList.add('print-active-exam');
-            previewBox.style.display = 'block';
-            setTimeout(() => { 
-                window.print(); 
-                previewBox.classList.remove('print-active-exam');
-            }, 250);
+            if (!previewBox || activeQuestions.length === 0) {
+                alert('الرجاء توليد ورقة الاختبار أولاً!');
+                return;
+            }
+
+            let printWin = window.open('', '_blank');
+            printWin.document.write(`
+                <!DOCTYPE html>
+                <html lang="ar" dir="rtl">
+                <head>
+                    <meta charset="UTF-8">
+                    <title>طباعة الاختبار - مدرسة داؤود بن عروة الثقفي</title>
+                    <style>
+                        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 15px; color: #1e293b; direction: rtl; }
+                        .exam-header { text-align: center; border-bottom: 2px solid #1e3a8a; padding-bottom: 8px; margin-bottom: 15px; background: #fef08a; padding: 8px; border-radius: 6px; }
+                        .exam-header h3 { margin: 0; font-size: 15px; color: #1e3a8a; }
+                        .exam-header h4 { margin: 3px 0; font-size: 13px; color: #334151; }
+                        .question-row { margin-bottom: 12px; padding: 10px; background: #fff; border-radius: 6px; border: 1px solid #cbd5e1; font-size: 13px; line-height: 1.5; page-break-inside: avoid; }
+                        .bubble-options { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; margin-top: 6px; }
+                        .bubble-item { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; background: #fefce8; padding: 5px; border-radius: 4px; border: 1px solid #e2e8f0; }
+                        .bubble-circle { width: 18px; height: 18px; border: 1.5px solid #1e3a8a; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold; color: #1e3a8a; background: #fef3c7; }
+                        @page { size: A4 portrait; margin: 10mm; }
+                    </style>
+                </head>
+                <body>
+                    ${previewBox.innerHTML.replace(/<div class="no-print".*?<\/div>/gs, '')}
+                </body>
+                </html>
+            `);
+            printWin.document.close();
+            printWin.focus();
+            setTimeout(() => {
+                printWin.print();
+                printWin.close();
+            }, 500);
         }
 
         let currentStudentIndex = 0;
@@ -1230,15 +1234,36 @@
         }
 
         function printAllGradesSheet() {
-            const qPreviewBox = document.getElementById('questionsPreviewBox');
-            if (qPreviewBox) { qPreviewBox.style.display = 'none'; }
             prepareGradesPrintSheet();
             const sheetArea = document.getElementById('allGradesSheetPrintArea');
-            sheetArea.style.display = 'block';
+            if (!sheetArea) return;
+
+            let printWin = window.open('', '_blank');
+            printWin.document.write(`
+                <!DOCTYPE html>
+                <html lang="ar" dir="rtl">
+                <head>
+                    <meta charset="UTF-8">
+                    <title>كشف درجات الطلاب - مدرسة داؤود بن عروة الثقفي</title>
+                    <style>
+                        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 15px; color: #1e293b; direction: rtl; }
+                        table { width: 100%; border-collapse: collapse; font-size: 12px; text-align: center; margin-top: 10px; }
+                        th, td { border: 1px solid #cbd5e1; padding: 6px; }
+                        th { background: #fef08a; color: #1e3a8a; }
+                        @page { size: A4 portrait; margin: 10mm; }
+                    </style>
+                </head>
+                <body>
+                    ${sheetArea.innerHTML.replace(/<div class="no-print".*?<\/div>/gs, '')}
+                </body>
+                </html>
+            `);
+            printWin.document.close();
+            printWin.focus();
             setTimeout(() => {
-                window.print();
-                sheetArea.style.display = 'none';
-            }, 200);
+                printWin.print();
+                printWin.close();
+            }, 500);
         }
 
         function toggleAnalysisBox() {
@@ -1360,13 +1385,35 @@
 
         function printAnalysisBoxOnly() {
             const analysisBox = document.getElementById('analysisContainer');
-            analysisBox.classList.add('print-active-exam');
-            analysisBox.style.display = 'block';
+            if (!analysisBox) return;
             prepareAnalysisContent();
-            setTimeout(() => { 
-                window.print(); 
-                analysisBox.classList.remove('print-active-exam');
-            }, 300);
+
+            let printWin = window.open('', '_blank');
+            printWin.document.write(`
+                <!DOCTYPE html>
+                <html lang="ar" dir="rtl">
+                <head>
+                    <meta charset="UTF-8">
+                    <title>تقرير التحليل والخطط العلاجية - مدرسة داؤود بن عروة</title>
+                    <style>
+                        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 15px; color: #1e293b; direction: rtl; }
+                        table { width: 100%; border-collapse: collapse; font-size: 12px; text-align: center; margin-top: 10px; }
+                        th, td { border: 1px solid #cbd5e1; padding: 6px; }
+                        th { background: #fef08a; color: #1e3a8a; }
+                        @page { size: A4 portrait; margin: 10mm; }
+                    </style>
+                </head>
+                <body>
+                    ${analysisBox.innerHTML.replace(/<div class="no-print".*?<\/div>/gs, '')}
+                </body>
+                </html>
+            `);
+            printWin.document.close();
+            printWin.focus();
+            setTimeout(() => {
+                printWin.print();
+                printWin.close();
+            }, 500);
         }
 
         window.addEventListener('DOMContentLoaded', () => {
