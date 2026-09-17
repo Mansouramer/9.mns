@@ -273,25 +273,25 @@
 
         .exam-header {
             text-align: center;
-            border-bottom: 3px solid var(--primary);
-            padding-bottom: 10px;
-            margin-bottom: 15px;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 6px;
+            margin-bottom: 10px;
             background: #fef08a;
-            padding: 10px;
-            border-radius: 8px;
+            padding: 6px;
+            border-radius: 6px;
         }
 
-        .exam-header h3 { margin: 0; font-size: 15px; color: #1e3a8a; font-weight: bold; }
-        .exam-header h4 { margin: 4px 0; font-size: 13px; color: #334151; }
+        .exam-header h3 { margin: 0; font-size: 13px; color: #1e3a8a; font-weight: bold; }
+        .exam-header h4 { margin: 2px 0; font-size: 11px; color: #334151; }
 
         .question-row {
-            margin-bottom: 14px;
-            padding: 10px 12px;
+            margin-bottom: 6px;
+            padding: 6px 8px;
             background: #fef9c3;
-            border-radius: 8px;
-            border: 1.5px solid #fcd34d;
-            font-size: 13px;
-            line-height: 1.6;
+            border-radius: 6px;
+            border: 1px solid #fcd34d;
+            font-size: 11px;
+            line-height: 1.4;
             box-sizing: border-box;
             page-break-inside: avoid;
             break-inside: avoid;
@@ -299,9 +299,9 @@
 
         .bubble-options {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 8px;
-            margin-top: 8px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 4px;
+            margin-top: 4px;
             width: 100%;
             box-sizing: border-box;
         }
@@ -309,36 +309,29 @@
         .bubble-item { 
             display: flex; 
             align-items: center; 
-            gap: 6px; 
-            font-size: 12.5px; 
+            gap: 4px; 
+            font-size: 10.5px; 
             font-weight: 600; 
             background: #fffbeb;
-            padding: 6px 8px;
-            border-radius: 6px;
+            padding: 3px 6px;
+            border-radius: 4px;
             border: 1px solid #fcd34d;
             box-sizing: border-box;
         }
 
         .bubble-circle {
-            width: 22px;
-            height: 22px;
-            border: 2px solid #1e3a8a;
+            width: 16px;
+            height: 16px;
+            border: 1.5px solid #1e3a8a;
             border-radius: 50%;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            font-size: 11px;
+            font-size: 9px;
             font-weight: bold;
             color: #1e3a8a;
             background: #fef3c7;
             flex-shrink: 0;
-            transition: 0.2s;
-        }
-        
-        .bubble-item:hover .bubble-circle {
-            background: #2563eb;
-            color: #fff;
-            border-color: #1d4ed8;
         }
 
         .analysis-box { display: none; background: #fef3c7; border: 2px solid #eab308; padding: 20px; border-radius: 12px; margin-top: 15px; font-size: 13px; }
@@ -471,11 +464,11 @@
                 <div class="exam-header">
                     <h3>المملكة العربية السعودية - وزارة التعليم</h3>
                     <h4 id="printSchoolTitle">مدرسة داؤود بن عروة الثقفي الابتدائية</h4>
-                    <p style="margin:2px 0; font-size:11.5px; color:#1e293b; font-weight:bold;">معلم المادة: منصور عامر الرحيلي</p>
-                    <p id="printTestInfo" style="margin:2px 0; font-size:12px; color:#1e3a8a; font-weight:bold;"></p>
-                    <div id="printSelectedLessonsPrint" style="margin:2px 0; font-size:11.5px; color:#0284c7; font-weight:bold;"></div>
-                    <div id="printModelBadge" style="margin:4px 0; font-size:12px; color:#0d9488; font-weight:bold;"></div>
-                    <div style="margin-top: 6px; border: 1.5px solid #ca8a04; padding: 4px 10px; border-radius: 5px; display:inline-block; font-size:11.5px; background: #fef3c7;">
+                    <p style="margin:2px 0; font-size:10px; color:#1e293b; font-weight:bold;">معلم المادة: منصور عامر الرحيلي</p>
+                    <p id="printTestInfo" style="margin:2px 0; font-size:10.5px; color:#1e3a8a; font-weight:bold;"></p>
+                    <div id="printSelectedLessonsPrint" style="margin:2px 0; font-size:10px; color:#0284c7; font-weight:bold;"></div>
+                    <div id="printModelBadge" style="margin:2px 0; font-size:10.5px; color:#0d9488; font-weight:bold;"></div>
+                    <div style="margin-top: 4px; border: 1px solid #ca8a04; padding: 3px 8px; border-radius: 4px; display:inline-block; font-size:10px; background: #fef3c7;">
                         <b>اسم الطالب:</b> .................................................................... &nbsp;&nbsp; <b id="printClassLabel">الصف/الفصل:</b> <span id="printClassValue">................</span>
                     </div>
                 </div>
@@ -483,7 +476,7 @@
                 <div id="generatedQuestionsList"></div>
 
                 <div class="no-print" style="margin-top: 15px;">
-                    <button type="button" class="action-btn btn-print" onclick="printExamOnly()">🖨️ طباعة الاختبار بملء صفحة A4</button>
+                    <button type="button" class="action-btn btn-print" onclick="printExamOnly()">🖨️ طباعة الاختبار بملء صفحة A4 واحدة</button>
                 </div>
             </div>
         </div>
@@ -568,7 +561,7 @@
                 "science": [
                     { chapter: "الوحدة الأولى", title: "أجزاء النباتات وخصائصها" },
                     { chapter: "الوحدة الأولى", title: "المخلوقات الحية في بيئاتها" },
-                    { chapter: "الوحدة الثانية", title: "الضوء الحرارة ومصادرها" },
+                    { chapter: "الوحدة الثانية", title: "الضوء والحرارة ومصادرها" },
                     { chapter: "الوحدة الثانية", title: "الطقس وتغيرات الفصول" }
                 ],
                 "math": [
@@ -689,7 +682,7 @@
                     { domain: "علوم الأرض والفضاء", q: "ما طبقة الغلاف الجوي القريبة من سطح الأرض وتحتوي على معظم الظواهر الجوية؟", options: ["التروبوسفير", "الستراتوسفير", "الإيونسفير", "الميزوسفير"], correctIdx: 0 },
                     { domain: "علوم الأرض والفضاء", q: "كم يبلغ تقريباً عدد كواكب المجموعة الشمسية الرئيسية التي تدور حول الشمس؟", options: ["ثمانية كواكب", "سبعة كواكب", "عشرة كواكب", "خمسة كواكب"], correctIdx: 0 },
                     { domain: "علوم الأرض والفضاء", q: "ما الظاهرة الطبيعية الناتجة عن جذب القمر والشمس لمياه محيطات الأرض؟", options: ["الزلازل والبراكين", "المد والجزر", "الرياح الموسمية", "الكسوف الكلي"], correctIdx: 1 },
-                    { domain: "علوم الأرض والفضاء", q: "ما نوع الصخور التي تتكون نتيجة تبريد وتجمد الصهارة البركانية المنصهرة؟", options: ["الصخور النارية", "الصخور الرسوبية", "الصخور المتحولة", "الصخور الرملية"], correctIdx: 0 },
+                    { domain: "علوم الأرض والفضاء", q: "ما نوع الصخور التي تتكون نتيجة تبريد وت تجمد الصهارة البركانية المنصهرة؟", options: ["الصخور النارية", "الصخور الرسوبية", "الصخور المتحولة", "الصخور الرملية"], correctIdx: 0 },
                     { domain: "علوم الأرض والفضاء", q: "ماذا يسمى الغلاف الصخري الخارجي للأرض والمقسم إلى صفائح متحركة؟", options: ["الصفائح الأرضية (التكتونية)", "لب الأرض", "الوشاح العلوي", "الغلاف المائي"], correctIdx: 0 },
                     { domain: "علوم الأرض والفضاء", q: "ما الأداة العلمية الأساسية المستخدمة لقياس رصد الزلازل والهزات الأرضية؟", options: ["السيسموجراف (مقياس الزلازل)", "البارومتر", "الترمومتر", "الأنيمومتر"], correctIdx: 0 },
                     { domain: "علوم الأرض والفضاء", q: "ما السبب الرئيسي لحدوث ظاهرة تعاقب فصول السنة الأربعة على كوكب الأرض؟", options: ["ميل محور الأرض أثناء دورانها حول الشمس", "دوران القمر حول كوكب الأرض", "تباين المسافة بين الأرض والقمر", "هبوب الرياح العالمية الموسمية"], correctIdx: 0 },
@@ -919,7 +912,7 @@
                 let qObj = activeQuestions[i];
                 htmlContent += `
                     <div class="question-row">
-                        <b>س${i + 1}: ${escapeHtml(qObj.q)}</b> <span style="color:#b45309; font-size:11px; font-weight: bold;">[المجال: ${escapeHtml(qObj.domain)}]</span>
+                        <b>س${i + 1}: ${escapeHtml(qObj.q)}</b> <span style="color:#b45309; font-size:10px; font-weight: bold;">[المجال: ${escapeHtml(qObj.domain)}]</span>
                         <div class="bubble-options">
                             <div class="bubble-item"><span class="bubble-circle">أ</span> أ) ${escapeHtml(qObj.options[0])}</div>
                             <div class="bubble-item"><span class="bubble-circle">ب</span> ب) ${escapeHtml(qObj.options[1])}</div>
@@ -948,17 +941,17 @@
                 <html lang="ar" dir="rtl">
                 <head>
                     <meta charset="UTF-8">
-                    <title>طباعة الاختبار - مدرسة داؤود بن عروة الثقفي</title>
+                    <title>طباعة الاختبار - مدرسة داؤود بن عروة</title>
                     <style>
-                        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 15px; color: #1e293b; direction: rtl; }
-                        .exam-header { text-align: center; border-bottom: 2px solid #1e3a8a; padding-bottom: 8px; margin-bottom: 15px; background: #fef08a; padding: 8px; border-radius: 6px; }
-                        .exam-header h3 { margin: 0; font-size: 15px; color: #1e3a8a; }
-                        .exam-header h4 { margin: 3px 0; font-size: 13px; color: #334151; }
-                        .question-row { margin-bottom: 12px; padding: 10px; background: #fff; border-radius: 6px; border: 1px solid #cbd5e1; font-size: 13px; line-height: 1.5; page-break-inside: avoid; }
-                        .bubble-options { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; margin-top: 6px; }
-                        .bubble-item { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; background: #fefce8; padding: 5px; border-radius: 4px; border: 1px solid #e2e8f0; }
-                        .bubble-circle { width: 18px; height: 18px; border: 1.5px solid #1e3a8a; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold; color: #1e3a8a; background: #fef3c7; }
-                        @page { size: A4 portrait; margin: 10mm; }
+                        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 5px; color: #1e293b; direction: rtl; margin: 0; }
+                        .exam-header { text-align: center; border-bottom: 2px solid #1e3a8a; padding-bottom: 4px; margin-bottom: 8px; background: #fef08a; padding: 5px; border-radius: 4px; }
+                        .exam-header h3 { margin: 0; font-size: 13px; color: #1e3a8a; }
+                        .exam-header h4 { margin: 2px 0; font-size: 11px; color: #334151; }
+                        .question-row { margin-bottom: 5px; padding: 5px 7px; background: #fff; border-radius: 4px; border: 1px solid #cbd5e1; font-size: 10.5px; line-height: 1.35; page-break-inside: avoid; }
+                        .bubble-options { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; margin-top: 3px; }
+                        .bubble-item { display: flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 600; background: #fefce8; padding: 2px 4px; border-radius: 3px; border: 1px solid #e2e8f0; }
+                        .bubble-circle { width: 15px; height: 15px; border: 1px solid #1e3a8a; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 9px; font-weight: bold; color: #1e3a8a; background: #fef3c7; }
+                        @page { size: A4 portrait; margin: 6mm; }
                     </style>
                 </head>
                 <body>
@@ -1244,7 +1237,7 @@
                 <html lang="ar" dir="rtl">
                 <head>
                     <meta charset="UTF-8">
-                    <title>كشف درجات الطلاب - مدرسة داؤود بن عروة الثقفي</title>
+                    <title>كشف درجات الطلاب - مدرسة داؤود بن عروة</title>
                     <style>
                         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 15px; color: #1e293b; direction: rtl; }
                         table { width: 100%; border-collapse: collapse; font-size: 12px; text-align: center; margin-top: 10px; }
