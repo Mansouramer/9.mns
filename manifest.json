@@ -1,15 +1,18 @@
 {
-  "name": "سجل متابعة العلوم",
-  "short_name": "سجل متابعة العلوم",
+  "name": "مركز قيادة العلوم",
+  "short_name": "علوم",
   "start_url": "./",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#e0f2fe",
-  "theme_color": "#2563eb",
+  "background_color": "#05060f",
+  "theme_color": "#05060f",
+  "orientation": "any",
   "icons": [
     {
-      "src": "https://cdn-icons-png.flaticon.com/512/2921/2921222.png",
-      "sizes": "512x512",
-      "type": "image/png"
+      "src": "icon.png",
+      "sizes": "192x192 512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
