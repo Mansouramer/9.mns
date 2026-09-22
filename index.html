@@ -3561,11 +3561,11 @@
                   , sClass = $('studentClassCustom').value.trim() || currentGrade
                   , phone = $('studentPhone').value.trim();
                 if (!name) {
-                    alert('أدخل اسم الطالب');
+                    alert(' اسم الطالب');
                     return;
                 }
                 if (phone && !/^\d{10}$/.test(phone)) {
-                    alert('رقم الجوال يجب أن يكون 10 أرقام');
+                    alert('رقم الجوال');
                     return;
                 }
                 students.push({
