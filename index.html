@@ -1970,7 +1970,7 @@ function prepareAnalysisContent(){
 
 /* دالة ربط جيمناي لتوليد الأسئلة */
 async function generateQuestionsWithGemini(lessonTitle, gradeLevel, questionType) {
-    const apiKey = localStorage.getItem("gemini_api_key"); 
+    const apiKey = localStorage.getItem("AQ.Ab8RN6JVaFMTdezYVzb4GNTrjfpW4SDu8KMrORHSDmIq-kI4ZA"); 
     const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
 
     const prompt = `أنت معلم خبير في المنهج السعودي للمرحلة الابتدائية. قم بتوليد 3 أسئلة ${questionType} لدرس "${lessonTitle}" للصف "${gradeLevel}" في مادة العلوم. اجعل الإخراج على هيئة مصفوفة JSON تحتوي على السؤال، الخيارات، والإجابة الصحيحة فقط بدون أي نصوص إضافية.`;
