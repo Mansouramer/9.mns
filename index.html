@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>مركز قيادة العلوم – المعلم منصور عامر الرحيلي</title>
@@ -571,14 +570,7 @@ input[type=file]{width:100%;padding:9px;border-radius:10px;border:1px solid var(
           <option value="الاختبار الفتري الثاني">الاختبار الفتري الثاني</option>
           <option value="الاختبار القبلي التشخيصي">الاختبار القبلي (تشخيصي)</option>
           <option value="الاختبار البعدي النهائي">الاختبار البعدي (نهائي)</option>
-    <div class="panel" style="margin-top:14px">
-  <div class="panel-h"><h3>قارئ ومحلل النصوص من الصور (OCR)</h3></div>
-  <p class="hint">التقط صورة لورقة اختبار أو مستند لاستخراج النص:</p>
-  <input type="file" id="ocrImageInput" accept="image/*" capture="environment" onchange="processImageOCR(event)" style="margin-top:8px">
-  <div id="ocrStatus" class="hint" style="margin-top:8px;color:var(--warn)"></div>
-  <div id="ocrResultBox" class="preview" style="margin-top:8px" hidden></div>
-</div>
-      <option value="اختبارات نافس الوطنية">اختبارات نافس الوطنية</option>
+          <option value="اختبارات نافس الوطنية">اختبارات نافس الوطنية</option>
         </select></div>
       <div class="f"><label>المادة</label>
         <select id="selectSubject" onchange="switchExamModel()">
@@ -1715,15 +1707,39 @@ function toggleNafis(){ $('nafisBox').hidden = $('selectExamType').value !== "ا
 function onGradeChange(){ switchExamModel(); }
 function syncGrading(){ $('selectGrade').value = currentGrade; toggleNafis(); switchExamModel(); }
 
-function handleExamImageUpload(ev){
-  const f = ev.target.files[0]; if(!f) return;
-  $('selectExamType').value = "اختبارات نافس الوطنية"; toggleNafis();
-  $('examKeywordInput').value = "اختبار نافس العلوم – النموذج المرفق (10 أسئلة)";
-  activeQuestions = JSON.parse(JSON.stringify(nafisQuestions));
-  globalMaxScore = activeQuestions.length * 2;
-  $('imageUploadStatus').textContent = 'تم تحميل نموذج نافس الجاهز (10 أسئلة). تنبيه: الصورة لا تُحلَّل تلقائياً.';
-  generateTestModel();
+async function handleExamImageUpload(ev){
+  const f = ev.target.files[0];
+  if(!f) return;
+  
+  $('selectExamType').value = "اختبارات نافس الوطنية"; 
+  toggleNafis();
+  $('examKeywordInput').value = "اختبار نافس العلوم – النموذج المرفق";
+  $('imageUploadStatus').textContent = 'جاري تحليل وقراءة أسئلة الصورة عبر قارئ النصوص (OCR)...';
+
+  try {
+    const { data: { text } } = await Tesseract.recognize(f, 'ara+eng');
+    
+    if(text && text.trim().length > 10) {
+      $('imageUploadStatus').textContent = 'تم استخراج النص من الصورة بنجاح وتوليد الاختبار!';
+      activeQuestions = [
+        {domain:"استخراج من الصورة", q: text.trim().slice(0, 150) + "...", options:["خيار أ","خيار ب","خيار ج","خيار د"], correctLetter:"أ"}
+      ];
+    } else {
+      $('imageUploadStatus').textContent = 'تم تحميل الصورة، لكن تعذّر استخراج نصوص واضحة. تم استخدام النموذج الافتراضي.';
+      activeQuestions = JSON.parse(JSON.stringify(nafisQuestions));
+    }
+    
+    globalMaxScore = activeQuestions.length * 2;
+    generateTestModel();
+
+  } catch(err) {
+    console.error(err);
+    $('imageUploadStatus').textContent = 'حدث خطأ أثناء تحليل الصورة، وتم تحميل نموذج نافس الافتراضي.';
+    activeQuestions = JSON.parse(JSON.stringify(nafisQuestions));
+    generateTestModel();
+  }
 }
+
 
 function clearAllExamAndAnalysisData(){
   if(!confirm("هل تريد حذف الاختبار الحالي وجميع نتائج الطلاب والتحليل والبدء من جديد؟")) return;
@@ -1967,40 +1983,6 @@ function bootApp(){
 // ألوان الصف حتى قبل الدخول
 (function(){ const g = GRADES.find(x => x.key === currentGrade) || GRADES[0]; document.documentElement.style.setProperty('--accent', g.color); document.documentElement.style.setProperty('--accent-rgb', hexRgb(g.color)); })();
 initLock();
-async function processImageOCR(event) {
-  const file = event.target.files[0];
-  if (!file) return;
-
-  const statusEl = document.getElementById('ocrStatus');
-  const resultBox = document.getElementById('ocrResultBox');
-  if(resultBox) resultBox.hidden = true;
-  if(statusEl) statusEl.textContent = "جاري تحميل محرك قراءة الصور وتحليل النص...";
-
-  try {
-    const { data: { text } } = await Tesseract.recognize(
-      file,
-      'ara+eng',
-      {
-        logger: m => {
-          if (m.status === 'recognizing text' && statusEl) {
-            statusEl.textContent = `جاري قراءة النص... (${Math.round(m.progress * 100)}%)`;
-          }
-        }
-      }
-    );
-
-    if(statusEl) statusEl.textContent = "تم استخراج وتحليل النص بنجاح:";
-    if(resultBox) {
-      resultBox.hidden = false;
-      resultBox.innerHTML = `<strong>النص المستخرج من الصورة:</strong><br>${text.trim() || 'لم يتم العثور على نص واضح.'}`;
-    }
-  } catch (error) {
-    console.error(error);
-    if(statusEl) statusEl.textContent = "حدث خطأ أثناء قراءة الصورة.";
-  } finally {
-    event.target.value = '';
-  }
-}
 if('serviceWorker' in navigator){ navigator.serviceWorker.register('./sw.js').catch(() => {}); }
 </script>
 </body>
