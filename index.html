@@ -1,19 +1,6 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-<div class="panel" style="margin-top:14px;border-color:rgba(71,184,255,.4)">
-  <div class="panel-h"><h3>توليد أسئلة نافس بالذكاء الاصطناعي (Gemini)</h3></div>
-  <div class="f" style="margin-bottom:8px">
-    <label>اختر مجال الأسئلة المطلوبة</label>
-    <select id="geminiDomainSelect">
-      <option value="علوم الحياة">علوم الحياة</option>
-      <option value="العلوم الفيزيائية">العلوم الفيزيائية</option>
-      <option value="علوم الأرض والفضاء">علوم الأرض والفضاء</option>
-      <option value="الاستقصاء العلمي">الاستقصاء العلمي</option>
-    </select>
-  </div>
-  <button class="btn block" onclick="generateQuestionsWithGemini()">توليد الأسئلة بالذكاء الاصطناعي 🤖</button>
-  <div id="geminiStatus" class="hint" style="margin-top:8px;color:var(--good)"></div>
-</div><head>
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>مركز قيادة العلوم – المعلم منصور عامر الرحيلي</title>
@@ -1997,53 +1984,6 @@ function bootApp(){
 (function(){ const g = GRADES.find(x => x.key === currentGrade) || GRADES[0]; document.documentElement.style.setProperty('--accent', g.color); document.documentElement.style.setProperty('--accent-rgb', hexRgb(g.color)); })();
 initLock();
 if('serviceWorker' in navigator){ navigator.serviceWorker.register('./sw.js').catch(() => {}); }
-async function generateQuestionsWithGemini() {
-  const domain = $('geminiDomainSelect').value;
-  const statusEl = $('geminiStatus');
-  statusEl.textContent = `جاري التواصل مع الذكاء الاصطناعي لتوليد أسئلة لـ (${domain})...`;
-
-  // مفتاح الـ API الخاص بك من قوقل (يمكنك وضعه هنا مباشرة)
-  const apiKey = "ضع_مفتاح_Gemini_API_هنا"; 
-
-  const prompt = `أنت معلم مادة علوم للمرحلة الابتدائية في السعودية. قم بتوليد 5 أسئلة اختيار من متعدد في مجال "${domain}" مطابقة لاختبارات نافس الوطنية. 
-  أعطني النتيجة حصراً بصيغة مصفوفة JSON لـ JavaScript بالشكل التالي دون أي نص إضافي:
-  [
-    {"domain": "${domain}", "q": "نص السؤال هنا؟", "options": ["خيار أ", "خيار ب", "خيار ج", "خيار د"], "correctLetter": "أ"}
-  ]`;
-
-  try {
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        contents: [{ parts: [{ text: prompt }] }]
-      })
-    });
-
-    const data = await response.json();
-    let textResult = data.candidates[0].content.parts[0].text;
-    
-    // تنظيف النص لضمان استخراج صيغة الـ JSON بدقة
-    textResult = textResult.replace(/```json/g, '').replace(/```/g, '').trim();
-    const generatedQuestions = JSON.parse(textResult);
-
-    if (generatedQuestions && generatedQuestions.length > 0) {
-      activeQuestions = generatedQuestions;
-      globalMaxScore = activeQuestions.length * 2;
-      $('selectExamType').value = "اختبارات نافس الوطنية";
-      toggleNafis();
-      $('examKeywordInput').value = `اختبار نافس ذكي - ${domain}`;
-      generateTestModel();
-      statusEl.textContent = `تم توليد وإضافة 5 أسئلة في (${domain}) بنجاح!`;
-    } else {
-      throw new Error("لم يتم استقبال الأسئلة بشكل صحيح");
-    }
-
-  } catch (error) {
-    console.error(error);
-    statusEl.textContent = "حدث خطأ أثناء التوليد. تأكد من صحة مفتاح الـ API أو اتصال الإنترنت.";
-  }
-}</script>
+</script>
 </body>
 </html>
-
