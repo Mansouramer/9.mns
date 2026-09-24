@@ -2001,49 +2001,39 @@ function bootApp(){
 }
 async function generateQuestionsWithGemini() {
  async function generateQuestionsWithGemini() {
-  const domain = $('geminiDomainSelect') ?$('geminiDomainSelect').value : "علوم الحياة";
-  const statusEl = $('geminiStatus');
-  statusEl.textContent = `جاري توليد 10 أسئلة ذكية بناءً على إعدادات الاختبار المحددة...`;
+  const domain = document.getElementById('geminiDomainSelect') ? document.getElementById('geminiDomainSelect').value : "علوم الحياة";
+  const statusEl = document.getElementById('geminiStatus');
+  if (statusEl) statusEl.textContent = "جاري توليد 10 أسئلة ذكية بناءً على إعدادات الاختبار المحددة...";
 
   const apiKey = "AQ.Ab8RN6LC_JUU2DyUp5VXy3uGjapoO6x7j86sYzPMk-z_pg-btQ";
   
-  // الربط الذكي المباشر بقوائم إعدادات الاختبار في الأسفل
-  // البحث عن حقل الصف الدراسي المختار
   let selectedGrade = "الصف الأول الابتدائي";
-  const gradeSelects = document.querySelectorAll('select');
-  for (let sel of gradeSelects) {
-    if (sel.value && (sel.value.includes('الابتدائية') || sel.value.includes('الصف') || sel.value.includes('الأول') || sel.value.includes('السادس'))) {
-      selectedGrade = sel.value;
-      break;
-    }
-  }
-
-  // البحث عن حقل نوع الاختبار المختار
   let selectedExamType = "الاختبار التشخيصي";
-  for (let sel of gradeSelects) {
-    if (sel.value && (sel.value.includes('اختبار') || sel.value.includes('تشخيصي') || sel.value.includes('فتري') || sel.value.includes('قبلي') || sel.value.includes('بعدي'))) {
-      selectedExamType = sel.value;
-      break;
-    }
-  }
-
-  // البحث عن حقل الدرس المختار
   let selectedLesson = domain;
-  const lessonInput = $('bulkLesson') || $('selectLesson') \vert{}\vert{}$('examKeywordInput');
+
+  const allSelects = document.querySelectorAll('select');
+  allSelects.forEach(sel => {
+    if (sel.value) {
+      if (sel.value.includes('الصف') || sel.value.includes('الابتدائية') || sel.value.includes('الأول') || sel.value.includes('السادس')) {
+        selectedGrade = sel.value;
+      }
+      if (sel.value.includes('اختبار') || sel.value.includes('تشخيصي') || sel.value.includes('فتري') || sel.value.includes('قبلي') || sel.value.includes('بعدي')) {
+        selectedExamType = sel.value;
+      }
+    }
+  });
+
+  const lessonInput = document.getElementById('bulkLesson') || document.getElementById('selectLesson') || document.getElementById('examKeywordInput');
   if (lessonInput && lessonInput.value) {
     selectedLesson = lessonInput.value;
   }
 
-  // معامل عشوائي لمنع التكرار وتوليد نماذج جديدة كلياً في كل ضغطة
   const randomSeed = Math.floor(Math.random() * 99999999);
 
-  const promptText = `أنت خبير تربوي ومحترف في المناهج السعودية واختبارات نافس. قم بتوليد بالضبط 10 أسئلة اختيار من متعدد جديدة كلياً ومتنوعة الأفكار (معرف التجديد: ${randomSeed}) في مادة العلوم، وموجهة حصرياً وبدقة شديدة إلى "${selectedGrade}" (مع مراعاة خصائص النمو ومستوى الفهم العمري لهذا الصف وعدم الخلط بين المراحل)، ضمن مجال "${domain}"، وتناسب بدقة نوع التقييم المحدد "${selectedExamType}" والدرس أو المهارة "${selectedLesson}". يجب أن تكون الأسئلة مبتكرة وغير مكررة. يجب أن تكون الإجابة بصيغة مصفوفة JSON صالحة فقط بالشكل التالي تماماً دون أي نصوص أو مقدمات أو علامات إضافية:
-  [
-    {"domain": "${domain}", "q": "صيغة السؤال المخصص بدقة للصف المطلوب؟", "options": ["خيار أ", "خيار ب", "خيار ج", "خيار د"], "correctLetter": "أ"}
-  ]`;
+  const promptText = "أنت خبير تربوي ومحترف في المناهج السعودية. قم بتوليد 10 أسئلة اختيار من متعدد جديدة كلياً ومتنوعة (معرف التجديد: " + randomSeed + ") في مادة العلوم، موجهة حصرياً لـ " + selectedGrade + "، ضمن مجال " + domain + "، وتناسب نوع التقييم " + selectedExamType + " والدرس " + selectedLesson + ". يجب أن تكون الإجابة بصيغة مصفوفة JSON صالحة فقط بالشكل التالي دون أي نصوص أو مقدمات:\n[\n  {\"domain\": \"" + domain + "\", \"q\": \"نص السؤال هنا؟\", \"options\": [\"أ\", \"ب\", \"ج\", \"د\"], \"correctLetter\": \"أ\"}\n]";
 
   try {
-    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+    const res = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + apiKey, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -2061,9 +2051,10 @@ async function generateQuestionsWithGemini() {
         activeQuestions = parsed;
         globalMaxScore = activeQuestions.length * 2;
         toggleNafis();
-        $('examKeywordInput').value = `اختبار نافس ذكي - ${selectedGrade} - ${selectedExamType} (${selectedLesson}) [10 أسئلة]`;
+        const kwInput = document.getElementById('examKeywordInput');
+        if (kwInput) kwInput.value = "اختبار نافس ذكي - " + selectedGrade + " - " + selectedExamType + " (" + selectedLesson + ") [10 أسئلة]";
         generateTestModel();
-        statusEl.textContent = `تم توليد 10 أسئلة مخصصة لـ (${selectedGrade} - ${selectedExamType}) بنجاح!`;
+        if (statusEl) statusEl.textContent = "تم توليد 10 أسئلة مخصصة لـ (" + selectedGrade + ") بنجاح!";
         return;
       }
     }
@@ -2071,22 +2062,23 @@ async function generateQuestionsWithGemini() {
   } catch(e) {
     console.error("Gemini API Error:", e);
     activeQuestions = [
-      {domain: domain, q: `تقييم (${selectedGrade} - ${selectedExamType}): أي مما يلي يعتبر من الخصائص العامة للكائنات الحية؟`, options: ["النمو والتكاثر", "الثبات كالصخور", "عدم التأثر بالبيئة", "الذوبان في الماء"], correctLetter: "أ"},
-      {domain: domain, q: `سؤال قياس مهارات (${selectedGrade}): ما هو العضو المسؤول عن الإبصار والرؤية عند الإنسان؟`, options: ["العين", "الأذن", "الأنف", "اليد"], correctLetter: "أ"},
-      {domain: domain, q: `اختبار نافس (${selectedGrade}): أي الأجسام التالية يعتبر مصدراً طبيعياً للضوء؟`, options: ["الشمس", "القمح", "الكرسي", "الطاولة"], correctLetter: "أ"},
-      {domain: domain, q: `تقييم مهارات العلوم (${selectedGrade}): ما هي الفائدة الأساسية لجذور النبات في التربة؟`, options: ["تمتص الماء وتثبت النبات", "تصنع الأصوات", "تتحرك في المكان", "تنتج الضوء"], correctLetter: "أ"},
-      {domain: domain, q: `سؤال تشخيصي (${selectedGrade}): ما هو الفصل الذي تتساقط فيه أوراق بعض الأشجار ويبرد فيه الجو؟`, options: ["الخريف", "الصيف", "الربيع", "الاعتدال"], correctLetter: "أ"},
-      {domain: domain, q: `تقييم (${selectedGrade}): ما الحالة الفيزيائية للماء عندما يتجمد بفعل البرودة الشديدة؟`, options: ["صلبة (ثلج)", "غازية (بخار)", "بلازما", "دخان كثيف"], correctLetter: "أ"},
-      {domain: domain, q: `سؤال مهارة (${selectedGrade}): ما هو العضو الذي يضخ الدم لجميع أجزاء جسم الإنسان؟`, options: ["القلب", "المعدة", "المخ", "العين"], correctLetter: "أ"},
-      {domain: domain, q: `اختبار (${selectedGrade}): أي المواد التالية يطفو على سطح الماء عند وضعه فيه؟`, options: ["قطعة خشب خفيفة", "مسمار حديد ثقيل", "حجر صلب", "عملة معدنية"], correctLetter: "أ"},
-      {domain: domain, q: `قياس فهم (${selectedGrade}): ما هو الغطاء الذي يغطي معظم مساحة كوكب الأرض؟`, options: ["الماء", "اليابسة الصخرية", "الرمال الصحراوية", "الجليد الدائم فقط"], correctLetter: "أ"},
-      {domain: domain, q: `سؤال شامل (${selectedGrade}): كيف تتنفس الأسماك وتحصل على الهواء في الماء؟`, options: ["باستخدام الخياشيم", "باستخدام الرئتين", "عن طريق الجلد الجاف", "عن طريق الفم مباشرة بالهواء"], correctLetter: "أ"}
+      {domain: domain, q: "تقييم (" + selectedGrade + " - " + selectedExamType + "): أي مما يلي يعتبر من الخصائص العامة للكائنات الحية؟", options: ["النمو والتكاثر", "الثبات كالصخور", "عدم التأثر بالبيئة", "الذوبان في الماء"], correctLetter: "أ"},
+      {domain: domain, q: "سؤال قياس مهارات (" + selectedGrade + "): ما هو العضو المسؤول عن الإبصار والرؤية عند الإنسان؟", options: ["العين", "الأذن", "الأنف", "اليد"], correctLetter: "أ"},
+      {domain: domain, q: "اختبار نافس (" + selectedGrade + "): أي الأجسام التالية يعتبر مصدراً طبيعياً للضوء؟", options: ["الشمس", "القمح", "الكرسي", "الطاولة"], correctLetter: "أ"},
+      {domain: domain, q: "تقييم مهارات العلوم (" + selectedGrade + "): ما هي الفائدة الأساسية لجذور النبات في التربة؟", options: ["تمتص الماء وتثبت النبات", "تصنع الأصوات", "تتحرك في المكان", "تنتج الضوء"], correctLetter: "أ"},
+      {domain: domain, q: "سؤال تشخيصي (" + selectedGrade + "): ما هو الفصل الذي تتساقط فيه أوراق بعض الأشجار ويبرد فيه الجو؟", options: ["الخريف", "الصيف", "الربيع", "الاعتدال"], correctLetter: "أ"},
+      {domain: domain, q: "تقييم (" + selectedGrade + "): ما الحالة الفيزيائية للماء عندما يتجمد بفعل البرودة الشديدة؟", options: ["صلبة (ثلج)", "غازية (بخار)", "بلازما", "دخان كثيف"], correctLetter: "أ"},
+      {domain: domain, q: "سؤال مهارة (" + selectedGrade + "): ما هو العضو الذي يضخ الدم لجميع أجزاء جسم الإنسان؟", options: ["القلب", "المعدة", "المخ", "العين"], correctLetter: "أ"},
+      {domain: domain, q: "اختبار (" + selectedGrade + "): أي المواد التالية يطفو على سطح الماء عند وضعه فيه؟", options: ["قطعة خشب خفيفة", "مسمار حديد ثقيل", "حجر صلب", "عملة معدنية"], correctLetter: "أ"},
+      {domain: domain, q: "قياس فهم (" + selectedGrade + "): ما هو الغطاء الذي يغطي معظم مساحة كوكب الأرض؟", options: ["الماء", "اليابسة الصخرية", "الرمال الصحراوية", "الجليد الدائم فقط"], correctLetter: "أ"},
+      {domain: domain, q: "سؤال شامل (" + selectedGrade + "): كيف تتنفس الأسماك وتحصل على الهواء في الماء؟", options: ["باستخدام الخياشيم", "باستخدام الرئتين", "عن طريق الجلد الجاف", "عن طريق الفم مباشرة بالهواء"], correctLetter: "أ"}
     ];
     globalMaxScore = activeQuestions.length * 2;
     toggleNafis();
-    $('examKeywordInput').value = `اختبار نافس - ${selectedGrade} - ${selectedExamType} (${selectedLesson}) [10 أسئلة]`;
+    const kwInput2 = document.getElementById('examKeywordInput');
+    if (kwInput2) kwInput2.value = "اختبار نافس - " + selectedGrade + " - " + selectedExamType + " (" + selectedLesson + ") [10 أسئلة]";
     generateTestModel();
-    statusEl.textContent = `تم تحميل 10 أسئلة مخصصة لـ (${selectedGrade} - ${selectedExamType}) بنجاح!`;
+    if (statusEl) statusEl.textContent = "تم تحميل 10 أسئلة مخصصة لـ (" + selectedGrade + " - " + selectedExamType + ") بنجاح!";
   }
 }
 
@@ -2094,4 +2086,5 @@ if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js'); }
 </script>
 </body>
 </html>
+
  
