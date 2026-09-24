@@ -2085,15 +2085,18 @@ async function generateQuestionsWithGemini() {
     ];
   }
 
-  globalMaxScore = activeQuestions.length * 2;
+   globalMaxScore = activeQuestions.length * 2;
   toggleNafis();
   const kw2 = document.getElementById('examKeywordInput');
   if (kw2) kw2.value = `${examType} - ${grade} (${lesson})`;
   generateTestModel();
-  if (statusEl) statusEl.textContent = `تم توليد الأسئلة لـ (${grade}) بنجاح!`;
+  if (statusEl) statusEl.textContent = "تم توليد الأسئلة بنجاح!";
 }
 
-if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js'); }
+if('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js');
+}
 </script>
 </body>
 </html>
+ 
