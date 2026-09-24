@@ -10,203 +10,476 @@
     
     <style>
         :root {
-            --void: #05060f;
-            --panel: rgba(16,18,42,.74);
-            --line: rgba(255,255,255,.09);
-            --line-strong: rgba(255,255,255,.2);
-            --ink: #eceffd;
-            --ink-dim: #a6a6c8;
-            --accent: #47b8ff;
-            --good: #5eead4;
-            --warn: #ffcf70;
-            --bad: #ff7a88;
+            --void: #05060f; --panel: rgba(16,18,42,.74); --panel-solid: #11132c;
+            --line: rgba(255,255,255,.09); --line-strong: rgba(255,255,255,.2);
+            --ink: #eceffd; --ink-dim: #a6a6c8; --ink-faint: #7178a0;
+            --accent: #47b8ff; --accent-rgb: 71,184,255; --accent-ink: #04121c;
+            --good: #5eead4; --warn: #ffcf70; --bad: #ff7a88; --sun: #ffb547;
             --display: 'Lalezar', 'Readex Pro', Tahoma, sans-serif;
             --body: 'Readex Pro', 'Segoe UI', Tahoma, sans-serif;
         }
+        html { background: #05060f; color: #eceffd; box-sizing: border-box; -webkit-tap-highlight-color: transparent; scroll-behavior: smooth; }
         * { box-sizing: border-box; }
-        body {
-            font-family: var(--body);
-            font-size: 15px;
-            color: var(--ink);
-            background: var(--void);
-            margin: 0;
-            padding-bottom: 84px;
-        }
-        .hidden { display: none !important; }
-        .panel {
-            background: var(--panel);
-            border: 1px solid var(--line);
-            border-radius: 18px;
-            padding: 16px;
-            margin: 14px;
-        }
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 10px 16px;
-            border-radius: 10px;
-            background: var(--accent);
-            color: #04121c;
-            font-weight: 600;
-            cursor: pointer;
-            border: none;
-        }
-        .btn.ghost { background: transparent; color: var(--ink); border: 1px solid var(--line-strong); }
-        .btn.danger { background: rgba(255,122,136,.14); color: var(--bad); border: 1px solid rgba(255,122,136,.4); }
-        input, select {
-            width: 100%;
-            padding: 11px 12px;
-            border-radius: 10px;
-            border: 1px solid var(--line-strong);
-            background: rgba(255,255,255,.055);
-            color: var(--ink);
-            margin-bottom: 8px;
-        }
-        /* Paper Layout for Printing */
-        .paper {
-            background: #fbfaf5;
-            color: #1a1d33;
-            border-radius: 10px;
-            padding: 14px;
-            margin-top: 12px;
-        }
-        .qrow { margin-bottom: 10px; padding: 10px; border: 1px solid #cbd5e1; border-radius: 5px; }
-        .opts { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
-        .opt { background: #f1f5f9; padding: 5px; border-radius: 4px; border: 1px solid #e2e8f0; font-size: 13px; }
+        [hidden] { display: none !important; }
+        body { margin: 0; font-family: var(--body); font-size: 15px; line-height: 1.6; color: var(--ink); background: radial-gradient(900px 520px at 90% -8%, rgba(96,58,190,.34), transparent 70%), radial-gradient(800px 520px at -10% 38%, rgba(var(--accent-rgb),.13), transparent 70%), var(--void); background-attachment: fixed; min-height: 100vh; padding-bottom: calc(84px + env(safe-area-inset-bottom, 0px)); }
+        
+        h1,h2,h3,h4,h5,p { margin: 0; }
+        button, input, select, textarea { font-family: inherit; font-size: 16px; color: inherit; }
+        a { color: var(--accent); }
+        
+        /* Layout */
+        .topbar { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: calc(12px + env(safe-area-inset-top, 0px)) 16px 10px; max-width: 1040px; margin: 0 auto; }
+        .brand { display: flex; flex-direction: column; line-height: 1.3; }
+        .brand b { font-size: 14px; font-weight: 600; }
+        .brand span { font-size: 12px; color: var(--ink-dim); }
+        main { max-width: 1040px; margin: 0 auto; padding: 0 14px; }
+        .view { display: none; }
+        .view.active { display: block; }
+        .stack { display: flex; flex-direction: column; gap: 14px; }
+        .panel { background: var(--panel); backdrop-filter: blur(10px); border: 1px solid var(--line); border-radius: 18px; padding: 16px; }
+        .panel-h { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
+        .panel-h h3 { font-size: 16px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+        
+        /* Controls */
+        input[type=text], input[type=tel], input[type=search], input[type=number], select, textarea { width: 100%; padding: 11px 12px; border-radius: 10px; border: 1px solid var(--line-strong); background: rgba(255,255,255,.055); color: var(--ink); min-height: 44px; margin-bottom: 8px;}
+        select option { background: #11132c; color: var(--ink); }
+        .form { display: grid; gap: 8px; }
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 44px; padding: 10px 16px; border-radius: 10px; border: 1px solid transparent; background: var(--accent); color: var(--accent-ink); font-weight: 600; cursor: pointer; text-decoration: none; font-size: 14px; text-align: center; }
+        .btn.block { width: 100%; }
+        .btn.ghost { background: transparent; color: var(--ink); border-color: var(--line-strong); }
+        .btn.danger { background: rgba(255,122,136,.14); color: var(--bad); border-color: rgba(255,122,136,.4); }
+        .btn.wa { background: #25d366; color: #04200e; }
+        .btn.good { background: rgba(94,234,212,.15); color: var(--good); border-color: rgba(94,234,212,.4); }
+        .btn.warn { background: rgba(255,207,112,.14); color: var(--warn); border-color: rgba(255,207,112,.4); }
+        
+        /* Tab bar */
+        .tabbar { position: fixed; bottom: 0; right: 0; left: 0; z-index: 30; display: flex; justify-content: center; padding: 0 10px calc(8px + env(safe-area-inset-bottom, 0px)); pointer-events: none; }
+        .tabbar-in { pointer-events: auto; display: flex; width: 100%; max-width: 520px; padding: 6px; border-radius: 22px; background: rgba(12,14,34,.88); backdrop-filter: blur(14px); border: 1px solid var(--line-strong); box-shadow: 0 10px 30px rgba(0,0,0,.5); }
+        .tab { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 8px 2px; border: none; background: none; border-radius: 16px; color: var(--ink-faint); cursor: pointer; font-size: 11px; font-weight: 500; }
+        .tab.active { color: var(--accent); background: rgba(var(--accent-rgb),.14); }
+
+        /* Paper / Exam */
+        .paper { background: #fbfaf5; color: #1a1d33; border-radius: 10px; padding: 14px; margin-top: 12px; box-shadow: 0 10px 30px rgba(0,0,0,.45); }
+        .paper .head { text-align: center; border-bottom: 2px solid #1e3a8a; padding-bottom: 6px; margin-bottom: 8px; }
+        .paper .head h3 { font-size: 13px; color: #1e3a8a; font-weight: 700; }
+        .paper .head h4 { font-size: 11px; color: #334155; margin: 2px 0; font-weight: 500; }
+        .paper .stu { display: inline-block; margin-top: 4px; border: 1px solid #94a3b8; border-radius: 4px; padding: 3px 8px; font-size: 10.5px; }
+        .qrow { margin-bottom: 5px; padding: 5px 7px; border: 1px solid #cbd5e1; border-radius: 5px; font-size: 12px; line-height: 1.45; }
+        .qrow .dom { color: #9a3412; font-size: 10px; font-weight: 700; }
+        .opts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px; margin-top: 4px; }
+        .opt { display: flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 500; background: #f1f5f9; padding: 3px 6px; border-radius: 4px; border: 1px solid #e2e8f0; }
+        .opt i { width: 16px; height: 16px; border: 1.5px solid #1e3a8a; border-radius: 50%; display: inline-grid; place-items: center; font-size: 9px; font-weight: 700; color: #1e3a8a; font-style: normal; flex: none; }
+        
+        /* Auto Grading Buttons (التعديل المطلوب: أزرار حروف كبيرة فقط) */
+        .ans { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 14px; }
+        .ans button { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 78px; border-radius: 14px; cursor: pointer; border: 1.5px solid var(--line-strong); background: rgba(255,255,255,.05); color: var(--ink); font-size: 38px; font-weight: bold; transition: .15s; }
+        .ans button.ok { background: rgba(94,234,212,.2); border-color: var(--good); color: var(--good); }
+        .ans button.no { background: rgba(255, 122, 136,.2); border-color: var(--bad); color: var(--bad); }
+
+        .toast { position: fixed; left: 50%; bottom: calc(96px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); z-index: 60; background: #1b1e44; border: 1px solid var(--accent); color: var(--ink); padding: 10px 18px; border-radius: 99px; font-size: 13px; display: none; text-align: center; box-shadow: 0 8px 24px rgba(0,0,0,.5); }
+        
         @media print {
-            body { background: #fff !important; color: #000 !important; }
+            body { background: #fff !important; color: #000 !important; padding: 0; }
             .noprint { display: none !important; }
-            .panel { border: none; }
+            .panel { border: none !important; padding: 0 !important; margin: 0 !important; }
         }
     </style>
 </head>
 <body>
 
-    <header class="panel noprint" style="margin-top: 0; border-radius: 0 0 18px 18px;">
-        <h2 style="margin:0; color: var(--accent);">مدرسة داوود بن عروة الثقفي</h2>
-        <span style="color: var(--ink-dim); font-size: 13px;">المعلم منصور عامر الرحيلي - مركز قيادة العلوم</span>
+    <header class="topbar noprint">
+        <div class="brand">
+            <b>مدرسة داوود بن عروة الثقفي الابتدائية</b>
+            <span>مركز قيادة العلوم - إعداد : منصور عامر الرحيلي</span>
+        </div>
     </header>
 
     <main id="app">
-        <!-- قسم توليد الاختبار والتصحيح الآلي -->
-        <section id="view-grade" class="panel">
-            <div class="noprint">
-                <h3 style="margin-top:0;">توليد ورقة الاختبار</h3>
+        <!-- 1. الشاشة الرئيسية -->
+        <section id="view-home" class="view active stack">
+            <div class="panel">
+                <div class="panel-h">
+                    <h3>لوحة القيادة</h3>
+                </div>
+                <p style="color: var(--ink-dim); font-size: 13px; margin-bottom: 10px;">أهلاً بك أستاذ منصور. يمكنك من هنا إدارة طلابك وإنشاء الاختبارات.</p>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div style="background: rgba(255,255,255,.05); border: 1px solid var(--line); border-radius: 10px; padding: 12px; text-align: center;">
+                        <span style="font-size: 12px; color: var(--ink-dim);">إجمالي الطلاب</span>
+                        <h2 id="statStudents" style="margin: 0; color: var(--accent);">0</h2>
+                    </div>
+                    <div style="background: rgba(255,255,255,.05); border: 1px solid var(--line); border-radius: 10px; padding: 12px; text-align: center;">
+                        <span style="font-size: 12px; color: var(--ink-dim);">الواجبات</span>
+                        <h2 id="statHomework" style="margin: 0; color: var(--good);">0</h2>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. الطلاب -->
+        <section id="view-students" class="view stack">
+            <div class="panel noprint">
+                <div class="panel-h"><h3>إضافة طالب</h3></div>
+                <div class="form">
+                    <input type="text" id="studentName" placeholder="اسم الطالب">
+                    <input type="text" id="studentClass" placeholder="الصف (مثال: السادس أ)">
+                    <input type="tel" id="studentPhone" placeholder="جوال ولي الأمر (05...)" maxlength="10">
+                    <button class="btn block" onclick="addStudent()">إضافة الطالب</button>
+                </div>
+            </div>
+            
+            <div class="panel noprint">
+                <div class="panel-h"><h3>قائمة الطلاب</h3></div>
+                <div id="studentsList" style="display: grid; gap: 10px;"></div>
+            </div>
+        </section>
+
+        <!-- 3. التصحيح والاختبارات (تم تطبيق التعديلات هنا) -->
+        <section id="view-grade" class="view stack">
+            <div class="panel noprint" id="setup">
+                <div class="panel-h"><h3>إعدادات الاختبار وتوليد الأسئلة</h3></div>
                 
-                <label>نوع الاختبار</label>
-                <select id="selectExamType">
-                    <option value="الاختبار الفتري الأول">الاختبار الفتري الأول</option>
-                    <option value="اختبارات نافس الوطنية" selected>اختبارات نافس الوطنية</option>
-                </select>
+                <div class="form">
+                    <label style="font-size: 12px; color: var(--ink-dim);">الصف الدراسي (لتوليد أسئلة مخصصة)</label>
+                    <select id="selectGrade">
+                        <option value="الأول الابتدائي">الأول الابتدائي</option>
+                        <option value="الثاني الابتدائي">الثاني الابتدائي</option>
+                        <option value="الثالث الابتدائي">الثالث الابتدائي</option>
+                        <option value="الرابع الابتدائي">الرابع الابتدائي</option>
+                        <option value="الخامس الابتدائي">الخامس الابتدائي</option>
+                        <option value="السادس الابتدائي" selected>السادس الابتدائي</option>
+                    </select>
 
-                <label>الكلمة الدلالية أو عنوان النموذج</label>
-                <input type="text" id="examKeywordInput" placeholder="مثال: اختبار نافس العلوم">
+                    <label style="font-size: 12px; color: var(--ink-dim);">الفصل</label>
+                    <select id="selectClassDigit">
+                        <option value="all">كل طلاب الصف</option>
+                        <option value="أ">فصل أ</option>
+                        <option value="ب">فصل ب</option>
+                        <option value="ج">فصل ج</option>
+                    </select>
 
-                <label>تحميل نموذج جاهز (اختياري - تصوير ورقة)</label>
-                <p style="font-size:12px; color:var(--ink-dim);">عند رفع صورة الاختبار، سيتم توليد الأسئلة من البنك المدمج تلقائياً لتسهيل التصحيح.</p>
-                <input type="file" id="examImageUploadInput" accept="image/*" onchange="handleExamImageUpload(event)">
-                <div id="imageUploadStatus" style="color: var(--good); font-size: 12px; margin-bottom: 10px;"></div>
+                    <label style="font-size: 12px; color: var(--ink-dim);">عنوان النموذج</label>
+                    <input type="text" id="examKeywordInput" placeholder="مثال: اختبار منتصف الفصل">
+                    
+                    <label style="font-size: 13px; color: var(--warn); margin-top: 10px;">تصوير ورقة الأسئلة (اختياري لاستخراج أسئلة الصف)</label>
+                    <input type="file" id="examImageUploadInput" accept="image/*" capture="environment" onchange="handleExamImageUpload(event)" style="padding: 8px;">
+                    <div id="imageUploadStatus" style="font-size: 12px; color: var(--good);"></div>
 
-                <div style="display: flex; gap: 10px; margin-top: 10px;">
-                    <button class="btn" onclick="generateTestModel()" style="flex:1;">توليد ورقة الاختبار</button>
-                    <button class="btn danger" onclick="clearExam()">مسح</button>
+                    <div style="display: flex; gap: 10px; margin-top: 10px;">
+                        <button class="btn" onclick="generateTestModel()" style="flex: 1;">توليد ورقة الاختبار</button>
+                        <button class="btn danger" onclick="clearExam()">مسح</button>
+                    </div>
                 </div>
             </div>
 
-            <!-- عرض ورقة الاختبار -->
-            <div id="paper" class="paper hidden">
-                <div style="text-align: center; border-bottom: 2px solid #1e3a8a; padding-bottom: 10px; margin-bottom: 15px;">
-                    <h3 style="margin:0; color: #1e3a8a;">المملكة العربية السعودية - وزارة التعليم</h3>
-                    <h4 style="margin:5px 0;">مدرسة داوود بن عروة الثقفي الابتدائية</h4>
-                    <p style="margin:0; font-size: 12px;">معلم المادة: منصور عامر الرحيلي</p>
-                    <p id="printTestInfo" style="color:#0f766e; font-weight: bold; margin-top: 10px;"></p>
+            <!-- الورقة الجاهزة للطباعة -->
+            <div class="panel" id="sheet" class="hidden">
+                <div class="panel-h noprint"><h3>ورقة الاختبار</h3></div>
+                <div id="paper" class="paper hidden">
+                    <div class="head">
+                        <h3>المملكة العربية السعودية - وزارة التعليم</h3>
+                        <h4>مدرسة داوود بن عروة الثقفي الابتدائية</h4>
+                        <p>معلم المادة: منصور عامر الرحيلي</p>
+                        <p id="printTestInfo" style="color:#1e3a8a; font-weight: bold; margin-top: 5px;"></p>
+                    </div>
+                    <div class="stu">
+                        <b>اسم الطالب: </b> ........................................ &nbsp;&nbsp;
+                        <b>الصف: </b> <span id="printClassValue">..........</span>
+                    </div>
+                    <div id="generatedQuestionsList" style="margin-top: 15px;"></div>
                 </div>
-                
-                <div style="margin-bottom: 15px;">
-                    <b>اسم الطالب: </b> ........................................ 
-                    <b style="margin-right: 20px;">الصف: </b> ....................
-                </div>
-
-                <div id="generatedQuestionsList"></div>
+                <button id="printExamRow" class="btn ghost block hidden noprint" style="margin-top: 10px;" onclick="window.print()">طباعة الورقة</button>
             </div>
 
-            <button id="printExamRow" class="btn ghost hidden noprint" style="width: 100%; margin-top: 15px;" onclick="window.print()">طباعة الاختبار</button>
+            <!-- التصحيح الآلي (أزرار كبيرة للحروف فقط) -->
+            <div class="panel noprint" id="grading">
+                <div class="panel-h"><h3>التصحيح السريع المباشر</h3></div>
+                <p style="font-size: 12px; color: var(--ink-dim); margin-bottom: 10px;">اضغط الحرف الذي اختاره الطالب من ورقته لتصحيحه فوراً.</p>
+                <button class="btn good block" onclick="startTouchGradingSession()">بدء جلسة التصحيح لطلاب الفصل</button>
+                
+                <div id="touchGradingCard" style="margin-top: 15px; border: 1px solid var(--accent); border-radius: 16px; padding: 14px; background: rgba(var(--accent-rgb),.06);" hidden>
+                    <div id="studentHeader" style="display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 10px;"></div>
+                    <div id="singleQuestionContainer"></div>
+                    
+                    <div style="display: flex; gap: 8px; margin-top: 15px;">
+                        <button class="btn ghost" style="flex:1;" onclick="prevQuestionStep()">السابق</button>
+                        <button class="btn" style="flex:1;" onclick="nextQuestionStepOrFinish()">التالي / حفظ</button>
+                    </div>
+                </div>
+            </div>
         </section>
     </main>
+
+    <nav class="tabbar noprint">
+        <div class="tabbar-in">
+            <button class="tab active" onclick="showView('view-home', this)">الرئيسية</button>
+            <button class="tab" onclick="showView('view-students', this)">الطلاب</button>
+            <button class="tab" onclick="showView('view-grade', this)">التصحيح</button>
+        </div>
+    </nav>
+
+    <div id="toast" class="toast"></div>
 
     <script>
         const $ = id => document.getElementById(id);
         const LETTERS = ['أ', 'ب', 'ج', 'د'];
-
-        // بنك أسئلة نافس المدمج (لتوليد الاختبار)
-        const nafisQuestions = [
-            { domain: "علوم الحياة", q: "ما العملية التي تتخلص بها الخلايا من الفضلات الناتجة عن العمليات الحيوية؟", options: ["الإخراج الخلوي", "التخمر", "الانقسام المتساوي", "البناء الضوئي"], correctLetter: "أ" },
-            { domain: "الاستقصاء العلمي", q: "ما الأداة المخبرية المناسبة بدقة لقياس حجم سائل معين؟", options: ["ميزان الحرارة", "مسطرة القياس", "المخبار المدرج", "الميزان ذو الكفتين"], correctLetter: "ج" },
-            { domain: "العلوم الفيزيائية", q: "يُعد الذهب من أفضل العناصر قابلية للثني والطرق توصيلاً للكهرباء. ما اسم المجموعة التي ينتمي إليها؟", options: ["الغازات النبيلة", "الفلزات", "أشباه الفلزات", "اللافلزات"], correctLetter: "ب" },
-            { domain: "علوم الأرض والفضاء", q: "أي الأجرام السماوية التالية يقع في مركز المجموعة الشمسية تماماً؟", options: ["كوكب الأرض", "الشمس", "كوكب المريخ", "القمر"], correctLetter: "ب" },
-            { domain: "العلوم الفيزيائية", q: "ما الحالة التي تكون فيها جزيئات المادة متراصة وقوية جداً وذات شكل ثابت؟", options: ["حالة البلازما", "الحالة السائلة", "الحالة الصلبة", "الحالة الغازية"], correctLetter: "ج" }
-        ];
-
+        let students = JSON.parse(localStorage.getItem('mansour_students_data_v2')) || [];
+        
         let activeQuestions = [];
+        let currentStudentIndex = 0;
+        let currentQuestionStep = 0;
+        let studentAnswers = {};
+        let advanceTimer = null;
 
-        // معالجة رفع الصورة (محاكاة تصوير الورقة)
-        function handleExamImageUpload(ev) {
-            const file = ev.target.files[0];
-            if (!file) return;
-            
-            $('selectExamType').value = "اختبارات نافس الوطنية";
-            $('examKeywordInput').value = "اختبار نافس العلوم – النموذج المرفق";
-            $('imageUploadStatus').textContent = 'تم التعرف على الصورة. جاري تهيئة بنك الأسئلة...';
-            
-            // توليد الأسئلة مباشرة بعد الرفع
-            setTimeout(() => {
-                generateTestModel();
-            }, 500);
+        // 1. بنوك الأسئلة المخصصة لكل صف (حسب طلبك)
+        const gradeQuestionsBank = {
+            "الأول الابتدائي": [
+                { domain: "علوم الحياة", q: "ما الجزء الذي يثبت النبات في التربة؟", options: ["الساق", "الجذر", "الأوراق", "الزهرة"], correctLetter: "ب" },
+                { domain: "علوم الحياة", q: "ماذا تحتاج النباتات لكي تنمو؟", options: ["الماء وضوء الشمس", "الظلام فقط", "الرياح القوية", "الجليد"], correctLetter: "أ" },
+                { domain: "علوم الأرض", q: "ما هو الفصل الذي تتساقط فيه أوراق بعض الأشجار؟", options: ["الصيف", "الشتاء", "الخريف", "الربيع"], correctLetter: "ج" },
+                { domain: "الفيزياء", q: "أي الأشياء التالية يجذبه المغناطيس؟", options: ["الورق", "الممحاة", "المسمار الحديدي", "الخشب"], correctLetter: "ج" },
+                { domain: "علوم الحياة", q: "من أين نحصل على الحليب؟", options: ["من الدجاج", "من البقر", "من الشجر", "من البحر"], correctLetter: "ب" }
+            ],
+            "الثاني الابتدائي": [
+                { domain: "علوم الحياة", q: "تتغذى الحيوانات العاشبة على:", options: ["اللحوم", "النباتات", "التربة", "الصخور"], correctLetter: "ب" },
+                { domain: "علوم الأرض", q: "تتكون الأرض من:", options: ["يابسة فقط", "ماء فقط", "يابسة وماء", "هواء فقط"], correctLetter: "ج" },
+                { domain: "الفيزياء", q: "الجليد هو حالة الماء:", options: ["السائلة", "الغازية", "الصلبة", "المتبخرة"], correctLetter: "ج" },
+                { domain: "علوم الحياة", q: "تبدأ دورة حياة الفراشة بـ:", options: ["يرقة", "بيضة", "فراشة مكتملة", "عذراء"], correctLetter: "ب" },
+                { domain: "الفيزياء", q: "ما الذي يغير حالة المادة من صلب إلى سائل؟", options: ["التبريد", "الحرارة", "التكسير", "الضغط"], correctLetter: "ب" }
+            ],
+            "الثالث الابتدائي": [
+                { domain: "علوم الحياة", q: "أين تعيش الجمال وتتكيف؟", options: ["الغابة", "الصحراء", "المنطقة القطبية", "البحر"], correctLetter: "ب" },
+                { domain: "الفيزياء", q: "ما نوع الطاقة التي نحصل عليها من الشمس؟", options: ["ضوئية وحرارية", "صوتية", "حركية", "مغناطيسية"], correctLetter: "أ" },
+                { domain: "علوم الأرض", q: "أي مما يلي يعتبر من الموارد الطبيعية؟", options: ["البلاستيك", "الزجاج", "الماء", "السيارات"], correctLetter: "ج" },
+                { domain: "علوم الحياة", q: "عضو في جسم الإنسان يقوم بضخ الدم:", options: ["المعدة", "الرئتين", "القلب", "الدماغ"], correctLetter: "ج" },
+                { domain: "الفيزياء", q: "الأقطاب المغناطيسية المتشابهة:", options: ["تتجاذب", "تتنافر", "تلتصق", "لا تتأثر"], correctLetter: "ب" }
+            ],
+            "الرابع الابتدائي": [
+                { domain: "علوم الحياة", q: "الوحدة الأساسية لبناء أجسام المخلوقات الحية هي:", options: ["العضو", "النسيج", "الخلية", "الجهاز"], correctLetter: "ج" },
+                { domain: "علوم الحياة", q: "الحيوانات التي لها عمود فقري تسمى:", options: ["لافقاريات", "فقاريات", "حشرات", "رخويات"], correctLetter: "ب" },
+                { domain: "الفيزياء", q: "القوة التي تعيق حركة الأجسام تسمى:", options: ["قوة الدفع", "قوة الاحتكاك", "قوة الجاذبية", "القوة المغناطيسية"], correctLetter: "ب" },
+                { domain: "الفيزياء", q: "أداة تستخدم لقياس درجة الحرارة:", options: ["الميزان", "المخبار المدرج", "الثيرمومتر", "المسطرة"], correctLetter: "ج" },
+                { domain: "البيئة", q: "أي مما يلي يسبب تلوث الهواء؟", options: ["زراعة الأشجار", "دخان المصانع", "إعادة التدوير", "الطاقة الشمسية"], correctLetter: "ب" }
+            ],
+            "الخامس الابتدائي": [
+                { domain: "علوم الحياة", q: "العضو المسؤول عن التكاثر في النباتات الزهرية هو:", options: ["الجذر", "الساق", "الورقة", "الزهرة"], correctLetter: "د" },
+                { domain: "علوم الأرض", q: "ما هي الطبقة الخارجية للأرض؟", options: ["اللب الداخلي", "اللب الخارجي", "الستار", "القشرة الأرضية"], correctLetter: "د" },
+                { domain: "الكيمياء", q: "تغير حالة المادة من سائل إلى غاز يسمى:", options: ["تبخر", "تكثف", "انصهار", "تجمد"], correctLetter: "أ" },
+                { domain: "الفيزياء", q: "مقدرة الجسم على إنجاز شغل تسمى:", options: ["القوة", "السرعة", "الطاقة", "التسارع"], correctLetter: "ج" },
+                { domain: "البيئة", q: "مسار انتقال الطاقة من كائن حي إلى آخر يسمى:", options: ["هرم الطاقة", "السلسلة الغذائية", "الموطن", "التكيف"], correctLetter: "ب" }
+            ],
+            "السادس الابتدائي": [
+                { domain: "علوم الحياة", q: "تحتوي الخلية النباتية على تركيب غير موجود في الخلية الحيوانية هو:", options: ["النواة", "الجدار الخلوي", "السيتوبلازم", "الغشاء البلازمي"], correctLetter: "ب" },
+                { domain: "الكيمياء", q: "مادة طعمها حامض وتحول ورقة تباع الشمس الزرقاء إلى حمراء:", options: ["القاعدة", "الماء", "الحمض", "الملح"], correctLetter: "ج" },
+                { domain: "الفيزياء", q: "الدائرة الكهربائية التي يسري فيها التيار في مسار واحد فقط هي:", options: ["دائرة التوالي", "دائرة التوازي", "الدائرة المفتوحة", "الدائرة العازلة"], correctLetter: "أ" },
+                { domain: "الفيزياء", q: "كلما زادت كتلة الجسم فإن القوة اللازمة لتحريكه:", options: ["تقل", "تزداد", "لا تتغير", "تنعدم"], correctLetter: "ب" },
+                { domain: "الفضاء", q: "تحدث ظاهرة الخسوف عندما تقع الأرض بين:", options: ["الشمس والقمر", "المريخ والمشتري", "الزهرة وعطارد", "زحل وأورانوس"], correctLetter: "أ" }
+            ]
+        };
+
+        // التوست والإشعارات
+        let toastT;
+        function showToast(msg) {
+            const t = $('toast');
+            t.textContent = msg;
+            t.style.display = 'block';
+            clearTimeout(toastT);
+            toastT = setTimeout(() => t.style.display = 'none', 2500);
         }
 
-        // دالة توليد ورقة الأسئلة
-        function generateTestModel() {
-            const keyword = $('examKeywordInput').value.trim() \vert{}\vert{}$('selectExamType').value;
+        // التنقل بين الشاشات
+        function showView(viewId, tabElement) {
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            $(viewId).classList.add('active');
             
-            // سحب الأسئلة
-            activeQuestions = JSON.parse(JSON.stringify(nafisQuestions));
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            if(tabElement) tabElement.classList.add('active');
             
-            // تحديث واجهة الورقة
-            $('printTestInfo').textContent = keyword;
-            renderPaperQuestions();
-            
-            // إظهار الورقة وزر الطباعة
-            $('paper').classList.remove('hidden');
-            $('printExamRow').classList.remove('hidden');$('paper').scrollIntoView({ behavior: 'smooth', block: 'start' });
-            alert('تم توليد الأسئلة بنجاح!');
+            window.scrollTo(0, 0);
+            updateDashboardStats();
         }
 
-        // دالة رسم الأسئلة في الصفحة
-        function renderPaperQuestions() {
-            const list = $('generatedQuestionsList');
-            list.innerHTML = activeQuestions.map((q, i) => `
-                <div class="qrow">
-                    <b style="color: #9a3412; font-size: 11px;">[${q.domain}]</b><br>
-                    <b>س${i + 1}: ${q.q}</b>
-                    <div class="opts">
-                        ${q.options.map((opt, k) => `
-                            <div class="opt">
-                                <b style="color: #1e3a8a;">${LETTERS[k]}</b> -${opt}
-                            </div>
-                        `).join('')}
+        function updateDashboardStats() {
+            if($('statStudents')) $('statStudents').textContent = students.length;
+            let hwCount = students.reduce((sum, s) => sum + (s.homework || 0), 0);
+            if($('statHomework')) $('statHomework').textContent = hwCount;
+        }
+
+        // ------------------ إدارة الطلاب ------------------
+        function addStudent() {
+            const name = $('studentName').value.trim();
+            const cls = $('studentClass').value.trim();
+            const phone = $('studentPhone').value.trim();
+            if (!name) return alert('اكتب اسم الطالب');
+            
+            students.push({ name, cls, phone, homework: 0 });
+            localStorage.setItem('mansour_students_data_v2', JSON.stringify(students));
+            $('studentName').value = ''; $('studentClass').value = ''; $('studentPhone').value = '';
+            renderStudents();
+            updateDashboardStats();
+            showToast('تمت إضافة الطالب');
+        }
+
+        function renderStudents() {
+            const list = $('studentsList');
+            if(!list) return;
+            if(students.length === 0) {
+                list.innerHTML = '<span style="color:var(--ink-dim); font-size:13px;">لا يوجد طلاب. أضف طالباً للبدء.</span>';
+                return;
+            }
+            list.innerHTML = students.map((s, i) => `
+                <div style="background: rgba(255,255,255,.05); border: 1px solid var(--line); border-radius: 10px; padding: 10px;">
+                    <div style="display: flex; justify-content: space-between;">
+                        <b>${s.name}</b> <span style="font-size:12px; color:var(--warn);">${s.cls || '-'}</span>
                     </div>
                 </div>
             `).join('');
         }
 
-        // مسح الاختبار
-        function clearExam() {
-            if(!confirm("هل تريد مسح ورقة الاختبار الحالية؟")) return;
-            $('paper').classList.add('hidden');$('printExamRow').classList.add('hidden');
-            $('examImageUploadInput').value = '';$('imageUploadStatus').textContent = '';
-            activeQuestions = [];
+        // ------------------ توليد الاختبار والتصحيح ------------------
+        function handleExamImageUpload(ev) {
+            const f = ev.target.files[0];
+            if(!f) return;
+            $('imageUploadStatus').textContent = 'تم التقاط الصورة. سيتم استخدام بنك أسئلة الصف المحدد.';
+            setTimeout(() => {
+                generateTestModel();
+            }, 800);
         }
+
+        function generateTestModel() {
+            const grade = $('selectGrade').value;
+            const cls = $('selectClassDigit').value;
+            const keyword = $('examKeywordInput').value.trim() || `اختبار ${grade}`;
+            
+            // جلب الأسئلة الخاصة بالصف المحدد (الميزة المطلوبة)
+            const qList = gradeQuestionsBank[grade] || gradeQuestionsBank["السادس الابتدائي"];
+            activeQuestions = JSON.parse(JSON.stringify(qList)); // نسخ
+            
+            $('printTestInfo').textContent = keyword;
+            $('printClassValue').textContent = cls === 'all' ? grade : `${grade} - فصل ${cls}`;
+            
+            const list = $('generatedQuestionsList');
+            list.innerHTML = activeQuestions.map((q, i) => `
+                <div class="qrow">
+                    <span class="dom">[${q.domain}]</span><br>
+                    <b>س${i + 1}: ${q.q}</b>
+                    <div class="opts">
+                        ${q.options.map((opt, k) => `
+                            <div class="opt">
+                                <i>${LETTERS[k]}</i>${opt}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+            
+            $('paper').classList.remove('hidden');
+            $('printExamRow').classList.remove('hidden');$('paper').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            showToast(`تم توليد اختبار ${grade}`);
+        }
+
+        function clearExam() {
+            if(!confirm("حذف ورقة الاختبار الحالية؟")) return;
+            $('paper').classList.add('hidden');$('printExamRow').classList.add('hidden');
+            activeQuestions = [];
+            $('imageUploadStatus').textContent = '';
+        }
+
+        // ------------------ جلسة التصحيح الآلي المباشر ------------------
+        function startTouchGradingSession() {
+            if(activeQuestions.length === 0) return alert('قم بتوليد الاختبار أولاً.');
+            if(students.length === 0) return alert('لا يوجد طلاب مسجلين.');
+            
+            currentStudentIndex = 0;
+            currentQuestionStep = 0;
+            studentAnswers = {};
+            $('touchGradingCard').hidden = false;
+            renderCurrentStepView();
+            $('touchGradingCard').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function renderCurrentStepView() {
+            const st = students[currentStudentIndex];
+            const q = activeQuestions[currentQuestionStep];
+            const n = currentQuestionStep + 1;
+            const total = activeQuestions.length;
+            const saved = studentAnswers[n];
+
+            $('studentHeader').innerHTML = `
+                <span>${st.name} <span style="color:var(--warn);font-size:12px;">(${st.cls || ''})</span></span>
+                <span style="color:var(--ink-dim); font-size:13px;">${n} / ${total}</span>
+            `;
+
+            // التعديل المطلوب: أزرار مربعة ضخمة تعرض الحرف فقط (أ، ب، ج، د) بدون نص الإجابة
+            $('singleQuestionContainer').innerHTML = `
+                <div style="font-size:12px; color:var(--warn); font-weight:bold;">سؤال ${n}: ${q.domain}</div>
+                <h4 style="margin: 5px 0 15px;">${q.q}</h4>
+                <div class="ans">
+                    ${LETTERS.map((L, k) => {
+                        let cls = '';
+                        if (saved) {
+                            if (L === q.correctLetter) cls = 'ok';
+                            else if (L === saved) cls = 'no';
+                        }
+                        return `
+                        <button type="button" class="${cls}" data-l="${L}" onclick="selectFastOpt(${n},'${L}')">
+                            <strong>${L}</strong>
+                        </button>`;
+                    }).join('')}
+                </div>
+            `;
+        }
+
+        function selectFastOpt(n, L) {
+            if (advanceTimer) return;
+            studentAnswers[n] = L;
+            const q = activeQuestions[n - 1];
+            
+            document.querySelectorAll('#singleQuestionContainer .ans button').forEach(b => {
+                const l = b.dataset.l;
+                b.classList.remove('ok', 'no');
+                if (l === q.correctLetter) b.classList.add('ok');
+                else if (l === L) b.classList.add('no');
+            });
+
+            if (currentQuestionStep < activeQuestions.length - 1) {
+                advanceTimer = setTimeout(() => {
+                    advanceTimer = null;
+                    currentQuestionStep++;
+                    renderCurrentStepView();
+                }, 400);
+            }
+        }
+
+        function prevQuestionStep() {
+            if (advanceTimer) return;
+            if (currentQuestionStep > 0) {
+                currentQuestionStep--;
+                renderCurrentStepView();
+            }
+        }
+
+        function nextQuestionStepOrFinish() {
+            if (advanceTimer) return;
+            if (currentQuestionStep < activeQuestions.length - 1) {
+                currentQuestionStep++;
+                renderCurrentStepView();
+            } else {
+                showToast(`تم حفظ درجة ${students[currentStudentIndex].name}`);
+                currentStudentIndex++;
+                if (currentStudentIndex < students.length) {
+                    currentQuestionStep = 0;
+                    studentAnswers = {};
+                    renderCurrentStepView();
+                } else {
+                    $('touchGradingCard').hidden = true;
+                    alert('اكتملت جلسة التصحيح لجميع الطلاب!');
+                }
+            }
+        }
+
+        // التهيئة عند التحميل
+        renderStudents();
+        updateDashboardStats();
     </script>
 </body>
 </html>
