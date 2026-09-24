@@ -1997,7 +1997,7 @@ function bootApp(){
 // ألوان الصف حتى قبل الدخول
 (function(){ const g = GRADES.find(x => x.key === currentGrade) || GRADES[0]; document.documentElement.style.setProperty('--accent', g.color); document.documentElement.style.setProperty('--accent-rgb', hexRgb(g.color)); })();
 initLock();
-async function generateQuestionsWithGemini() {
+function geasyncnerateQuestionsWithGemini() {
   const domain = $('geminiDomainSelect').value;
   const statusEl = $('geminiStatus');
   statusEl.textContent = `جاري توليد 10 أسئلة ذكية عبر الذكاء الاصطناعي...`;
@@ -2066,3 +2066,4 @@ if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js'); }
 </body>
 </html>
 
+ 
