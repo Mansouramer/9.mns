@@ -1487,13 +1487,10 @@ function updateExam(i, f, el){
   const cls = $('examClassSelect').value; if(cls) avgExams(students.filter(s => clsOf(s) === cls));
 }
 
-/* ================= ملف الطالب والرسائل ================= */
 /* ==================== ملف الطالب وارساله ==================== */
 function filterStudentDropdown(){
     const k = $('studentSearchInput').value.trim().toLowerCase();
     const box = $('studentDropdown');
-    
-    // إظهار قائمة الطلاب كاملة إذا كان حقل البحث فارغاً، أو تصفيتها حسب المدخل
     const filtered = k === "" ? students : students.filter(s => s.name.toLowerCase().includes(k));
     
     if(filtered.length === 0){
@@ -1512,8 +1509,39 @@ function filterStudentDropdown(){
     });
 }
 
+document.addEventListener('click', e => { 
+    if(!e.target.closest('.dd')) $('studentDropdown').style.display = 'none'; 
+});
+
+function selectStudent(i){
+    selectedStudentIndex = i;
+    $('studentCard').hidden = false;
+    fillStudentCard(i);
+    updateLessonsProgress(i);
+    masterCount();
 }
-document.addEventListener('click', e => { if(!e.target.closest('.dd')) $('studentDropdown').style.display = 'none'; });
+
+function fillStudentCard(i){
+    if(!students[i]) return;
+    const s = students[i];
+    $('selName').textContent = s.name;
+    $('selClass').textContent = s.classCustom \vert{}\vert{} '';$('sdParticipation').textContent = s.participation || 0;
+    $('sdHomework').textContent = s.homework || 0;
+    $('sdAbsence').textContent = s.absence || 0;
+    $('sdSkills').textContent = masteredCount(i);$('sdProjects').textContent = s.projects || 0;
+    $('sdMessages').textContent = s.messages || 0;
+    $('sdPhone').textContent = s.phone || '';
+}
+
+function transferSelected(){
+    if(selectedStudentIndex === null) return;
+    const t = $('transferTarget').value;
+    if(!t) { alert('اختر الفصل المستهدف'); return; }
+    students[selectedStudentIndex].classCustom = t;
+    saveStudents();
+    render();
+}
+
 function selectStudent(i){ selectedStudentIndex = i; $('studentCard').hidden = false; fillStudentCard(i); updateLessonMsg(); updateMotivationMsg(); }
 function masteredCount(i){ let n = 0; lessons.forEach((l,li) => { if(lessonMastery[i] && lessonMastery[i][li]) n++; }); return n; }
 function fillStudentCard(i){
