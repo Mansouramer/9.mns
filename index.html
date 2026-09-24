@@ -1524,7 +1524,18 @@ function selectStudent(i){
 function fillStudentCard(i){
     if(!students[i]) return;
     const s = students[i];
-    function transferSelected(){
+    $('selName').textContent = s.name;
+    $('selClass').textContent = s.classCustom || '';
+    $('sdParticipation').textContent = s.participation || 0;
+    $('sdHomework').textContent = s.homework || 0;
+    $('sdAbsence').textContent = s.absence || 0;
+    $('sdSkills').textContent = masteredCount(i);
+    $('sdProjects').textContent = s.projects || 0;
+    $('sdMessages').textContent = s.messages || 0;
+    $('sdPhone').textContent = s.phone || '';
+}
+
+function transferSelected(){
     if(selectedStudentIndex === null) return;
     const t = document.getElementById('transferTarget').value;
     if(!t) { alert('اختر الفصل المستهدف'); return; }
@@ -1533,14 +1544,6 @@ function fillStudentCard(i){
     render();
 }
 
-    $('sdPhone').textContent = s.phone || '';
-}
-
-function transferSelected(){
-    if(selectedStudentIndex === null) return;
-    const t = $('transferTarget').value;
-    if(!t) { alert('اختر الفصل المستهدف'); return; }
-    students[selectedStudentIndex].classCustom = t;
     saveStudents();
     render();
 }
