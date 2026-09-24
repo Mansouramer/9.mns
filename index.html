@@ -2031,10 +2031,9 @@ function bootApp(){
 async function generateQuestionsWithGemini() {
   const domain = document.getElementById('geminiDomainSelect')?.value || "علوم الحياة";
   const statusEl = document.getElementById('geminiStatus');
-  if (statusEl) statusEl.textContent = "جاري توليد الأسئلة الذكية...";
+  if (statusEl) statusEl.textContent = "جاري توليد الأسئلة...";
 
   const apiKey = "AQ.Ab8RN6lnFSU2txvYZfweadz...";
-  
   let grade = "الصف الأول الابتدائي";
   let examType = "الاختبار التشخيصي";
   
@@ -2048,7 +2047,7 @@ async function generateQuestionsWithGemini() {
   const lesson = lessonInput?.value || domain;
 
   try {
-    const promptText = `أنت خبير تربوي للمناهج السعودية. ولّد 10 أسئلة اختيار من متعدد في مادة العلوم لـ "${grade}"، ضمن مجال "${domain}"، تناسب "${examType}" والدرس "${lesson}". اجابة بصيغة JSON فقط:
+    const promptText = `أنت خبير تربوي. ولّد 10 أسئلة اختيار من متعدد في مادة العلوم لـ "${grade}"، مجال "${domain}"، تناسب "${examType}" والدرس "${lesson}". بصيغة JSON فقط:
 [
   {"domain": "${domain}", "q": "السؤال؟", "options": ["أ", "ب", "ج", "د"], "correctLetter": "أ"}
 ]`;
@@ -2072,19 +2071,11 @@ async function generateQuestionsWithGemini() {
     }
   } catch (e) {
     activeQuestions = [
-      {domain: domain, q: `تقييم مهارات (${grade}): ما هي الحاجات الأساسية للكائنات الحية؟`, options: ["الماء والهواء والغذاء", "الألعاب والسيارات", "الملابس الملونة", "الجمادات والصخور"], correctLetter: "أ"},
-      {domain: domain, q: `سؤال قياس (${grade}): أي الحواس تستخدم للتعرف على الروائح؟`, options: ["الأنف (الشم)", "العين (البصر)", "الأذن (السمع)", "اللسان (التذوق)"], correctLetter: "أ"},
-      {domain: domain, q: `اختبار نافس (${grade}): ما هو المصدر الأساسي للضوء والحرارة؟`, options: ["الشمس", "المصباح", "القمر", "النجوم"], correctLetter: "أ"},
-      {domain: domain, q: `تقييم العلوم (${grade}): أي الأجسام التالية يطفو على الماء؟`, options: ["قطعة خشب خفيفة", "مسمار حديدي", "حجر صلب", "عملة معدنية"], correctLetter: "أ"},
-      {domain: domain, q: `سؤال تشخيصي (${grade}): ما فائدة جذور النبات في التربة؟`, options: ["تمتص الماء وتثبت النبات", "تصنع الأصوات", "تتحرك", "تنتج الضوء"], correctLetter: "أ"},
-      {domain: domain, q: `تقييم (${grade}): في أي فصل تتساقط أوراق بعض الأشجار؟`, options: ["الخريف", "الصيف", "الربيع", "الشتاء"], correctLetter: "أ"},
-      {domain: domain, q: `سؤال مهارة (${grade}): ما هو العضو المسؤول عن ضخ الدم؟`, options: ["القلب", "المعدة", "المخ", "الرئتان"], correctLetter: "أ"},
-      {domain: domain, q: `اختبار (${grade}): ما هي حالة الماء عندما يتحول لثلج؟`, options: ["صلبة", "سائلة", "غازية", "بلازما"], correctLetter: "أ"},
-      {domain: domain, q: `قياس فهم (${grade}): ما هو الغطاء الأكثر على سطح الأرض؟`, options: ["الماء", "اليابسة", "الرمال", "الجليد"], correctLetter: "أ"},
-      {domain: domain, q: `سؤال شامل (${grade}): كيف تتنفس الأسماك تحت الماء؟`, options: ["بالخياشيم", "بالرئتين", "بالفم", "بالجلد"], correctLetter: "أ"}
+      {domain: domain, q: "ما هي الحاجات الأساسية للكائنات الحية؟", options: ["الماء والهواء والغذاء", "الألعاب", "الملابس", "الجمادات"], correctLetter: "أ"}
     ];
   }
-    globalMaxScore = activeQuestions.length * 2;
+
+  globalMaxScore = activeQuestions.length * 2;
   toggleNafis();
   const kw2 = document.getElementById('examKeywordInput');
   if (kw2) {
@@ -2102,4 +2093,3 @@ if ('serviceWorker' in navigator) {
 </script>
 </body>
 </html>
-  
