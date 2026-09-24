@@ -1488,16 +1488,30 @@ function updateExam(i, f, el){
 }
 
 /* ================= ملف الطالب والرسائل ================= */
+/* ==================== ملف الطالب وارساله ==================== */
 function filterStudentDropdown(){
-  const k = $('studentSearchInput').value.trim().toLowerCase(), box = $('studentDropdown');
-  if(!k){ box.style.display = 'none'; return; }
-  const m = students.filter(s => s.name.toLowerCase().includes(k));
-  if(!m.length){ box.style.display = 'none'; return; }
-  box.style.display = 'block';
-  box.innerHTML = m.slice(0,30).map(s => `<div class="dd-item" data-i="${students.indexOf(s)}"><strong>${esc(s.name)}</strong><span class="tag">${esc(clsOf(s))}</span></div>`).join('');
-  box.querySelectorAll('.dd-item').forEach(el => el.onclick = () => {
-    const i = +el.dataset.i; selectStudent(i); box.style.display = 'none'; $('studentSearchInput').value = students[i].name;
-  });
+    const k = $('studentSearchInput').value.trim().toLowerCase();
+    const box = $('studentDropdown');
+    
+    // إظهار قائمة الطلاب كاملة إذا كان حقل البحث فارغاً، أو تصفيتها حسب المدخل
+    const filtered = k === "" ? students : students.filter(s => s.name.toLowerCase().includes(k));
+    
+    if(filtered.length === 0){
+        box.style.display = 'none';
+        return;
+    }
+    
+    box.style.display = 'block';
+    box.innerHTML = filtered.slice(0, 30).map(s => `<div class="dd-item" data-i="${students.indexOf(s)}"><strong>${esc(s.name)}</strong> <span style="opacity:0.6; font-size:12px;">(الفصل: ${esc(s.classCustom || '')})</span></div>`).join('');
+    
+    box.querySelectorAll('.dd-item').forEach(el => el.onclick = () => {
+        const i = el.dataset.i;
+        selectStudent(i);
+        box.style.display = 'none';
+        $('studentSearchInput').value = students[i].name;
+    });
+}
+
 }
 document.addEventListener('click', e => { if(!e.target.closest('.dd')) $('studentDropdown').style.display = 'none'; });
 function selectStudent(i){ selectedStudentIndex = i; $('studentCard').hidden = false; fillStudentCard(i); updateLessonMsg(); updateMotivationMsg(); }
