@@ -560,20 +560,6 @@ input[type=file]{width:100%;padding:9px;border-radius:10px;border:1px solid var(
   <a href="#results"><b>٤</b>النتائج</a><a href="#analysisPanel"><b>٥</b>التحليل</a>
 </nav>
       <div class="stack" style="margin-top:6px">
-<section class="panel noprint" id="geminiSetupPanel">
-  <div class="panel-h"><h3>توليد أسئلة نافس بالذكاء الاصطناعي</h3></div>
-  <div class="f" style="margin-bottom:8px">
-    <label>اختر مجال الأسئلة المطلوبة</label>
-    <select id="geminiDomainSelect">
-      <option value="علوم الحياة">علوم الحياة</option>
-      <option value="العلوم الفيزيائية">العلوم الفيزيائية</option>
-      <option value="علوم الأرض والفضاء">علوم الأرض والفضاء</option>
-      <option value="الاستقصاء العلمي">الاستقصاء العلمي</option>
-    </select>
-  </div>
-  <button class="btn block" onclick="generateQuestionsWithGemini()">توليد الأسئلة بالذكاء الاصطناعي 🤖</button>
-  <div id="geminiStatus" class="hint" style="margin-top:8px;color:var(--good)"></div>
-</section>
 
   <section class="panel noprint" id="setup">
     <div class="panel-h"><h3>إعدادات الاختبار</h3></div>
@@ -1487,63 +1473,35 @@ function updateExam(i, f, el){
   const cls = $('examClassSelect').value; if(cls) avgExams(students.filter(s => clsOf(s) === cls));
 }
 
-/* ==================== ملف الطالب وارساله ==================== */
+/* ================= ملف الطالب والرسائل ================= */
 function filterStudentDropdown(){
-    const k = $('studentSearchInput').value.trim().toLowerCase();
-    const box = $('studentDropdown');
-    const filtered = k === "" ? students : students.filter(s => s.name.toLowerCase().includes(k));
-    
-    if(filtered.length === 0){
-        box.style.display = 'none';
-        return;
-    }
-    
-    box.style.display = 'block';
-    box.innerHTML = filtered.slice(0, 30).map(s => `<div class="dd-item" data-i="${students.indexOf(s)}"><strong>${esc(s.name)}</strong> <span style="opacity:0.6; font-size:12px;">(الفصل: ${esc(s.classCustom || '')})</span></div>`).join('');
-    
-    box.querySelectorAll('.dd-item').forEach(el => el.onclick = () => {
-        const i = el.dataset.i;
-        selectStudent(i);
-        box.style.display = 'none';
-        $('studentSearchInput').value = students[i].name;
-    });
+  const k = $('studentSearchInput').value.trim().toLowerCase(), box = $('studentDropdown');
+  if(!k){ box.style.display = 'none'; return; }
+  const m = students.filter(s => s.name.toLowerCase().includes(k));
+  if(!m.length){ box.style.display = 'none'; return; }
+  box.style.display = 'block';
+  box.innerHTML = m.slice(0,30).map(s => `<div class="dd-item" data-i="${students.indexOf(s)}"><strong>${esc(s.name)}</strong><span class="tag">${esc(clsOf(s))}</span></div>`).join('');
+  box.querySelectorAll('.dd-item').forEach(el => el.onclick = () => {
+    const i = +el.dataset.i; selectStudent(i); box.style.display = 'none'; $('studentSearchInput').value = students[i].name;
+  });
 }
-
-document.addEventListener('click', e => { 
-    if(!e.target.closest('.dd')) $('studentDropdown').style.display = 'none'; 
-});
-function selectStudent(i){
-    selectedStudentIndex = i;
-    $('studentCard').hidden = false;
-    fillStudentCard(i);
-    updateLessonsProgress(i);
-    masterCount();
-}
-
+document.addEventListener('click', e => { if(!e.target.closest('.dd')) $('studentDropdown').style.display = 'none'; });
+function selectStudent(i){ selectedStudentIndex = i; $('studentCard').hidden = false; fillStudentCard(i); updateLessonMsg(); updateMotivationMsg(); }
+function masteredCount(i){ let n = 0; lessons.forEach((l,li) => { if(lessonMastery[i] && lessonMastery[i][li]) n++; }); return n; }
 function fillStudentCard(i){
-    if(!students[i]) return;
-    const s = students[i];
-    $('selName').textContent = s.name;
-    $('selClass').textContent = s.classCustom || '';
-    $('sdParticipation').textContent = s.participation || 0;
-    $('sdHomework').textContent = s.homework || 0;
-    $('sdAbsence').textContent = s.absence || 0;
-    $('sdSkills').textContent = masteredCount(i);
-    $('sdProjects').textContent = s.projects || 0;
-    $('sdMessages').textContent = s.messages || 0;
-    $('sdPhone').textContent = s.phone || '';
+  const s = students[i]; if(!s) return;
+  $('selName').textContent = s.name; $('selClass').textContent = clsOf(s);
+  $('sdParticipation').textContent = s.participation || 0; $('sdHomework').textContent = s.homework || 0;
+  $('sdAbsence').textContent = s.absence || 0; $('sdSkills').textContent = masteredCount(i);
+  $('sdProjects').textContent = s.projects || 0; $('sdMessages').textContent = s.messages || 0;
+  $('sdPhone').textContent = s.phone || 'لا يوجد';
 }
-
 function transferSelected(){
-    if(selectedStudentIndex === null) return;
-    const t = document.getElementById('transferTarget').value;
-    if(!t) { alert('اختر الفصل المستهدف'); return; }
-    students[selectedStudentIndex].classCustom = t;
-    saveStudents();
-    render();
-
-
-
+  if(selectedStudentIndex === '') return;
+  const t = $('transferTarget').value; if(!t){ alert('اختر الفصل المستهدف'); return; }
+  students[selectedStudentIndex].classCustom = t; saveStudents(); render();
+  showToast(`تم نقل الطالب إلى ${t}`);
+}
 function updateLessonMsg(){
   if(selectedStudentIndex === '') return;
   const s = students[selectedStudentIndex], li = $('selectLesson').value, pv = $('lessonMsgPreview'), btn = $('waLessonBtn');
@@ -2022,74 +1980,11 @@ function bootApp(){
   if(isStandalone()){ $('installTop').hidden = true; $('pwaInstallBtn').hidden = true; }
   try{ const t = sessionStorage.getItem('mansour_tab'); if(t) showView(t); }catch(e){}
 }
-// أل// ألوان الصف حتى قبل الدخول
-{
-  const g = GRADES.find(x => x.key === currentGrade);
-  initLock();
-}
-
-async function generateQuestionsWithGemini() {
-  const domain = document.getElementById('geminiDomainSelect')?.value || "علوم الحياة";
-  const statusEl = document.getElementById('geminiStatus');
-  if (statusEl) statusEl.textContent = "جاري توليد الأسئلة...";
-
-  const apiKey = "AQ.Ab8RN6lnFSU2txvYZfweadz...";
-  let grade = "الصف الأول الابتدائي";
-  let examType = "الاختبار التشخيصي";
-  
-  const gradeSel = document.getElementById('selectGrade');
-  if (gradeSel && gradeSel.value) grade = gradeSel.value;
-  
-  const examSel = document.getElementById('selectExamType');
-  if (examSel && examSel.value) examType = examSel.value;
-
-  const lessonInput = document.getElementById('bulkLesson') || document.getElementById('selectLesson');
-  const lesson = lessonInput?.value || domain;
-
-  try {
-    const promptText = `أنت خبير تربوي. ولّد 10 أسئلة اختيار من متعدد في مادة العلوم لـ "${grade}"، مجال "${domain}"، تناسب "${examType}" والدرس "${lesson}". بصيغة JSON فقط:
-[
-  {"domain": "${domain}", "q": "السؤال؟", "options": ["أ", "ب", "ج", "د"], "correctLetter": "أ"}
-]`;
-    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ contents: [{ role: "user", parts: [{ text: promptText }] }] })
-    });
-    const data = await res.json();
-    let raw = data.candidates?.[0]?.content?.parts?.[0]?.text;
-    if (raw) {
-      raw = raw.replace(/```json/g, "").replace(/```/g, "").trim();
-      const parsed = JSON.parse(raw);
-      if (parsed && parsed.length > 0) {
-        activeQuestions = parsed;
-      } else {
-        throw new Error();
-      }
-    } else {
-      throw new Error();
-    }
-  } catch (e) {
-    activeQuestions = [
-      {domain: domain, q: "ما هي الحاجات الأساسية للكائنات الحية؟", options: ["الماء والهواء والغذاء", "الألعاب", "الملابس", "الجمادات"], correctLetter: "أ"}
-    ];
-  }
-
- globalMaxScore = activeQuestions.length * 2;
-  toggleNafis();
-  const kw2 = document.getElementById('examKeywordInput');
-  if (kw2) {
-    kw2.value = examType + ' - ' + grade + ' (' + lesson + ')';
-  }
-  generateTestModel();
-  if (statusEl) {
-    statusEl.textContent = "تم توليد الأسئلة بنجاح!";
-  }
-}
-
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js');
-}
+// ألوان الصف حتى قبل الدخول
+(function(){ const g = GRADES.find(x => x.key === currentGrade) || GRADES[0]; document.documentElement.style.setProperty('--accent', g.color); document.documentElement.style.setProperty('--accent-rgb', hexRgb(g.color)); })();
+initLock();
+if('serviceWorker' in navigator){ navigator.serviceWorker.register('./sw.js').catch(() => {}); }
 </script>
 </body>
 </html>
+
