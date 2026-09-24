@@ -1999,7 +1999,7 @@ function bootApp(){
   const g = GRADES.find(x => x.key === currentGrade);
   initLock();
 }
-async function generateQuestionsWithGemini() {
+
 async function generateQuestionsWithGemini() {
   const domain = document.getElementById('geminiDomainSelect') ? document.getElementById('geminiDomainSelect').value : "علوم الحياة";
   const statusEl = document.getElementById('geminiStatus');
