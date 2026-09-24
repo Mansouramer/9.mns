@@ -1997,18 +1997,30 @@ function bootApp(){
 // ألوان الصف حتى قبل الدخول
 (function(){ const g = GRADES.find(x => x.key === currentGrade) || GRADES[0]; document.documentElement.style.setProperty('--accent', g.color); document.documentElement.style.setProperty('--accent-rgb', hexRgb(g.color)); })();
 initLock();
-function geasyncnerateQuestionsWithGemini() {
+});
+
+async function generateQuestionsWithGemini() {
   const domain = $('geminiDomainSelect').value;
   const statusEl = $('geminiStatus');
-  statusEl.textContent = `جاري توليد 10 أسئلة ذكية عبر الذكاء الاصطناعي...`;
+  statusEl.textContent = `جاري توليد 10 أسئلة ذكية ومتجددة عبر الذكاء الاصطناعي...`;
 
   const apiKey = "AQ.Ab8RN6LC_JUU2DyUp5VXy3uGjapoO6x7j86sYzPMk-z_pg-btQ";
   
   const selectedGrade = $('selectGrade') ?$('selectGrade').value : "المرحلة الابتدائية";
   const selectedExamType = $('selectExamType') ?$('selectExamType').value : "اختبار";
-  const selectedLesson = $('bulkLesson') && $('bulkLesson').value ? $('bulkLesson').value : ( $('examKeywordInput') ?$('examKeywordInput').value : domain );
+  
+  let selectedLesson = domain;
+  if ($('bulkLesson') &&$('bulkLesson').value) {
+    selectedLesson = $('bulkLesson').value;
+  } else if ($('selectLesson') &&$('selectLesson').value) {
+    selectedLesson = $('selectLesson').value;
+  } else if ($('examKeywordInput') &&$('examKeywordInput').value) {
+    selectedLesson = $('examKeywordInput').value;
+  }
 
-  const promptText = `قم بتوليد 10 أسئلة اختيار من متعدد في مادة العلوم لـ "${selectedGrade}" في السعودية، ضمن مجال "${domain}"، وتناسب تماماً نوع الاختبار "${selectedExamType}" والدرس المرتبط "${selectedLesson}" (مطابقة لاختبارات نافس الوطنية ومعايير المناهج السعودية). يجب أن تكون الإجابة بصيغة مصفوفة JSON فقط بالشكل التالي دون أي نصوص إضافية:
+  const randomSeed = Math.floor(Math.random() * 100000);
+
+  const promptText = `قم بتوليد 10 أسئلة اختيار من متعدد جديدة كلياً (رقم الطلب ${randomSeed}) في مادة العلوم لـ "${selectedGrade}" في السعودية، ضمن مجال "${domain}"، وتناسب تماماً نوع الاختبار "${selectedExamType}" والدرس المخصص "${selectedLesson}" (مطابقة لاختبارات نافس الوطنية ومعايير المناهج السعودية). ابتكر أسئلة منوعة وغير مكررة. يجب أن تكون الإجابة بصيغة مصفوفة JSON فقط بالشكل التالي دون أي نصوص إضافية:
   [
     {"domain": "${domain}", "q": "نص السؤال هنا؟", "options": ["خيار أ", "خيار ب", "خيار ج", "خيار د"], "correctLetter": "أ"}
   ]`;
@@ -2065,5 +2077,3 @@ if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js'); }
 </script>
 </body>
 </html>
-
- 
