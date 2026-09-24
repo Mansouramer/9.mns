@@ -1994,12 +1994,14 @@ function bootApp(){
   if(isStandalone()){ $('installTop').hidden = true; $('pwaInstallBtn').hidden = true; }
   try{ const t = sessionStorage.getItem('mansour_tab'); if(t) showView(t); }catch(e){}
 }
-// أل
-(function(){ const g = GRADES.find(x => x.key === currentGrade) || GRADES[0]; document.documentElement.style.setProperty('--accent', g.color); document.documentElement.style.setProperty('--accent-rgb', hexRgb(g.color)); })();
-initLock();
-});
+// أل// ألوان الصف حتى قبل الدخول
+{
+  const g = GRADES.find(x => x.key === currentGrade);
+  initLock();
+}
 
-generateQuestionsWithGemini() {
+async function generateQuestionsWithGemini() {
+
   const domain = $('geminiDomainSelect').value;
   const statusEl = $('geminiStatus');
   statusEl.textContent = `جاري توليد 10 أسئلة ذكية ومتجددة عبر الذكاء الاصطناعي...`;
