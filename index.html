@@ -2001,6 +2001,35 @@ async function generateQuestionsWithGemini(lessonTitle, gradeLevel, questionType
         console.error("خطأ في الاتصال بـ Gemini API:", error);
         alert("حدث خطأ أثناء توليد الأسئلة، تأكد من صحة مفتاح الـ API.");
     }
+}async function handleExamAIGeneration() {
+    const subjectElem = document.getElementById("selectSubject");
+    const gradeElem = document.getElementById("selectGrade");
+    
+    const subject = subjectElem ? subjectElem.options[subjectElem.selectedIndex].text : "مادة العلوم";
+    const grade = gradeElem ? gradeElem.options[gradeElem.selectedIndex].text : "الصف الابتدائي";
+    
+    const outputDiv = document.getElementById("aiExamOutput");
+    if (!outputDiv) {
+        alert("الرجاء إضافة زر توليد الأسئلة في واجهة الـ HTML أولاً.");
+        return;
+    }
+
+    outputDiv.innerHTML = "<span style='font-size: 13px; color: var(--warn);'>جاري إعداد الأسئلة للمادة والصف المختار...</span>";
+
+    const questions = await generateQuestionsWithGemini(`منهج ${subject}`, grade, "اختيار من متعدد");
+
+    if (questions && Array.isArray(questions)) {
+        let html = "<div style='padding: 8px; background: rgba(0,0,0,0.1); border-radius: 6px; font-size: 13px; margin-top: 5px;'>";
+        questions.forEach((q, idx) => {
+            html += `<p style='font-weight: bold;'>س${idx + 1}: ${q.question}</p>`;
+            html += `<ul style='margin-right: 15px;'>${q.options.map(o => `<li>${o}</li>`).join('')}</ul>`;
+            html += `<p style='color: var(--good);'>الإجابة: ${q.answer}</p><hr style='border-color: var(--line); margin: 4px 0;'>`;
+        });
+        html += "</div>";
+        outputDiv.innerHTML = html;
+    } else {
+        outputDiv.innerHTML = "<span style='color: var(--bad); font-size: 13px;'>تعذر توليد الأسئلة، تحقق من مفتاح الـ API.</span>";
+    }
 }
 /* ================= التشغيل ================= */
 function bootApp(){
