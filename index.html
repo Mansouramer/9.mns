@@ -1999,7 +1999,7 @@ function bootApp(){
 initLock();
 });
 
-async function generateQuestionsWithGemini() {
+generateQuestionsWithGemini() {
   const domain = $('geminiDomainSelect').value;
   const statusEl = $('geminiStatus');
   statusEl.textContent = `جاري توليد 10 أسئلة ذكية ومتجددة عبر الذكاء الاصطناعي...`;
