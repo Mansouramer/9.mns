@@ -1524,12 +1524,15 @@ function selectStudent(i){
 function fillStudentCard(i){
     if(!students[i]) return;
     const s = students[i];
-    $('selName').textContent = s.name;
-    $('selClass').textContent = s.classCustom \vert{}\vert{} '';$('sdParticipation').textContent = s.participation || 0;
-    $('sdHomework').textContent = s.homework || 0;
-    $('sdAbsence').textContent = s.absence || 0;
-    $('sdSkills').textContent = masteredCount(i);$('sdProjects').textContent = s.projects || 0;
-    $('sdMessages').textContent = s.messages || 0;
+    function transferSelected(){
+    if(selectedStudentIndex === null) return;
+    const t = document.getElementById('transferTarget').value;
+    if(!t) { alert('اختر الفصل المستهدف'); return; }
+    students[selectedStudentIndex].classCustom = t;
+    saveStudents();
+    render();
+}
+
     $('sdPhone').textContent = s.phone || '';
 }
 
