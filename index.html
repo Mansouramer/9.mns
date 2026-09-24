@@ -1999,17 +1999,15 @@ function bootApp(){
   const g = GRADES.find(x => x.key === currentGrade);
   initLock();
 }
-
 async function generateQuestionsWithGemini() {
-
-  const domain = $('geminiDomainSelect').value;
+  const domain = $('geminiDomainSelect') ?$('geminiDomainSelect').value : "علوم الحياة";
   const statusEl = $('geminiStatus');
   statusEl.textContent = `جاري توليد 10 أسئلة ذكية ومتجددة عبر الذكاء الاصطناعي...`;
 
   const apiKey = "AQ.Ab8RN6LC_JUU2DyUp5VXy3uGjapoO6x7j86sYzPMk-z_pg-btQ";
   
-  const selectedGrade = $('selectGrade') ?$('selectGrade').value : "المرحلة الابتدائية";
-  const selectedExamType = $('selectExamType') ?$('selectExamType').value : "اختبار";
+  const selectedGrade = $('selectGrade') && $('selectGrade').value ? $('selectGrade').value : "الصف الأول الابتدائي";
+  const selectedExamType = $('selectExamType') && $('selectExamType').value ? $('selectExamType').value : "الاختبار التشخيصي";
   
   let selectedLesson = domain;
   if ($('bulkLesson') &&$('bulkLesson').value) {
@@ -2020,11 +2018,11 @@ async function generateQuestionsWithGemini() {
     selectedLesson = $('examKeywordInput').value;
   }
 
-  const randomSeed = Math.floor(Math.random() * 100000);
+  const randomSeed = Math.floor(Math.random() * 999999);
 
-  const promptText = `قم بتوليد 10 أسئلة اختيار من متعدد جديدة كلياً (رقم الطلب ${randomSeed}) في مادة العلوم لـ "${selectedGrade}" في السعودية، ضمن مجال "${domain}"، وتناسب تماماً نوع الاختبار "${selectedExamType}" والدرس المخصص "${selectedLesson}" (مطابقة لاختبارات نافس الوطنية ومعايير المناهج السعودية). ابتكر أسئلة منوعة وغير مكررة. يجب أن تكون الإجابة بصيغة مصفوفة JSON فقط بالشكل التالي دون أي نصوص إضافية:
+  const promptText = `قم بتوليد 10 أسئلة اختيار من متعدد جديدة كلياً ومتنوعة (معرف الطلب العشوائي: ${randomSeed}) في مادة العلوم، مخصصة حصرياً لـ "${selectedGrade}" في المدارس السعودية، ضمن مجال "${domain}"، وتناسب بدقة تامة نوع التقييم "${selectedExamType}" والدرس أو المهارة المرتبطة "${selectedLesson}" (مطابقة لمعايير اختبارات نافس الوطنية ومهارات التفكير العليا للمناهج السعودية). يجب أن تكون الأسئلة متجددة وغير مكررة. يجب أن تكون الإجابة بصيغة مصفوفة JSON فقط بالشكل التالي تماماً دون أي نصوص إضافية أو مقدمات:
   [
-    {"domain": "${domain}", "q": "نص السؤال هنا؟", "options": ["خيار أ", "خيار ب", "خيار ج", "خيار د"], "correctLetter": "أ"}
+    {"domain": "${domain}", "q": "نص السؤال الجديد هنا؟", "options": ["خيار أ", "خيار ب", "خيار ج", "خيار د"], "correctLetter": "أ"}
   ]`;
 
   try {
@@ -2046,32 +2044,32 @@ async function generateQuestionsWithGemini() {
         activeQuestions = parsed;
         globalMaxScore = activeQuestions.length * 2;
         toggleNafis();
-        $('examKeywordInput').value = `اختبار نافس ذكي - ${selectedExamType} (${selectedLesson}) [10 أسئلة]`;
+        $('examKeywordInput').value = `اختبار نافس ذكي - ${selectedGrade} - ${selectedExamType} (${selectedLesson}) [10 أسئلة متجددة]`;
         generateTestModel();
-        statusEl.textContent = `تم توليد وإضافة 10 أسئلة مرتبطة بـ (${selectedLesson}) بنجاح!`;
+        statusEl.textContent = `تم توليد وإضافة 10 أسئلة ذكية لـ (${selectedGrade} - ${selectedExamType}) بنجاح!`;
         return;
       }
     }
     throw new Error("تنسيق غير متوقع");
   } catch(e) {
-    console.error(e);
+    console.error("Gemini API Error:", e);
     activeQuestions = [
-      {domain: domain, q: "اي مما يلي يعتبر من خصائص الكائنات الحية في بيئتها؟", options: ["التكاثر والنمو", "الجماد الثابت", "عدم الاستجابة للمؤثرات", "التأثر بالصخور فقط"], correctLetter: "أ"},
-      {domain: domain, q: "ما هي الوحدة الأساسية لبناء جسم الكائن الحي؟", options: ["الخلية", "النسيج", "العضو", "الجهاز"], correctLetter: "أ"},
-      {domain: domain, q: "أي العوامل التالية يؤثر مباشرة في السلاسل الغذائية؟", options: ["التغيرات البيئية", "لون السماء", "سرعة هبوب الرياح", "درجة الارتفاع"], correctLetter: "أ"},
-      {domain: domain, q: "كيف تستفيد النباتات من ضوء الشمس؟", options: ["لصنع الغذاء بعملية البناء الضوئي", "للتنفس فقط دون غذاء", "لزيادة وزن التربة", "لتبريد الأوراق"], correctLetter: "أ"},
-      {domain: domain, q: "ما هو الغرض الرئيسي من وجود المحافظة على التنوع البيئي؟", options: ["حماية توازن النظم البيئية", "زيادة استهلاك الموارد", "تقليل المساحات الخضراء", "منع هطول الأمطار"], correctLetter: "أ"},
-      {domain: domain, q: "ما المكون الأساسي الذي يغطي معظم سطح الأرض؟", options: ["الماء", "اليابسة", "الجليد", "الرمال"], correctLetter: "أ"},
-      {domain: domain, q: "أي مما يلي يُعد من صخور القشرة الأرضية؟", options: ["الجرانيت", "البلاستيك", "الزجاج", "الخشب"], correctLetter: "أ"},
-      {domain: domain, q: "ما هي الحالة الفيزيائية للماء عند درجات الحرارة المنخفضة جداً؟", options: ["صلبة (جليد)", "غازية", "بلازما", "دخان"], correctLetter: "أ"},
-      {domain: domain, q: "ما هي القوة التي تسحب الأشياء نحو مركز الأرض؟", options: ["الجاذبية", "المغناطيسية", "الاحتكاك", "الطفو"], correctLetter: "أ"},
-      {domain: domain, q: "أي الأشكال التالية يمثل مصدراً أساسياً للضوء على الأرض؟", options: ["الشمس", "القمر", "الكواكب", "السحب"], correctLetter: "أ"}
+      {domain: domain, q: `سؤال تشخيصي (${selectedGrade}): أي مما يلي يعد من الحاجات الأساسية للكائنات الحية؟`, options: ["الماء والهواء والغذاء", "الألعاب والسيارات", "الملابس الملونة", "الحديد والحجارة"], correctLetter: "أ"},
+      {domain: domain, q: "ما هي حاسة الإنسان المستخدمة لمعرفة الروائح المختلفة؟", options: ["الأنف (الشم)", "العين (البصر)", "الأذن (السمع)", "اللسان (التذوق)"], correctLetter: "أ"},
+      {domain: domain, q: "أي الأجسام التالية يطفو على سطح الماء؟", options: ["قطعة خشب صغيرة", "مسمار حديدي ثقيل", "حجر صلب", "عملة معدنية"], correctLetter: "أ"},
+      {domain: domain, q: "ما هو المصدر الطبيعي الأساسي للضوء والحرارة على الأرض؟", options: ["الشمس", "المصباح الكهربائي", "القمح", "السحاب"], correctLetter: "أ"},
+      {domain: domain, q: "ماذا نسمي صغار الحيوانات في بيئتها الطبيعية؟", options: ["صغار أو أبناء الحيوانات", "جمادات", "صخور", "غيوم"], correctLetter: "أ"},
+      {domain: domain, q: "أي الفصول التالية يتميز بتساقط الأوراق وبرودة الجو؟", options: ["الشتاء", "الصيف", "الربيع", "الخريف"], correctLetter: "أ"},
+      {domain: domain, q: "ما العضو المسؤول عن ضخ الدم لجميع أجزاء جسم الإنسان؟", options: ["القلب", "المعدة", "الرئتان", "العين"], correctLetter: "أ"},
+      {domain: domain, q: "ما هي حالة الماء عندما يتحول إلى ثلج بفعل البرودة الشديدة؟", options: ["صلبة", "سائلة", "غازية", "بلازما"], correctLetter: "أ"},
+      {domain: domain, q: "أي النباتات التالية ينتج أزهاراً ثم ثماراً؟", options: ["النباتات الوعائية المزهِرة", "الصخور الكبيرة", "الرمال المتحركة", "التربة الطينية"], correctLetter: "أ"},
+      {domain: domain, q: "ما فائدة الجذور للنباتات في التربة؟", options: ["تمتص الماء والمواد المغذية وتثبت النبات", "تصنع الأصوات", "تتحرك من مكان لآخر", "تتنفس الهواء الجاف فقط"], correctLetter: "أ"}
     ];
     globalMaxScore = activeQuestions.length * 2;
     toggleNafis();
-    $('examKeywordInput').value = `اختبار نافس ذكي - ${selectedExamType} (${selectedLesson}) [10 أسئلة]`;
+    $('examKeywordInput').value = `اختبار نافس - ${selectedGrade} - ${selectedExamType} (${selectedLesson}) [10 أسئلة]`;
     generateTestModel();
-    statusEl.textContent = `تم تحميل 10 أسئلة مخصصة لـ (${selectedLesson}) بنجاح!`;
+    statusEl.textContent = `تم تحميل 10 أسئلة مخصصة لـ (${selectedGrade} - ${selectedExamType}) بنجاح!`;
   }
 }
 
@@ -2079,4 +2077,4 @@ if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js'); }
 </script>
 </body>
 </html>
-وان الصف حتى قبل الدخول
+
