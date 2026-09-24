@@ -560,7 +560,13 @@ input[type=file]{width:100%;padding:9px;border-radius:10px;border:1px solid var(
   <a href="#results"><b>٤</b>النتائج</a><a href="#analysisPanel"><b>٥</b>التحليل</a>
 </nav>
       <div class="stack" style="margin-top:6px">
-
+<!-- زر توليد الأسئلة الذكية عبر جيمناي داخل قسم إعدادات الاختبار -->
+<div style="margin-bottom: 12px; padding: 10px; background: var(--panel-solid); border-radius: 8px; border: 1px solid var(--line);">
+    <button onclick="handleExamAIGeneration()" class="btn" style="background: var(--accent); color: white; width: 100%; padding: 8px; border-radius: 6px; cursor: pointer;">
+        <i class="fas fa-wand-magic-sparkles"></i> توليد أسئلة الاختبار آلياً عبر جيمناي
+    </button>
+    <div id="aiExamOutput" style="margin-top: 8px;"></div>
+</div>
   <section class="panel noprint" id="setup">
     <div class="panel-h"><h3>إعدادات الاختبار</h3></div>
     <div class="grid">
