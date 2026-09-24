@@ -2079,4 +2079,546 @@
                         <a href="https://wa.me/966${s.phone ? s.phone.replace(/^0+/, '') : ''}?text=${encodeURIComponent('عزيزي ولي أمر الطالب ' + s.name + '، نود إفادتكم بدرجات اختبارات مادة العلوم:\n- اختبار الفترة الأولى: ' + (s.exam1 || 0) + '/20\n- اختبار الفترة الثانية: ' + (s.exam2 || 0) + '/20\nمع تمنياتنا له بدوام التوفيق والنجاح.')}" target="_blank" class="whatsapp-btn" style="padding:4px 6px; font-size:11px; margin-top:0;" onclick="incrementMessageCount(${globalIndex})">📤 إرسال</a>
                     </td>
                 `;
-         
+                tbody.appendChild(tr);
+            });
+
+            document.getElementById('avgExam1').textContent = (sum1 / classStudents.length).toFixed(1) + ' / 20';
+            document.getElementById('avgExam2').textContent = (sum2 / classStudents.length).toFixed(1) + ' / 20';
+        }
+
+        function updateExamScore(index, field, val) {
+            students[index][field] = val === "" ? 0 : Number(val);
+            localStorage.setItem(getStorageKeyForStudents(), JSON.stringify(students));
+            
+            const selectedClass = document.getElementById('examClassSelect').value;
+            if(selectedClass) {
+                const classStudents = students.filter(s => (s.classCustom || currentGrade) === selectedClass);
+                let sum1 = 0, sum2 = 0;
+                classStudents.forEach(s => {
+                    sum1 += Number(s.exam1) || 0;
+                    sum2 += Number(s.exam2) || 0;
+                });
+                document.getElementById('avgExam1').textContent = (sum1 / classStudents.length).toFixed(1) + ' / 20';
+                document.getElementById('avgExam2').textContent = (sum2 / classStudents.length).toFixed(1) + ' / 20';
+            }
+        }
+
+        function printSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (!section) return;
+            
+            document.querySelectorAll('.section-card').forEach(el => el.classList.remove('printing-section'));
+            section.classList.add('printing-section');
+            window.print();
+        }
+
+        function printStudentReport() {
+            printSection('studentReportSection');
+        }
+
+        function exportExcel() {
+            if(students.length === 0) { alert('لا توجد بيانات طلاب لتصديرها!'); return; }
+            const dataToExport = students.map((s, idx) => ({
+                "م": idx + 1,
+                "اسم الطالب": s.name,
+                "الصف": s.classCustom || currentGrade,
+                "رقم الجوال": s.phone || '',
+                "الغياب": s.absence || 0,
+                "المشاركة": s.participation || 0,
+                "الواجبات": s.homework || 0,
+                "التجارب": s.projects || 0,
+                "اختبار الفترة الأولى": s.exam1 || 0,
+                "اختبار الفترة الثانية": s.exam2 || 0
+            }));
+
+            const ws = XLSX.utils.json_to_sheet(dataToExport);
+            if(!ws['!views']) ws['!views'] = [];
+            ws['!views'].push({ rightToLeft: true });
+
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "سجل طلاب العلوم");
+            XLSX.writeFile(wb, `سجل_العلوم_${currentGrade}.xlsx`);
+            showToast('📊 تم تصدير ملف الإكسل بنجاح!');
+        }
+
+        function exportToGoogleSheetsCSV() {
+            if(students.length === 0) { alert('لا توجد بيانات طلاب لتصديرها!'); return; }
+            let csvContent = "\uFEFFاسم الطالب,الصف,رقم الجوال,الغياب,المشاركة,الواجبات,التجارب,اختبار 1,اختبار 2\n";
+            students.forEach(s => {
+                csvContent += `"${s.name}","${s.classCustom || currentGrade}","${s.phone || ''}",${s.absence || 0},${s.participation || 0},${s.homework || 0},${s.projects || 0},${s.exam1 || 0},${s.exam2 || 0}\n`;
+            });
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.setAttribute('href', url);
+            a.setAttribute('download', `GoogleSheets_Backup_${currentGrade}.csv`);
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            showToast('☁️ تم التصدير بنجاح!');
+        }
+
+        function importExcel(event) {
+            const file = event.target.files[0];
+            if(!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, { type: 'array' });
+                    const firstSheetName = workbook.SheetNames[0];
+                    const worksheet = workbook.Sheets[firstSheetName];
+                    const jsonData = XLSX.utils.sheet_to_json(worksheet);
+
+                    if(!jsonData || jsonData.length === 0) {
+                        alert('ملف الإكسل فارغ أو غير مطابق للهيكلة المطلوبة.');
+                        return;
+                    }
+
+                    let count = 0;
+                    jsonData.forEach(row => {
+                        const name = row["اسم الطالب"] || row["اسم الطالبة"] || row["الاسم"] || "";
+                        const sClass = row["الصف"] || row["الصف/الشعبة"] || row["Class"] || currentGrade;
+                        const phone = row["رقم الجوال"] || row["الجوال"] || row["Phone"] || "";
+
+                        if(name.toString().trim() !== "") {
+                            students.push({
+                                name: name.toString().trim(),
+                                classCustom: sClass.toString().trim(),
+                                phone: phone.toString().trim(),
+                                absence: Number(row["الغياب"] || 0),
+                                participation: Number(row["المشاركة"] || row["المشاركات"] || 0),
+                                homework: Number(row["الواجبات"] || 0),
+                                projects: Number(row["التجارب"] || 0),
+                                messages: Number(row["الرسائل"] || 0),
+                                exam1: Number(row["اختبار الفترة الأولى"] || 0),
+                                exam2: Number(row["اختبار الفترة الثانية"] || 0)
+                            });
+                            count++;
+                        }
+                    });
+
+                    localStorage.setItem(getStorageKeyForStudents(), JSON.stringify(students));
+                    render();
+                    showToast(`📂 تمت استعادة (${count}) طالب بنجاح!`);
+                } catch(err) {
+                    console.error(err);
+                    alert('حدث خطأ أثناء قراءة ملف الإكسل.');
+                } finally {
+                    event.target.value = '';
+                }
+            };
+            reader.readAsArrayBuffer(file);
+        }
+
+        function exportData() {
+            const backupPackage = {
+                students: students,
+                lessons: lessons,
+                lessonStatus: lessonStatus,
+                lessonMastery: lessonMastery,
+                customMotivations: customMotivations,
+                schoolSchedule: schoolSchedule
+            };
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backupPackage));
+            const dlAnchor = document.createElement('a');
+            dlAnchor.setAttribute("href", dataStr);
+            dlAnchor.setAttribute("download", `سجل_العلوم_${currentGrade}_backup.json`);
+            document.body.appendChild(dlAnchor);
+            dlAnchor.click();
+            dlAnchor.remove();
+            localStorage.setItem('mansour_last_backup_date', Date.now().toString());
+            showToast('💾 تم تصدير النسخة الاحتياطية بنجاح!');
+        }
+
+        function importData(event) {
+            const file = event.target.files[0];
+            if(!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const imported = JSON.parse(e.target.result);
+                    if(Array.isArray(imported)) {
+                        students = imported;
+                        localStorage.setItem(getStorageKeyForStudents(), JSON.stringify(students));
+                    } else if(imported && typeof imported === 'object') {
+                        if(imported.students) {
+                            students = imported.students;
+                            localStorage.setItem(getStorageKeyForStudents(), JSON.stringify(students));
+                        }
+                        if(imported.lessons) {
+                            lessons = imported.lessons;
+                            localStorage.setItem(getStorageKeyForLessons(), JSON.stringify(lessons));
+                        }
+                        if(imported.lessonStatus) {
+                            lessonStatus = imported.lessonStatus;
+                            localStorage.setItem(getStorageKeyForStatus(), JSON.stringify(lessonStatus));
+                        }
+                        if(imported.lessonMastery) {
+                            lessonMastery = imported.lessonMastery;
+                            localStorage.setItem(getStorageKeyForMastery(), JSON.stringify(lessonMastery));
+                        }
+                        if(imported.schoolSchedule) {
+                            schoolSchedule = imported.schoolSchedule;
+                            localStorage.setItem('mansour_school_schedule_v12', JSON.stringify(schoolSchedule));
+                        }
+                    }
+                    renderLessons();
+                    render();
+                    showToast('📂 تم استرجاع كافة البيانات بنجاح!');
+                } catch(err) {
+                    alert('خطأ في قراءة ملف JSON.');
+                } finally {
+                    event.target.value = '';
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function filterStudentDropdown() {
+            const keyword = document.getElementById('studentSearchInput').value.trim().toLowerCase();
+            const listContainer = document.getElementById('studentDropdownList');
+            listContainer.innerHTML = '';
+
+            if(!keyword) {
+                listContainer.style.display = 'none';
+                return;
+            }
+
+            const matches = students.filter(s => s.name.toLowerCase().includes(keyword));
+            if(matches.length === 0) {
+                listContainer.style.display = 'none';
+                return;
+            }
+
+            listContainer.style.display = 'block';
+            matches.forEach(m => {
+                const globalIdx = students.indexOf(m);
+                const item = document.createElement('div');
+                item.className = 'searchable-item';
+                item.innerHTML = `<strong>${m.name}</strong> <span class="class-badge" style="float:left;">${m.classCustom || currentGrade}</span>`;
+                item.onclick = function() {
+                    selectStudentForDetails(globalIdx);
+                    listContainer.style.display = 'none';
+                    document.getElementById('studentSearchInput').value = m.name;
+                };
+                listContainer.appendChild(item);
+            });
+        }
+
+        function showStudentDropdown() {
+            if(document.getElementById('studentSearchInput').value.trim()) {
+                filterStudentDropdown();
+            }
+        }
+
+        function selectStudentForDetails(index) {
+            selectedStudentIndex = index;
+            const s = students[index];
+            document.getElementById('studentCard').style.display = 'block';
+            document.getElementById('selectedName').textContent = s.name;
+            document.getElementById('selectedClassBadge').textContent = s.classCustom || currentGrade;
+            document.getElementById('sdParticipation').textContent = s.participation || 0;
+            document.getElementById('sdHomework').textContent = s.homework || 0;
+            document.getElementById('sdAbsence').textContent = s.absence || 0;
+            
+            let studentMasteredCount = 0;
+            lessons.forEach((l, lIdx) => {
+                if (lessonMastery[index] && lessonMastery[index][lIdx]) studentMasteredCount++;
+            });
+            document.getElementById('sdSkills').textContent = studentMasteredCount;
+            document.getElementById('sdProjects').textContent = s.projects || 0;
+            document.getElementById('sdMessages').textContent = s.messages || 0;
+            document.getElementById('sdPhone').textContent = s.phone || 'لا يوجد';
+            
+            updateLessonMsg();
+            updateMotivationMsg();
+        }
+
+        function updateLessonMsg() {
+            if(selectedStudentIndex === '') return;
+            const s = students[selectedStudentIndex];
+            const lessonIdx = document.getElementById('selectLesson').value;
+            const preview = document.getElementById('lessonMsgPreview');
+            const btn = document.getElementById('whatsappLessonBtn');
+
+            if(lessonIdx === "") {
+                preview.textContent = "اختر موضوع الدرس والمهارة أعلاه...";
+                btn.href = "#";
+                return;
+            }
+
+            const l = lessons[lessonIdx];
+            const msg = `عزيزي ولي أمر الطالب / ${s.name}\nنحيطكم علماً بأننا تناولنا اليوم في مادة العلوم درس:\n📘 (${l.chapter}) - ${l.title}\n💡 المفاهيم والتجارب المرتبطة: ${l.desc}\nنرجو منكم متابعة ابنكم وتعزيز استكشافاته العلمية.\nمع تقديـرنا، المعلم: ${TEACHER_NAME} - ${SCHOOL_NAME}`;
+            
+            preview.textContent = msg;
+            const formattedPhone = s.phone ? `966${s.phone.replace(/^0+/, '')}` : '';
+            btn.href = `https://wa.me/${formattedPhone}?text=` + encodeURIComponent(msg);
+        }
+
+        function updateMotivationMsg() {
+            if(selectedStudentIndex === '') return;
+            const s = students[selectedStudentIndex];
+            const motivVal = document.getElementById('selectMotivation').value;
+            const preview = document.getElementById('motivationMsgPreview');
+            const btn = document.getElementById('whatsappMotivationBtn');
+
+            if(motivVal === "") {
+                preview.textContent = "اختر الرسالة لعرض نص الشكر والتحفيز...";
+                btn.href = "#";
+                return;
+            }
+
+            let text = "";
+            if(motivVal.startsWith('motiv-')) {
+                const idx = motivVal.split('-')[1];
+                text = customMotivations[idx].text;
+            }
+
+            const finalMsg = `إلى ولي أمر الطالب / ${s.name}\n\n${text}\n\nمع خالص الشكر، المعلم: ${TEACHER_NAME} - ${SCHOOL_NAME}`;
+            preview.textContent = finalMsg;
+            const formattedPhone = s.phone ? `966${s.phone.replace(/^0+/, '')}` : '';
+            btn.href = `https://wa.me/${formattedPhone}?text=` + encodeURIComponent(finalMsg);
+        }
+
+        function sendFullReportWhatsApp() {
+            if(selectedStudentIndex === '') return;
+            const s = students[selectedStudentIndex];
+            
+            let studentMasteredCount = 0;
+            lessons.forEach((l, lIdx) => {
+                if (lessonMastery[selectedStudentIndex] && lessonMastery[selectedStudentIndex][lIdx]) studentMasteredCount++;
+            });
+
+            const msg = `عزيزي ولي أمر الطالب / ${s.name} (${s.classCustom || currentGrade})\nنحيطكم علماً بمستوى ابنكم وتقييمه في مادة العلوم حتى تاريخه:\n\n- المشاركات: ${s.participation || 0}\n- الواجبات: ${s.homework || 0}\n- أيام الغياب: ${s.absence || 0}\n- الدروس المتقنة: ${studentMasteredCount} من ${lessons.length}\n- التجارب: ${s.projects || 0}\n- اختبار الفترة الأولى: ${s.exam1 || 0}/20\n- اختبار الفترة الثانية: ${s.exam2 || 0}/20\n\nنشكر تعاونكم المستمر.\nمع تقديـرنا، المعلم: ${TEACHER_NAME} - ${SCHOOL_NAME}`;
+            
+            incrementMessageCount(selectedStudentIndex);
+            const formattedPhone = s.phone ? `966${s.phone.replace(/^0+/, '')}` : '';
+            window.open(`https://wa.me/${formattedPhone}?text=` + encodeURIComponent(msg), '_blank');
+        }
+
+        function addNewMotivation() {
+            const title = document.getElementById('newMotivationTitle').value.trim();
+            const text = document.getElementById('newMotivationText').value.trim();
+            if(!title || !text) { alert('الرجاء كتابة عنوان ونصح الرسالة التشجيعية'); return; }
+
+            customMotivations.push({ id: Date.now().toString(), title: title, text: text });
+            localStorage.setItem('mansour_custom_motivations_science_v5', JSON.stringify(customMotivations));
+            
+            document.getElementById('newMotivationTitle').value = '';
+            document.getElementById('newMotivationText').value = '';
+            
+            renderLessons();
+            showToast('🌟 تمت إضافة رسالة التحفيز بنجاح!');
+        }
+
+        function incrementMessageCount(targetIdx = selectedStudentIndex) {
+            if(targetIdx !== '' && students[targetIdx]) {
+                students[targetIdx].messages = (students[targetIdx].messages || 0) + 1;
+                localStorage.setItem(getStorageKeyForStudents(), JSON.stringify(students));
+                render();
+                if(selectedStudentIndex !== '') selectStudentForDetails(selectedStudentIndex);
+            }
+        }
+
+        function updateBulkHomeworkMsgPreview() {
+            const val = document.getElementById('bulkSelectHomeworkLesson').value;
+            const details = document.getElementById('bulkHomeworkDetails').value.trim();
+            const note = document.getElementById('bulkHomeworkExtraNote').value.trim();
+            const preview = document.getElementById('bulkHomeworkMsgPreview');
+
+            if(!val) {
+                preview.textContent = "اختر الصف والدرس وأدخل تفاصيل الواجب...";
+                return;
+            }
+
+            let lessonTitle = "";
+            let chapterName = "";
+            if(val.startsWith('lesson-')) {
+                const idx = val.split('-')[1];
+                const l = lessons[idx];
+                chapterName = l.chapter;
+                lessonTitle = l.title;
+            }
+
+            let msg = `أولياء الأمور الأفاضل، نود إحاطتكم بأن واجب مادة العلوم للدرس:\n📘 (${chapterName}) - ${lessonTitle}\n`;
+            if(details) {
+                msg += `📝 المطلوب حلّه: ${details}\n`;
+            } else {
+                msg += `📝 المطلوب: حل تدريبات وأسئلة الدرس في الكتاب المدرسي.\n`;
+            }
+
+            if(note) {
+                msg += `📌 ملاحظات: ${note}\n`;
+            }
+
+            msg += `\nنرجو الحرص على حل الواجب وإرساله في الموعد المحدد.\nمع خالص الشكر، المعلم: ${TEACHER_NAME} - ${SCHOOL_NAME}`;
+            preview.textContent = msg;
+        }
+
+        function prepareBulkHomeworkBatch() {
+            const targetClass = document.getElementById('bulkTargetClass').value;
+            const val = document.getElementById('bulkSelectHomeworkLesson').value;
+            if(!val) { alert('الرجاء اختيار الدرس لتحديد الواجب المراد إرساله'); return; }
+
+            let targetStudents = students;
+            if(targetClass !== 'ALL') {
+                targetStudents = students.filter(s => (s.classCustom || currentGrade) === targetClass);
+            }
+
+            targetStudents = targetStudents.filter(s => s.phone && s.phone.trim() !== '');
+            if(targetStudents.length === 0) { 
+                alert('لا توجد أرقام جوالات مسجلة للطلاب المستهدفين'); 
+                return; 
+            }
+
+            const baseMsg = document.getElementById('bulkHomeworkMsgPreview').textContent;
+            const panel = document.getElementById('bulkSendPanel');
+            const listContainer = document.getElementById('bulkSendListContainer');
+            listContainer.innerHTML = '';
+
+            targetStudents.forEach(s => {
+                const globalIdx = students.indexOf(s);
+                const formattedPhone = s.phone ? `966${s.phone.replace(/^0+/, '')}` : '';
+                const finalMsg = `عزيزي ولي أمر الطالب / ${s.name}\n\n` + baseMsg;
+                const link = `https://wa.me/${formattedPhone}?text=` + encodeURIComponent(finalMsg);
+
+                const itemDiv = document.createElement('div');
+                itemDiv.style.display = 'flex';
+                itemDiv.style.flexDirection = 'column';
+                itemDiv.style.gap = '5px';
+                itemDiv.style.background = 'var(--card-bg)';
+                itemDiv.style.padding = '8px';
+                itemDiv.style.borderRadius = '6px';
+                itemDiv.style.border = '1px solid rgba(0,0,0,0.1)';
+
+                itemDiv.innerHTML = `
+                    <div style="font-size:12px;"><strong>${s.name}</strong> <span class="class-badge" style="font-size:10px;">${s.classCustom || currentGrade}</span></div>
+                    <a href="${link}" target="_blank" class="whatsapp-btn" style="margin-top:0; padding:6px; font-size:11px;" onclick="markMessageSentFromBulk(${globalIdx}, this)">📤 إرسال</a>
+                `;
+                listContainer.appendChild(itemDiv);
+            });
+
+            panel.style.display = 'block';
+            showToast(`🚀 تم تجهيز قائمة إرسال لعدد (${targetStudents.length}) ولي أمر!`);
+        }
+
+        function markMessageSentFromBulk(globalIdx, btnElement) {
+            if(students[globalIdx]) {
+                students[globalIdx].messages = (students[globalIdx].messages || 0) + 1;
+                localStorage.setItem(getStorageKeyForStudents(), JSON.stringify(students));
+                render();
+                btnElement.style.background = '#6b7280';
+                btnElement.textContent = '✅ تم';
+            }
+        }
+
+        function setTheme(themeName) {
+            document.body.className = themeName;
+            localStorage.setItem('mansour_science_theme_v5', themeName);
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        window.onscroll = function() {
+            const topBtn = document.getElementById('scrollToTopBtn');
+            if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+                topBtn.style.display = 'flex';
+            } else {
+                topBtn.style.display = 'none';
+            }
+        };
+
+        const savedTheme = localStorage.getItem('mansour_science_theme_v5');
+        if(savedTheme) document.body.className = savedTheme;
+
+        let deferredPrompt;
+        const installBtn = document.getElementById('pwaInstallBtn');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            if (installBtn) {
+                installBtn.style.display = 'flex';
+            }
+        });
+
+        function installPWAApp() {
+            if (!deferredPrompt) return;
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then((choiceResult) => {
+                if (choiceResult.outcome === 'accepted') {
+                    showToast('🎉 تم تثبيت اللوحة على شاشة جهازك بنجاح!');
+                }
+                deferredPrompt = null;
+                installBtn.style.display = 'none';
+            });
+        }
+
+        window.addEventListener('appinstalled', () => {
+            if (installBtn) installBtn.style.display = 'none';
+            deferredPrompt = null;
+        });
+
+        window.onload = function() {
+            renderLessons();
+            render();
+            updateLiveScheduleWidget();
+            checkBackupReminder();
+
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('./sw.js').catch((err) => {
+                    console.log('Service Worker registration skipped or failed: ', err);
+                });
+            }
+        };
+
+        function backupAllData() {
+            const fullBackup = {
+                students: typeof students !== 'undefined' ? students : [],
+                lessons: typeof lessons !== 'undefined' ? lessons : [],
+                schoolSchedule: typeof schoolSchedule !== 'undefined' ? schoolSchedule : {},
+                timestamp: new Date().toLocaleString('ar-SA')
+            };
+
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(fullBackup));
+            const dlAnchor = document.createElement('a');
+            dlAnchor.setAttribute("href", dataStr);
+            dlAnchor.setAttribute("download", `نسخة_احتياطية_الداش_بورد_${new Date().toISOString().slice(0,10)}.json`);
+            document.body.appendChild(dlAnchor);
+            dlAnchor.click();
+            dlAnchor.remove();
+            
+            showToast('💾 تم حفظ النسخة الاحتياطية على جهازك بنجاح!');
+        }
+
+        function restoreDashboardData(event) {
+            const file = event.target.files[0];
+            if(!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const imported = JSON.parse(e.target.result);
+                    if(imported) {
+                        if(imported.students) localStorage.setItem(getStorageKeyForStudents(), JSON.stringify(imported.students));
+                        if(imported.lessons) localStorage.setItem(getStorageKeyForLessons(), JSON.stringify(imported.lessons));
+                        if(imported.schoolSchedule) localStorage.setItem('mansour_school_schedule_v12', JSON.stringify(imported.schoolSchedule));
+                        alert('📂 تم استرجاع البيانات بنجاح!');
+                        location.reload();
+                    } else {
+                        alert('ملف النسخة الاحتياطية غير صالح.');
+                    }
+                } catch(err) {
+                    alert('خطأ في قراءة ملف JSON.');
+                } finally {
+                    event.target.value = '';
+                }
+            };
+            reader.readAsText(file);
+        }
+    </script>
+</body>
+</html>
