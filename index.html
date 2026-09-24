@@ -1994,7 +1994,7 @@ function bootApp(){
   if(isStandalone()){ $('installTop').hidden = true; $('pwaInstallBtn').hidden = true; }
   try{ const t = sessionStorage.getItem('mansour_tab'); if(t) showView(t); }catch(e){}
 }
-// ألوان الصف حتى قبل الدخول
+// أل
 (function(){ const g = GRADES.find(x => x.key === currentGrade) || GRADES[0]; document.documentElement.style.setProperty('--accent', g.color); document.documentElement.style.setProperty('--accent-rgb', hexRgb(g.color)); })();
 initLock();
 });
@@ -2077,3 +2077,4 @@ if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js'); }
 </script>
 </body>
 </html>
+وان الصف حتى قبل الدخول
