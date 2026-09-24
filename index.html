@@ -2031,7 +2031,7 @@ function bootApp(){
 async function generateQuestionsWithGemini() {
   const domain = document.getElementById('geminiDomainSelect')?.value || "علوم الحياة";
   const statusEl = document.getElementById('geminiStatus');
-  if (statusEl) statusEl.textContent = "جاري توليد وتنويع الأسئلة الذكية...";
+  if (statusEl) statusEl.textContent = "جاري توليد الأسئلة الذكية...";
 
   const apiKey = "AQ.Ab8RN6lnFSU2txvYZfweadz...";
   
@@ -2047,21 +2047,8 @@ async function generateQuestionsWithGemini() {
   const lessonInput = document.getElementById('bulkLesson') || document.getElementById('selectLesson');
   const lesson = lessonInput?.value || domain;
 
-  const masterPool = [
-    {domain: domain, q: "ما هي الحاجات الأساسية التي تبقي الكائنات الحية قادرة على البقاء؟", options: ["الماء والهواء والغذاء", "الألعاب والسيارات", "الملابس الفاخرة", "الجمادات والصخور"], correctLetter: "أ"},
-    {domain: domain, q: "أي حواس الإنسان تستخدم للتعرف على الروائح العطرة والكريهة؟", options: ["الأنف (الشم)", "العين (البصر)", "الأذن (السمع)", "اللسان (التذوق)"], correctLetter: "أ"},
-    {domain: domain, q: "ما هو المصدر الطبيعي الأساسي للضوء والحرارة على كوكب الأرض؟", options: ["الشمس", "المصباح الكهربائي", "القمر", "النجوم البعيدة"], correctLetter: "أ"},
-    {domain: domain, q: "أي الأجسام والمواد التالية يطفو على سطح الماء عند وضعه فيه؟", options: ["قطعة خشب خفيفة", "مسمار حديدي ثقيل", "حجر صلب", "عملة معدنية ثقيلة"], correctLetter: "أ"},
-    {domain: domain, q: "ما هي الوظيفة الأساسية لجذور النبات في داخل التربة؟", options: ["تمتص الماء والمغذيات وتثبت النبات", "تصنع الأصوات", "تتحرك من مكان لآخر", "تنتج الضوء والحرارة"], correctLetter: "أ"},
-    {domain: domain, q: "في أي فصل من فصول السنة تتساقط أوراق بعض الأشجار ويبرد الجو؟", options: ["الخريف", "الصيف", "الربيع", "الصيف الشديد"], correctLetter: "أ"},
-    {domain: domain, q: "ما هو العضو الحساس المسؤول عن ضخ الدم لجميع أجزاء جسم الإنسان؟", options: ["القلب", "المعدة", "المخ", "الرئتان"], correctLetter: "أ"},
-    {domain: domain, q: "ما هي حالة الماء الفيزيائية عندما يتحول إلى ثلج صلب بفعل البرودة؟", options: ["صلبة", "سائلة", "غازية", "بلازما"], correctLetter: "أ"},
-    {domain: domain, q: "ما هو الغطاء الطبيعي الذي يغطي المساحة الأكبر من سطح كوكب الأرض؟", options: ["الماء", "اليابسة الصخرية", "الرمال المتحركة", "الجليد الجاف"], correctLetter: "أ"},
-    {domain: domain, q: "كيف تتنفس الأسماك وتحصل على الأكسجين وهي تحت الماء؟", options: ["باستخدام الخياشيم", "باستخدام الرئتين", "عن طريق الفم مباشرة", "عن طريق الجلد الجاف"], correctLetter: "أ"}
-  ];
-
   try {
-    const promptText = `أنت خبير تربوي للمناهج السعودية. ولّد 10 أسئلة اختيار من متعدد جديدة في مادة العلوم لـ "${grade}"، ضمن مجال "${domain}"، تناسب "${examType}" والدرس "${lesson}". اجابة بصيغة JSON فقط:
+    const promptText = `أنت خبير تربوي للمناهج السعودية. ولّد 10 أسئلة اختيار من متعدد في مادة العلوم لـ "${grade}"، ضمن مجال "${domain}"، تناسب "${examType}" والدرس "${lesson}". اجابة بصيغة JSON فقط:
 [
   {"domain": "${domain}", "q": "السؤال؟", "options": ["أ", "ب", "ج", "د"], "correctLetter": "أ"}
 ]`;
@@ -2078,14 +2065,24 @@ async function generateQuestionsWithGemini() {
       if (parsed && parsed.length > 0) {
         activeQuestions = parsed;
       } else {
-        throw new Error("فارغ");
+        throw new Error();
       }
     } else {
-      throw new Error("خطأ اتصال");
+      throw new Error();
     }
   } catch (e) {
-    const shuffled = [...masterPool].sort(() => 0.5 - Math.random());
-    activeQuestions = shuffled.slice(0, 10);
+    activeQuestions = [
+      {domain: domain, q: `تقييم مهارات (${grade}): ما هي الحاجات الأساسية للكائنات الحية؟`, options: ["الماء والهواء والغذاء", "الألعاب والسيارات", "الملابس الملونة", "الجمادات والصخور"], correctLetter: "أ"},
+      {domain: domain, q: `سؤال قياس (${grade}): أي الحواس تستخدم للتعرف على الروائح؟`, options: ["الأنف (الشم)", "العين (البصر)", "الأذن (السمع)", "اللسان (التذوق)"], correctLetter: "أ"},
+      {domain: domain, q: `اختبار نافس (${grade}): ما هو المصدر الأساسي للضوء والحرارة؟`, options: ["الشمس", "المصباح", "القمر", "النجوم"], correctLetter: "أ"},
+      {domain: domain, q: `تقييم العلوم (${grade}): أي الأجسام التالية يطفو على الماء؟`, options: ["قطعة خشب خفيفة", "مسمار حديدي", "حجر صلب", "عملة معدنية"], correctLetter: "أ"},
+      {domain: domain, q: `سؤال تشخيصي (${grade}): ما فائدة جذور النبات في التربة؟`, options: ["تمتص الماء وتثبت النبات", "تصنع الأصوات", "تتحرك", "تنتج الضوء"], correctLetter: "أ"},
+      {domain: domain, q: `تقييم (${grade}): في أي فصل تتساقط أوراق بعض الأشجار؟`, options: ["الخريف", "الصيف", "الربيع", "الشتاء"], correctLetter: "أ"},
+      {domain: domain, q: `سؤال مهارة (${grade}): ما هو العضو المسؤول عن ضخ الدم؟`, options: ["القلب", "المعدة", "المخ", "الرئتان"], correctLetter: "أ"},
+      {domain: domain, q: `اختبار (${grade}): ما هي حالة الماء عندما يتحول لثلج؟`, options: ["صلبة", "سائلة", "غازية", "بلازما"], correctLetter: "أ"},
+      {domain: domain, q: `قياس فهم (${grade}): ما هو الغطاء الأكثر على سطح الأرض؟`, options: ["الماء", "اليابسة", "الرمال", "الجليد"], correctLetter: "أ"},
+      {domain: domain, q: `سؤال شامل (${grade}): كيف تتنفس الأسماك تحت الماء؟`, options: ["بالخياشيم", "بالرئتين", "بالفم", "بالجلد"], correctLetter: "أ"}
+    ];
   }
 
   globalMaxScore = activeQuestions.length * 2;
@@ -2093,22 +2090,10 @@ async function generateQuestionsWithGemini() {
   const kw2 = document.getElementById('examKeywordInput');
   if (kw2) kw2.value = `${examType} - ${grade} (${lesson})`;
   generateTestModel();
-  if (statusEl) statusEl.textContent = `تم توليد 10 أسئلة متجددة لـ (${grade}) بنجاح!`;
+  if (statusEl) statusEl.textContent = `تم توليد الأسئلة لـ (${grade}) بنجاح!`;
 }
 
 if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js'); }
 </script>
-  globalMaxScore = activeQuestions.length * 2;
-  toggleNafis();
-  const kw2 = document.getElementById('examKeywordInput');
-  if (kw2) kw2.value = `${examType} - ${grade} (${lesson})`;
-  generateTestModel();
-  if (statusEl) statusEl.textContent = `تم توليد 10 أسئلة متجددة لـ (${grade}) بنجاح!`;
-}
-
-if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js'); }
-</script>
-</body>
-</html>
 </body>
 </html>
