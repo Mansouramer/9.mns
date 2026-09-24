@@ -2084,17 +2084,17 @@ async function generateQuestionsWithGemini() {
       {domain: domain, q: `سؤال شامل (${grade}): كيف تتنفس الأسماك تحت الماء؟`, options: ["بالخياشيم", "بالرئتين", "بالفم", "بالجلد"], correctLetter: "أ"}
     ];
   }
-  globalMaxScore = activeQuestions.length * 2;
+    globalMaxScore = activeQuestions.length * 2;
   toggleNafis();
   const kw2 = document.getElementById('examKeywordInput');
   if (kw2) {
-    kw2.value = `${examType} - ${grade} (${lesson})`;
+    kw2.value = examType + ' - ' + grade + ' (' + lesson + ')';
   }
   generateTestModel();
   if (statusEl) {
     statusEl.textContent = "تم توليد الأسئلة بنجاح!";
   }
-}
+} // هذا القوس هو إغلاق دالة generateQuestionsWithGemini
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js');
@@ -2102,6 +2102,3 @@ if ('serviceWorker' in navigator) {
 </script>
 </body>
 </html>
-
-  
- 
