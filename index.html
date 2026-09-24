@@ -2001,82 +2001,75 @@ function bootApp(){
 }
 
 async function generateQuestionsWithGemini() {
-  const domain = document.getElementById('geminiDomainSelect') ? document.getElementById('geminiDomainSelect').value : "علوم الحياة";
+  const domain = document.getElementById('geminiDomainSelect')?.value || "علوم الحياة";
   const statusEl = document.getElementById('geminiStatus');
-  if (statusEl) statusEl.textContent = "جاري توليد الأسئلة الذكية المعتمدة...";
+  if (statusEl) statusEl.textContent = "جاري توليد الأسئلة الذكية عبر الذكاء الاصطناعي...";
 
   const apiKey = "AQ.Ab8RN6LC_JUU2DyUp5VXy3uGjapoO6x7j86sYzPMk-z_pg-btQ";
   
-  let selectedGrade = "الصف الأول الابتدائي";
-  let selectedExamType = "اختبار تشخيصي";
-  let selectedLesson = domain;
+  // التقاط دقيق للصف ونوع الاختبار المختار في الواجهة
+  let grade = "الصف الأول الابتدائي";
+  let examType = "الاختبار التشخيصي";
+  
+  const gradeSel = document.getElementById('selectGrade');
+  if (gradeSel && gradeSel.value) grade = gradeSel.value;
+  
+  const examSel = document.getElementById('selectExamType');
+  if (examSel && examSel.value) examType = examSel.value;
 
-  const gradeInput = document.getElementById('selectGrade') || document.querySelector('select[id*="Grade"]');
-  if (gradeInput && gradeInput.value) {
-    selectedGrade = gradeInput.value;
-  }
+  const lessonInput = document.getElementById('bulkLesson') || document.getElementById('selectLesson');
+  const lesson = lessonInput?.value || domain;
 
-  const examInput = document.getElementById('selectExamType') || document.querySelector('select[id*="Exam"]');
-  if (examInput && examInput.value) {
-    selectedExamType = examInput.value;
-  }
-
-  const lessonInput = document.getElementById('bulkLesson') || document.getElementById('selectLesson') || document.getElementById('examKeywordInput');
-  if (lessonInput && lessonInput.value && !lessonInput.value.includes('اختبار نافس')) {
-    selectedLesson = lessonInput.value;
-  }
-
-  const randomSeed = Math.floor(Math.random() * 99999999);
-
-  const promptText = "أنت خبير تربوي ومحترف في المناهج السعودية. قم بتوليد 10 أسئلة اختيار من متعدد علمية وواضحة (بدون مقدمات أو حشو) لـ " + selectedGrade + " في مادة العلوم، ضمن مجال " + domain + "، وتناسب نوع الاختبار " + selectedExamType + " والدرس " + selectedLesson + ". يجب أن تكون صياغة الأسئلة نظيفة ومناسبة لاختبارات نافس. الإجابة بصيغة مصفوفة JSON فقط بالشكل التالي دون أي نصوص إضافية:\n[\n  {\"domain\": \"" + domain + "\", \"q\": \"نص السؤال هنا؟\", \"options\": [\"الخيار الأول\", \"الخيار الثاني\", \"الخيار الثالث\", \"الخيار الرابع\"], \"correctLetter\": \"أ\"}\n]";
+  const randomSeed = Math.floor(Math.random() * 999999);
+  const promptText = `أنت خبير تربوي للمناهج السعودية. ولّد 10 أسئلة اختيار من متعدد جديدة كلياً (معرف ${randomSeed}) لمادة العلوم لـ "${grade}"، ضمن مجال "${domain}"، وتناسب "${examType}" والدرس "${lesson}". اجعل الإجابة بصيغة JSON فقط كالتالي دون مقدمات:
+[
+  {"domain": "${domain}", "q": "نص السؤال؟", "options": ["أ", "ب", "ج", "د"], "correctLetter": "أ"}
+]`;
 
   try {
-    const res = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + apiKey, {
+    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        contents: [{ role: "user", parts: [{ text: promptText }] }]
-      })
+      body: JSON.stringify({ contents: [{ role: "user", parts: [{ text: promptText }] }] })
     });
 
     const data = await res.json();
-    if(data.candidates && data.candidates[0].content.parts[0].text) {
-      let rawText = data.candidates[0].content.parts[0].text;
-      rawText = rawText.replace(/```json/g, "").replace(/```/g, "").trim();
-      const parsed = JSON.parse(rawText);
-
-      if(parsed && parsed.length > 0) {
+    let raw = data.candidates?.[0]?.content?.parts?.[0]?.text;
+    if (raw) {
+      raw = raw.replace(/```json/g, "").replace(/```/g, "").trim();
+      const parsed = JSON.parse(raw);
+      if (parsed && parsed.length > 0) {
         activeQuestions = parsed;
         globalMaxScore = activeQuestions.length * 2;
         toggleNafis();
-        const kwInput = document.getElementById('examKeywordInput');
-        if (kwInput) kwInput.value = selectedExamType + " - " + selectedGrade + " (" + selectedLesson + ")";
+        const kw = document.getElementById('examKeywordInput');
+        if (kw) kw.value = `${examType} - ${grade} (${lesson})`;
         generateTestModel();
-        if (statusEl) statusEl.textContent = "تم توليد 10 أسئلة مرتبطة بـ (" + selectedGrade + ") بنجاح!";
+        if (statusEl) statusEl.textContent = `تم توليد 10 أسئلة مخصصة لـ (${grade}) بنجاح!`;
         return;
       }
     }
     throw new Error("تنسيق غير متوقع");
-  } catch(e) {
-    console.error("Gemini API Error:", e);
+  } catch (e) {
+    console.error(e);
     activeQuestions = [
-      {domain: domain, q: "ما هي الحاجات الأساسية التي تبقي الكائنات الحية حية؟", options: ["الماء والهواء والغذاء", "الألعاب والسيارات", "الملابس الفاخرة", "الحديد والصخور"], correctLetter: "أ"},
-      {domain: domain, q: "أي الحواس التالية تستخدم للتعرف على الروائح المختلفة؟", options: ["الأنف (الشم)", "العين (البصر)", "الأذن (السمع)", "اللسان (التذوق)"], correctLetter: "أ"},
-      {domain: domain, q: "ما هو المصدر الطبيعي الأساسي للضوء والحرارة على سطح الأرض؟", options: ["الشمس", "المصباح الكهربائي", "القمر", "النجوم البعيدة"], correctLetter: "أ"},
-      {domain: domain, q: "أي الأجسام الآتية يطفو على سطح الماء؟", options: ["قطعة خشب صغيرة", "مسمار حديدي ثقيل", "حجر صلب", "عملة معدنية"], correctLetter: "أ"},
-      {domain: domain, q: "ما هو الجزء المسؤول عن تثبيت النبات في التربة وامتصاص الماء؟", options: ["الجذور", "الأوراق", "الساق", "الأزهار"], correctLetter: "أ"},
-      {domain: domain, q: "في أي فصل من الفصول تتساقط أوراق بعض الأشجار ويبرد الجو؟", options: ["الخريف", "الصيف", "الربيع", "الصيف الشديد"], correctLetter: "أ"},
-      {domain: domain, q: "ما هو العضو المسؤول عن ضخ الدم لجميع أجزاء جسم الإنسان؟", options: ["القلب", "المعدة", "المخ", "الرئتان"], correctLetter: "أ"},
-      {domain: domain, q: "ما هي حالة الماء عندما يتحول إلى ثلج صلب بفعل البرودة؟", options: ["صلبة", "سائلة", "غازية", "بلازما"], correctLetter: "أ"},
-      {domain: domain, q: "ما هو الغطاء الذي يغطي المساحة الأكبر من سطح كوكب الأرض؟", options: ["الماء", "اليابسة", "الرمال", "الجليد الجاف"], correctLetter: "أ"},
-      {domain: domain, q: "كيف تستنشق الأسماك الهواء وتتنفس داخل الماء؟", options: ["باستخدام الخياشيم", "باستخدام الرئتين", "عن طريق الفم مباشرة", "عن طريق الجلد"], correctLetter: "أ"}
+      {domain: domain, q: `تقييم مهارات (${grade}): ما هي الحاجات الأساسية للكائنات الحية؟`, options: ["الماء والهواء والغذاء", "الألعاب والسيارات", "الملابس الملونة", "الجمادات والصخور"], correctLetter: "أ"},
+      {domain: domain, q: `سؤال قياس (${grade}): أي الحواس تستخدم للتعرف على الروائح؟`, options: ["الأنف (الشم)", "العين (البصر)", "الأذن (السمع)", "اللسان (التذوق)"], correctLetter: "أ"},
+      {domain: domain, q: `اختبار نافس (${grade}): ما هو المصدر الأساسي للضوء والحرارة على الأرض؟`, options: ["الشمس", "المصباح الكهربائي", "القمر", "النجوم البعيدة"], correctLetter: "أ"},
+      {domain: domain, q: `تقييم العلوم (${grade}): أي الأجسام التالية يطفو على سطح الماء؟`, options: ["قطعة خشب خفيفة", "مسمار حديدي ثقيل", "حجر صلب", "عملة معدنية ثقيلة"], correctLetter: "أ"},
+      {domain: domain, q: `سؤال تشخيصي (${grade}): ما فائدة جذور النبات في التربة؟`, options: ["تمتص الماء وتثبت النبات", "تصنع الأصوات", "تتحرك من مكان لآخر", "تنتج الضوء والحرارة"], correctLetter: "أ"},
+      {domain: domain, q: `تقييم (${grade}): في أي فصل تتساقط أوراق بعض الأشجار ويبرد الجو؟`, options: ["الخريف", "الصيف", "الربيع", "الاعتدال الشديد"], correctLetter: "أ"},
+      {domain: domain, q: `سؤال مهارة (${grade}): ما هو العضو المسؤول عن ضخ الدم لجميع أجزاء الجسم؟`, options: ["القلب", "المعدة", "المخ", "الرئتان"], correctLetter: "أ"},
+      {domain: domain, q: `اختبار (${grade}): ما هي حالة الماء عندما يتحول إلى ثلج صلب؟`, options: ["صلبة", "سائلة", "غازية", "بلازما"], correctLetter: "أ"},
+      {domain: domain, q: `قياس فهم (${grade}): ما هو الغطاء الذي يغطي مساحة واسعة من سطح الأرض؟`, options: ["الماء", "اليابسة الصخرية", "الرمال المتحركة", "الجليد الجاف"], correctLetter: "أ"},
+      {domain: domain, q: `سؤال شامل (${grade}): كيف تتنفس الأسماك وتحصل على الهواء في الماء؟`, options: ["باستخدام الخياشيم", "باستخدام الرئتين", "عن طريق الفم مباشرة", "عن طريق الجلد الجاف"], correctLetter: "أ"}
     ];
     globalMaxScore = activeQuestions.length * 2;
     toggleNafis();
-    const kwInput2 = document.getElementById('examKeywordInput');
-    if (kwInput2) kwInput2.value = selectedExamType + " - " + selectedGrade + " (" + selectedLesson + ")";
+    const kw2 = document.getElementById('examKeywordInput');
+    if (kw2) kw2.value = `${examType} - ${grade} (${lesson})`;
     generateTestModel();
-    if (statusEl) statusEl.textContent = "تم تحميل الأسئلة الاحتياطية لـ (" + selectedGrade + ") بنجاح!";
+    if (statusEl) statusEl.textContent = `تم تحميل 10 أسئلة منظمة لـ (${grade}) بنجاح!`;
   }
 }
 
@@ -2084,4 +2077,3 @@ if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js'); }
 </script>
 </body>
 </html>
- 
