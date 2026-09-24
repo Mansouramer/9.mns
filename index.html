@@ -2000,20 +2000,17 @@ function bootApp(){
   initLock();
 }
 async function generateQuestionsWithGemini() {
- 
-  async function generateQuestionsWithGemini() {
+async function generateQuestionsWithGemini() {
   const domain = document.getElementById('geminiDomainSelect') ? document.getElementById('geminiDomainSelect').value : "علوم الحياة";
   const statusEl = document.getElementById('geminiStatus');
   if (statusEl) statusEl.textContent = "جاري توليد الأسئلة الذكية المعتمدة...";
 
   const apiKey = "AQ.Ab8RN6LC_JUU2DyUp5VXy3uGjapoO6x7j86sYzPMk-z_pg-btQ";
   
-  // التقاط دقيق ونظيف لاسم الصف ونوع الاختبار من الحقول النشطة حصرياً
   let selectedGrade = "الصف الأول الابتدائي";
   let selectedExamType = "اختبار تشخيصي";
   let selectedLesson = domain;
 
-  // فحص دقيق لعنصر الصف النشط
   const gradeInput = document.getElementById('selectGrade') || document.querySelector('select[id*="Grade"]');
   if (gradeInput && gradeInput.value) {
     selectedGrade = gradeInput.value;
@@ -2062,7 +2059,6 @@ async function generateQuestionsWithGemini() {
     throw new Error("تنسيق غير متوقع");
   } catch(e) {
     console.error("Gemini API Error:", e);
-    // أسئلة احتياطية نظيفة ومنسقة وخالية من الحشو الطويل
     activeQuestions = [
       {domain: domain, q: "ما هي الحاجات الأساسية التي تبقي الكائنات الحية حية؟", options: ["الماء والهواء والغذاء", "الألعاب والسيارات", "الملابس الفاخرة", "الحديد والصخور"], correctLetter: "أ"},
       {domain: domain, q: "أي الحواس التالية تستخدم للتعرف على الروائح المختلفة؟", options: ["الأنف (الشم)", "العين (البصر)", "الأذن (السمع)", "اللسان (التذوق)"], correctLetter: "أ"},
@@ -2088,3 +2084,4 @@ if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js'); }
 </script>
 </body>
 </html>
+ 
