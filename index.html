@@ -1544,22 +1544,6 @@ function transferSelected(){
 
 
 
-function selectStudent(i){ selectedStudentIndex = i; $('studentCard').hidden = false; fillStudentCard(i); updateLessonMsg(); updateMotivationMsg(); }
-function masteredCount(i){ let n = 0; lessons.forEach((l,li) => { if(lessonMastery[i] && lessonMastery[i][li]) n++; }); return n; }
-function fillStudentCard(i){
-  const s = students[i]; if(!s) return;
-  $('selName').textContent = s.name; $('selClass').textContent = clsOf(s);
-  $('sdParticipation').textContent = s.participation || 0; $('sdHomework').textContent = s.homework || 0;
-  $('sdAbsence').textContent = s.absence || 0; $('sdSkills').textContent = masteredCount(i);
-  $('sdProjects').textContent = s.projects || 0; $('sdMessages').textContent = s.messages || 0;
-  $('sdPhone').textContent = s.phone || 'لا يوجد';
-}
-function transferSelected(){
-  if(selectedStudentIndex === '') return;
-  const t = $('transferTarget').value; if(!t){ alert('اختر الفصل المستهدف'); return; }
-  students[selectedStudentIndex].classCustom = t; saveStudents(); render();
-  showToast(`تم نقل الطالب إلى ${t}`);
-}
 function updateLessonMsg(){
   if(selectedStudentIndex === '') return;
   const s = students[selectedStudentIndex], li = $('selectLesson').value, pv = $('lessonMsgPreview'), btn = $('waLessonBtn');
