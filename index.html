@@ -1968,7 +1968,34 @@ function prepareAnalysisContent(){
   localStorage.setItem('mansour_last_analysis_report', JSON.stringify({gradeKey:$('selectGrade').value, subjectKey:$('selectSubject').value, content:html, date:new Date().toLocaleDateString('en-GB')}));
 }
 
+/* دالة ربط جيمناي لتوليد الأسئلة */
+async function generateQuestionsWithGemini(lessonTitle, gradeLevel, questionType) {
+    const apiKey = localStorage.getItem("gemini_api_key"); 
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
 
+    const prompt = `أنت معلم خبير في المنهج السعودي للمرحلة الابتدائية. قم بتوليد 3 أسئلة ${questionType} لدرس "${lessonTitle}" للصف "${gradeLevel}" في مادة العلوم. اجعل الإخراج على هيئة مصفوفة JSON تحتوي على السؤال، الخيارات، والإجابة الصحيحة فقط بدون أي نصوص إضافية.`;
+
+    const requestBody = {
+        contents: [{ parts: [{ text: prompt }] }]
+    };
+
+    try {
+        const response = await fetch(url, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(requestBody)
+        });
+
+        const data = await response.json();
+        const rawText = data.candidates[0].content.parts[0].text;
+        const cleanJson = rawText.replace(/```json/g, "").replace(/```/g, "").trim();
+        return JSON.parse(cleanJson);
+
+    } catch (error) {
+        console.error("خطأ في الاتصال بـ Gemini API:", error);
+        alert("حدث خطأ أثناء توليد الأسئلة، تأكد من صحة مفتاح الـ API.");
+    }
+}
 /* ================= التشغيل ================= */
 function bootApp(){
   localStorage.setItem('mansour_current_grade_science_v5', currentGrade);
