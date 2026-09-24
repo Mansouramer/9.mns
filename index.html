@@ -2047,7 +2047,6 @@ async function generateQuestionsWithGemini() {
   const lessonInput = document.getElementById('bulkLesson') || document.getElementById('selectLesson');
   const lesson = lessonInput?.value || domain;
 
-  // بنك أسئلة منوع وكبير يتم اختيار 10 أسئلة منه بشكل عشوائي ومتجدد في كل ضغطة
   const masterPool = [
     {domain: domain, q: "ما هي الحاجات الأساسية التي تبقي الكائنات الحية قادرة على البقاء؟", options: ["الماء والهواء والغذاء", "الألعاب والسيارات", "الملابس الفاخرة", "الجمادات والصخور"], correctLetter: "أ"},
     {domain: domain, q: "أي حواس الإنسان تستخدم للتعرف على الروائح العطرة والكريهة؟", options: ["الأنف (الشم)", "العين (البصر)", "الأذن (السمع)", "اللسان (التذوق)"], correctLetter: "أ"},
@@ -2058,16 +2057,10 @@ async function generateQuestionsWithGemini() {
     {domain: domain, q: "ما هو العضو الحساس المسؤول عن ضخ الدم لجميع أجزاء جسم الإنسان؟", options: ["القلب", "المعدة", "المخ", "الرئتان"], correctLetter: "أ"},
     {domain: domain, q: "ما هي حالة الماء الفيزيائية عندما يتحول إلى ثلج صلب بفعل البرودة؟", options: ["صلبة", "سائلة", "غازية", "بلازما"], correctLetter: "أ"},
     {domain: domain, q: "ما هو الغطاء الطبيعي الذي يغطي المساحة الأكبر من سطح كوكب الأرض؟", options: ["الماء", "اليابسة الصخرية", "الرمال المتحركة", "الجليد الجاف"], correctLetter: "أ"},
-    {domain: domain, q: "كيف تتنفس الأسماك وتحصل على الأكسجين وهي تحت الماء؟", options: ["باستخدام الخياشيم", "باستخدام الرئتين", "عن طريق الفم مباشرة", "عن طريق الجلد الجاف"], correctLetter: "أ"},
-    {domain: domain, q: "ماذا نسمي صغار الحيوانات في بيئتها الطبيعية مثل صغير البقرة؟", options: ["عجل", "شبل", "صقر", "حمل"], correctLetter: "أ"},
-    {domain: domain, q: "أي المواد التالية يعتبر موصلاً جيداً للحرارة والكهرباء؟", options: ["النحاس والحديد", "البلاستيك الخالص", "الخشب الجاف", "الفلين"], correctLetter: "أ"},
-    {domain: domain, q: "ما هي الطريقة التي تتكاثر بها معظم النباتات الزهرية في الطبيعة؟", options: ["عن طريق البذور", "عن طريق الصخور", "عن طريق الرمال", "بدون وسائل"], correctLetter: "أ"},
-    {domain: domain, q: "أي الأماكن التالية يعتبر بيئة صحراوية جافة؟", options: ["الصحراء الرملية الحارة", "الغابة كثيفة الأمطار", "المحيط الأزرق", "القطب المتجمد"], correctLetter: "أ"},
-    {domain: domain, q: "ما هي الظاهرة التي تنتج عن دوران الأرض حول نفسها أمام الشمس؟", options: ["تعاقب الليل والنهار", "فصول السنة الأربعة", "سقوط الأمطار", "هبوب الرياح"], correctLetter: "أ"}
+    {domain: domain, q: "كيف تتنفس الأسماك وتحصل على الأكسجين وهي تحت الماء؟", options: ["باستخدام الخياشيم", "باستخدام الرئتين", "عن طريق الفم مباشرة", "عن طريق الجلد الجاف"], correctLetter: "أ"}
   ];
 
   try {
-    // محاولة الاتصال بالذكاء الاصطناعي أولاً
     const promptText = `أنت خبير تربوي للمناهج السعودية. ولّد 10 أسئلة اختيار من متعدد جديدة في مادة العلوم لـ "${grade}"، ضمن مجال "${domain}"، تناسب "${examType}" والدرس "${lesson}". اجابة بصيغة JSON فقط:
 [
   {"domain": "${domain}", "q": "السؤال؟", "options": ["أ", "ب", "ج", "د"], "correctLetter": "أ"}
@@ -2091,7 +2084,6 @@ async function generateQuestionsWithGemini() {
       throw new Error("خطأ اتصال");
     }
   } catch (e) {
-    // خوارزمية السحب العشوائي المضمونة: اختيار 10 أسئلة مختلفة عشوائياً من البنك في كل ضغطة
     const shuffled = [...masterPool].sort(() => 0.5 - Math.random());
     activeQuestions = shuffled.slice(0, 10);
   }
@@ -2101,8 +2093,8 @@ async function generateQuestionsWithGemini() {
   const kw2 = document.getElementById('examKeywordInput');
   if (kw2) kw2.value = `${examType} - ${grade} (${lesson})`;
   generateTestModel();
-    if (statusEl) statusEl.textContent = `تم توليد 10 أسئلة متجددة لـ (${grade}) بنجاح!`;
-
+  if (statusEl) statusEl.textContent = `تم توليد 10 أسئلة متجددة لـ (${grade}) بنجاح!`;
+}
 
 if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js'); }
 </script>
