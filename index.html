@@ -1512,7 +1512,6 @@ function filterStudentDropdown(){
 document.addEventListener('click', e => { 
     if(!e.target.closest('.dd')) $('studentDropdown').style.display = 'none'; 
 });
-
 function selectStudent(i){
     selectedStudentIndex = i;
     $('studentCard').hidden = false;
@@ -1544,9 +1543,7 @@ function transferSelected(){
     render();
 }
 
-    saveStudents();
-    render();
-}
+
 
 function selectStudent(i){ selectedStudentIndex = i; $('studentCard').hidden = false; fillStudentCard(i); updateLessonMsg(); updateMotivationMsg(); }
 function masteredCount(i){ let n = 0; lessons.forEach((l,li) => { if(lessonMastery[i] && lessonMastery[i][li]) n++; }); return n; }
