@@ -874,6 +874,9 @@
         const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
         const reduceMotion = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
         
+        // تم إضافة السطر المفقود هنا لتعمل أزرار الخيارات بشكل صحيح
+        const LETTERS = ['أ', 'ب', 'ج', 'د'];
+        
         const TEACHER_NAME = "منصور عامر الرحيلي";
         const SCHOOL_NAME = "مدرسة داوود بن عروة الثقفي";
 
@@ -1058,7 +1061,7 @@
             { period: "الحصة الأولى", startTime: "07:00", duration: 45, className: "الأول" },
             { period: "الحصة الثانية", startTime: "07:50", duration: 45, className: "الثاني" },
             { period: "الحصة الثالثة", startTime: "08:40", duration: 45, className: "الثالث" },
-            { period: "الحصة الرابعة", startTime: "09:35", duration: 45, className: "الرابع" },
+            { period: "الحصة الرابع", startTime: "09:35", duration: 45, className: "الرابع" },
             { period: "الحصة الخامسة", startTime: "10:25", duration: 45, className: "الخامس" },
             { period: "الحصة السادسة", startTime: "11:15", duration: 45, className: "السادس" },
             { period: "الحصة السابعة", startTime: "12:05", duration: 40, className: "نشاط / مراجعة" }
@@ -1812,3 +1815,4 @@
     </script>
 </body>
 </html>
+
