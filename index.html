@@ -2000,11 +2000,15 @@ initLock();
 async function generateQuestionsWithGemini() {
   const domain = $('geminiDomainSelect').value;
   const statusEl = $('geminiStatus');
-  statusEl.textContent = `جاري توليد الأسئلة عبر الذكاء الاصطناعي لـ (${domain})...`;
+  statusEl.textContent = `جاري توليد 10 أسئلة ذكية عبر الذكاء الاصطناعي...`;
 
   const apiKey = "AQ.Ab8RN6LC_JUU2DyUp5VXy3uGjapoO6x7j86sYzPMk-z_pg-btQ";
   
-  const promptText = `قم بتوليد 5 أسئلة اختيار من متعدد في مادة العلوم للمرحلة الابتدائية في السعودية ضمن مجال "${domain}" مطابقة لاختبارات نافس الوطنية. يجب أن تكون الإجابة بصيغة مصفوفة JSON فقط بالشكل التالي دون أي نصوص إضافية:
+  const selectedGrade = $('selectGrade') ?$('selectGrade').value : "المرحلة الابتدائية";
+  const selectedExamType = $('selectExamType') ?$('selectExamType').value : "اختبار";
+  const selectedLesson = $('bulkLesson') && $('bulkLesson').value ? $('bulkLesson').value : ( $('examKeywordInput') ?$('examKeywordInput').value : domain );
+
+  const promptText = `قم بتوليد 10 أسئلة اختيار من متعدد في مادة العلوم لـ "${selectedGrade}" في السعودية، ضمن مجال "${domain}"، وتناسب تماماً نوع الاختبار "${selectedExamType}" والدرس المرتبط "${selectedLesson}" (مطابقة لاختبارات نافس الوطنية ومعايير المناهج السعودية). يجب أن تكون الإجابة بصيغة مصفوفة JSON فقط بالشكل التالي دون أي نصوص إضافية:
   [
     {"domain": "${domain}", "q": "نص السؤال هنا؟", "options": ["خيار أ", "خيار ب", "خيار ج", "خيار د"], "correctLetter": "أ"}
   ]`;
@@ -2027,11 +2031,10 @@ async function generateQuestionsWithGemini() {
       if(parsed && parsed.length > 0) {
         activeQuestions = parsed;
         globalMaxScore = activeQuestions.length * 2;
-        $('selectExamType').value = "اختبارات نافس الوطنية";
         toggleNafis();
-        $('examKeywordInput').value = `اختبار نافس ذكي - ${domain}`;
+        $('examKeywordInput').value = `اختبار نافس ذكي - ${selectedExamType} (${selectedLesson}) [10 أسئلة]`;
         generateTestModel();
-        statusEl.textContent = `تم توليد وإضافة 5 أسئلة في (${domain}) بنجاح!`;
+        statusEl.textContent = `تم توليد وإضافة 10 أسئلة مرتبطة بـ (${selectedLesson}) بنجاح!`;
         return;
       }
     }
@@ -2043,17 +2046,22 @@ async function generateQuestionsWithGemini() {
       {domain: domain, q: "ما هي الوحدة الأساسية لبناء جسم الكائن الحي؟", options: ["الخلية", "النسيج", "العضو", "الجهاز"], correctLetter: "أ"},
       {domain: domain, q: "أي العوامل التالية يؤثر مباشرة في السلاسل الغذائية؟", options: ["التغيرات البيئية", "لون السماء", "سرعة هبوب الرياح", "درجة الارتفاع"], correctLetter: "أ"},
       {domain: domain, q: "كيف تستفيد النباتات من ضوء الشمس؟", options: ["لصنع الغذاء بعملية البناء الضوئي", "للتنفس فقط دون غذاء", "لزيادة وزن التربة", "لتبريد الأوراق"], correctLetter: "أ"},
-      {domain: domain, q: "ما هو الغرض الرئيسي من وجود المحافظة على التنوع البيئي؟", options: ["حماية توازن النظم البيئية", "زيادة استهلاك الموارد", "تقليل المساحات الخضراء", "منع هطول الأمطار"], correctLetter: "أ"}
+      {domain: domain, q: "ما هو الغرض الرئيسي من وجود المحافظة على التنوع البيئي؟", options: ["حماية توازن النظم البيئية", "زيادة استهلاك الموارد", "تقليل المساحات الخضراء", "منع هطول الأمطار"], correctLetter: "أ"},
+      {domain: domain, q: "ما المكون الأساسي الذي يغطي معظم سطح الأرض؟", options: ["الماء", "اليابسة", "الجليد", "الرمال"], correctLetter: "أ"},
+      {domain: domain, q: "أي مما يلي يُعد من صخور القشرة الأرضية؟", options: ["الجرانيت", "البلاستيك", "الزجاج", "الخشب"], correctLetter: "أ"},
+      {domain: domain, q: "ما هي الحالة الفيزيائية للماء عند درجات الحرارة المنخفضة جداً؟", options: ["صلبة (جليد)", "غازية", "بلازما", "دخان"], correctLetter: "أ"},
+      {domain: domain, q: "ما هي القوة التي تسحب الأشياء نحو مركز الأرض؟", options: ["الجاذبية", "المغناطيسية", "الاحتكاك", "الطفو"], correctLetter: "أ"},
+      {domain: domain, q: "أي الأشكال التالية يمثل مصدراً أساسياً للضوء على الأرض؟", options: ["الشمس", "القمر", "الكواكب", "السحب"], correctLetter: "أ"}
     ];
     globalMaxScore = activeQuestions.length * 2;
-    $('selectExamType').value = "اختبارات نافس الوطنية";
     toggleNafis();
-    $('examKeywordInput').value = `اختبار نافس ذكي - ${domain}`;
+    $('examKeywordInput').value = `اختبار نافس ذكي - ${selectedExamType} (${selectedLesson}) [10 أسئلة]`;
     generateTestModel();
-    statusEl.textContent = `تم تحميل الأسئلة الذكية المخصصة لـ (${domain}) بنجاح!`;
+    statusEl.textContent = `تم تحميل 10 أسئلة مخصصة لـ (${selectedLesson}) بنجاح!`;
   }
 }
-if('serviceWorker' in navigator){ navigator.serviceWorker.register('./sw.js').catch(() => {}); }
+
+if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js'); }
 </script>
 </body>
 </html>
