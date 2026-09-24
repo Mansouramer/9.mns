@@ -2101,8 +2101,8 @@ async function generateQuestionsWithGemini() {
   const kw2 = document.getElementById('examKeywordInput');
   if (kw2) kw2.value = `${examType} - ${grade} (${lesson})`;
   generateTestModel();
-  if (statusEl) statusEl.textContent = `تم توليد 10 أسئلة متجددة لـ (${grade}) بنجاح!`;
-}
+    if (statusEl) statusEl.textContent = `تم توليد 10 أسئلة متجددة لـ (${grade}) بنجاح!`;
+
 
 if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js'); }
 </script>
