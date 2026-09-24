@@ -2000,36 +2000,44 @@ function bootApp(){
   initLock();
 }
 async function generateQuestionsWithGemini() {
-  async function generateQuestionsWithGemini() {
+ async function generateQuestionsWithGemini() {
   const domain = $('geminiDomainSelect') ?$('geminiDomainSelect').value : "علوم الحياة";
   const statusEl = $('geminiStatus');
-  statusEl.textContent = `جاري توليد 10 أسئلة ذكية ومخصصة بدقة عبر الذكاء الاصطناعي...`;
+  statusEl.textContent = `جاري توليد 10 أسئلة ذكية بناءً على إعدادات الاختبار المحددة...`;
 
   const apiKey = "AQ.Ab8RN6LC_JUU2DyUp5VXy3uGjapoO6x7j86sYzPMk-z_pg-btQ";
   
-  // الاستخراج المباشر والصارم لمعرف الصف الحقيقي من الشاشة دون أي افتراضات
+  // الربط الذكي المباشر بقوائم إعدادات الاختبار في الأسفل
+  // البحث عن حقل الصف الدراسي المختار
   let selectedGrade = "الصف الأول الابتدائي";
-  const gradeEl = $('selectGrade') || document.getElementById('selectGrade') || document.querySelector('select[id*="Grade"]');
-  if (gradeEl && gradeEl.value) {
-    selectedGrade = gradeEl.value;
+  const gradeSelects = document.querySelectorAll('select');
+  for (let sel of gradeSelects) {
+    if (sel.value && (sel.value.includes('الابتدائية') || sel.value.includes('الصف') || sel.value.includes('الأول') || sel.value.includes('السادس'))) {
+      selectedGrade = sel.value;
+      break;
+    }
   }
 
-  let selectedExamType = "اختبار تشخيصي";
-  const examEl = $('selectExamType') || document.getElementById('selectExamType') || document.querySelector('select[id*="Exam"]');
-  if (examEl && examEl.value) {
-    selectedExamType = examEl.value;
+  // البحث عن حقل نوع الاختبار المختار
+  let selectedExamType = "الاختبار التشخيصي";
+  for (let sel of gradeSelects) {
+    if (sel.value && (sel.value.includes('اختبار') || sel.value.includes('تشخيصي') || sel.value.includes('فتري') || sel.value.includes('قبلي') || sel.value.includes('بعدي'))) {
+      selectedExamType = sel.value;
+      break;
+    }
   }
 
+  // البحث عن حقل الدرس المختار
   let selectedLesson = domain;
-  const lessonEl = $('bulkLesson') || $('selectLesson') \vert{}\vert{}$('examKeywordInput') || document.getElementById('bulkLesson');
-  if (lessonEl && lessonEl.value) {
-    selectedLesson = lessonEl.value;
+  const lessonInput = $('bulkLesson') || $('selectLesson') \vert{}\vert{}$('examKeywordInput');
+  if (lessonInput && lessonInput.value) {
+    selectedLesson = lessonInput.value;
   }
 
-  // معامل عشوائي ضخم لضمان تغيير الأسئلة ونماذجها بالكامل في كل ضغطة زر
+  // معامل عشوائي لمنع التكرار وتوليد نماذج جديدة كلياً في كل ضغطة
   const randomSeed = Math.floor(Math.random() * 99999999);
 
-  const promptText = `أنت خبير تربوي ومحترف في المناهج السعودية واختبارات نافس. قم بتوليد بالضبط 10 أسئلة اختيار من متعدد جديدة كلياً ومتنوعة الأفكار (معرف التجديد: ${randomSeed}) في مادة العلوم، وموجهة حصرياً وبدقة شديدة إلى "${selectedGrade}" (تجنب تماماً خلط مراحل أخرى وراعي مستوى خصائص النمو لهذا الصف)، ضمن مجال "${domain}"، وتناسب نوع التقييم "${selectedExamType}" والدرس أو المهارة "${selectedLesson}". يجب أن تكون الأسئلة مبتكرة وغير مكررة أبداً. يجب أن تكون الإجابة بصيغة مصفوفة JSON صالحة فقط بالشكل التالي تماماً دون أي نصوص أو مقدمات أو علامات إضافية:
+  const promptText = `أنت خبير تربوي ومحترف في المناهج السعودية واختبارات نافس. قم بتوليد بالضبط 10 أسئلة اختيار من متعدد جديدة كلياً ومتنوعة الأفكار (معرف التجديد: ${randomSeed}) في مادة العلوم، وموجهة حصرياً وبدقة شديدة إلى "${selectedGrade}" (مع مراعاة خصائص النمو ومستوى الفهم العمري لهذا الصف وعدم الخلط بين المراحل)، ضمن مجال "${domain}"، وتناسب بدقة نوع التقييم المحدد "${selectedExamType}" والدرس أو المهارة "${selectedLesson}". يجب أن تكون الأسئلة مبتكرة وغير مكررة. يجب أن تكون الإجابة بصيغة مصفوفة JSON صالحة فقط بالشكل التالي تماماً دون أي نصوص أو مقدمات أو علامات إضافية:
   [
     {"domain": "${domain}", "q": "صيغة السؤال المخصص بدقة للصف المطلوب؟", "options": ["خيار أ", "خيار ب", "خيار ج", "خيار د"], "correctLetter": "أ"}
   ]`;
@@ -2053,18 +2061,17 @@ async function generateQuestionsWithGemini() {
         activeQuestions = parsed;
         globalMaxScore = activeQuestions.length * 2;
         toggleNafis();
-        $('examKeywordInput').value = `اختبار نافس ذكي - ${selectedGrade} - ${selectedExamType} (${selectedLesson}) [10 أسئلة متجددة]`;
+        $('examKeywordInput').value = `اختبار نافس ذكي - ${selectedGrade} - ${selectedExamType} (${selectedLesson}) [10 أسئلة]`;
         generateTestModel();
-        statusEl.textContent = `تم توليد 10 أسئلة دقيقة ومخصصة لـ (${selectedGrade}) بنجاح!`;
+        statusEl.textContent = `تم توليد 10 أسئلة مخصصة لـ (${selectedGrade} - ${selectedExamType}) بنجاح!`;
         return;
       }
     }
     throw new Error("تنسيق غير متوقع");
   } catch(e) {
     console.error("Gemini API Error:", e);
-    // مصفوفة احتياطية تتكيف بحسب الصف المختار لمنع أي تداخل
     activeQuestions = [
-      {domain: domain, q: `تقييم (${selectedGrade}): أي مما يلي يعتبر من الخصائص العامة للكائنات الحية؟`, options: ["النمو والتكاثر", "الثبات كالصخور", "عدم التأثر بالبيئة", "الذوبان في الماء"], correctLetter: "أ"},
+      {domain: domain, q: `تقييم (${selectedGrade} - ${selectedExamType}): أي مما يلي يعتبر من الخصائص العامة للكائنات الحية؟`, options: ["النمو والتكاثر", "الثبات كالصخور", "عدم التأثر بالبيئة", "الذوبان في الماء"], correctLetter: "أ"},
       {domain: domain, q: `سؤال قياس مهارات (${selectedGrade}): ما هو العضو المسؤول عن الإبصار والرؤية عند الإنسان؟`, options: ["العين", "الأذن", "الأنف", "اليد"], correctLetter: "أ"},
       {domain: domain, q: `اختبار نافس (${selectedGrade}): أي الأجسام التالية يعتبر مصدراً طبيعياً للضوء؟`, options: ["الشمس", "القمح", "الكرسي", "الطاولة"], correctLetter: "أ"},
       {domain: domain, q: `تقييم مهارات العلوم (${selectedGrade}): ما هي الفائدة الأساسية لجذور النبات في التربة؟`, options: ["تمتص الماء وتثبت النبات", "تصنع الأصوات", "تتحرك في المكان", "تنتج الضوء"], correctLetter: "أ"},
@@ -2079,7 +2086,7 @@ async function generateQuestionsWithGemini() {
     toggleNafis();
     $('examKeywordInput').value = `اختبار نافس - ${selectedGrade} - ${selectedExamType} (${selectedLesson}) [10 أسئلة]`;
     generateTestModel();
-    statusEl.textContent = `تم تحميل 10 أسئلة مخصصة لـ (${selectedGrade}) بنجاح!`;
+    statusEl.textContent = `تم تحميل 10 أسئلة مخصصة لـ (${selectedGrade} - ${selectedExamType}) بنجاح!`;
   }
 }
 
@@ -2087,3 +2094,4 @@ if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js'); }
 </script>
 </body>
 </html>
+ 
