@@ -31,12 +31,12 @@
     </svg>
     <h1>مركز قيادة العلوم</h1>
     <p class="sub" id="lockSub">مدرسة داوود بن عروة الثقفي</p>
-    <form id="lockForm" autocomplete="off">
+    <form id="lockForm" autocomplete="off" onsubmit="event.preventDefault(); submitLock();">
       <input type="password" id="pw1" placeholder="الرقم السري" autocomplete="current-password">
       <input type="password" id="pw2" placeholder="أعد كتابة الرقم السري" hidden>
       <div class="lock-msg" id="lockMsg" role="alert"></div>
       <label class="remember"><input type="checkbox" id="rememberDevice"> تذكّر هذا الجهاز</label>
-      <button class="btn block" type="button" id="lockBtn">دخول</button>
+      <button class="btn block" type="submit" id="lockBtn">دخول</button>
     </form>
   </div>
 </div>
