@@ -2560,7 +2560,7 @@
         </div>
         <div id="toast" class="toast" role="status"></div>
         <script>
-            window.addEventListener('error', function(e) {
+            function showErrBanner(msg){
                 var d = document.getElementById('errBox');
                 if (!d) {
                     d = document.createElement('div');
@@ -2568,4 +2568,5 @@
                     d.style.cssText = 'position:fixed;top:0;right:0;left:0;z-index:9999;background:#7f1d1d;color:#fff;font:12px/1.5 sans-serif;padding:8px 10px;direction:ltr;word-break:break-all';
                     document.body.appendChild(d);
                 }
-                d.textC
+                d.textContent = msg;
+    
