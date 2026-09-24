@@ -5,36 +5,96 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>مركز قيادة العلوم – المعلم منصور عامر الرحيلي</title>
 <meta name="theme-color" content="#05060f">
-<link rel="manifest" href="manifest.json">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lalezar&family=Readex+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js" defer></script>
-<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Lalezar&family=Readex+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<style>
+:root{
+  --void:#05060f; --deep:#0b0d22;
+  --panel:rgba(16,18,42,.74); --panel-solid:#11132c;
+  --line:rgba(255,255,255,.09); --line-strong:rgba(255,255,255,.2);
+  --ink:#eceffd; --ink-dim:#a6acce; --ink-faint:#7178a0;
+  --accent:#47b8ff; --accent-rgb:71,184,255; --accent-ink:#04121c;
+  --good:#5eead4; --warn:#ffcf70; --bad:#ff7a88; --sun:#ffb547;
+  --display:'Lalezar','Readex Pro',Tahoma,sans-serif;
+  --body:'Readex Pro','Segoe UI',Tahoma,sans-serif;
+}
+html{background:#05060f;color:#eceffd;scroll-behavior:smooth}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+[hidden]{display:none!important}
+body{
+  margin:0;font-family:var(--body);font-size:15px;line-height:1.6;color:var(--ink);
+  background:
+    radial-gradient(900px 520px at 90% -8%,rgba(96,58,190,.34),transparent 70%),
+    radial-gradient(800px 520px at -10% 38%,rgba(var(--accent-rgb),.13),transparent 70%),
+    var(--void);
+  background-attachment:fixed;min-height:100vh;
+  padding-bottom:calc(84px + env(safe-area-inset-bottom,0px));
+}
+body.locked{overflow:hidden}
+#stars{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+#app{position:relative;z-index:1}
+h1,h2,h3,h4,h5,p{margin:0}
+button,input,select,textarea{font-family:inherit;font-size:16px;color:inherit}
+a{color:var(--accent)}
+
+.lock{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;padding:24px;
+  background:radial-gradient(700px 500px at 50% 30%,rgba(60,40,140,.5),transparent 70%),rgba(5,6,15,.94);}
+.lock-card{width:100%;max-width:360px;text-align:center}
+.lock-card svg{width:150px;height:150px;margin:0 auto 6px;display:block}
+.lock-card h1{font-family:var(--display);font-size:34px;font-weight:400}
+.lock-card .sub{color:var(--ink-dim);font-size:13px;margin:2px 0 22px}
+.lock-card input[type=password]{width:100%;padding:14px 16px;border-radius:12px;border:1px solid var(--line-strong);
+  background:rgba(255,255,255,.06);text-align:center;letter-spacing:6px;margin-bottom:10px}
+.lock-msg{min-height:22px;font-size:13px;color:var(--bad);margin:2px 0 8px}
+.lock-msg.ok{color:var(--good)}
+.remember{display:flex;gap:8px;justify-content:center;align-items:center;font-size:13px;color:var(--ink-dim);margin:6px 0 14px}
+.remember input{accent-color:var(--accent);width:16px;height:16px}
+
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 16px;max-width:1040px;margin:0 auto}
+.brand{display:flex;flex-direction:column;line-height:1.3}
+.brand b{font-size:14px;font-weight:600}
+.brand span{font-size:12px;color:var(--ink-dim)}
+.icon-btn{width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:var(--panel);display:grid;place-items:center;cursor:pointer;color:var(--ink)}
+main{max-width:1040px;margin:0 auto;padding:0 14px}
+.view{display:none}
+.view.active{display:block}
+.stack{display:flex;flex-direction:column;gap:14px}
+.panel{background:var(--panel);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:18px;padding:16px}
+.panel-h{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+.hint{font-size:12px;color:var(--ink-dim)}
+input,select,textarea{width:100%;padding:11px 12px;border-radius:10px;border:1px solid var(--line-strong);background:rgba(255,255,255,.055);color:var(--ink);min-height:44px}
+select option{background:#11132c;color:var(--ink)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:44px;padding:10px 16px;border-radius:10px;border:1px solid transparent;background:var(--accent);color:var(--accent-ink);font-weight:600;cursor:pointer}
+.btn.block{width:100%}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line-strong)}
+.tabbar{position:fixed;bottom:0;right:0;left:0;z-index:30;display:flex;justify-content:center;padding:0 10px 8px}
+.tabbar-in{display:flex;width:100%;max-width:560px;padding:6px;border-radius:22px;background:rgba(12,14,34,.88);backdrop-filter:blur(14px);border:1px solid var(--line-strong)}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 0;border:none;background:none;border-radius:16px;color:var(--ink-faint);cursor:pointer;font-size:10.5px}
+.tab.active{color:var(--accent);background:rgba(var(--accent-rgb),.14)}
+.toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%);z-index:60;background:#1b1e44;border:1px solid var(--accent);color:var(--ink);padding:10px 18px;border-radius:99px;font-size:13px;display:none}
+</style>
 </head>
 <body class="locked">
-<noscript><style>body{background:#05060f;color:#fff;padding:30px;text-align:center;font-family:sans-serif}</style>تحتاج هذه الصفحة إلى تفعيل JavaScript لتعمل بشكل صحيح.</noscript>
 <canvas id="stars"></canvas>
-<div class="shooting" aria-hidden="true"></div>
 
 <!-- شاشة القفل -->
 <div class="lock" id="lock">
   <div class="lock-card">
-    <svg viewBox="0 0 150 150" aria-hidden="true">
+    <svg viewBox="0 0 150 150">
       <defs><radialGradient id="lsun" cx="40%" cy="35%"><stop offset="0" stop-color="#fff2c2"/><stop offset=".5" stop-color="#ffb547"/><stop offset="1" stop-color="#e2711d"/></radialGradient></defs>
       <circle cx="75" cy="75" r="62" fill="none" stroke="rgba(255,255,255,.14)"/>
-      <circle cx="75" cy="75" r="40" fill="none" stroke="rgba(255,255,255,.1)"/>
       <circle cx="75" cy="75" r="14" fill="url(#lsun)"/>
-      <g><circle cx="137" cy="75" r="6" fill="#47b8ff"/><animateTransform attributeName="transform" type="rotate" from="0 75 75" to="360 75 75" dur="14s" repeatCount="indefinite"/></g>
     </svg>
     <h1>مركز قيادة العلوم</h1>
     <p class="sub" id="lockSub">مدرسة داوود بن عروة الثقفي</p>
-    <form id="lockForm" autocomplete="off" onsubmit="event.preventDefault(); submitLock();">
+    <form id="lockForm" onsubmit="event.preventDefault(); submitLock();">
       <input type="password" id="pw1" placeholder="الرقم السري" autocomplete="current-password">
       <input type="password" id="pw2" placeholder="أعد كتابة الرقم السري" hidden>
-      <div class="lock-msg" id="lockMsg" role="alert"></div>
+      <div class="lock-msg" id="lockMsg"></div>
       <label class="remember"><input type="checkbox" id="rememberDevice"> تذكّر هذا الجهاز</label>
       <button class="btn block" type="submit" id="lockBtn">دخول</button>
     </form>
@@ -48,469 +108,103 @@
       <b>مدرسة داوود بن عروة الثقفي</b>
       <span>المعلم: منصور عامر الرحيلي</span>
     </div>
-    <div style="display:flex;gap:8px">
-      <button class="icon-btn" id="installTop" onclick="installPWA()" aria-label="تثبيت التطبيق" title="تثبيت التطبيق">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7.5 10.5L12 15l4.5-4.5M5 20h14"/></svg>
-      </button>
-      <button class="icon-btn" onclick="lockNow()" aria-label="قفل اللوحة" title="قفل اللوحة">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
-      </button>
-    </div>
+    <button class="icon-btn" onclick="lockNow()">قفل</button>
   </header>
 
   <main>
-    <!-- المدار (الرئيسية) -->
     <section id="view-home" class="view active">
-      <div id="backupBanner" class="banner noprint" hidden>
-        <span>مرّ أكثر من أسبوع على آخر نسخة احتياطية. احفظ نسخة الآن حتى لا تضيع بياناتك.</span>
-        <button class="btn sm warn" onclick="backupAll()">حفظ نسخة</button>
-      </div>
-
-      <div class="hero">
-        <div class="hero-text">
-          <div class="eyebrow">مادة العلوم – المرحلة الابتدائية</div>
-          <h2 id="gradeTitle">الصف الأول</h2>
-          <div class="planet" id="planetName">مدار عطارد</div>
-          <p class="hint" style="margin-top:8px;max-width:340px">كل كوكب يمثّل صفاً دراسياً. المس كوكباً لتنتقل إلى بيانات ذلك الصف.</p>
-          <div class="panel clock-panel noprint" style="margin-top:14px">
-            <div class="clock" onclick="toggleSched()">
-              <div class="clock-ring">
-                <svg viewBox="0 0 80 80"><circle cx="40" cy="40" r="34" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="6"/>
-                  <circle id="clockArc" cx="40" cy="40" r="34" fill="none" stroke="var(--accent)" stroke-width="6" stroke-linecap="round" stroke-dasharray="213.6" stroke-dashoffset="213.6"/></svg>
-                <div class="t" id="clockTime">--:--</div>
-              </div>
-              <div class="clock-info">
-                <div class="k" id="clockKicker">الحصة الحالية</div>
-                <div class="v" id="clockTitle">جارٍ التحديث…</div>
-                <div class="c" id="clockClass"></div>
-              </div>
-              <span class="chev" id="schedChev">الجدول ▾</span>
-            </div>
-            <div class="sched" id="sched">
-              <div class="hint" style="margin-bottom:8px">أوقات الحصص موحّدة في جميع الأيام، ويمكنك تغيير الصف لكل حصة.</div>
-              <select id="scheduleDaySelect" onchange="renderScheduleTable()" style="margin-bottom:8px">
-                <option>الأحد</option><option>الإثنين</option><option>الثلاثاء</option><option>الأربعاء</option><option>الخميس</option>
-              </select>
-              <div class="tbl-wrap"><table>
-                <thead><tr><th>الحصة</th><th>البداية</th><th>المدة</th><th>الصف</th></tr></thead>
-                <tbody id="scheduleTbody"></tbody></table></div>
-            </div>
-          </div>
-        </div>
-        <div class="orbit-wrap"><svg id="orbit" viewBox="0 0 360 360" role="group" aria-label="النظام الشمسي: اختر الصف"></svg></div>
-        <div class="chips-col"><div class="chips" id="gradeChips"></div></div>
-      </div>
-
-      <div class="stats noprint">
-        <div class="stat"><div class="k">الطلاب</div><div class="n" id="totalStudents">0</div></div>
-        <div class="stat"><div class="k">إتقان الدروس</div><div class="n" id="totalSkills">0%</div><div class="bar"><b id="barSkills"></b></div></div>
-        <div class="stat"><div class="k">الدروس المنفذة</div><div class="n" id="totalExecutedLessons">0 / 0</div><div class="bar"><b id="barLessons"></b></div></div>
-        <div class="stat"><div class="k">المشاركات</div><div class="n" id="totalParticipation">0</div></div>
-        <div class="stat"><div class="k">الواجبات المنجزة</div><div class="n" id="totalHomework">0</div></div>
-        <div class="stat"><div class="k">أيام الغياب</div><div class="n" id="totalAbsence">0</div></div>
-        <div class="stat"><div class="k">التجارب</div><div class="n" id="totalProjects">0</div></div>
-        <div class="stat"><div class="k">رسائل الواتساب</div><div class="n" id="totalMessagesSent">0</div></div>
-      </div>
-
-      <div class="panel noprint" style="margin-top:14px;border-color:rgba(94,234,212,.4)">
-        <div class="panel-h"><h3>التصحيح الآلي والاختبارات</h3></div>
-        <button class="btn good block" onclick="showView('grade')">فتح التصحيح الآلي</button>
-      </div>
-    </section>
-
-    <!-- الطلاب -->
-    <section id="view-students" class="view">
-      <div class="stack">
-        <div class="panel noprint">
-          <div class="panel-h"><h3>إضافة طالب</h3></div>
-          <div class="form">
-            <input type="text" id="studentName" placeholder="اسم الطالب">
-            <input type="text" id="studentClassCustom" placeholder="الصف والفصل (مثال: رابع ابتدائي أول)">
-            <input type="tel" id="studentPhone" maxlength="10" inputmode="numeric" placeholder="جوال ولي الأمر (10 أرقام)">
-            <button class="btn block" onclick="addStudent()">إضافة الطالب</button>
-          </div>
-        </div>
-
-        <div class="panel" id="studentsPanel">
-          <div class="panel-h">
-            <h3>الفصول والطلاب</h3>
-            <button class="btn sm ghost noprint" onclick="printSection('studentsPanel')">طباعة</button>
-          </div>
-          <div class="noprint">
-            <div class="hint" style="margin-bottom:8px">اضغط على الفصل لعرض طلابه، أو ابحث بالاسم.</div>
-            <div class="class-list" id="classList"></div>
-            <input type="search" id="filterStudentNameInput" placeholder="ابحث عن طالب بالاسم في كل الفصول…" oninput="onSearchStudents()" style="margin-top:10px">
-          </div>
-          <div class="students" id="studentsList" style="margin-top:12px"></div>
-          <div class="pager noprint">
-            <button class="btn sm ghost" id="prevBtn" onclick="changePage(-1)">السابق</button>
-            <span class="hint" id="pageInfo">0</span>
-            <button class="btn sm ghost" id="nextBtn" onclick="changePage(1)">التالي</button>
-          </div>
-        </div>
-
-        <div class="panel noprint">
-          <div class="panel-h"><h3>تصدير واستيراد الطلاب</h3></div>
-          <div class="btn-grid">
-            <button class="btn good" onclick="exportExcel()">تصدير Excel</button>
-            <button class="btn warn" onclick="$('importExcelFile').click()">استيراد Excel</button>
-            <button class="btn ghost" onclick="exportCSV()">ملف Google Sheets</button>
-          </div>
-          <input type="file" id="importExcelFile" accept=".xlsx,.xls" hidden onchange="importExcel(event)">
-        </div>
-      </div>
-    </section>
-
-    <!-- الدروس -->
-    <section id="view-lessons" class="view">
-      <div class="stack">
-        <div class="panel noprint">
-          <div class="panel-h"><h3 id="curriculumTitle">مقرر العلوم</h3></div>
-          <select id="curriculumSelect" onchange="onCurriculumChange(this.value)">
-            <option value="">اختر درساً للاطلاع على تفاصيله</option>
-          </select>
-          <div id="lessonDetail" class="detail-box" hidden></div>
-          <div id="lessonsTimeline" style="margin-top:8px"></div>
-
-          <div class="sub-panel">
-            <h5>إضافة درس</h5>
-            <div class="form">
-              <input type="text" id="newLessonTitle" placeholder="عنوان الدرس">
-              <input type="text" id="newLessonDesc" placeholder="المفاهيم والتجارب (اختياري)">
-              <button class="btn block" onclick="addNewLesson()">إضافة الدرس</button>
-            </div>
-            <div class="form" style="margin-top:12px;padding-top:12px;border-top:1px dashed var(--line-strong)">
-              <textarea id="bulkLessonsInput" rows="3" placeholder="درس في كل سطر:&#10;اسم الوحدة | عنوان الدرس | الوصف"></textarea>
-              <button class="btn ghost block" onclick="addBatchLessons()">إضافة مجموعة دروس</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="panel" id="masteryPanel">
-          <div class="panel-h">
-            <h3>تتبع إتقان الدروس</h3>
-            <button class="btn sm ghost noprint" onclick="printSection('masteryPanel')">طباعة</button>
-          </div>
-          <div class="form noprint">
-            <select id="masteryLessonSelect" onchange="renderMasteryTable()"><option value="">اختر الدرس</option></select>
-            <select id="masteryClassSelect" onchange="renderMasteryTable()"><option value="">كل الفصول</option></select>
-          </div>
-          <div id="masterySummary" class="mini-stats" style="margin-top:10px" hidden>
-            <div>متقنون<strong id="countMastered" style="color:var(--good)">0</strong></div>
-            <div>يحتاجون مراجعة<strong id="countReview" style="color:var(--bad)">0</strong></div>
-          </div>
-          <div class="tbl-wrap"><table>
-            <thead><tr><th>الطالب</th><th>الفصل</th><th>الحالة</th><th class="noprint">تغيير</th></tr></thead>
-            <tbody id="masteryTbody"></tbody></table></div>
-        </div>
-
-        <div class="panel noprint">
-          <div class="panel-h"><h3>إرسال الواجب لأولياء الأمور</h3></div>
-          <div class="form">
-            <select id="bulkTargetClass"><option value="ALL">كل الفصول</option></select>
-            <select id="bulkLesson" onchange="updateBulkPreview()"><option value="">اختر درس الواجب</option></select>
-            <input type="text" id="bulkDetails" placeholder="المطلوب (مثال: حل ص 45)" oninput="updateBulkPreview()">
-            <input type="text" id="bulkNote" placeholder="ملاحظات إضافية (اختياري)" oninput="updateBulkPreview()">
-          </div>
-          <div id="bulkPreview" class="preview">اختر الدرس وأدخل تفاصيل الواجب لتظهر الرسالة هنا.</div>
-          <div id="bulkPanel" hidden><div class="send-list" id="bulkList"></div></div>
-          <button class="btn wa block" style="margin-top:8px" onclick="prepareBulk()">تجهيز روابط الإرسال</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- التصحيح الآلي -->
-    <section id="view-grade" class="view">
-      <nav class="steps noprint" aria-label="الخطوات">
-        <a href="#setup"><b>١</b>الإعداد</a><a href="#sheet"><b>٢</b>الورقة</a><a href="#grading"><b>٣</b>التصحيح</a>
-        <a href="#results"><b>٤</b>النتائج</a><a href="#analysisPanel"><b>٥</b>التحليل</a>
-      </nav>
-      <div class="stack" style="margin-top:6px">
-        <section class="panel noprint" id="setup">
-          <div class="panel-h"><h3>إعدادات الاختبار</h3></div>
-          <div class="grid">
-            <div class="f"><label>نوع الاختبار</label>
-              <select id="selectExamType" onchange="toggleNafis(); switchExamModel();">
-                <option value="الاختبار الفتري الأول">الاختبار الفتري الأول</option>
-                <option value="الاختبار الفتري الثاني">الاختبار الفتري الثاني</option>
-                <option value="الاختبار القبلي التشخيصي">الاختبار القبلي (تشخيصي)</option>
-                <option value="الاختبار البعدي النهائي">الاختبار البعدي (نهائي)</option>
-                <option value="اختبارات نافس الوطنية">اختبارات نافس الوطنية</option>
-              </select></div>
-            <div class="f"><label>المادة</label>
-              <select id="selectSubject" onchange="switchExamModel()">
-                <option value="science">العلوم</option><option value="math">الرياضيات</option><option value="arabic">لغتي الجميلة</option>
-                <option value="english">اللغة الإنجليزية</option><option value="islamic">الدراسات الإسلامية</option>
-              </select></div>
-            <div class="f"><label>الصف الدراسي</label>
-              <select id="selectGrade" onchange="onGradeChange()">
-                <option value="الأول الابتدائي">الأول الابتدائي</option><option value="الثاني الابتدائي">الثاني الابتدائي</option>
-                <option value="الثالث الابتدائي">الثالث الابتدائي</option><option value="الرابع الابتدائي">الرابع الابتدائي</option>
-                <option value="الخامس الابتدائي">الخامس الابتدائي</option><option value="السادس الابتدائي">السادس الابتدائي</option>
-              </select></div>
-            <div class="f"><label>الفصل</label>
-              <select id="selectClassDigit" onchange="switchExamModel()">
-                <option value="all">كل طلاب الصف</option>
-                <option value="1">فصل 1</option><option value="2">فصل 2</option><option value="3">فصل 3</option>
-                <option value="4">فصل 4</option><option value="5">فصل 5</option><option value="6">فصل 6</option>
-              </select></div>
-            <div class="f"><label>رقم النموذج</label>
-              <select id="selectModelLetter" onchange="switchExamModel()">
-                <option value="نموذج (أ)">نموذج (أ)</option><option value="نموذج (ب)">نموذج (ب)</option>
-                <option value="نموذج (ج)">نموذج (ج)</option><option value="نموذج (د)" selected>نموذج (د)</option>
-              </select></div>
-            <div class="f"><label>عدد الأسئلة</label>
-              <select id="selectQuestionCount">
-                <option value="5">5 أسئلة</option><option value="10" selected>10 أسئلة</option>
-              </select></div>
-          </div>
-
-          <div id="nafisBox" class="sub" hidden>
-            <h5>مجالات مادة العلوم في اختبارات نافس</h5>
-            <div class="checks">
-              <label class="check"><input type="checkbox" class="nafis-cb" value="علوم الحياة" checked>علوم الحياة</label>
-              <label class="check"><input type="checkbox" class="nafis-cb" value="العلوم الفيزيائية" checked>العلوم الفيزيائية</label>
-              <label class="check"><input type="checkbox" class="nafis-cb" value="علوم الأرض والفضاء" checked>علوم الأرض والفضاء</label>
-              <label class="check"><input type="checkbox" class="nafis-cb" value="الاستقصاء العلمي" checked>الاستقصاء العلمي</label>
-            </div>
-          </div>
-          <div class="sub">
-            <h5>عنوان النموذج</h5>
-            <div class="f"><input type="text" id="examKeywordInput" placeholder="مثال: اختبار نافس علوم – نموذج د"></div>
-          </div>
-          <div class="sub">
-            <h5>تحميل نموذج نافس الجاهز</h5>
-            <input type="file" id="examImageUploadInput" accept="image/*" onchange="handleExamImageUpload(event)">
-            <div class="status" id="imageUploadStatus"></div>
-          </div>
-        </section>
-
-        <section class="panel" id="sheet">
-          <div class="panel-h noprint"><h3>ورقة الاختبار (A4)</h3></div>
-          <div class="row noprint">
-            <button class="btn" onclick="generateTestModel()">توليد ورقة الاختبار</button>
-            <button class="btn danger" onclick="clearAllExamAndAnalysisData()">حذف الاختبار والنتائج</button>
-          </div>
-          <div id="paper" class="paper" hidden>
-            <div class="head">
-              <h3>المملكة العربية السعودية – وزارة التعليم</h3>
-              <h4>مدرسة داوود بن عروة الثقفي الابتدائية</h4>
-              <p>معلم المادة: منصور عامر الرحيلي</p>
-              <p id="printTestInfo" style="color:#1e3a8a"></p>
-              <p id="printModelBadge" style="color:#0f766e"></p>
-              <div class="stu"><b>اسم الطالب:</b> ............................................ &nbsp; <b>الصف/الفصل:</b> <span id="printClassValue">..........</span></div>
-            </div>
-            <div id="generatedQuestionsList"></div>
-          </div>
-          <div class="noprint" style="margin-top:10px" id="printExamRow" hidden>
-            <button class="btn ghost block" onclick="printSection('paper')">طباعة الاختبار على صفحة A4</button>
-          </div>
-        </section>
-
-        <section class="panel noprint" id="grading">
-          <div class="panel-h"><h3>التصحيح السريع</h3></div>
-          <button class="btn good block" onclick="startTouchGradingSession()">بدء جلسة التصحيح</button>
-          <div id="studentsNote" class="hint" style="margin-top:8px"></div>
-          <div id="touchGradingCard" class="g-card" hidden>
-            <div id="studentHeader" class="g-head"></div>
-            <div class="prog"><b id="progBar" style="width:0"></b></div>
-            <div id="singleQuestionContainer"></div>
-            <div class="nav">
-              <button class="btn ghost" onclick="prevQuestionStep()">السابق</button>
-              <button class="btn" onclick="nextQuestionStepOrFinish()">التالي / حفظ</button>
-            </div>
-            <button class="btn warn sm" style="margin-top:10px" onclick="skipStudent()">تخطي الطالب (غائب)</button>
-          </div>
-        </section>
-
-        <section class="panel" id="results">
-          <div class="panel-h noprint"><h3>سجل الدرجات</h3></div>
-          <div class="noprint"><div class="f"><input type="text" id="searchStudentInput" placeholder="ابحث عن اسم طالب…" oninput="filterStudentResults()"></div></div>
-          <div id="summaryBox" class="summary" style="margin-top:12px" hidden>
-            <div>عدد الطلاب<strong id="sumCount">0</strong></div>
-            <div>المتوسط<strong id="sumAvg">0</strong></div>
-            <div>المتقنون<strong id="sumMastered">0</strong></div>
-          </div>
-          <div id="correctionOutput" style="margin-top:12px"></div>
-          <div class="row noprint" style="margin-top:8px">
-            <button class="btn ghost" onclick="printGradesSheet()">طباعة كشف الدرجات</button>
-            <button class="btn warn" onclick="toggleAnalysisBox()">تقرير التحليل والخطط العلاجية</button>
-          </div>
-        </section>
-
-        <section id="gradesSheet" class="paper sheet">
-          <div class="head">
-            <h3>المملكة العربية السعودية – وزارة التعليم</h3>
-            <h4>مدرسة داوود بن عروة الثقفي الابتدائية</h4>
-            <p id="sheetPrintMeta"></p>
-          </div>
-          <table border="1">
-            <thead><tr><th>م</th><th>اسم الطالب</th><th>الفصل</th><th>الدرجة</th><th>الدرجة الكبرى</th><th>مستوى الإتقان</th></tr></thead>
-            <tbody id="sheetPrintTableBody"></tbody>
-          </table>
-          <div style="margin-top:22px;display:flex;justify-content:space-between;font-size:12px;font-weight:700">
-            <div>ختم المدرسة: ....................</div><div>معلم المادة: منصور عامر الرحيلي</div>
-          </div>
-        </section>
-
-        <section class="panel" id="analysisPanel" hidden>
-          <div class="head" style="text-align:center;margin-bottom:8px">
-            <h3 style="font-size:14px">تقرير تحليل نواتج التعلم والخطط العلاجية</h3>
-            <p class="hint">مدرسة داوود بن عروة الثقفي الابتدائية – معلم المادة: منصور عامر الرحيلي</p>
-          </div>
-          <div id="analysisContentText"></div>
-          <div class="noprint" style="margin-top:12px"><button class="btn ghost block" onclick="printSection('analysisPanel')">طباعة التقرير</button></div>
-        </section>
-      </div>
-    </section>
-
-    <!-- التقارير -->
-    <section id="view-reports" class="view">
-      <div class="stack">
-        <div class="panel" id="examsPanel">
-          <div class="panel-h">
-            <h3>اختبارات الفترتين (من 20)</h3>
-            <button class="btn sm ghost noprint" onclick="printSection('examsPanel')">طباعة</button>
-          </div>
-          <select id="examClassSelect" class="noprint" onchange="renderExamsTable()"><option value="">اختر الفصل</option></select>
-          <div id="examsAnalysis" class="mini-stats" style="margin-top:10px" hidden>
-            <div>متوسط الفترة 1<strong id="avgExam1">0</strong></div>
-            <div>متوسط الفترة 2<strong id="avgExam2">0</strong></div>
-          </div>
-          <div class="tbl-wrap"><table>
-            <thead><tr><th>الطالب</th><th>الفترة 1</th><th>الفترة 2</th><th class="noprint">إرسال</th></tr></thead>
-            <tbody id="examsTbody"></tbody></table></div>
-        </div>
-
-        <div class="panel" id="studentFilePanel">
-          <div class="panel-h">
-            <h3>ملف الطالب</h3>
-            <button class="btn sm ghost noprint" onclick="printSection('studentFilePanel')">طباعة</button>
-          </div>
-          <div class="dd noprint">
-            <input type="text" id="studentSearchInput" placeholder="اكتب اسم الطالب…" oninput="filterStudentDropdown()" onfocus="filterStudentDropdown()" autocomplete="off">
-            <div class="dd-list" id="studentDropdown"></div>
-          </div>
-          <div id="studentCard" hidden>
-            <h4 style="margin:12px 0 4px;font-size:15px">سجل الطالب: <span id="selName"></span> <span class="tag" id="selClass"></span></h4>
-            <div class="kv">
-              <div>المشاركات<strong id="sdParticipation">0</strong></div>
-              <div>الواجبات<strong id="sdHomework">0</strong></div>
-              <div>الغياب<strong id="sdAbsence">0</strong></div>
-              <div>الدروس المتقنة<strong id="sdSkills">0</strong></div>
-              <div>التجارب<strong id="sdProjects">0</strong></div>
-              <div>الرسائل<strong id="sdMessages">0</strong></div>
-            </div>
-
-            <div class="sub-panel noprint">
-              <h5>نقل الطالب وسجله إلى فصل آخر</h5>
-              <div class="form">
-                <select id="transferTarget"><option value="">اختر الفصل المستهدف</option></select>
-                <button class="btn block" style="background:var(--accent)" onclick="transferSelected()">نقل الطالب</button>
-              </div>
-            </div>
-
-            <div class="btn-grid noprint" style="margin-top:12px">
-              <button class="btn ghost" onclick="printSection('studentFilePanel')">طباعة التقرير</button>
-              <button class="btn wa" onclick="sendFullReport()">التقرير عبر واتساب</button>
-            </div>
-
-            <div class="sub-panel noprint">
-              <h5>إشعار ولي الأمر بالدرس</h5>
-              <div class="hint">الجوال: <span id="sdPhone" style="direction:ltr;display:inline-block">لا يوجد</span></div>
-              <select id="selectLesson" onchange="updateLessonMsg()" style="margin-top:8px"><option value="">اختر الدرس</option></select>
-              <div id="lessonMsgPreview" class="preview">اختر الدرس لتظهر الرسالة.</div>
-              <a id="waLessonBtn" href="#" target="_blank" class="btn wa block" onclick="return sendVia(this)">إرسال لولي الأمر</a>
-            </div>
-
-            <div class="sub-panel noprint">
-              <h5>رسالة تشجيع وشكر</h5>
-              <select id="selectMotivation" onchange="updateMotivationMsg()"><option value="">اختر الرسالة</option></select>
-              <div id="motivationMsgPreview" class="preview">اختر الرسالة لعرض نصها.</div>
-              <a id="waMotivBtn" href="#" target="_blank" class="btn wa block" onclick="return sendVia(this)">إرسال التشجيع</a>
-              <div class="form" style="margin-top:12px;padding-top:12px;border-top:1px dashed var(--line-strong)">
-                <input type="text" id="newMotivationTitle" placeholder="عنوان رسالة جديدة">
-                <input type="text" id="newMotivationText" placeholder="نص الرسالة">
-                <button class="btn ghost block" onclick="addNewMotivation()">حفظ الرسالة</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- المزيد -->
-    <section id="view-more" class="view">
-      <div class="stack">
-        <div class="panel noprint">
-          <div class="panel-h"><h3>النسخ الاحتياطي</h3></div>
-          <p class="hint" style="margin-bottom:10px">احفظ نسخة كاملة (كل الصفوف) لتنقلها إلى جهاز آخر أو تحميها من الضياع.</p>
-          <div class="btn-grid">
-            <button class="btn" onclick="backupAll()">حفظ نسخة كاملة</button>
-            <button class="btn warn" onclick="$('restoreFile').click()">استرجاع نسخة</button>
-          </div>
-          <input type="file" id="restoreFile" accept=".json" hidden onchange="restoreBackup(event)">
-        </div>
-
-        <div class="panel noprint">
-          <div class="panel-h"><h3>الرقم السري</h3></div>
-          <div class="form">
-            <input type="password" id="curPw" placeholder="الرقم السري الحالي" autocomplete="off">
-            <input type="password" id="newPw" placeholder="الرقم السري الجديد (4 خانات على الأقل)" autocomplete="off">
-            <button class="btn ghost block" onclick="changePassword()">تغيير الرقم السري</button>
-            <button class="btn danger block" onclick="lockNow()">قفل اللوحة الآن</button>
-          </div>
-        </div>
-
-        <div class="panel noprint">
-          <div class="panel-h"><h3>التطبيق والدعم</h3></div>
-          <div class="form">
-            <button class="btn block" id="pwaInstallBtn" onclick="installPWA()">تثبيت اللوحة على الشاشة الرئيسية</button>
-            <a class="btn wa block" href="https://wa.me/966581015002" target="_blank">تواصل مع الدعم الفني</a>
-          </div>
-        </div>
-
-        <div class="footer-note noprint">
-          ﴿ هذا الجهد استغرق وقتاً وعناية، ولا أحلّ نقله تجارياً أو نسخه دون إذن ﴾<br>
-          للتواصل عبر واتساب: <a href="https://wa.me/966581015002" target="_blank">0581015002</a><br>
-          نهاية الاشتراك: 2027/07/01
-        </div>
+      <div class="panel">
+        <div class="panel-h"><h3>مرحباً بك يا معلم منصور</h3></div>
+        <p class="hint">لوحة قيادة العلوم تعمل بكفاءة وسلاسة تامة.</p>
       </div>
     </section>
   </main>
 
-  <nav class="tabbar noprint" aria-label="التنقل">
+  <nav class="tabbar">
     <div class="tabbar-in">
-      <button class="tab active" data-view="home" onclick="showView('home')">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(-25 12 12)"/></svg>المدار</button>
-      <button class="tab" data-view="students" onclick="showView('students')">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14c2.5 0 4.5 2 4.5 4.5"/></svg>الطلاب</button>
-      <button class="tab" data-view="lessons" onclick="showView('lessons')">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21.5z"/><path d="M4 5.5v16M9 8h7"/></svg>الدروس</button>
-      <button class="tab" data-view="grade" onclick="showView('grade')">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l3 3 5-6"/></svg>التصحيح</button>
-      <button class="tab" data-view="reports" onclick="showView('reports')">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>التقارير</button>
-      <button class="tab" data-view="more" onclick="showView('more')">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg>المزيد</button>
+      <button class="tab active" data-view="home" onclick="showView('home')">الرئيسية</button>
     </div>
   </nav>
 </div>
 
-<div id="installHelp" class="modal" hidden onclick="if(event.target===this)this.hidden=true">
-  <div class="modal-c">
-    <h3 style="font-size:17px;margin-bottom:8px">تثبيت اللوحة كتطبيق</h3>
-    <p class="hint" style="margin-bottom:10px">لم يعرض المتصفح نافذة التثبيت تلقائياً. ثبّتها يدوياً:</p>
-    <p style="font-size:14px;margin-bottom:8px"><b>أندرويد (كروم):</b> اضغط النقاط الثلاث ⋮ ثم "تثبيت التطبيق".</p>
-    <p style="font-size:14px;margin-bottom:14px"><b>آيفون (سفاري):</b> اضغط زر المشاركة ثم "إضافة إلى الشاشة الرئيسية".</p>
-    <button class="btn block" onclick="$('installHelp').hidden=true">حسناً</button>
-  </div>
-</div>
-<div id="toast" class="toast" role="status"></div>
+<div id="toast" class="toast"></div>
 
-<!-- ربط ملفات الجافاسكريبت المنفصلة -->
-<script src="app.js"></script>
-<script src="grading.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+const PW_KEY='mansour_pw_hash_v1', PW_SALT='mansour_pw_salt_v1', REMEMBER_KEY='mansour_remember_v1', SESSION_KEY='mansour_session_v1';
+let lockMode = 'login';
+
+async function hashPw(pw, salt){
+  const data = salt + '::' + pw;
+  try{
+    if(window.crypto && crypto.subtle){
+      const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(data));
+      return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+    }
+  }catch(e){}
+  return 'pw_' + pw;
+}
+
+function initLock(){
+  const hash = localStorage.getItem(PW_KEY);
+  if(!hash){
+    lockMode = 'setup';
+    $('pw2').hidden = false;
+    $('pw1').placeholder = 'أنشئ رقماً سرياً (4 خانات)';
+    $('lockBtn').textContent = 'إنشاء الرقم ودخول';
+    $('lockSub').textContent = 'أول مرة؟ اختر رقماً سرياً للوحة';
+    return;
+  }
+  if(localStorage.getItem(REMEMBER_KEY) === hash || sessionStorage.getItem(SESSION_KEY) === hash){
+    unlock(); return;
+  }
+}
+
+async function submitLock(){
+  const p1 = $('pw1').value;
+  if(!p1){ $('lockMsg').textContent = 'الرجاء إدخال الرقم السري'; return; }
+  
+  if(lockMode === 'setup'){
+    if(p1.length < 4){ $('lockMsg').textContent = 'يجب ألا يقل عن 4 خانات'; return; }
+    if(p1 !== $('pw2').value){ $('lockMsg').textContent = 'الرقمان غير متطابقان'; return; }
+    const salt = 'salt_' + Date.now(), h = await hashPw(p1, salt);
+    localStorage.setItem(PW_SALT, salt); localStorage.setItem(PW_KEY, h);
+    sessionStorage.setItem(SESSION_KEY, h);
+    if($('rememberDevice').checked) localStorage.setItem(REMEMBER_KEY, h);
+    unlock();
+    return;
+  }
+
+  const salt = localStorage.getItem(PW_SALT) || '';
+  const h = await hashPw(p1, salt);
+  if(h === localStorage.getItem(PW_KEY)){
+    sessionStorage.setItem(SESSION_KEY, h);
+    if($('rememberDevice').checked) localStorage.setItem(REMEMBER_KEY, h);
+    unlock();
+  } else {
+    $('lockMsg').textContent = 'الرقم السري غير صحيح';
+    $('pw1').value = '';
+  }
+}
+
+function unlock(){
+  $('lock').hidden = true;
+  document.body.classList.remove('locked');
+  $('app').hidden = false;
+}
+
+function lockNow(){
+  sessionStorage.removeItem(SESSION_KEY);
+  localStorage.removeItem(REMEMBER_KEY);
+  location.reload();
+}
+
+function showView(name){
+  document.querySelectorAll('.view').forEach(v => v.classList.toggle('active', v.id === 'view-' + name));
+}
+
+initLock();
+</script>
 </body>
 </html>
 
