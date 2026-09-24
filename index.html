@@ -2082,7 +2082,25 @@ async function generateQuestionsWithGemini() {
     kw2.value = examType + ' - ' + grade + ' (' + lesson + ')';
   }
   generateTestModel();
+    globalMaxScore = activeQuestions.length * 2;
+  toggleNafis();
+  const kw2 = document.getElementById('examKeywordInput');
+  if (kw2) {
+    kw2.value = examType + ' - ' + grade + ' (' + lesson + ')';
+  }
+  generateTestModel();
   if (statusEl) {
+    statusEl.textContent = "تم توليد الأسئلة بنجاح!";
+  }
+}
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js');
+}
+</script>
+</body>
+</html>
+if (statusEl) {
     statusEl.textContent = "تم توليد الأسئلة بنجاح!";
   }
 }
