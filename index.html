@@ -1,3 +1,6 @@
+
+
+مركز قيادة العلوم محدث (gemini) · HTML
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -63,7 +66,7 @@ h1,h2,h3,h4,h5,p{margin:0}
 button,input,select,textarea{font-family:inherit;font-size:16px;color:inherit}
 a{color:var(--accent)}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-
+ 
 /* ---------- Lock ---------- */
 .lock{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;padding:24px;
   background:radial-gradient(700px 500px at 50% 30%,rgba(60,40,140,.5),transparent 70%),rgba(5,6,15,.94);}
@@ -80,7 +83,7 @@ a{color:var(--accent)}
 .remember input{accent-color:var(--accent);width:16px;height:16px}
 .lock.shake .lock-card{animation:shake .4s}
 @keyframes shake{20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
-
+ 
 /* ---------- Layout ---------- */
 .topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;
   padding:calc(12px + env(safe-area-inset-top,0px)) 16px 10px;max-width:1040px;margin:0 auto}
@@ -94,7 +97,7 @@ main{max-width:1040px;margin:0 auto;padding:0 14px}
 .view{display:none}
 .view.active{display:block}
 .stack{display:flex;flex-direction:column;gap:14px}
-
+ 
 .panel{background:var(--panel);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
   border:1px solid var(--line);border-radius:18px;padding:16px}
 .panel-h{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px;flex-wrap:wrap}
@@ -103,7 +106,7 @@ main{max-width:1040px;margin:0 auto;padding:0 14px}
 .hint{font-size:12px;color:var(--ink-dim)}
 .sub-panel{background:rgba(255,255,255,.035);border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:12px}
 .sub-panel h5{font-size:13px;font-weight:600;color:var(--accent);margin-bottom:8px}
-
+ 
 /* ---------- Controls ---------- */
 input[type=text],input[type=tel],input[type=search],input[type=number],select,textarea{
   width:100%;padding:11px 12px;border-radius:10px;border:1px solid var(--line-strong);
@@ -127,7 +130,7 @@ input::placeholder,textarea::placeholder{color:var(--ink-faint)}
 .btn-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .tag{display:inline-block;padding:1px 9px;border-radius:99px;font-size:11px;font-weight:500;
   background:rgba(var(--accent-rgb),.16);color:var(--accent);border:1px solid rgba(var(--accent-rgb),.35)}
-
+ 
 /* ---------- Home hero ---------- */
 .hero{display:grid;grid-template-columns:minmax(0,1fr);gap:14px;margin-bottom:14px}
 .hero>*{min-width:0}
@@ -152,7 +155,7 @@ html,body{overflow-x:hidden}
   .hero-text h2{font-size:64px}
   .chips-col{grid-column:1/-1}
 }
-
+ 
 /* mission clock */
 .clock{display:flex;align-items:center;gap:14px;cursor:pointer}
 .clock-ring{position:relative;width:78px;height:78px;flex:none}
@@ -165,7 +168,7 @@ html,body{overflow-x:hidden}
 .clock .chev{color:var(--ink-faint);font-size:12px}
 .sched{display:none;margin-top:14px;padding-top:12px;border-top:1px dashed var(--line-strong)}
 .sched.open{display:block}
-
+ 
 /* stats */
 .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
 @media(min-width:700px){.stats{grid-template-columns:repeat(4,1fr)}}
@@ -174,11 +177,11 @@ html,body{overflow-x:hidden}
 .stat .n{font-family:var(--display);font-size:30px;line-height:1.2;color:var(--ink)}
 .stat .bar{height:4px;border-radius:4px;background:rgba(255,255,255,.1);margin-top:6px;overflow:hidden}
 .stat .bar b{display:block;height:100%;background:var(--accent);border-radius:4px;width:0;transition:width .5s}
-
+ 
 .banner{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
   padding:12px 14px;border-radius:14px;background:rgba(255,207,112,.1);border:1px solid rgba(255,207,112,.4);
   font-size:13px;margin-bottom:14px}
-
+ 
 /* ---------- Students ---------- */
 .class-list{display:flex;flex-wrap:wrap;gap:8px}
 .class-pill{display:flex;align-items:stretch;border-radius:10px;overflow:hidden;border:1px solid var(--line-strong)}
@@ -208,7 +211,7 @@ html,body{overflow-x:hidden}
 .pager{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:12px}
 .empty{padding:22px 12px;text-align:center;color:var(--ink-dim);font-size:13px;
   border:1px dashed var(--line-strong);border-radius:12px}
-
+ 
 /* ---------- Lessons timeline ---------- */
 .chapter-h{font-size:12px;color:var(--accent);font-weight:600;margin:14px 0 6px}
 .lesson{position:relative;padding:10px 26px 10px 10px;border-inline-start:none;border-right:2px solid var(--line);margin-right:8px}
@@ -233,7 +236,7 @@ td:first-child,th:first-child{text-align:right}
 .mini-stats strong{display:block;font-size:20px;font-family:var(--display);font-weight:400;color:var(--ink)}
 .score{width:56px!important;min-height:36px!important;padding:4px!important;text-align:center}
 .st-ok{color:var(--good);font-weight:600}.st-re{color:var(--bad);font-weight:600}
-
+ 
 .dd{position:relative}
 .dd-list{position:absolute;top:100%;right:0;left:0;z-index:20;max-height:220px;overflow-y:auto;background:#151836;
   border:1px solid var(--accent);border-radius:0 0 10px 10px;display:none;box-shadow:0 10px 24px rgba(0,0,0,.5)}
@@ -246,7 +249,7 @@ td:first-child,th:first-child{text-align:right}
 .send-list{display:grid;gap:8px;max-height:260px;overflow-y:auto;margin-top:8px}
 .send-row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 10px;border-radius:10px;
   border:1px solid var(--line);background:rgba(255,255,255,.03);font-size:13px}
-
+ 
 /* ---------- Tab bar ---------- */
 .tabbar{position:fixed;bottom:0;right:0;left:0;z-index:30;display:flex;justify-content:center;
   padding:0 10px calc(8px + env(safe-area-inset-bottom,0px));pointer-events:none}
@@ -257,13 +260,13 @@ td:first-child,th:first-child{text-align:right}
   border-radius:16px;color:var(--ink-faint);cursor:pointer;font-size:11px;font-weight:500}
 .tab svg{width:22px;height:22px}
 .tab.active{color:var(--accent);background:rgba(var(--accent-rgb),.14)}
-
+ 
 .toast{position:fixed;left:50%;bottom:calc(96px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:60;
   background:#1b1e44;border:1px solid var(--accent);color:var(--ink);padding:10px 18px;border-radius:99px;font-size:13px;
   display:none;max-width:90%;text-align:center;box-shadow:0 8px 24px rgba(0,0,0,.5)}
 .footer-note{text-align:center;color:var(--ink-faint);font-size:11px;line-height:1.8;margin:22px 0 8px}
 .footer-note a{color:var(--ink-dim)}
-
+ 
 /* ---------- Print ---------- */
 @media print{
   body{background:#fff!important;color:#000!important;padding:0}
@@ -273,9 +276,12 @@ td:first-child,th:first-child{text-align:right}
   .printing{position:absolute!important;left:0;top:0;width:100%;border:none!important;padding:8px!important}
   .printing table,.printing th,.printing td{border:1.5px solid #000!important}
   .printing th{background:#ddd!important}
+  .printing .opt i{border:1.8px solid #000!important;color:#000!important;font-weight:800!important;background:#fff!important}
+  .printing .opt{border:1px solid #000!important;background:#fff!important}
+  .printing .qrow{border:1px solid #000!important}
   .noprint,button,select,input,textarea,.btn{display:none!important}
 }
-
+ 
 /* ---------- التصحيح الآلي ---------- */
 .grid{display:grid;gap:10px;grid-template-columns:1fr 1fr}
 @media(max-width:560px){.grid{grid-template-columns:1fr}}
@@ -350,7 +356,7 @@ input[type=file]{width:100%;padding:9px;border-radius:10px;border:1px solid var(
 <noscript><p style="color:#fff;padding:20px;text-align:center">تحتاج هذه الصفحة إلى تفعيل JavaScript، افتحها من متصفح الجوال (كروم أو سفاري).</p></noscript>
 <canvas id="stars"></canvas>
 <div class="shooting" aria-hidden="true"></div>
-
+ 
 <!-- ================= شاشة القفل ================= -->
 <div class="lock" id="lock">
   <div class="lock-card">
@@ -375,7 +381,7 @@ input[type=file]{width:100%;padding:9px;border-radius:10px;border:1px solid var(
     </form>
   </div>
 </div>
-
+ 
 <!-- ================= التطبيق ================= -->
 <div id="app" hidden>
   <header class="topbar">
@@ -392,7 +398,7 @@ input[type=file]{width:100%;padding:9px;border-radius:10px;border:1px solid var(
     </button>
     </div>
   </header>
-
+ 
   <main>
     <!-- ===== المدار (الرئيسية) ===== -->
     <section id="view-home" class="view active">
@@ -400,7 +406,7 @@ input[type=file]{width:100%;padding:9px;border-radius:10px;border:1px solid var(
         <span>مرّ أكثر من أسبوع على آخر نسخة احتياطية. احفظ نسخة الآن حتى لا تضيع بياناتك.</span>
         <button class="btn sm warn" onclick="backupAll()">حفظ نسخة</button>
       </div>
-
+ 
       <div class="hero">
         <div class="hero-text">
           <div class="eyebrow">مادة العلوم – المرحلة الابتدائية</div>
@@ -435,7 +441,7 @@ input[type=file]{width:100%;padding:9px;border-radius:10px;border:1px solid var(
         <div class="orbit-wrap"><svg id="orbit" viewBox="0 0 360 360" role="group" aria-label="النظام الشمسي: اختر الصف"></svg></div>
         <div class="chips-col"><div class="chips" id="gradeChips"></div></div>
       </div>
-
+ 
       <div class="stats noprint">
         <div class="stat"><div class="k">الطلاب</div><div class="n" id="totalStudents">0</div></div>
         <div class="stat"><div class="k">إتقان الدروس</div><div class="n" id="totalSkills">0%</div><div class="bar"><b id="barSkills"></b></div></div>
@@ -446,13 +452,13 @@ input[type=file]{width:100%;padding:9px;border-radius:10px;border:1px solid var(
         <div class="stat"><div class="k">التجارب</div><div class="n" id="totalProjects">0</div></div>
         <div class="stat"><div class="k">رسائل الواتساب</div><div class="n" id="totalMessagesSent">0</div></div>
       </div>
-
+ 
       <div class="panel noprint" style="margin-top:14px;border-color:rgba(94,234,212,.4)">
         <div class="panel-h"><h3>التصحيح الآلي والاختبارات</h3></div>
         <button class="btn good block" onclick="showView('grade')">فتح التصحيح الآلي</button>
       </div>
     </section>
-
+ 
     <!-- ===== الطلاب ===== -->
     <section id="view-students" class="view">
       <div class="stack">
@@ -465,7 +471,7 @@ input[type=file]{width:100%;padding:9px;border-radius:10px;border:1px solid var(
             <button class="btn block" onclick="addStudent()">إضافة الطالب</button>
           </div>
         </div>
-
+ 
         <div class="panel" id="studentsPanel">
           <div class="panel-h">
             <h3>الفصول والطلاب</h3>
@@ -483,7 +489,7 @@ input[type=file]{width:100%;padding:9px;border-radius:10px;border:1px solid var(
             <button class="btn sm ghost" id="nextBtn" onclick="changePage(1)">التالي</button>
           </div>
         </div>
-
+ 
         <div class="panel noprint">
           <div class="panel-h"><h3>تصدير واستيراد الطلاب</h3></div>
           <div class="btn-grid">
@@ -495,7 +501,7 @@ input[type=file]{width:100%;padding:9px;border-radius:10px;border:1px solid var(
         </div>
       </div>
     </section>
-
+ 
     <!-- ===== الدروس ===== -->
     <section id="view-lessons" class="view">
       <div class="stack">
@@ -506,7 +512,7 @@ input[type=file]{width:100%;padding:9px;border-radius:10px;border:1px solid var(
           </select>
           <div id="lessonDetail" class="detail-box" hidden></div>
           <div id="lessonsTimeline" style="margin-top:8px"></div>
-
+ 
           <div class="sub-panel">
             <h5>إضافة درس</h5>
             <div class="form">
@@ -520,7 +526,7 @@ input[type=file]{width:100%;padding:9px;border-radius:10px;border:1px solid var(
             </div>
           </div>
         </div>
-
+ 
         <div class="panel" id="masteryPanel">
           <div class="panel-h">
             <h3>تتبع إتقان الدروس</h3>
@@ -538,7 +544,7 @@ input[type=file]{width:100%;padding:9px;border-radius:10px;border:1px solid var(
             <thead><tr><th>الطالب</th><th>الفصل</th><th>الحالة</th><th class="noprint">تغيير</th></tr></thead>
             <tbody id="masteryTbody"></tbody></table></div>
         </div>
-
+ 
         <div class="panel noprint">
           <div class="panel-h"><h3>إرسال الواجب لأولياء الأمور</h3></div>
           <div class="form">
@@ -553,7 +559,7 @@ input[type=file]{width:100%;padding:9px;border-radius:10px;border:1px solid var(
         </div>
       </div>
     </section>
-
+ 
     <!-- ===== التصحيح الآلي ===== -->
     <section id="view-grade" class="view">
       <nav class="steps noprint" aria-label="الخطوات">
@@ -561,7 +567,7 @@ input[type=file]{width:100%;padding:9px;border-radius:10px;border:1px solid var(
   <a href="#results"><b>٤</b>النتائج</a><a href="#analysisPanel"><b>٥</b>التحليل</a>
 </nav>
       <div class="stack" style="margin-top:6px">
-
+ 
   <section class="panel noprint" id="setup">
     <div class="panel-h"><h3>إعدادات الاختبار</h3></div>
     <div class="grid">
@@ -600,7 +606,7 @@ input[type=file]{width:100%;padding:9px;border-radius:10px;border:1px solid var(
           <option value="5">5 أسئلة</option><option value="10" selected>10 أسئلة</option>
         </select></div>
     </div>
-
+ 
     <div id="nafisBox" class="sub" hidden>
       <h5>مجالات مادة العلوم في اختبارات نافس</h5>
       <div class="checks">
@@ -631,7 +637,7 @@ input[type=file]{width:100%;padding:9px;border-radius:10px;border:1px solid var(
       <div class="status" id="imageUploadStatus"></div>
     </div>
   </section>
-
+ 
   <section class="panel" id="sheet">
     <div class="panel-h noprint"><h3>ورقة الاختبار (A4)</h3></div>
     <div class="row noprint">
@@ -653,7 +659,7 @@ input[type=file]{width:100%;padding:9px;border-radius:10px;border:1px solid var(
       <button class="btn ghost block" onclick="printSection('paper')">طباعة الاختبار على صفحة A4</button>
     </div>
   </section>
-
+ 
   <section class="panel noprint" id="grading">
     <div class="panel-h"><h3>التصحيح السريع</h3></div>
     <p class="hint" style="margin-bottom:10px">اضغط الحرف الذي اختاره الطالب على ورقته، ويظهر لك فوراً هل هو صحيح.</p>
@@ -670,7 +676,7 @@ input[type=file]{width:100%;padding:9px;border-radius:10px;border:1px solid var(
       <button class="btn warn sm" style="margin-top:10px" onclick="skipStudent()">تخطي الطالب (غائب)</button>
     </div>
   </section>
-
+ 
   <section class="panel" id="results">
     <div class="panel-h noprint"><h3>سجل الدرجات</h3></div>
     <div class="noprint">
@@ -687,7 +693,7 @@ input[type=file]{width:100%;padding:9px;border-radius:10px;border:1px solid var(
       <button class="btn warn" onclick="toggleAnalysisBox()">تقرير التحليل والخطط العلاجية</button>
     </div>
   </section>
-
+ 
   <section id="gradesSheet" class="paper sheet">
     <div class="head">
       <h3>المملكة العربية السعودية – وزارة التعليم</h3>
@@ -702,7 +708,7 @@ input[type=file]{width:100%;padding:9px;border-radius:10px;border:1px solid var(
       <div>ختم المدرسة: ....................</div><div>معلم المادة: منصور عامر الرحيلي</div>
     </div>
   </section>
-
+ 
   <section class="panel" id="analysisPanel" hidden>
     <div class="head" style="text-align:center;margin-bottom:8px">
       <h3 style="font-size:14px">تقرير تحليل نواتج التعلم والخطط العلاجية</h3>
@@ -711,10 +717,10 @@ input[type=file]{width:100%;padding:9px;border-radius:10px;border:1px solid var(
     <div id="analysisContentText"></div>
     <div class="noprint" style="margin-top:12px"><button class="btn ghost block" onclick="printSection('analysisPanel')">طباعة التقرير</button></div>
   </section>
-
+ 
 </div>
     </section>
-
+ 
     <!-- ===== التقارير ===== -->
     <section id="view-reports" class="view">
       <div class="stack">
@@ -732,7 +738,7 @@ input[type=file]{width:100%;padding:9px;border-radius:10px;border:1px solid var(
             <thead><tr><th>الطالب</th><th>الفترة 1</th><th>الفترة 2</th><th class="noprint">إرسال</th></tr></thead>
             <tbody id="examsTbody"></tbody></table></div>
         </div>
-
+ 
         <div class="panel" id="studentFilePanel">
           <div class="panel-h">
             <h3>ملف الطالب</h3>
@@ -752,7 +758,7 @@ input[type=file]{width:100%;padding:9px;border-radius:10px;border:1px solid var(
               <div>التجارب<strong id="sdProjects">0</strong></div>
               <div>الرسائل<strong id="sdMessages">0</strong></div>
             </div>
-
+ 
             <div class="sub-panel noprint">
               <h5>نقل الطالب وسجله إلى فصل آخر</h5>
               <div class="form">
@@ -760,12 +766,12 @@ input[type=file]{width:100%;padding:9px;border-radius:10px;border:1px solid var(
                 <button class="btn block" style="background:var(--accent)" onclick="transferSelected()">نقل الطالب</button>
               </div>
             </div>
-
+ 
             <div class="btn-grid noprint" style="margin-top:12px">
               <button class="btn ghost" onclick="printSection('studentFilePanel')">طباعة التقرير</button>
               <button class="btn wa" onclick="sendFullReport()">التقرير عبر واتساب</button>
             </div>
-
+ 
             <div class="sub-panel noprint">
               <h5>إشعار ولي الأمر بالدرس</h5>
               <div class="hint">الجوال: <span id="sdPhone" style="direction:ltr;display:inline-block">لا يوجد</span></div>
@@ -773,7 +779,7 @@ input[type=file]{width:100%;padding:9px;border-radius:10px;border:1px solid var(
               <div id="lessonMsgPreview" class="preview">اختر الدرس لتظهر الرسالة.</div>
               <a id="waLessonBtn" href="#" target="_blank" class="btn wa block" onclick="return sendVia(this)">إرسال لولي الأمر</a>
             </div>
-
+ 
             <div class="sub-panel noprint">
               <h5>رسالة تشجيع وشكر</h5>
               <select id="selectMotivation" onchange="updateMotivationMsg()"><option value="">اختر الرسالة</option></select>
@@ -789,7 +795,7 @@ input[type=file]{width:100%;padding:9px;border-radius:10px;border:1px solid var(
         </div>
       </div>
     </section>
-
+ 
     <!-- ===== المزيد ===== -->
     <section id="view-more" class="view">
       <div class="stack">
@@ -802,7 +808,7 @@ input[type=file]{width:100%;padding:9px;border-radius:10px;border:1px solid var(
           </div>
           <input type="file" id="restoreFile" accept=".json" hidden onchange="restoreBackup(event)">
         </div>
-
+ 
         <div class="panel noprint">
           <div class="panel-h"><h3>الذكاء الاصطناعي (Gemini) لتوليد أسئلة الاختبارات</h3></div>
           <p class="hint" style="margin-bottom:10px">أدخل مفتاح Gemini API الخاص بك ليقوم التصحيح الآلي بتوليد أسئلة جديدة تلقائياً: حسب محتوى الدرس المختار في الاختبارات الفصلية، أو حسب مجالات نافس الأربعة في اختبارات نافس، بدلاً من الاعتماد على نموذج ثابت من 10 أسئلة محفوظة.</p>
@@ -813,7 +819,7 @@ input[type=file]{width:100%;padding:9px;border-radius:10px;border:1px solid var(
           </div>
           <p class="hint" style="margin-top:8px">يمكنك الحصول على مفتاح من <a href="https://aistudio.google.com/apikey" target="_blank">Google AI Studio</a>. يُحفظ المفتاح داخل متصفح هذا الجهاز فقط، ولا يصل إلى أي جهة سوى Google عند توليد الأسئلة.</p>
         </div>
-
+ 
         <div class="panel noprint">
           <div class="panel-h"><h3>الرقم السري</h3></div>
           <div class="form">
@@ -823,7 +829,7 @@ input[type=file]{width:100%;padding:9px;border-radius:10px;border:1px solid var(
             <button class="btn danger block" onclick="lockNow()">قفل اللوحة الآن</button>
           </div>
         </div>
-
+ 
         <div class="panel noprint">
           <div class="panel-h"><h3>التطبيق والدعم</h3></div>
           <div class="form">
@@ -831,7 +837,7 @@ input[type=file]{width:100%;padding:9px;border-radius:10px;border:1px solid var(
             <a class="btn wa block" href="https://wa.me/966581015002" target="_blank">تواصل مع الدعم الفني</a>
           </div>
         </div>
-
+ 
         <div class="footer-note noprint">
           ﴿ هذا الجهد استغرق وقتاً وعناية، ولا أحلّ نقله تجارياً أو نسخه دون إذن ﴾<br>
           للتواصل عبر واتساب: <a href="https://wa.me/966581015002" target="_blank">0581015002</a><br>
@@ -840,7 +846,7 @@ input[type=file]{width:100%;padding:9px;border-radius:10px;border:1px solid var(
       </div>
     </section>
   </main>
-
+ 
   <nav class="tabbar noprint" aria-label="التنقل">
     <div class="tabbar-in">
       <button class="tab active" data-view="home" onclick="showView('home')">
@@ -858,7 +864,7 @@ input[type=file]{width:100%;padding:9px;border-radius:10px;border:1px solid var(
     </div>
   </nav>
 </div>
-
+ 
 <div id="installHelp" class="modal" hidden onclick="if(event.target===this)this.hidden=true">
   <div class="modal-c">
     <h3 style="font-size:17px;margin-bottom:8px">تثبيت اللوحة كتطبيق</h3>
@@ -869,7 +875,7 @@ input[type=file]{width:100%;padding:9px;border-radius:10px;border:1px solid var(
   </div>
 </div>
 <div id="toast" class="toast" role="status"></div>
-
+ 
 <script>
 window.addEventListener('error', function(e){
   var d=document.getElementById('errBox');
@@ -893,7 +899,7 @@ const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp
 const reduceMotion = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
 const TEACHER_NAME = "منصور عامر الرحيلي";
 const SCHOOL_NAME = "مدرسة داوود بن عروة الثقفي";
-
+ 
 /* ================= خلفية النجوم ================= */
 (function stars(){
   const cv = $('stars'), ctx = cv.getContext('2d');
@@ -911,11 +917,11 @@ const SCHOOL_NAME = "مدرسة داوود بن عروة الثقفي";
   draw();
   let t; addEventListener('resize', () => { clearTimeout(t); t = setTimeout(draw, 250); });
 })();
-
+ 
 /* ================= الرقم السري ================= */
 const PW_KEY='mansour_pw_hash_v1', PW_SALT='mansour_pw_salt_v1', REMEMBER_KEY='mansour_remember_v1', SESSION_KEY='mansour_session_v1';
 let lockMode = 'login', failCount = 0, lockedUntil = 0, appBooted = false;
-
+ 
 function cyrb53(str, seed=0){
   let h1=0xdeadbeef^seed, h2=0x41c6ce57^seed;
   for(let i=0,ch;i<str.length;i++){ch=str.charCodeAt(i);h1=Math.imul(h1^ch,2654435761);h2=Math.imul(h2^ch,1597334677);}
@@ -934,7 +940,7 @@ async function hashPw(pw, salt){
   return 'w' + cyrb53(data) + cyrb53(data, 7);
 }
 function newSalt(){ return Math.random().toString(36).slice(2) + Date.now().toString(36); }
-
+ 
 function initLock(){
   const hash = localStorage.getItem(PW_KEY);
   if(!hash){ setLockMode('setup'); return; }
@@ -954,7 +960,7 @@ function setLockMode(mode){
 }
 function lockMsg(t, ok){ $('lockMsg').textContent = t; $('lockMsg').className = 'lock-msg' + (ok ? ' ok' : ''); }
 function shakeLock(){ $('lock').classList.remove('shake'); void $('lock').offsetWidth; $('lock').classList.add('shake'); }
-
+ 
 async function submitLock(){
   const p1 = $('pw1').value;
   if(lockMode === 'setup'){
@@ -1005,7 +1011,7 @@ async function changePassword(){
   $('curPw').value = ''; $('newPw').value = '';
   showToast('تم تغيير الرقم السري');
 }
-
+ 
 /* ================= الصفوف = الكواكب ================= */
 const GRADES = [
   {key:"الأول الابتدائي",  short:"الأول",  planet:"عطارد",  color:"#b9b4ad", r:38,  size:5,   dur:70,  start:200},
@@ -1019,7 +1025,7 @@ const NONE = '__NONE__';
 let currentGrade = localStorage.getItem('mansour_current_grade_science_v5') || GRADES[0].key;
 if(!GRADES.some(g => g.key === currentGrade)) currentGrade = GRADES[0].key;
 const gradeInfo = () => GRADES.find(g => g.key === currentGrade);
-
+ 
 function hexRgb(h){ const n = parseInt(h.slice(1),16); return [(n>>16)&255,(n>>8)&255,n&255].join(','); }
 function applyGradeTheme(){
   const g = gradeInfo(), root = document.documentElement.style;
@@ -1035,7 +1041,7 @@ function applyGradeTheme(){
   });
   document.querySelectorAll('#orbit .active-ring').forEach((c,i) => c.setAttribute('opacity', GRADES[i].key === currentGrade ? '1' : '0'));
 }
-
+ 
 function buildOrbit(){
   let svg = `<defs>
     <radialGradient id="sunG" cx="40%" cy="38%"><stop offset="0" stop-color="#fff5cc"/><stop offset=".45" stop-color="#ffb547"/><stop offset="1" stop-color="#e2711d"/></radialGradient>
@@ -1068,7 +1074,7 @@ function buildOrbit(){
   });
   $('gradeChips').innerHTML = GRADES.map((g,i) => `<button class="chip" onclick="changeGradeLevel('${g.key}')"><i style="background:${g.color}"></i>${g.short}</button>`).join('');
 }
-
+ 
 /* ================= الجدول والمؤقت ================= */
 const DAYS = ["الأحد","الإثنين","الثلاثاء","الأربعاء","الخميس"];
 const predefinedClasses = ["لا توجد حصة","انتظار","نشاط / مراجعة"];
@@ -1154,7 +1160,7 @@ function updateClock(){
   }
   setClock('انتهى الدوام','أحسنت اليوم','','—',0);
 }
-
+ 
 /* ================= البيانات ================= */
 const gradeScienceData = {
   "الأول الابتدائي":[
@@ -1227,7 +1233,7 @@ const K = {
 let lessons = [], students = [], lessonStatus = {}, lessonMastery = {}, customMotivations = [];
 let activeQueryClass = NONE, selectedStudentIndex = '', currentPage = 1, classList = [];
 const ROWS = 12;
-
+ 
 function loadGradeData(){
   lessons = load(K.lessons(), null) || JSON.parse(JSON.stringify(gradeScienceData[currentGrade]));
   students = load(K.students(), []);
@@ -1240,7 +1246,7 @@ const saveLessons  = () => localStorage.setItem(K.lessons(), JSON.stringify(less
 const saveStatus   = () => localStorage.setItem(K.status(), JSON.stringify(lessonStatus));
 const saveMastery  = () => localStorage.setItem(K.mastery(), JSON.stringify(lessonMastery));
 const clsOf = s => s.classCustom || currentGrade;
-
+ 
 let toastT;
 function showToast(msg){
   const t = $('toast'); t.textContent = msg; t.style.display = 'block';
@@ -1250,7 +1256,7 @@ function waLink(phone, msg){
   const p = String(phone || '').replace(/\D/g,'').replace(/^0+/,'');
   return `https://wa.me/${p ? '966' + p : ''}?text=${encodeURIComponent(msg)}`;
 }
-
+ 
 /* ================= التنقل ================= */
 function showView(name){
   document.querySelectorAll('.view').forEach(v => v.classList.toggle('active', v.id === 'view-' + name));
@@ -1268,7 +1274,7 @@ function changeGradeLevel(grade){
   applyGradeTheme(); renderLessons(); render(); syncGrading();
   showToast(`الصف ${gradeInfo().short} – مدار ${gradeInfo().planet}`);
 }
-
+ 
 /* ================= الدروس ================= */
 function renderLessons(){
   const opt = (v,t) => `<option value="${v}">${esc(t)}</option>`;
@@ -1278,7 +1284,7 @@ function renderLessons(){
   $('bulkLesson').innerHTML = opt('', 'اختر درس الواجب') + lessons.map((l,i) => opt('lesson-' + i, `[${l.chapter}] ${l.title}`)).join('');
   $('selectMotivation').innerHTML = opt('', 'اختر الرسالة') + customMotivations.map((m,i) => opt('motiv-' + i, m.title)).join('');
   $('lessonDetail').hidden = true;
-
+ 
   let html = '', lastCh = null, done = 0;
   lessons.forEach((l,i) => {
     const ex = !!lessonStatus[i]; if(ex) done++;
@@ -1327,7 +1333,7 @@ function deleteLesson(idx){
   const nm = {}; Object.keys(lessonMastery).forEach(s => nm[s] = remap(lessonMastery[s] || {})); lessonMastery = nm;
   saveLessons(); saveStatus(); saveMastery(); renderLessons(); render(); showToast('تم حذف الدرس');
 }
-
+ 
 /* ================= الإحصائيات ================= */
 function render(){
   let ach = 0;
@@ -1344,7 +1350,7 @@ function render(){
   renderStudents(); renderClasses(); renderMasteryTable(); renderExamsTable();
   if(selectedStudentIndex !== '' && students[selectedStudentIndex]) fillStudentCard(selectedStudentIndex);
 }
-
+ 
 /* ================= الطلاب ================= */
 function addStudent(){
   const name = $('studentName').value.trim(), sClass = $('studentClassCustom').value.trim() || currentGrade, phone = $('studentPhone').value.trim();
@@ -1362,12 +1368,12 @@ function renderStudents(){
     box.innerHTML = '<div class="empty" style="grid-column:1/-1">اختر فصلاً من الأعلى أو ابحث بالاسم لعرض الطلاب.</div>';
     $('pageInfo').textContent = '0'; return;
   } else list = students.filter(s => clsOf(s) === activeQueryClass);
-
+ 
   const pages = Math.ceil(list.length / ROWS) || 1;
   if(currentPage > pages) currentPage = pages;
   const from = (currentPage-1)*ROWS, part = list.slice(from, from+ROWS);
   if(!part.length){ box.innerHTML = '<div class="empty" style="grid-column:1/-1">لا يوجد طلاب مطابقون.</div>'; $('pageInfo').textContent = '0'; return; }
-
+ 
   const stepper = (cls, label, gi, f, v) => `<div class="metric ${cls}"><div class="m-l">${label}</div><div class="stepper">
     <button aria-label="إنقاص" onclick="stepField(${gi},'${f}',-1)">−</button><b>${v||0}</b><button aria-label="زيادة" onclick="stepField(${gi},'${f}',1)">+</button></div></div>`;
   box.innerHTML = part.map(s => {
@@ -1441,7 +1447,7 @@ function quickTransfer(i){
   const t = prompt(`اكتب اسم الفصل الجديد للطالب (المتاح: ${classList.join('، ')}):`, clsOf(s));
   if(t && t.trim()){ s.classCustom = t.trim(); saveStudents(); render(); showToast(`تم نقل ${s.name} إلى ${s.classCustom}`); }
 }
-
+ 
 /* ================= الإتقان ================= */
 function renderMasteryDropdown(){
   const sel = $('masteryLessonSelect'), v = sel.value;
@@ -1467,7 +1473,7 @@ function toggleMastery(si, li){
   lessonMastery[si][li] = !lessonMastery[si][li];
   saveMastery(); render(); showToast('تم تحديث حالة الإتقان');
 }
-
+ 
 /* ================= الاختبارات ================= */
 function avgExams(list){
   let a = 0, b = 0; list.forEach(s => { a += Number(s.exam1) || 0; b += Number(s.exam2) || 0; });
@@ -1494,7 +1500,7 @@ function updateExam(i, f, el){
   students[i][f] = v; saveStudents();
   const cls = $('examClassSelect').value; if(cls) avgExams(students.filter(s => clsOf(s) === cls));
 }
-
+ 
 /* ================= ملف الطالب والرسائل ================= */
 function filterStudentDropdown(){
   const k = $('studentSearchInput').value.trim().toLowerCase(), box = $('studentDropdown');
@@ -1565,7 +1571,7 @@ function bumpMessages(i){
   $('totalMessagesSent').textContent = students.reduce((a,s) => a + (s.messages||0), 0);
   if(selectedStudentIndex === i) $('sdMessages').textContent = students[i].messages;
 }
-
+ 
 /* ================= الواجب الجماعي ================= */
 function bulkBase(){
   const v = $('bulkLesson').value, d = $('bulkDetails').value.trim(), n = $('bulkNote').value.trim();
@@ -1591,7 +1597,7 @@ function prepareBulk(){
   $('bulkPanel').hidden = false; showToast(`جاهزة روابط ${list.length} ولي أمر`);
 }
 function markSent(i, el){ bumpMessages(i); el.textContent = 'تم'; el.style.background = '#6b7280'; }
-
+ 
 /* ================= الطباعة ================= */
 function printSection(id){
   if(id === 'paper' && !activeQuestions.length){ alert('ولّد ورقة الاختبار أولاً'); return; }
@@ -1599,7 +1605,7 @@ function printSection(id){
   $(id).classList.add('printing'); window.print();
 }
 window.addEventListener('afterprint', () => document.querySelectorAll('.printing').forEach(e => e.classList.remove('printing')));
-
+ 
 /* ================= Excel / CSV ================= */
 function exportExcel(){
   if(!students.length){ alert('لا توجد بيانات لتصديرها'); return; }
@@ -1644,7 +1650,7 @@ function importExcel(ev){
   };
   r.readAsArrayBuffer(f);
 }
-
+ 
 /* ================= النسخ الاحتياطي الكامل ================= */
 const SECRET_KEYS = [PW_KEY, PW_SALT, REMEMBER_KEY];
 function backupAll(){
@@ -1687,7 +1693,7 @@ function checkBackupReminder(){
   const hasData = Object.keys(localStorage).some(k => k.startsWith('mansour_students_'));
   if(hasData && (!last || Date.now() - last > 7*86400000)) $('backupBanner').hidden = false;
 }
-
+ 
 /* ================= PWA ================= */
 const isStandalone = () => (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true;
 let deferredPrompt = null;
@@ -1702,11 +1708,11 @@ async function installPWA(){
   $('installHelp').hidden = false;
 }
 window.addEventListener('appinstalled', () => { deferredPrompt = null; $('installTop').hidden = true; $('pwaInstallBtn').hidden = true; });
-
+ 
 /* ================= التصحيح الآلي ================= */
-
+ 
 const subjectNames = {science:"مادة العلوم",math:"مادة الرياضيات",arabic:"مادة لغتي الجميلة",english:"مادة اللغة الإنجليزية",islamic:"الدراسات الإسلامية"};
-
+ 
 /* نموذج احتياطي (يُستخدم فقط عند عدم توفر مفتاح Gemini أو تعذّر الاتصال) */
 const nafisQuestions = [
   {domain:"علوم الحياة",q:"ما العملية التي تتخلص بها الخلايا من الفضلات الناتجة عن العمليات الحيوية؟",options:["الإخراج الخلوي","التخمر","الانقسام المتساوي","البناء الضوئي"],correctLetter:"أ"},
@@ -1721,10 +1727,10 @@ const nafisQuestions = [
   {domain:"العلوم الفيزيائية",q:"ماذا تسمى المنطقة المحيطة بالمغناطيس ويظهر فيها قوة تأثيره على المغناطيسات الأخرى؟",options:["المجال المغناطيسي","الكهرومغناطيسية","القوة المغناطيسية","خطوط القوة الوهمية"],correctLetter:"أ"}
 ];
 const LETTERS = ['أ','ب','ج','د'];
-
+ 
 let currentStudentIndex = 0, currentQuestionStep = 0, studentsList = [], activeQuestions = [], globalMaxScore = 20,
     currentModelName = "نموذج (د)", studentAnswers = {}, allClassResults = {}, advanceTimer = null;
-
+ 
 function toggleNafis(){
   const isNafis = $('selectExamType').value === "اختبارات نافس الوطنية";
   $('nafisBox').hidden = !isNafis;
@@ -1733,7 +1739,7 @@ function toggleNafis(){
 }
 function onGradeChange(){ renderExamLessonChecklist(); switchExamModel(); }
 function syncGrading(){ $('selectGrade').value = currentGrade; toggleNafis(); renderExamLessonChecklist(); switchExamModel(); }
-
+ 
 /* ---- الدروس المتاحة للصف المختار (لبناء أسئلة الذكاء الاصطناعي) ---- */
 function fetchLessonsForGrade(grade){
   try{
@@ -1748,7 +1754,7 @@ function renderExamLessonChecklist(){
   box.innerHTML = list.map((l,i) => `<label class="check"><input type="checkbox" class="lesson-cb" value="${i}" checked>${esc(l.title)}</label>`).join('')
     || '<span class="hint">لا توجد دروس مسجلة لهذا الصف بعد، أضِفها من تبويب "الدروس".</span>';
 }
-
+ 
 /* ---- إعدادات Gemini ---- */
 function saveGeminiSettings(){
   const key = ($('geminiApiKeyInput').value || '').trim();
@@ -1761,7 +1767,7 @@ function loadGeminiSettingsUI(){
   if($('geminiApiKeyInput')) $('geminiApiKeyInput').value = localStorage.getItem('mansour_gemini_api_key') || '';
   if($('geminiModelInput')) $('geminiModelInput').value = localStorage.getItem('mansour_gemini_model') || '';
 }
-
+ 
 /* ---- استدعاء Gemini API ---- */
 async function callGemini(promptText){
   const key = localStorage.getItem('mansour_gemini_api_key');
@@ -1781,7 +1787,7 @@ async function callGemini(promptText){
   const parts = (data && data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts) || [];
   return parts.map(p => p.text || '').join('');
 }
-
+ 
 /* ---- بناء نص الطلب حسب نوع الاختبار ---- */
 function buildGeminiPrompt(qCount){
   const grade = $('selectGrade').value, subject = subjectNames[$('selectSubject').value] || 'العلوم';
@@ -1806,12 +1812,17 @@ ${scopeText}
 [{"domain":"...","q":"نص السؤال","options":["الخيار الأول","الخيار الثاني","الخيار الثالث","الخيار الرابع"],"correctIndex":0}]
 حيث correctIndex رقم فهرس الإجابة الصحيحة داخل مصفوفة options (0 أو 1 أو 2 أو 3).`;
 }
-
+ 
 /* ---- توليد الأسئلة عبر Gemini، مع تحديث حالة الواجهة ---- */
+function setAiStatus(text, kind){
+  const statusEl = $('aiGenStatus'); if(!statusEl) return;
+  statusEl.textContent = text;
+  statusEl.style.color = kind === 'bad' ? 'var(--bad)' : kind === 'good' ? 'var(--good)' : kind === 'warn' ? 'var(--warn)' : 'var(--ink-dim)';
+  statusEl.style.fontWeight = kind ? '700' : '500';
+}
 async function generateQuestionsWithAI(qCount){
-  const statusEl = $('aiGenStatus');
   if(!localStorage.getItem('mansour_gemini_api_key')){
-    if(statusEl) statusEl.textContent = 'لم يتم إدخال مفتاح Gemini API بعد (من صفحة "المزيد")، تم استخدام نموذج احتياطي مؤقت.';
+    setAiStatus('⚠️ لم يتم إدخال مفتاح Gemini API بعد. اذهب لصفحة "المزيد" وأدخل المفتاح واحفظه، ثم أعد التوليد. تم الآن استخدام نموذج احتياطي مؤقت.', 'warn');
     return false;
   }
   let prompt;
@@ -1821,7 +1832,7 @@ async function generateQuestionsWithAI(qCount){
     else if(e.message === 'NO_LESSON'){ alert('اختر درساً واحداً على الأقل من قائمة "الدروس المستهدفة بالاختبار".'); }
     return false;
   }
-  if(statusEl) statusEl.textContent = 'جارٍ توليد أسئلة جديدة بالذكاء الاصطناعي (Gemini)…';
+  setAiStatus('جارٍ توليد أسئلة جديدة بالذكاء الاصطناعي (Gemini)…', null);
   try{
     const raw = await callGemini(prompt);
     const clean = raw.replace(/```json|```/g,'').trim();
@@ -1834,15 +1845,16 @@ async function generateQuestionsWithAI(qCount){
     }).filter(q => q.q && q.options.length === 4);
     if(!built.length) throw new Error('EMPTY');
     activeQuestions = built;
-    if(statusEl) statusEl.textContent = `تم توليد ${built.length} سؤالاً جديداً بالذكاء الاصطناعي بنجاح ✅`;
+    setAiStatus(`تم توليد ${built.length} سؤالاً جديداً بالذكاء الاصطناعي بنجاح ✅`, 'good');
     return true;
   }catch(err){
     console.error(err);
-    if(statusEl) statusEl.textContent = 'تعذّر توليد الأسئلة بالذكاء الاصطناعي (تحقّق من صحة المفتاح/اسم النموذج/الاتصال بالإنترنت). تم استخدام نموذج احتياطي مؤقت.';
+    const detail = (err && err.message) ? String(err.message).slice(0,180) : '';
+    setAiStatus('❌ تعذّر توليد الأسئلة بالذكاء الاصطناعي (تحقّق من صحة المفتاح/اسم النموذج/الاتصال). تم استخدام نموذج احتياطي مؤقت. تفصيل الخطأ: ' + detail, 'bad');
     return false;
   }
 }
-
+ 
 /* ---- نموذج احتياطي عند عدم توفر الذكاء الاصطناعي ---- */
 function buildFallbackQuestions(qCount){
   const isNafis = $('selectExamType').value === "اختبارات نافس الوطنية";
@@ -1865,16 +1877,16 @@ function buildFallbackQuestions(qCount){
   }
   return out;
 }
-
+ 
 function onGradeChangeInit(){ /* legacy placeholder kept intentionally empty */ }
-
+ 
 async function handleExamImageUpload(ev){
   const f = ev.target.files[0];
   if(!f) return;
   $('imageUploadStatus').textContent = 'تم إرفاق الصورة كمرجع مساعد (لن تُقرأ تلقائياً). استخدم زر "توليد ورقة الاختبار" لتوليد الأسئلة عبر الذكاء الاصطناعي.';
 }
-
-
+ 
+ 
 function clearAllExamAndAnalysisData(){
   if(!confirm("هل تريد حذف الاختبار الحالي وجميع نتائج الطلاب والتحليل والبدء من جديد؟")) return;
   ['mansour_last_exam_full_state','dashboardLatestExamResults','examResultsHistory','mansour_last_analysis_report'].forEach(k => localStorage.removeItem(k));
@@ -1886,7 +1898,7 @@ function clearAllExamAndAnalysisData(){
   if($('aiGenStatus')) $('aiGenStatus').textContent = '';
   filterStudentResults(); showToast('تم مسح البيانات السابقة');
 }
-
+ 
 /* الطلاب من لوحة التحكم */
 function fetchStudentsForSelectedClass(){
   const grade = $('selectGrade').value, digit = $('selectClassDigit').value;
@@ -1908,7 +1920,7 @@ function fetchStudentsForSelectedClass(){
   const m = new Map(); list.forEach(s => m.set(s.name, s));
   studentsList = Array.from(m.values());
 }
-
+ 
 function classLabel(){ const g = $('selectGrade').value.replace(" الابتدائي",""), d = $('selectClassDigit').value; return d === 'all' ? g : `${g} - فصل ${d}`; }
 function paperMeta(keyword){
   const examType = $('selectExamType').value, grade = $('selectGrade').value, subj = $('selectSubject').value;
@@ -1921,7 +1933,7 @@ function renderPaperQuestions(){
     <div class="opts">${q.options.map((o,k) => `<div class="opt"><i>${LETTERS[k]}</i>${esc(o)}</div>`).join('')}</div></div>`).join('');
   $('paper').hidden = false; $('printExamRow').hidden = false;
 }
-
+ 
 function stateKey(){ return `mansour_exam_state_${$('selectExamType').value}_${$('selectSubject').value}_${$('selectGrade').value}_${$('selectModelLetter').value}`; }
 function switchExamModel(){
   currentModelName = $('selectModelLetter').value;
@@ -1937,32 +1949,32 @@ function switchExamModel(){
   activeQuestions = []; allClassResults = {};
   filterStudentResults();
 }
-
+ 
 async function generateTestModel(){
   currentModelName = $('selectModelLetter').value;
   const isNafis = $('selectExamType').value === "اختبارات نافس الوطنية";
   const keywordDefault = isNafis ? `نموذج نافس (${currentModelName})` : `نموذج (${currentModelName})`;
   const keyword = $('examKeywordInput').value.trim() || keywordDefault;
   const qCount = Math.max(4, Number($('selectQuestionCount').value) || 10);
-
+ 
   const btn = $('genTestBtn');
   if(btn){ btn.disabled = true; btn.textContent = 'جارٍ توليد الأسئلة…'; }
-
+ 
   const ok = await generateQuestionsWithAI(qCount);
   if(!ok) activeQuestions = buildFallbackQuestions(qCount);
-
+ 
   if(btn){ btn.disabled = false; btn.textContent = 'توليد ورقة الاختبار'; }
-
+ 
   globalMaxScore = activeQuestions.length * 2;
   paperMeta(keyword); renderPaperQuestions();
   saveLatestExamState();
   $('paper').scrollIntoView({behavior:'smooth', block:'start'});
   showToast(ok ? 'تم توليد أسئلة جديدة بالذكاء الاصطناعي' : 'تم توليد ورقة الاختبار (نموذج احتياطي)');
 }
-
+ 
 /* الطباعة */
 function printGradesSheet(){ prepareGradesPrintSheet(); printSection('gradesSheet'); }
-
+ 
 /* جلسة التصحيح */
 function startTouchGradingSession(){
   if(!activeQuestions.length){ alert('ولّد ورقة الاختبار أولاً من قسم "الورقة".'); return; }
@@ -1972,7 +1984,7 @@ function startTouchGradingSession(){
   startNewStudentSession(); $('touchGradingCard').scrollIntoView({behavior:'smooth', block:'start'});
 }
 function startNewStudentSession(){ currentQuestionStep = 0; studentAnswers = {}; renderCurrentStepView(); }
-
+ 
 function renderCurrentStepView(){
   const st = studentsList[currentStudentIndex], total = activeQuestions.length;
   $('studentHeader').innerHTML = `<span><b>${esc(st.name)}</b> <span class="tag">${esc(st.className)}</span></span>
@@ -2030,7 +2042,7 @@ function finishGradingSession(){
   $('touchGradingCard').hidden = true; showToast('اكتملت جلسة التصحيح');
   $('results').scrollIntoView({behavior:'smooth', block:'start'});
 }
-
+ 
 function saveLatestExamState(){
   const st = {gradeKey:$('selectGrade').value, subjectKey:$('selectSubject').value, subjectName:subjectNames[$('selectSubject').value],
     examType:$('selectExamType').value, classDigit:$('selectClassDigit').value, currentModelName, examKeyword:$('examKeywordInput').value.trim(),
@@ -2046,7 +2058,7 @@ function updateLocalStorageAndResults(){
   localStorage.setItem('examResultsHistory', JSON.stringify(records));
   saveLatestExamState(); filterStudentResults(); prepareGradesPrintSheet(); prepareAnalysisContent();
 }
-
+ 
 /* النتائج */
 function filterStudentResults(){
   const q = $('searchStudentInput').value.toLowerCase().trim(), out = $('correctionOutput');
@@ -2076,7 +2088,7 @@ function prepareGradesPrintSheet(){
       <td style="font-weight:700">${p >= 75 ? 'متقن' : 'يحتاج دعم وتدخل علاجي'}</td></tr>`;
   }).join('');
 }
-
+ 
 /* التحليل */
 function toggleAnalysisBox(){
   const b = $('analysisPanel'); b.hidden = !b.hidden;
@@ -2110,8 +2122,8 @@ function prepareAnalysisContent(){
   box.innerHTML = html;
   localStorage.setItem('mansour_last_analysis_report', JSON.stringify({gradeKey:$('selectGrade').value, subjectKey:$('selectSubject').value, content:html, date:new Date().toLocaleDateString('en-GB')}));
 }
-
-
+ 
+ 
 /* ================= التشغيل ================= */
 function bootApp(){
   localStorage.setItem('mansour_current_grade_science_v5', currentGrade);
@@ -2131,3 +2143,6 @@ if('serviceWorker' in navigator){ navigator.serviceWorker.register('./sw.js').ca
 </script>
 </body>
 </html>
+ 
+
+
