@@ -1759,8 +1759,8 @@ function renderExamLessonChecklist(){
 function saveGeminiSettings(){
   const key = ($('geminiApiKeyInput').value || '').trim();
   const model = ($('geminiModelInput').value || '').trim();
-  if(key) localStorage.setItem('mansour_gemini_api_key', key);
-  if(model) localStorage.setItem('mansour_gemini_model', model); else localStorage.removeItem('mansour_gemini_model');
+  if(key) localStorage.setItem('AQ.Ab8RN6IKXvMIXLcQq1zeYwV-kGHoPw5M7OOkGh9WtbwsbqN9yw', key);
+  if(model) localStorage.setItem('AQ.Ab8RN6IKXvMIXLcQq1zeYwV-kGHoPw5M7OOkGh9WtbwsbqN9yw', model); else localStorage.removeItem('mansour_gemini_model');
   showToast('تم حفظ إعدادات الذكاء الاصطناعي');
 }
 function loadGeminiSettingsUI(){
@@ -1770,9 +1770,9 @@ function loadGeminiSettingsUI(){
  
 /* ---- استدعاء Gemini API ---- */
 async function callGemini(promptText){
-  const key = localStorage.getItem('mansour_gemini_api_key');
+  const key = localStorage.getItem('AQ.Ab8RN6IKXvMIXLcQq1zeYwV-kGHoPw5M7OOkGh9WtbwsbqN9yw');
   if(!key) throw new Error('NO_KEY');
-  const model = (localStorage.getItem('mansour_gemini_model') || 'gemini-2.5-flash').trim();
+  const model = (localStorage.getItem(AQ.Ab8RN6IKXvMIXLcQq1zeYwV-kGHoPw5M7OOkGh9WtbwsbqN9yw') || 'gemini-2.5-flash').trim();
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(key)}`;
   const res = await fetch(url, {
     method:'POST',
