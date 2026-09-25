@@ -1770,7 +1770,7 @@ function loadGeminiSettingsUI(){
  
 /* ---- استدعاء Gemini API ---- */
 async function callGemini(promptText){
-  const key = localStorage.getItem('AQ.Ab8RN6IKXvMIXLcQq1zeYwV-kGHoPw5M7OOkGh9WtbwsbqN9yw');
+  const key = localStorage.getItem('mansour_gemini_api_key');
   if(!key) throw new Error('NO_KEY');
   const model = (localStorage.getItem('mansour_gemini_model') || 'gemini-2.5-flash').trim();
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(key)}`;
