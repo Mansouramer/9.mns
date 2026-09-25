@@ -2060,12 +2060,18 @@ async function generateUltraDeepExam(startLessonIndex = 0, endLessonIndex = null
         console.error("خطأ جوهري في التوليد:", error);
         alert("تعذر بناء الاختبار. تأكد من إعدادات الشبكة ومفتاح API.");
         return [];
+ } catch (error) {
+        console.error("خطأ جوهري في التوليد:", error);
+        alert("تعذر بناء الاختبار. تأكد من إعدادات الشبكة ومفتاح API.");
+        return [];
     }
-}
+} // <--- هذا القوس كان مفقوداً وهو الذي يغلق دالة generateUltraDeepExam بالكامل
 
 /* ================ التشغيل ================ */
 function bootApp(){
     localStorage.setItem('mansour_current_grade_science_v5', currentGrade);
+    loadSchedule(); loadGradeData();
+    buildOrbit(); applyGradeTheme();
 
 /* ================= التشغيل ================= */
 function bootApp(){
