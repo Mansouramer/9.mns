@@ -1968,107 +1968,11 @@ function prepareAnalysisContent(){
   localStorage.setItem('mansour_last_analysis_report', JSON.stringify({gradeKey:$('selectGrade').value, subjectKey:$('selectSubject').value, content:html, date:new Date().toLocaleDateString('en-GB')}));
 }
 
-/* ================ التوليد الذكي عبر Gemini ================ */
-async function generateUltraDeepExam(startLessonIndex = 0, endLessonIndex = null) {
-    // 1. استقطاب إعدادات الواجهة
-    const subject = document.getElementById('subjectSelect')?.value || "العلوم";
-    const grade = document.getElementById('gradeSelect')?.value || "السادس الابتدائي";
-    const examType = document.getElementById('examTypeSelect')?.value || "اختبارات نافس الوطنية";
-    const count = parseInt(document.getElementById('questionsCountSelect')?.value) || 10;
 
-    // 2. الفلترة العميقة للدروس 
-    const storageKey = `mansour_custom_lessons_science_${grade}_v5`;
-    let localLessons = JSON.parse(localStorage.getItem(storageKey)) || [];
-    
-    let targetLessons = localLessons;
-    if (endLessonIndex !== null) {
-        targetLessons = localLessons.slice(startLessonIndex, endLessonIndex + 1);
-    }
-
-    if (targetLessons.length === 0) {
-        alert(`لا توجد دروس مسجلة للصف ${grade} في النطاق المحدد.`);
-        return [];
-    }
-
-    const lessonsText = targetLessons.map((l, i) => `الدرس ${startLessonIndex + i + 1}: ${l.chapter} - ${l.title}`).join('\n');
-
-    // 3. التوجيه النظامي العميق
-    const isNafes = examType.includes("نافس");
-    const prompt = `
-    أنت خبير قياس وتقويم في السعودية. قم ببناء اختبار ${examType} لمادة ${subject} - ${grade}.
-    عدد الأسئلة: ${count}.
-    الدروس المستهدفة:
-    ${lessonsText}
-
-    التوجيهات:
-    ${isNafes ? 
-      "وزع الأسئلة على المجالات (علوم الحياة، علوم الأرض، العلوم الفيزيائية) والمستويات المعرفية (معرفة، تطبيق، استدلال) بدقة." : 
-      "ركز على قياس استيعاب المفاهيم الأساسية الواردة في الدروس المحددة بوضوح."}
-    يجب أن تكون الخيارات أربعة (أ، ب، ج، د).
-    `;
-
-    // 4. تعريف الهيكل الصارم (JSON Schema)
-    const requestBody = {
-        contents: [{ parts: [{ text: prompt }] }],
-        generationConfig: {
-            temperature: 0.2,
-            responseMimeType: "application/json",
-            responseSchema: {
-                type: "ARRAY",
-                description: "قائمة أسئلة الاختبار",
-                items: {
-                    type: "OBJECT",
-                    properties: {
-                        id: { type: "INTEGER", description: "رقم السؤال التسلسلي" },
-                        domain: { type: "STRING", description: "المجال العلمي" },
-                        cognitive_level: { type: "STRING", description: "المستوى المعرفي" },
-                        question: { type: "STRING", description: "نص السؤال الدقيق" },
-                        options: { 
-                            type: "ARRAY", 
-                            items: { type: "STRING" },
-                            description: "مصفوفة من 4 نصوص تمثل الخيارات" 
-                        },
-                        correct_letter: { type: "STRING", description: "حرف الإجابة الصحيحة فقط (أ، ب، ج، أو د)" },
-                        analysis: { type: "STRING", description: "تحليل تربوي عميق يشرح سبب صحة الإجابة" }
-                    },
-                    required: ["id", "domain", "cognitive_level", "question", "options", "correct_letter", "analysis"]
-                }
-            }
-        }
-    };
-
-    const apiKey = "YOUR_GEMINI_API_KEY"; 
-    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
-
-    try {
-        console.log("جاري التوليد العميق...");
-        const response = await fetch(endpoint, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(requestBody)
-        });
-
-        if (!response.ok) throw new Error("فشل الاتصال بـ Gemini API");
-
-        const data = await response.json();
-        const generatedExam = JSON.parse(data.candidates[0].content.parts[0].text);
-        
-        console.log("البيانات المهيكلة المستلمة:", generatedExam);
-        return generatedExam;
-
-    } catch (error) {
-       } catch (error) {
-        console.error("خطأ جوهري في التوليد:", error);
-        alert("تعذر بناء الاختبار. تأكد من إعدادات الشبكة ومفتاح API.");
-        return [];
-    }
-}
-
-/* ================ التشغيل ================ */
+/* ================= التشغيل ================= */
 function bootApp(){
-    localStorage.setItem('mansour_current_grade_science_v5', currentGrade);
-    loadSchedule(); loadGradeData();
-    buildOrbit(); applyGradeTheme();
+  localStorage.setItem('mansour_current_grade_science_v5', currentGrade);
+  loadSchedule(); loadGradeData();
   buildOrbit(); applyGradeTheme();
   renderLessons(); render(); syncGrading();
   updateClock(); setInterval(updateClock, 1000);
