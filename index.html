@@ -1880,10 +1880,73 @@ function buildFallbackQuestions(qCount){
  
 function onGradeChangeInit(){ /* legacy placeholder kept intentionally empty */ }
  
+function fileToBase64(file){
+  return new Promise((resolve,reject)=>{
+    const r = new FileReader();
+    r.onload = () => resolve(String(r.result).split(',')[1]);
+    r.onerror = reject;
+    r.readAsDataURL(file);
+  });
+}
+
+async function callGeminiVision(promptText, base64, mimeType){
+  const key = localStorage.getItem('mansour_gemini_api_key');
+  if(!key) throw new Error('NO_KEY');
+  const model = (localStorage.getItem('mansour_gemini_model') || 'gemini-2.5-flash').trim();
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(key)}`;
+  const res = await fetch(url, {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({
+      contents:[{parts:[{text:promptText},{inline_data:{mime_type:mimeType || 'image/jpeg', data:base64}}]}],
+      generationConfig:{ temperature:0.2, responseMimeType:'application/json' }
+    })
+  });
+  if(!res.ok){ const t = await res.text().catch(()=>''); throw new Error('HTTP_' + res.status + '_' + t.slice(0,300)); }
+  const data = await res.json();
+  const parts = (data && data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts) || [];
+  return parts.map(p => p.text || '').join('');
+}
+
 async function handleExamImageUpload(ev){
   const f = ev.target.files[0];
   if(!f) return;
-  $('imageUploadStatus').textContent = 'تم إرفاق الصورة كمرجع مساعد (لن تُقرأ تلقائياً). استخدم زر "توليد ورقة الاختبار" لتوليد الأسئلة عبر الذكاء الاصطناعي.';
+  if(!localStorage.getItem('mansour_gemini_api_key')){
+    $('imageUploadStatus').textContent = '⚠️ أدخل مفتاح Gemini API أولاً من صفحة "المزيد" حتى يمكن قراءة الأسئلة من الصورة.';
+    ev.target.value = ''; return;
+  }
+  $('imageUploadStatus').textContent = 'جاري قراءة الأسئلة من الصورة وحلّها بالذكاء الاصطناعي…';
+  try{
+    const b64 = await fileToBase64(f);
+    const grade = $('selectGrade').value, subject = subjectNames[$('selectSubject').value] || 'العلوم';
+    const qCount = Math.max(4, Number($('selectQuestionCount').value) || 10);
+    const prompt = `هذه صورة ورقة اختبار خارجية (اختيار من متعدد) في مادة ${subject} لطلاب الصف ${grade}. اقرأ كل الأسئلة الظاهرة في الصورة (يُفترض أنها ${qCount} سؤالاً تقريباً)، ولكل سؤال انسخ نص السؤال والخيارات الأربعة كما وردت حرفياً، ثم حلّ السؤال بنفسك بدقة وحدد فهرس الإجابة الصحيحة (correctIndex من 0 إلى 3)، وصنّف كل سؤال ضمن مجال مناسب (اسم الدرس أو الموضوع العلمي).
+أعد الناتج ككائن JSON (مصفوفة فقط) بدون أي نص أو شرح أو علامات ترميز إضافية، بالشكل التالي بالضبط:
+[{"domain":"...","q":"نص السؤال","options":["الخيار الأول","الخيار الثاني","الخيار الثالث","الخيار الرابع"],"correctIndex":0}]`;
+    const raw = await callGeminiVision(prompt, b64, f.type || 'image/jpeg');
+    const clean = raw.replace(/```json|```/g,'').trim();
+    const arr = JSON.parse(clean);
+    if(!Array.isArray(arr) || !arr.length) throw new Error('EMPTY');
+    const built = arr.map(it => {
+      const idx = Number(it.correctIndex);
+      const opts = Array.isArray(it.options) ? it.options.slice(0,4) : [];
+      return { domain: it.domain || 'من الورقة المصوَّرة', q: it.q || it.question || '', options: opts, correctLetter: LETTERS[isNaN(idx) ? 0 : Math.min(3, Math.max(0, idx))] };
+    }).filter(q => q.q && q.options.length === 4);
+    if(!built.length) throw new Error('EMPTY');
+    activeQuestions = built;
+    globalMaxScore = activeQuestions.length * 2;
+    currentModelName = $('selectModelLetter').value;
+    const keyword = $('examKeywordInput').value.trim() || 'ورقة مصوَّرة';
+    paperMeta(keyword); renderPaperQuestions(); saveLatestExamState();
+    $('imageUploadStatus').textContent = `✅ تم استخراج وحلّ ${built.length} سؤالاً من الصورة بنجاح. راجعها في ورقة الاختبار أدناه، ثم ابدأ جلسة التصحيح.`;
+    $('paper').scrollIntoView({behavior:'smooth', block:'start'});
+  }catch(err){
+    console.error(err);
+    const detail = (err && err.message) ? String(err.message).slice(0,180) : '';
+    $('imageUploadStatus').textContent = '❌ تعذّر قراءة الأسئلة من الصورة (تحقّق من وضوح الصورة أو المفتاح أو الاتصال). تفصيل الخطأ: ' + detail;
+  } finally {
+    ev.target.value = '';
+  }
 }
  
  
