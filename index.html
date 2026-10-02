@@ -1602,7 +1602,33 @@ function sendQuickMotiv(a){
   if(a.getAttribute('href') === '#'){ alert('اختر الرسالة أولاً'); return false; }
   bumpMessages(qmIndex); return true;
 }
- 
+  
+ var mqIndex = '';
+function openMastery(gi){
+  mqIndex = gi;
+  $('mqName').textContent = students[gi].name;
+  drawMastery();
+  $('masteryModal').hidden = false;
+}
+function drawMastery(){
+  var h = '';
+  for(var li = 0; li < lessons.length; li++){
+    var ok = !!(lessonMastery[mqIndex] && lessonMastery[mqIndex][li]);
+    h += '<div class="send-row" style="margin-bottom:6px"><span>' + esc(lessons[li].title) + '</span>' +
+      '<button class="btn sm ' + (ok ? 'good' : 'warn') + '" onclick="toggleMq(' + li + ')">' +
+      (ok ? 'متقن' : 'مراجعة') + '</button></div>';
+  }
+  $('mqList').innerHTML = h || '<div class="empty">لا توجد دروس.</div>';
+}
+function toggleMq(li){
+  if(!lessonMastery[mqIndex]) lessonMastery[mqIndex] = {};
+  lessonMastery[mqIndex][li] = !lessonMastery[mqIndex][li];
+  saveMastery(); drawMastery(); renderMasteryTable();
+  var a = 0;
+  students.forEach(function(s, si){ lessons.forEach(function(l, k){ if(lessonMastery[si] && lessonMastery[si][k]) a++; }); });
+  var t = students.length * lessons.length;
+  $('totalSkills').textContent = (t ? Math.round(a / t * 100) : 0) + '%';
+}
 /* ================= الواجب الجماعي ================= */
 function bulkBase(){
   const v = $('bulkLesson').value, d = $('bulkDetails').value.trim(), n = $('bulkNote').value.trim();
