@@ -437,7 +437,7 @@ input[type=file]{width:100%;padding:9px;border-radius:10px;border:1px solid var(
         <div class="stat"><div class="k">المشاركات</div><div class="n" id="totalParticipation">0</div></div>
         <div class="stat"><div class="k">الواجبات المنجزة</div><div class="n" id="totalHomework">0</div></div>
         <div class="stat"><div class="k">أيام الغياب</div><div class="n" id="totalAbsence">0</div></div>
-        <div class="stat"><div class="k">التجارب</div><div class="n" id="totalProjects">0</div></div>
+        <div class="stat"><div class="k">االانشظة</div><div class="n" id="totalProjects">0</div></div>
         <div class="stat"><div class="k">رسائل الواتساب</div><div class="n" id="totalMessagesSent">0</div></div>
       </div>
  
@@ -743,7 +743,7 @@ input[type=file]{width:100%;padding:9px;border-radius:10px;border:1px solid var(
               <div>الواجبات<strong id="sdHomework">0</strong></div>
               <div>الغياب<strong id="sdAbsence">0</strong></div>
               <div>الدروس المتقنة<strong id="sdSkills">0</strong></div>
-              <div>التجارب<strong id="sdProjects">0</strong></div>
+              <div>الانشظة<strong id="sdProjects">0</strong></div>
               <div>الرسائل<strong id="sdMessages">0</strong></div>
             </div>
  
@@ -1390,7 +1390,7 @@ function renderStudents(){
         ${stepper('m-abs','الغياب',gi,'absence',s.absence)}
         ${stepper('m-par','المشاركة',gi,'participation',s.participation)}
         ${stepper('m-hw','الواجبات',gi,'homework',s.homework)}
-        ${stepper('m-pr','التجارب',gi,'projects',s.projects)}
+        ${stepper('m-pr','الانشظة',gi,'projects',s.projects)}
       </div>
       <button class="btn sm warn noprint" style="width:100%;margin-top:8px" onclick="openMotiv(${gi})">🌟 رسالة تشجيع</button>
       <button class="btn sm good noprint" style="width:100%;margin-top:8px" onclick="openMastery(${gi})">📘 إتقان الدروس</button>
