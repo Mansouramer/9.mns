@@ -862,7 +862,16 @@ input[type=file]{width:100%;padding:9px;border-radius:10px;border:1px solid var(
     <button class="btn block" onclick="$('installHelp').hidden=true">حسناً</button>
   </div>
 </div>
-<div id="toast" class="toast" role="status"></div>
+<div id="motivModal" class="modal" hidden onclick="if(event.target===this)this.hidden=true">
+  <div class="modal-c">
+    <h3 style="font-size:17px;margin-bottom:8px">رسالة تشجيع: <span id="qmName"></span></h3>
+    <select id="qmSelect" onchange="updateQuickMotiv()"></select>
+    <div id="qmPreview" class="preview">اختر الرسالة لعرض نصها.</div>
+    <a id="qmSend" href="#" target="_blank" class="btn wa block" onclick="return sendQuickMotiv(this)">إرسال التشجيع</a>
+    <button class="btn ghost block" style="margin-top:8px" onclick="$('motivModal').hidden=true">إغلاق</button>
+  </div>
+</div>
+  <div id="toast" class="toast" role="status"></div>
  
 <script>
 window.addEventListener('error', function(e){
