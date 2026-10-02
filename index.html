@@ -1363,7 +1363,7 @@ function render(){
   $('totalAbsence').textContent = sum('absence');
   $('totalProjects').textContent = sum('projects');
   $('totalMessagesSent').textContent = sum('messages');
-  renderStudents(); renderClasses(); renderMasteryTable(); renderExamsTable(); renderAttention();
+ renderStudents(); renderClasses(); renderMasteryTable(); renderExamsTable(); renderAttention(); renderSilent(); renderFair();
   if(selectedStudentIndex !== '' && students[selectedStudentIndex]) fillStudentCard(selectedStudentIndex);
 }
  
