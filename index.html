@@ -1569,12 +1569,14 @@ function bumpMessages(i){
   $('totalMessagesSent').textContent = students.reduce((a,s) => a + (s.messages||0), 0);
   if(selectedStudentIndex === i) $('sdMessages').textContent = students[i].messages;
 }
-  let qmIndex = '';
-function openMotiv(gi){
+ function openMotiv(gi){
   qmIndex = gi;
   $('qmName').textContent = students[gi].name;
-  $('qmSelect').innerHTML = '<option value="">اختر الرسالة</option>' +
-    customMotivations.map((m,i) => <option value="${i}">${esc(m.title)}</option>).join('');
+  var h = '<option value="">اختر الرسالة</option>';
+  for(var i = 0; i < customMotivations.length; i++){
+    h += '<option value="' + i + '">' + esc(customMotivations[i].title) + '</option>';
+  }
+  $('qmSelect').innerHTML = h;
   updateQuickMotiv(); $('motivModal').hidden = false;
 }
 function updateQuickMotiv(){
