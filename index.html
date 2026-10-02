@@ -872,6 +872,13 @@ input[type=file]{width:100%;padding:9px;border-radius:10px;border:1px solid var(
     <button class="btn ghost block" style="margin-top:8px" onclick="$('motivModal').hidden=true">إغلاق</button>
   </div>
 </div>
+  <div id="masteryModal" class="modal" hidden onclick="if(event.target===this)this.hidden=true">
+  <div class="modal-c" style="max-height:80vh;overflow-y:auto">
+    <h3 style="font-size:17px;margin-bottom:8px">إتقان الدروس: <span id="mqName"></span></h3>
+    <div id="mqList"></div>
+    <button class="btn ghost block" style="margin-top:8px" onclick="$('masteryModal').hidden=true">إغلاق</button>
+  </div>
+</div>
   <div id="toast" class="toast" role="status"></div>
  
 <script>
