@@ -1393,6 +1393,7 @@ function renderStudents(){
         ${stepper('m-pr','التجارب',gi,'projects',s.projects)}
       </div>
       <button class="btn sm warn noprint" style="width:100%;margin-top:8px" onclick="openMotiv(${gi})">🌟 رسالة تشجيع</button>
+      <button class="btn sm good noprint" style="width:100%;margin-top:8px" onclick="openMastery(${gi})">📘 إتقان الدروس</button>
       <input type="tel" class="phone-in noprint" maxlength="10" inputmode="numeric" value="${esc(s.phone||'')}" placeholder="جوال ولي الأمر 05xxxxxxxx" style="margin-top:8px" oninput="updatePhone(${gi},this.value)">
     </div>`;
   }).join('');
