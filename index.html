@@ -1615,7 +1615,7 @@ function sendQuickMotiv(a){
     if(ab >= 3){ r.push('غياب ' + ab); sc += (ab >= 5 ? 3 : 2); }
     if((Number(s.participation) || 0) === 0){ r.push('بلا مشاركة'); sc += 1; }
     if(hwTotal > 0 && (Number(s.homework) || 0) === 0){ r.push('بلا واجبات'); sc += 1; }
-    varlast=Number(s.exam2)Number(s.exam1)0;
+    varlast=0;if(number(s.exam2)>0)last=number(s.exam2);elseif(number(s.exam1)>0)last=number(s.exam1);
     if(last > 0 && last < 10){ r.push('درجة ' + last + '/20'); sc += 3; }
     if(sc >= 2){
       if((Number(s.messages) || 0) === 0) r.push('لم تصله رسالة');
