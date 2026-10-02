@@ -1642,6 +1642,33 @@ function sendQuickMotiv(a){
   box.innerHTML = h;
 }
   
+  function renderSilent(){
+  var box = $('silentList');
+  if(!box){ return; }
+  var rows = [];
+  for(var i = 0; i < students.length; i++){
+    var p = Number(students[i].participation);
+    if(p <= 1){ rows.push(i); }
+  }
+  $('silentCount').textContent = rows.length + ' طالب';
+  if(students.length === 0){
+    box.innerHTML = '<div class="empty">لا يوجد طلاب.</div>';
+    return;
+  }
+  if(rows.length === 0){
+    box.innerHTML = '<div class="empty">كل الطلاب شاركوا. أحسنت!</div>';
+    return;
+  }
+  var h = '';
+  for(var k = 0; k < rows.length && k < 8; k++){
+    var gi = rows[k];
+    var s = students[gi];
+    h += '<div class="send-row"><span><strong>' + esc(s.name) + '</strong><br>';
+    h += '<span class="hint">مشاركات: ' + Number(s.participation) + '</span></span>';
+    h += '<button class="btn sm good" onclick="stepField(' + gi + ',\'participation\',1)">+ مشاركة</button></div>';
+  }
+  box.innerHTML = h;
+}
  var mqIndex = '';
 function openMastery(gi){
   mqIndex = gi;
