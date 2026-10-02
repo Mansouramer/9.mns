@@ -1578,12 +1578,16 @@ function bumpMessages(i){
     h += '<option value="' + i + '">' + esc(customMotivations[i].title) + '</option>';
   }
   $('qmSelect').innerHTML = h;
+   $('qmCustom').value = '';
   updateQuickMotiv(); $('motivModal').hidden = false;
 }
 function updateQuickMotiv(){
-  const s = students[qmIndex], v = $('qmSelect').value, pv = $('qmPreview'), btn = $('qmSend');
-  if(v === ''){ pv.textContent = 'اختر الرسالة لعرض نصها.'; btn.href = '#'; return; }
- const msg = 'إلى ولي أمر الطالب / ' + s.name + '\n\n' + customMotivations[v].text + '\n\nمع خالص الشكر، المعلم: ' + TEACHER_NAME + ' - ' + SCHOOL_NAME;
+  var s = students[qmIndex], v = $('qmSelect').value, c = $('qmCustom').value.trim();
+  var pv = $('qmPreview'), btn = $('qmSend'), body = '';
+  if(c){ body = c; }
+  else if(v !== ''){ body = customMotivations[v].text; }
+  if(!body){ pv.textContent = 'اختر رسالة أو اكتب رسالتك.'; btn.href = '#'; return; }
+  var msg = 'إلى ولي أمر الطالب / ' + s.name + '\n\n' + body + '\n\nمع خالص الشكر، المعلم: ' + TEACHER_NAME + ' - ' + SCHOOL_NAME;
   pv.textContent = msg; btn.href = waLink(s.phone, msg);
 }
 function sendQuickMotiv(a){
