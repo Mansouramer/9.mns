@@ -1673,6 +1673,33 @@ function sendQuickMotiv(a){
   }
   box.innerHTML = h;
 }
+  function renderFair(){
+  var box = $('fairList');
+  if(!box){ return; }
+  var rows = [];
+  for(var i = 0; i < students.length; i++){
+    var m = Number(students[i].messages);
+    if(!(m > 0)){ rows.push(i); }
+  }
+  $('fairCount').textContent = rows.length + ' من ' + students.length;
+  if(students.length === 0){
+    box.innerHTML = '<div class="empty">لا يوجد طلاب.</div>';
+    return;
+  }
+  if(rows.length === 0){
+    box.innerHTML = '<div class="empty">وصلت رسالة لكل طالب. أحسنت!</div>';
+    return;
+  }
+  var h = '';
+  for(var k = 0; k < rows.length && k < 8; k++){
+    var gi = rows[k];
+    var s = students[gi];
+    h += '<div class="send-row"><span><strong>' + esc(s.name) + '</strong><br>';
+    h += '<span class="hint">لم تصله رسالة بعد</span></span>';
+    h += '<button class="btn sm warn" onclick="openMotiv(' + gi + ')">تشجيع</button></div>';
+  }
+  box.innerHTML = h;
+}
  var mqIndex = '';
 function openMastery(gi){
   mqIndex = gi;
