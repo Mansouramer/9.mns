@@ -1580,7 +1580,7 @@ function openMotiv(gi){
 function updateQuickMotiv(){
   const s = students[qmIndex], v = $('qmSelect').value, pv = $('qmPreview'), btn = $('qmSend');
   if(v === ''){ pv.textContent = 'اختر الرسالة لعرض نصها.'; btn.href = '#'; return; }
-  const msg = إلى ولي أمر الطالب / ${s.name}\n\n${customMotivations[v].text}\n\nمع خالص الشكر، المعلم: ${TEACHER_NAME} - ${SCHOOL_NAME};
+ const msg = 'إلى ولي أمر الطالب / ' + s.name + '\n\n' + customMotivations[v].text + '\n\nمع خالص الشكر، المعلم: ' + TEACHER_NAME + ' - ' + SCHOOL_NAME;
   pv.textContent = msg; btn.href = waLink(s.phone, msg);
 }
 function sendQuickMotiv(a){
